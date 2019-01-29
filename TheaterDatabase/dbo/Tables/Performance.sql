@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Performance] (
-    [PerformanceId] INT  NOT NULL,
+    [PerformanceId] INT identity(1,1) NOT NULL,
     [Duration]      INT  NOT NULL,
     [MinPrice]      INT  NOT NULL,
     [MaxPrice]      INT  NOT NULL,

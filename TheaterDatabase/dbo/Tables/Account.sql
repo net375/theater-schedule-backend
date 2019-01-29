@@ -1,10 +1,11 @@
 ﻿CREATE TABLE [dbo].[Account] (
-    [AccountId] INT           NOT NULL,
-    [Password]  NVARCHAR (60) NOT NULL,
-    [Email]     NVARCHAR (60) NOT NULL,
-    [FirstName] NVARCHAR (25) NOT NULL,
-    [LastName]  NVARCHAR (25) NOT NULL,
+    [AccountId] INT	identity(1,1) NOT NULL,
+    [Password]  NVARCHAR (60) NULL,
+    [Email]     NVARCHAR (60) NULL,
+    [FirstName] NVARCHAR (25) NULL,
+    [LastName]  NVARCHAR (25) NULL,
     [Birthdate] DATE          NULL,
+	[PhoneIdentifier] VARCHAR(50) NULL,
     CONSTRAINT [PK_Account] PRIMARY KEY CLUSTERED ([AccountId] ASC),   
     CONSTRAINT [FK_Account_Settings] FOREIGN KEY ([AccountId]) REFERENCES [dbo].[Settings] ([SettingsId])
 );

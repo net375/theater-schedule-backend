@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[GalleryImage] (
-    [GalleryImageId] INT             NOT NULL,
+    [GalleryImageId] INT identity(1,1) NOT NULL,
     [Image]          VARBINARY (MAX) NOT NULL,
     [PerformanceId]  INT             NULL,
     CONSTRAINT [PK_GalleryImage] PRIMARY KEY CLUSTERED ([GalleryImageId] ASC),

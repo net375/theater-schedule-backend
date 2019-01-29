@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Schedule] (
-    [ScheduleId]    INT           NOT NULL,
+    [ScheduleId]    INT identity(1,1) NOT NULL,
     [Title]         NVARCHAR (25) NOT NULL,
     [Beginning]     DATETIME      NOT NULL,
     [PerformanceId] INT           NOT NULL,
