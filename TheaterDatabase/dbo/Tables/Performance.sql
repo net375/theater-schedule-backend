@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[Performance] (
     [PerformanceId] INT identity(1,1) NOT NULL,
+	[Image]    VARBINARY (MAX) NOT NULL,
     [Duration]      INT  NOT NULL,
     [MinPrice]      INT  NOT NULL,
     [MaxPrice]      INT  NOT NULL,
@@ -10,7 +11,7 @@
     [AuthorId]      INT  NULL,
     [ArtistId]      INT  NULL,
     [ComposerId]    INT  NULL,
-    CONSTRAINT [PK_PerformanceDetails] PRIMARY KEY CLUSTERED ([PerformanceId] ASC),
+    CONSTRAINT [PK_Performance] PRIMARY KEY CLUSTERED ([PerformanceId] ASC),
     CONSTRAINT [FK_Performance_CreativePerson] FOREIGN KEY ([ProducerId]) REFERENCES [dbo].[CreativePerson] ([CreativePersonId]),
     CONSTRAINT [FK_Performance_CreativePerson1] FOREIGN KEY ([AuthorId]) REFERENCES [dbo].[CreativePerson] ([CreativePersonId]),
     CONSTRAINT [FK_Performance_CreativePerson2] FOREIGN KEY ([ArtistId]) REFERENCES [dbo].[CreativePerson] ([CreativePersonId]),

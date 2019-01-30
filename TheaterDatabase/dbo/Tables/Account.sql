@@ -5,7 +5,7 @@
     [FirstName] NVARCHAR (25) NULL,
     [LastName]  NVARCHAR (25) NULL,
     [Birthdate] DATE          NULL,
-	[PhoneIdentifier] VARCHAR(50) NOT NULL,
+	[PhoneIdentifier] VARCHAR(50) UNIQUE NOT NULL,
     CONSTRAINT [PK_Account] PRIMARY KEY CLUSTERED ([AccountId] ASC),   
     CONSTRAINT [FK_Account_Settings] FOREIGN KEY ([AccountId]) REFERENCES [dbo].[Settings] ([SettingsId])
 );
