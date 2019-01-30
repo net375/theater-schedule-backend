@@ -6,7 +6,6 @@
     [MaxPrice]      INT  NOT NULL,
     [MinimumAge]    INT  NOT NULL,
     [Description]   TEXT NULL,
-    [MainImageId]   INT  NOT NULL,
     [ProducerId]    INT  NULL,
     [AuthorId]      INT  NULL,
     [ArtistId]      INT  NULL,
