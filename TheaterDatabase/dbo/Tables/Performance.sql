@@ -6,10 +6,6 @@
     [MaxPrice]      INT  NOT NULL,
     [MinimumAge]    INT  NOT NULL,
     [Description]   TEXT NULL,
-    [ProducerId]    INT  NULL,
-    [AuthorId]      INT  NULL,
-    [ArtistId]      INT  NULL,
-    [ComposerId]    INT  NULL,
     CONSTRAINT [PK_Performance] PRIMARY KEY CLUSTERED ([PerformanceId] ASC),
 );
 
