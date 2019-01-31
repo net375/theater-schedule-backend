@@ -22,17 +22,17 @@ namespace TheaterSchedule.DAL.UnitTests
             List<Schedule> ScheduleList = new List<Schedule>()
             {
                 new Schedule()
-                    {ScheduleId = 1, Beginning = new DateTime(2019, 02, 25), PerfomanceId = 1, Title = "Cinderella"},
+                    {ScheduleId = 1, Beginning = new DateTime(2019, 02, 25), PerformanceId = 1, Title = "Cinderella"},
                 new Schedule()
-                    {ScheduleId = 2, Beginning = new DateTime(2019, 02, 26), PerfomanceId = 1, Title = "Cinderella"},
+                    {ScheduleId = 2, Beginning = new DateTime(2019, 02, 26), PerformanceId = 1, Title = "Cinderella"},
                 new Schedule()
-                    {ScheduleId = 3, Beginning = new DateTime(2019, 02, 28), PerfomanceId = 1, Title = "Cinderella"},
+                    {ScheduleId = 3, Beginning = new DateTime(2019, 02, 28), PerformanceId = 1, Title = "Cinderella"},
                 new Schedule()
-                    {ScheduleId = 4, Beginning = new DateTime(2019, 03, 03), PerfomanceId = 1, Title = "Cinderella"},
+                    {ScheduleId = 4, Beginning = new DateTime(2019, 03, 03), PerformanceId = 1, Title = "Cinderella"},
                 new Schedule()
-                    {ScheduleId = 5, Beginning = new DateTime(2019, 02, 21), PerfomanceId = 1, Title = "Cinderella"},
+                    {ScheduleId = 5, Beginning = new DateTime(2019, 02, 21), PerformanceId = 1, Title = "Cinderella"},
                 new Schedule()
-                    {ScheduleId = 6, Beginning = new DateTime(2019, 02, 22), PerfomanceId = 1, Title = "Cinderella"},
+                    {ScheduleId = 6, Beginning = new DateTime(2019, 02, 22), PerformanceId = 1, Title = "Cinderella"},
             };
 
             IEnumerable<Schedule> listSchedule = ScheduleList.AsEnumerable();

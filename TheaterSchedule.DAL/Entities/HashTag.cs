@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TheaterSchedule.Models
+namespace TheaterSchedule.DAL.Entities
 {
     public class HashTag
     {

@@ -19,7 +19,7 @@ namespace TheaterSchedule.BLL
         public IEnumerable<Schedule> GetListPerformancesByDateRange(DateTime? startDate, DateTime? endDate)
         {
             IEnumerable<Schedule> listPerfomances = uow.Schedule
-                .GetWithInclude(p => p.performance)
+                .GetWithInclude(p => p.Performance)
                 .Where(p => p.Beginning >= startDate && p.Beginning <= endDate);
             return listPerfomances;
         }

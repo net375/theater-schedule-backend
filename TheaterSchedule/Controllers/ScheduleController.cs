@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL;
-using TheaterSchedule.DAL;
 using TheaterSchedule.DAL.Contexts;
 using TheaterSchedule.DAL.Entities;
 using TheaterSchedule.DAL.Repositories;

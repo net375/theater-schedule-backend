@@ -1,4 +1,4 @@
-﻿namespace TheaterSchedule.Models
+﻿namespace TheaterSchedule.DAL.Entities
 {
     public class GalleryImage
     {

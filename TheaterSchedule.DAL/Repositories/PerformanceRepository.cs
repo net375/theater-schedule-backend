@@ -32,7 +32,7 @@ namespace TheaterSchedule.DAL.Repositories
 
         private IQueryable<Performance> Include(params Expression<Func<Performance, object>>[] includeProperties)
         {
-            IQueryable<Performance> query = db.Perfomances.AsNoTracking();
+            IQueryable<Performance> query = db.Performance.AsNoTracking();
             IQueryable<Performance> performances = includeProperties
                 .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TheaterSchedule.Models;
+using TheaterSchedule.DAL.Entities;
 
 namespace TheaterSchedule.Configurations
 {
