@@ -57,5 +57,27 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="bin" />
+    <Folder Include="bin\Debug" />
+    <Folder Include="dbo" />
+    <Folder Include="dbo\Tables" />
+    <Folder Include="obj" />
+    <Folder Include="obj\Debug" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Account.sql" />
+    <Build Include="dbo\Tables\CreativeTeamMember.sql" />
+    <Build Include="dbo\Tables\GalleryImage.sql" />
+    <Build Include="dbo\Tables\HashTag.sql" />
+    <Build Include="dbo\Tables\HashTag_Performance.sql" />
+    <Build Include="dbo\Tables\Performance.sql" />
+    <Build Include="dbo\Tables\PerformanceCreativeTeamMember.sql" />
+    <Build Include="dbo\Tables\Schedule.sql" />
+    <Build Include="dbo\Tables\Settings.sql" />
+    <Build Include="dbo\Tables\Watchlist.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="obj\Debug\TheaterDatabase.sqlprojAssemblyReference.cache" />
+    <None Include="TheaterDatabase.sqlproj.user" />
   </ItemGroup>
 </Project>
