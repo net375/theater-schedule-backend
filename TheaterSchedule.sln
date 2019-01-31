@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLLTests", "BLLTests\BLLTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheaterSchedule.DAL", "TheaterSchedule.DAL\TheaterSchedule.DAL.csproj", "{70DAEA2D-DF69-4017-B237-3251288E1977}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheaterSchedule.WEB", "TheaterSchedule\TheaterSchedule.WEB.csproj", "{CF5C553B-DC5D-478B-8947-9FAE695B9155}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheaterSchedule", "TheaterSchedule\TheaterSchedule.csproj", "{CF5C553B-DC5D-478B-8947-9FAE695B9155}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
