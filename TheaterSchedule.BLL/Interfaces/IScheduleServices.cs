@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TheaterSchedule.DAL;
+using TheaterSchedule.DAL.Entities;
 
 namespace TheaterSchedule.BLL
 {

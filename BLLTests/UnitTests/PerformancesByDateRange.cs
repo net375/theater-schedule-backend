@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Moq;
 using NUnit.Framework;
 using TheaterSchedule.BLL;
+using TheaterSchedule.DAL.Entities;
 using TheaterSchedule.DAL.Interfaces;
 
 namespace TheaterSchedule.DAL.UnitTests

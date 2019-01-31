@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TheaterSchedule.DAL.Entities;
 
-namespace TheaterSchedule.DAL
+namespace TheaterSchedule.DAL.Entities
 {
     public class Schedule
     {

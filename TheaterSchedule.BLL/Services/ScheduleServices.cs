@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TheaterSchedule.DAL;
+using TheaterSchedule.DAL.Entities;
 using TheaterSchedule.DAL.Interfaces;
 
 namespace TheaterSchedule.BLL
