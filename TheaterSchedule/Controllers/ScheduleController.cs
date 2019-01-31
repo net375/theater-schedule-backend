@@ -8,6 +8,8 @@ using TheaterSchedule.DAL.Repositories;
 
 namespace TheaterSchedule.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class ScheduleController : Controller
     {
         IScheduleServices services;
@@ -17,17 +19,15 @@ namespace TheaterSchedule.Controllers
             this.services = new ScheduleServices(new TheaterScheduleUnitOfWork(context));
         }
 
-        // GET: /<controller>/
-        [HttpGet("{id}")]
-        public IActionResult FilterPerformancesByDateRange()
-        { 
-            return View();
-        }
-
-        [HttpPost]
-        public IEnumerable<Schedule> FilterPerformancesByDateRange(DateTime startRange, DateTime endRange)
+        [HttpGet("startDate={startDate}&endDate={endDate}")]
+        public IEnumerable<Schedule> FilterPerformancesByDateRange(string startDate = null, string endDate = null)
         {
-           return services.GetListPerformancesByDateRange(startRange, endRange);  
+            startDate = startDate.Replace('-', '/');
+            endDate = endDate.Replace('-', '/');    
+            DateTime start = DateTime.ParseExact(startDate, "MM/dd/yyyy", null);
+            DateTime end = DateTime.ParseExact(endDate, "MM/dd/yyyy", null);
+
+            return services.GetListPerformancesByDateRange(start, end);  
         }
     }
 }

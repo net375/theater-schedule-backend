@@ -15,20 +15,12 @@ namespace TheaterSchedule.BLL
             uow = repo;
         }
 
-        public IEnumerable<Schedule> GetListPerformancesByDateRange(DateTime startRange, DateTime endRange)
+        public IEnumerable<Schedule> GetListPerformancesByDateRange(DateTime? startDate, DateTime? endDate)
         {
-            List<Schedule> listPerfomances = uow.Schedule.GetWithInclude(p => p.performance).ToList();
-            List<Schedule> listPerfomancesDateRange = new List<Schedule>();
-
-            foreach (var perfomance in listPerfomances)
-            {
-                if (perfomance.Beginning >= startRange && perfomance.Beginning <= endRange)
-                {
-                    listPerfomancesDateRange.Add(perfomance);
-                }
-            }
-
-            return listPerfomancesDateRange;
+            IEnumerable<Schedule> listPerfomances = uow.Schedule
+                .GetWithInclude(p => p.performance)
+                .Where(p => p.Beginning >= startDate && p.Beginning <= endDate);
+            return listPerfomances;
         }
     }
 }

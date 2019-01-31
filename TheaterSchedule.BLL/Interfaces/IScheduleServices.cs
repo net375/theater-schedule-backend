@@ -6,6 +6,6 @@ namespace TheaterSchedule.BLL
 {
     public interface IScheduleServices
     {
-        IEnumerable<Schedule> GetListPerformancesByDateRange(DateTime startRange, DateTime endRange);
+        IEnumerable<Schedule> GetListPerformancesByDateRange(DateTime? startDate, DateTime? endDate);
     }
 }

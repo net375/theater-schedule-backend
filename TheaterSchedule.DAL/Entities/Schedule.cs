@@ -1,14 +1,16 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using TheaterSchedule.DAL.Entities;
 
 namespace TheaterSchedule.DAL
 {
     public class Schedule
     {
-        public int ScheduleId;
-        public string Title;
-        public DateTime Beginning;
-        public int PerfomanceId;
-        public Performance performance;
+        [Key]
+        public int ScheduleId { get; set; }
+        public string Title { get; set; }
+        public DateTime Beginning { get; set; }
+        public int PerfomanceId { get; set; }
+        public Performance performance { get; set; }
     }
 }
