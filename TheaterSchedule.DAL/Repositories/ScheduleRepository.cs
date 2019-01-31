@@ -32,12 +32,8 @@ namespace TheaterSchedule.DAL.Repositories
             IEnumerable<Schedule> listPerfomances = null;
 
             listPerfomances = GetWithInclude(p => p.Performance)
-                .Where(p =>
-                    (!endDate.HasValue && !startDate.HasValue) ||
-                    (!endDate.HasValue && p.Beginning >= startDate) ||
-                    (!startDate.HasValue && p.Beginning <= endDate) ||
-                    (p.Beginning >= startDate && p.Beginning <= endDate)
-                );
+                .Where(p => (!startDate.HasValue || p.Beginning >= startDate)
+                         && (!endDate.HasValue || p.Beginning <= endDate));
 
             return listPerfomances;
         }
