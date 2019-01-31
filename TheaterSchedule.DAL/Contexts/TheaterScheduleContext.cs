@@ -1,18 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using TheaterSchedule.Configurations;
+using TheaterSchedule.DAL.Entities;
 
-namespace TheaterSchedule.Models
+namespace TheaterSchedule.DAL.Contexts
 {
     public partial class TheaterScheduleContext: DbContext
     {
         public TheaterScheduleContext()
         {
+
         }
 
         public TheaterScheduleContext( DbContextOptions<TheaterScheduleContext> options )
             : base( options )
         {
+            Database.EnsureCreated();
         }
 
         public virtual DbSet<Account> Account { get; set; }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TheaterSchedule.Controllers
@@ -14,7 +11,7 @@ namespace TheaterSchedule.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "testValue1", "testValue2" };
+            return new string[] { "testValue1", "testValue2", "testValue2" };
         }
 
         // GET api/test/5
