@@ -29,10 +29,6 @@ namespace TheaterSchedule
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-           /* var connection = @"Server=(localdb)\MSSQLLocalDB;Database=TheatherScheduleDB;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<TheaterScheduleContext>
-                (options => options.UseSqlServer(connection));*/
-
             services.AddDbContext<TheaterScheduleContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("DefaultConnection")));
         }

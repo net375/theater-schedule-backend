@@ -9,7 +9,7 @@ using TheaterSchedule.DAL.Interfaces;
 
 namespace TheaterSchedule.DAL.Repositories
 {
-    public class ScheduleRepository : IRepository<Schedule>
+    public class ScheduleRepository : IScheduleRepository
     {
         private TheaterScheduleContext db;
 
@@ -20,28 +20,26 @@ namespace TheaterSchedule.DAL.Repositories
 
         public IEnumerable<Schedule> GetWithInclude(params Expression<Func<Schedule, object>>[] includeProperties)
         {
-            IEnumerable<Schedule> scheduleList = Include(includeProperties);
-
-            if (scheduleList.Count() == 0)
-            {
-                throw new ArgumentNullException($"GetWithInclude method ScheduleRepository received a null argument!");
-            }
-
-            return scheduleList;
-        }
-
-        private IQueryable<Schedule> Include(params Expression<Func<Schedule, object>>[] includeProperties)
-        {
             IQueryable<Schedule> query = db.Schedule.AsNoTracking();
             IQueryable<Schedule> scheduleList = includeProperties
                 .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 
-            if (scheduleList.Count() == 0)
-            {
-                throw new ArgumentNullException($"Include method ScheduleRepository received a null argument!");
-            }
-
             return scheduleList;
+        }
+
+        public IEnumerable<Schedule> GetListPerformancesByDateRange(DateTime? startDate, DateTime? endDate)
+        {
+            IEnumerable<Schedule> listPerfomances = null;
+
+            listPerfomances = GetWithInclude(p => p.Performance)
+                .Where(p =>
+                    (!endDate.HasValue && !startDate.HasValue) ||
+                    (!endDate.HasValue && p.Beginning >= startDate) ||
+                    (!startDate.HasValue && p.Beginning <= endDate) ||
+                    (p.Beginning >= startDate && p.Beginning <= endDate)
+                );
+
+            return listPerfomances;
         }
     }
 }
