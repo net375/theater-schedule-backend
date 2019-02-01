@@ -20,11 +20,16 @@ namespace TheaterSchedule.DAL.Contexts
 
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<CreativeTeamMember> CreativeTeamMember { get; set; }
+        public virtual DbSet<CreativeTeamMemberTr> CreativeTeamMemberTr { get; set; }
         public virtual DbSet<GalleryImage> GalleryImage { get; set; }
         public virtual DbSet<HashTag> HashTag { get; set; }
         public virtual DbSet<HashTagPerformance> HashTagPerformance { get; set; }
+        public virtual DbSet<HashTagTr> HashTagTr { get; set; }
+        public virtual DbSet<Language> Language { get; set; }
         public virtual DbSet<Performance> Performance { get; set; }
         public virtual DbSet<PerformanceCreativeTeamMember> PerformanceCreativeTeamMember { get; set; }
+        public virtual DbSet<PerformanceCreativeTeamMemberTr> PerformanceCreativeTeamMemberTr { get; set; }
+        public virtual DbSet<PerformanceTr> PerformanceTr { get; set; }
         public virtual DbSet<Schedule> Schedule { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
         public virtual DbSet<Watchlist> Watchlist { get; set; }
@@ -51,9 +56,14 @@ namespace TheaterSchedule.DAL.Contexts
             modelBuilder.ApplyConfiguration( new HashTagPerformanceConfiguration() );
             modelBuilder.ApplyConfiguration( new PerformanceConfiguration() );
             modelBuilder.ApplyConfiguration( new PerformanceCreativeTeamMemberConfiguration() );
+            modelBuilder.ApplyConfiguration( new PerformanceCreativeTeamMemberTrConfiguration());
             modelBuilder.ApplyConfiguration( new ScheduleConfiguration() );
             modelBuilder.ApplyConfiguration( new SettingsConfiguration() );
             modelBuilder.ApplyConfiguration( new WatchlistConfiguration() );
+            modelBuilder.ApplyConfiguration( new CreativeTeamMemberTrConfiguration());
+            modelBuilder.ApplyConfiguration( new HashTagTrConfiguration());
+            modelBuilder.ApplyConfiguration( new LanguageConfiguration());
+            modelBuilder.ApplyConfiguration( new PerformanceTrConfiguration());
         }
     }
 }

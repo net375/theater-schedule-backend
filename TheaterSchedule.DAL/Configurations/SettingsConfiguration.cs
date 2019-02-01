@@ -8,7 +8,11 @@ namespace TheaterSchedule.Configurations
     {
         public void Configure(EntityTypeBuilder<Settings> builder)
         {
-            builder.Property( e => e.Language ).HasMaxLength( 25 );
+            builder.HasOne(d => d.Language)
+                    .WithMany(p => p.Settings)
+                    .HasForeignKey(d => d.LanguageId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Settings_Language");
         }
     }
 }

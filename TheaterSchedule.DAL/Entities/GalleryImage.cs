@@ -1,6 +1,9 @@
-﻿namespace TheaterSchedule.DAL.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace TheaterSchedule.DAL.Entities
 {
-    public class GalleryImage
+    public partial class GalleryImage
     {
         public int GalleryImageId { get; set; }
         public byte[] Image { get; set; }

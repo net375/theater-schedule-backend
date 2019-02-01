@@ -8,13 +8,7 @@ namespace TheaterSchedule.Configurations
     {
         public void Configure(EntityTypeBuilder<CreativeTeamMember> builder)
         {
-            builder.Property( e => e.FistName )
-                .IsRequired()
-                .HasMaxLength( 50 );
-
-            builder.Property( e => e.LastName )
-                .IsRequired()
-                .HasMaxLength( 50 );
+           
         }
     }
 }

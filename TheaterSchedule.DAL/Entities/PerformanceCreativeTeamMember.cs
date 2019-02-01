@@ -1,12 +1,21 @@
-﻿namespace TheaterSchedule.DAL.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace TheaterSchedule.DAL.Entities
 {
-    public class PerformanceCreativeTeamMember
+    public partial class PerformanceCreativeTeamMember
     {
+        public PerformanceCreativeTeamMember()
+        {
+            PerformanceCreativeTeamMemberTr = new HashSet<PerformanceCreativeTeamMemberTr>();
+        }
+
+        public int PerformanceCreativeTeamMemberId { get; set; }
         public int CreativeTeamMemberId { get; set; }
         public int PerformanceId { get; set; }
-        public string Role { get; set; }
 
         public virtual CreativeTeamMember CreativeTeamMember { get; set; }
         public virtual Performance Performance { get; set; }
+        public virtual ICollection<PerformanceCreativeTeamMemberTr> PerformanceCreativeTeamMemberTr { get; set; }
     }
 }

@@ -8,12 +8,12 @@ namespace TheaterSchedule.Configurations
     {
         public void Configure(EntityTypeBuilder<GalleryImage> builder)
         {
-            builder.Property( e => e.Image ).IsRequired();
+           builder.Property(e => e.Image).IsRequired();
 
-            builder.HasOne( d => d.Performance )
-                .WithMany( p => p.GalleryImage )
-                .HasForeignKey( d => d.PerformanceId )
-                .HasConstraintName( "FK_GalleryImage_Performance" );
+                builder.HasOne(d => d.Performance)
+                    .WithMany(p => p.GalleryImage)
+                    .HasForeignKey(d => d.PerformanceId)
+                    .HasConstraintName("FK_GalleryImage_Performance");
         }
     }
 }

@@ -1,10 +1,14 @@
-﻿namespace TheaterSchedule.DAL.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace TheaterSchedule.DAL.Entities
 {
-    public class Settings
+    public partial class Settings
     {
         public int SettingsId { get; set; }
-        public string Language { get; set; }
+        public int LanguageId { get; set; }
 
+        public virtual Language Language { get; set; }
         public virtual Account Account { get; set; }
     }
 }
