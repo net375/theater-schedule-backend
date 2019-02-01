@@ -71,6 +71,12 @@
     <Build Include="dbo\Tables\Schedule.sql" />
     <Build Include="dbo\Tables\Settings.sql" />
     <Build Include="dbo\Tables\Watchlist.sql" />
+    <Build Include="dbo\Tables\HashTag_TR.sql" />
+    <Build Include="dbo\Tables\Performance_TR.sql" />
+    <Build Include="dbo\Tables\Language.sql" />
+    <Build Include="dbo\Tables\Schedule_TR.sql" />
+    <Build Include="dbo\Tables\CreativeTeamMember_TR.sql" />
+    <Build Include="dbo\Tables\PerformanceCreativeTeamMember_TR.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TheaterDatabase.sqlproj.user" />

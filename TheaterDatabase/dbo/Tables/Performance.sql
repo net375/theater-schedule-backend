@@ -5,7 +5,6 @@
     [MinPrice]      INT  NOT NULL,
     [MaxPrice]      INT  NOT NULL,
     [MinimumAge]    INT  NOT NULL,
-    [Description]   TEXT NULL,
     CONSTRAINT [PK_Performance] PRIMARY KEY CLUSTERED ([PerformanceId] ASC),
 );
 
