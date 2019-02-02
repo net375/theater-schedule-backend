@@ -8,9 +8,7 @@ namespace TheaterSchedule.Configurations
     {
         public void Configure(EntityTypeBuilder<Account> builder)
         {
-            builder.HasIndex( e => e.Email )
-                .HasName( "UX_Email" )
-                .IsUnique();
+       
 
             builder.HasIndex( e => e.PhoneIdentifier )
                 .HasName( "UQ__Account__3D70EBFA8EDDC2BE" )
@@ -34,7 +32,7 @@ namespace TheaterSchedule.Configurations
 
             builder.HasOne( d => d.AccountNavigation )
                 .WithOne( p => p.Account )
-                .HasForeignKey<Account>( d => d.AccountId )
+                .HasForeignKey<Account>( d => d.PhoneIdentifier)
                 .OnDelete( DeleteBehavior.ClientSetNull )
                 .HasConstraintName( "FK_Account_Settings" );
         }
