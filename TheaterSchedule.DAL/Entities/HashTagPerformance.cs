@@ -1,6 +1,9 @@
-﻿namespace TheaterSchedule.DAL.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace TheaterSchedule.DAL.Entities
 {
-    public class HashTagPerformance
+    public partial class HashTagPerformance
     {
         public int PerformanceId { get; set; }
         public int HashTagId { get; set; }

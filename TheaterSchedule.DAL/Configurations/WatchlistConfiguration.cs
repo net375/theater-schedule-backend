@@ -8,19 +8,19 @@ namespace TheaterSchedule.Configurations
     {
         public void Configure(EntityTypeBuilder<Watchlist> builder)
         {
-            builder.HasKey( e => new { e.AccountId, e.ScheduleId } );
+            builder.HasKey(e => new { e.AccountId, e.ScheduleId });
 
-            builder.HasOne( d => d.Account )
-                .WithMany( p => p.Watchlist )
-                .HasForeignKey( d => d.AccountId )
-                .OnDelete( DeleteBehavior.ClientSetNull )
-                .HasConstraintName( "FK_Watchlist_Account" );
+            builder.HasOne(d => d.Account)
+                .WithMany(p => p.Watchlist)
+                .HasForeignKey(d => d.AccountId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Watchlist_Account");
 
-            builder.HasOne( d => d.Schedule )
-                .WithMany( p => p.Watchlist )
-                .HasForeignKey( d => d.ScheduleId )
-                .OnDelete( DeleteBehavior.ClientSetNull )
-                .HasConstraintName( "FK_Watchlist_Schedule" );
+            builder.HasOne(d => d.Schedule)
+                .WithMany(p => p.Watchlist)
+                .HasForeignKey(d => d.ScheduleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Watchlist_Schedule");
         }
     }
 }
