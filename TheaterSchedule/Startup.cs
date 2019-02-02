@@ -48,7 +48,6 @@ namespace TheaterSchedule
 
             app.UseHttpsRedirection();
             app.UseMvc();
-
         }
     }
 }
