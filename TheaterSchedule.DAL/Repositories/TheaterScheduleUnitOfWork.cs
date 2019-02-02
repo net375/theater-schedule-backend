@@ -8,6 +8,8 @@ namespace TheaterSchedule.DAL.Repositories
     {
         private TheaterScheduleContext db;
         private ScheduleRepository scheduleRepository;
+        private PerformanceRepository performanceRepository;
+        private GalleryImageRepository galleryImageRepository;
 
         public TheaterScheduleUnitOfWork(TheaterScheduleContext context)
         {
@@ -21,6 +23,26 @@ namespace TheaterSchedule.DAL.Repositories
                 if (scheduleRepository == null)
                     scheduleRepository = new ScheduleRepository(db);
                 return scheduleRepository;
+            }
+        }
+
+        public IPerformanceRepository Performances
+        {
+            get
+            {
+                if (performanceRepository == null)
+                    performanceRepository = new PerformanceRepository(db);
+                return performanceRepository;
+            }
+        }
+
+        public IGalleryImageRepository GalleryImages
+        {
+            get
+            {
+                if (galleryImageRepository == null)
+                    galleryImageRepository = new GalleryImageRepository(db);
+                return galleryImageRepository;
             }
         }
 

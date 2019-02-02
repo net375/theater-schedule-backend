@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>List of performances</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+</head>
+<body>
+    <h2>Fill all fields to add new performance</h2>
+    <form name="performanceForm" action="/api/DBHelper/Performances" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+            <label for="name">Duration:</label>
+            <input type="number" class="form-control" name="duration" />
+        </div>
+        <div class="form-group">
+            <label for="age">Min price:</label>
+            <input type="number" class="form-control" name="minPrice" />
+        </div>
+        <div class="form-group">
+            <label for="age">Max price:</label>
+            <input type="number" class="form-control" name="maxPrice" />
+        </div>
+        <div class="form-group">
+            <label for="age">Minimum age:</label>
+            <input type="number" class="form-control" name="minimumAge" />
+        </div>
+        <div class="form-group">
+            <label for="age">Description:</label>
+            <input type="text" class="form-control" name="description" />
+        </div>
+        <div class="panel-body">
+            <label>Select main image file:</label>
+            <input type="file" id="files" name="mainImage" class="form-control" />
+            <div id="result" hidden></div> <br>
+            <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+        </div>
+
+    </form>
+
+    <h3 id="ResultText"> </h3>
+
+    <script>             
+       /*
+          function CreateUser(img, vduration, vminPrice, vmaxPrice, vminimumAge, vdescription) {
+            $.ajax({
+                url: "/api/DBHelper/Performances",
+                dataType: 'json',
+                contentType: "multipart/form-data; charset=utf-8",
+                method: "POST",
+                data: JSON.stringify({        
+                    mainImage: img,
+                    duration: vduration,
+                    minPrice: vminPrice,
+                    maxPrice: vmaxPrice,
+                    minimumAge: vminimumAge,
+                    description: vdescription,
+                    galleryImage: [],
+                    hashTagPerformance: [],
+                    performanceCreativeTeamMember: [],
+                    schedule: []
+                }),
+                success: function (user) {
+                    reset();
+                    $("#ResultText").text("Success!"); 
+                },
+                error: function (jxqr, error, status) {
+                    $("#ResultText").text("Error!"); 
+                }
+            })
+        }
+
+        $(document).ready(function () {
+            (function (document) {
+                var input = document.getElementById("files"),
+                    output = document.getElementById("result"),
+                    fileData; // We need fileData to be visible to getBuffer.
+
+                // Eventhandler for file input. 
+                function openfile(evt) {
+                    var files = input.files;
+                    // Pass the file to the blob, not the input[0].
+                    fileData = new Blob([files[0]]);
+                    // Pass getBuffer to promise.
+                    var promise = new Promise(getBuffer);
+                    // Wait for promise to be resolved, or log error.
+                    promise.then(function (data) {
+                        // Here you can pass the bytes to another function.
+                        output.innerHTML = data.toString();
+                        console.log(data);
+                    }).catch(function (err) {
+                        console.log('Error: ', err);
+                    });
+                }
+              
+                function getBuffer(resolve) {
+                    var reader = new FileReader();
+                    reader.readAsArrayBuffer(fileData);
+                    reader.onload = function () {
+                        var arrayBuffer = reader.result
+                        var bytes = new Uint8Array(arrayBuffer);
+                        resolve(bytes);
+                    }
+                }
+
+                // Eventlistener for file input.
+                input.addEventListener('change', openfile, false);
+            }(document));
+        });
+    
+        function reset() {
+            var form = document.forms["performanceForm"];
+            form.reset();
+            getElementById("result").innerHTML = "";
+        }
+
+        $("form").submit(function (e) {
+            e.preventDefault();
+            //img, vduration, vminPrice, vmaxPrice, vminimumAge, vdescription
+            var duration = this.elements["duration"].value;
+            var minPrice = this.elements["minPrice"].value;
+            var maxPrice = this.elements["maxPrice"].value;
+            var vminimumAge = this.elements["minimumAge"].value;
+            var description = this.elements["description"].value;
+            
+            CreateUser(document.getElementById("result").innerHTML, duration, minPrice, maxPrice, vminimumAge, description);
+        });
+        */
+    </script>
+</body>
+</html>
