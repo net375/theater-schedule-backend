@@ -50,7 +50,7 @@ namespace TheaterSchedule.Controllers
             }
         }
 
-        //https://localhost:XXXXX/api/settings/XXX
+        //https://localhost:XXXXX/api/settings/XXX 
         /*{
           "language": "ua"
            }*/
