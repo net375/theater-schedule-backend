@@ -29,14 +29,14 @@ namespace TheaterSchedule.DAL.Repositories
         }
 
         // Post
-        public void CreateNewAccountWithCurrentPhoneId(Settings settings)
+        public void CreateNewAccountAndSettingsWithCurrentPhoneId(Settings settings)
         {
             db.Settings.Add(settings);
             db.Account.Add(new Account { PhoneIdentifier = settings.SettingsId });
         }
 
         //Put
-        public void ChangeAccountWithCurrentPhoneId(string SettingsId, Settings settings)
+        public void ChangeSettingsWithCurrentPhoneId(string SettingsId, Settings settings)
         {
             Settings ResultSettings = db.Settings.Where(s => s.SettingsId == SettingsId).SingleOrDefault();
             ResultSettings.Language = settings.Language;

@@ -36,7 +36,7 @@ namespace TheaterSchedule.Controllers
         //https://localhost:XXXXX/api/settings
         /*{
           "settingsId": "XXX",
-          "language": "ua"
+          "languageId": "1"
            }*/
         [HttpPost]
         public HttpResponseMessage Post([FromBody]Settings settings)
@@ -44,7 +44,7 @@ namespace TheaterSchedule.Controllers
            
             using (SettingsUnitOfWork uow = new SettingsUnitOfWork(db))
             {
-                uow.Settings.CreateNewAccountWithCurrentPhoneId(settings);
+                uow.Settings.CreateNewAccountAndSettingsWithCurrentPhoneId(settings);
                 uow.Save();
                 return new HttpResponseMessage(System.Net.HttpStatusCode.Created);
             }
@@ -52,14 +52,14 @@ namespace TheaterSchedule.Controllers
 
         //https://localhost:XXXXX/api/settings/XXX 
         /*{
-          "language": "ua"
+          "languageId": "2"
            }*/
         [HttpPut("{SettingsId}")]
         public void Put(string SettingsId, [FromBody]Settings settings)
         {
             using (SettingsUnitOfWork uow = new SettingsUnitOfWork(db))
             {
-                uow.Settings.ChangeAccountWithCurrentPhoneId(SettingsId, settings);
+                uow.Settings.ChangeSettingsWithCurrentPhoneId(SettingsId, settings);
                 uow.Save();
             }
         }

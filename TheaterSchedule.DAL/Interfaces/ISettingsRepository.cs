@@ -8,7 +8,7 @@ namespace TheaterSchedule.DAL.Interfaces
     public interface ISettingsRepository : IRepository<Settings>
     {
         Settings GetSettingsByPhoneId(string SettingsId);
-        void CreateNewAccountWithCurrentPhoneId(Settings settings);
-        void ChangeAccountWithCurrentPhoneId(string SettingsId, Settings settings);
+        void CreateNewAccountAndSettingsWithCurrentPhoneId(Settings settings);
+        void ChangeSettingsWithCurrentPhoneId(string SettingsId, Settings settings);
     }
 }
