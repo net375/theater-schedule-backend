@@ -26,7 +26,7 @@ namespace TheaterSchedule.Controllers
         [HttpGet("{SettingsId}")]
         public Settings Get(string SettingsId)
         {
-            using (SettingsUnitOfWork uow = new SettingsUnitOfWork(db))
+            using (TheaterSettingsUnitOfWork uow = new TheaterSettingsUnitOfWork(db))
             {
               return uow.Settings.GetSettingsByPhoneId(SettingsId);   
             }
@@ -42,7 +42,7 @@ namespace TheaterSchedule.Controllers
         public HttpResponseMessage Post([FromBody]Settings settings)
         {
            
-            using (SettingsUnitOfWork uow = new SettingsUnitOfWork(db))
+            using (TheaterSettingsUnitOfWork uow = new TheaterSettingsUnitOfWork(db))
             {
                 uow.Settings.CreateNewAccountAndSettingsWithCurrentPhoneId(settings);
                 uow.Save();
@@ -57,7 +57,7 @@ namespace TheaterSchedule.Controllers
         [HttpPut("{SettingsId}")]
         public void Put(string SettingsId, [FromBody]Settings settings)
         {
-            using (SettingsUnitOfWork uow = new SettingsUnitOfWork(db))
+            using (TheaterSettingsUnitOfWork uow = new TheaterSettingsUnitOfWork(db))
             {
                 uow.Settings.ChangeSettingsWithCurrentPhoneId(SettingsId, settings);
                 uow.Save();

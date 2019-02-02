@@ -6,12 +6,12 @@ using TheaterSchedule.DAL.Interfaces;
 
 namespace TheaterSchedule.DAL.Repositories
 {
-   public class SettingsUnitOfWork :ISettingsUnitOfWork
+   public class TheaterSettingsUnitOfWork :ISettingsUnitOfWork
     {
         private TheaterScheduleContext db;
         private SettingsRepository settingsRepository;
 
-        public SettingsUnitOfWork(TheaterScheduleContext context)
+        public TheaterSettingsUnitOfWork(TheaterScheduleContext context)
         {
             db = context;
         }
