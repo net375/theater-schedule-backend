@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TheaterSchedule.DAL.Contexts;
+using TheaterSchedule.DAL.Repositories;
+using TheaterSchedule.DAL.Interfaces;
 
 namespace TheaterSchedule
 {
@@ -31,6 +33,7 @@ namespace TheaterSchedule
 
             services.AddDbContext<TheaterScheduleContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +42,7 @@ namespace TheaterSchedule
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStaticFiles();
             }
             else
             {
