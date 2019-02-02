@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TheaterSchedule.DAL.Entities
 {
-    public class Account
+    public partial class Account
     {
         public Account()
         {

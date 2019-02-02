@@ -8,9 +8,7 @@ namespace TheaterSchedule.Configurations
     {
         public void Configure(EntityTypeBuilder<Performance> builder)
         {
-            builder.Property( e => e.Description ).HasColumnType( "text" );
-
-            builder.Property( e => e.MainImage ).IsRequired();
+            builder.Property(e => e.MainImage).IsRequired();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TheaterSchedule.DAL.Entities
 {
-    public class Schedule
+    public partial class Schedule
     {
         public Schedule()
         {
@@ -11,7 +11,6 @@ namespace TheaterSchedule.DAL.Entities
         }
 
         public int ScheduleId { get; set; }
-        public string Title { get; set; }
         public DateTime Beginning { get; set; }
         public int PerformanceId { get; set; }
 
