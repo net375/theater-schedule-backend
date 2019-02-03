@@ -32,7 +32,7 @@ namespace TheaterSchedule.DAL.Repositories
         public void CreateNewAccountAndSettingsWithCurrentPhoneId(string phoneId, Settings settings)
         {     
             db.Settings.Add(settings);
-            db.Account.Add(new Account { PhoneIdentifier = phoneId });         
+            db.Account.Add(new Account { PhoneIdentifier = phoneId, SettingsId=settings.SettingsId });         
         }
 
         //Put

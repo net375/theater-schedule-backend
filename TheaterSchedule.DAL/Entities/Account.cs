@@ -17,6 +17,7 @@ namespace TheaterSchedule.DAL.Entities
         public string LastName { get; set; }
         public DateTime? Birthdate { get; set; }
         public string PhoneIdentifier { get; set; }
+        public int SettingsId { get; set; }
 
         public virtual Settings AccountNavigation { get; set; }
         public virtual ICollection<Watchlist> Watchlist { get; set; }
