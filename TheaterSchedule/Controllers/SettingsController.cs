@@ -23,28 +23,27 @@ namespace TheaterSchedule.Controllers
             db = context;
         }
         //https://localhost:XXXXX/api/settings/XXX
-        [HttpGet("{SettingsId}")]
-        public Settings Get(string SettingsId)
+        [HttpGet("{phoneId}")]
+        public Settings Get(string phoneId)
         {
             using (TheaterSettingsUnitOfWork uow = new TheaterSettingsUnitOfWork(db))
             {
-              return uow.Settings.GetSettingsByPhoneId(SettingsId);   
+                return uow.Settings.GetSettingsByPhoneId(phoneId);
             }
 
         }
 
-        //https://localhost:XXXXX/api/settings
+        //https://localhost:XXXXX/api/settings/XXX
         /*{
-          "settingsId": "XXX",
           "languageId": "1"
            }*/
-        [HttpPost]
-        public HttpResponseMessage Post([FromBody]Settings settings)
+        [HttpPost("{phoneId}")]
+        public HttpResponseMessage Post(string phoneId, [FromBody]Settings settings)
         {
            
             using (TheaterSettingsUnitOfWork uow = new TheaterSettingsUnitOfWork(db))
             {
-                uow.Settings.CreateNewAccountAndSettingsWithCurrentPhoneId(settings);
+                uow.Settings.CreateNewAccountAndSettingsWithCurrentPhoneId(phoneId,settings);
                 uow.Save();
                 return new HttpResponseMessage(System.Net.HttpStatusCode.Created);
             }
@@ -55,12 +54,13 @@ namespace TheaterSchedule.Controllers
           "languageId": "2"
            }*/
         [HttpPut("{SettingsId}")]
-        public void Put(string SettingsId, [FromBody]Settings settings)
+        public HttpResponseMessage Put(string SettingsId, [FromBody]Settings settings)
         {
             using (TheaterSettingsUnitOfWork uow = new TheaterSettingsUnitOfWork(db))
             {
                 uow.Settings.ChangeSettingsWithCurrentPhoneId(SettingsId, settings);
                 uow.Save();
+                return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
             }
         }
     }

@@ -6,7 +6,7 @@ namespace TheaterSchedule.DAL.Entities
     public partial class Settings
     {
 
-        public string SettingsId { get; set; }
+        public int SettingsId { get; set; }
         public int LanguageId { get; set; }
 
 

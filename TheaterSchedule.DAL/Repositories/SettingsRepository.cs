@@ -23,23 +23,24 @@ namespace TheaterSchedule.DAL.Repositories
         //Get
         public Settings GetSettingsByPhoneId(string SettingsId)
         {
-            Settings settings = null;
-            settings = db.Account.Select(a => a.AccountNavigation).Where(a => a.SettingsId == SettingsId).SingleOrDefault();
-            return settings;
+           Settings settings = null;
+           settings  = db.Settings.Select(a => a).Where(a => a.Account.PhoneIdentifier== SettingsId).SingleOrDefault();
+           return settings;
         }
 
         // Post
-        public void CreateNewAccountAndSettingsWithCurrentPhoneId(Settings settings)
-        {
+        public void CreateNewAccountAndSettingsWithCurrentPhoneId(string phoneId, Settings settings)
+        {     
             db.Settings.Add(settings);
-            db.Account.Add(new Account { PhoneIdentifier = settings.SettingsId });
+            db.Account.Add(new Account { PhoneIdentifier = phoneId });         
         }
 
         //Put
-        public void ChangeSettingsWithCurrentPhoneId(string SettingsId, Settings settings)
+        public void ChangeSettingsWithCurrentPhoneId(string phoneId, Settings settings)
         {
-            Settings ResultSettings = db.Settings.Where(s => s.SettingsId == SettingsId).SingleOrDefault();
-            ResultSettings.Language = settings.Language;
+            Settings ResultSettings = null;
+            ResultSettings = db.Settings.Select(a => a).Where(a => a.Account.PhoneIdentifier == phoneId).SingleOrDefault();  
+            ResultSettings.LanguageId = settings.LanguageId;
         }
 
         public IEnumerable<Settings> GetWithInclude(params Expression<Func<Settings, object>>[] includeProperties)
