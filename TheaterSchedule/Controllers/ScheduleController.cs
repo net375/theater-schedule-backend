@@ -12,20 +12,20 @@ namespace TheaterSchedule.Controllers
     [ApiController]
     public class ScheduleController : Controller
     {
-        TheaterScheduleContext db;
+        //  TheaterScheduleContext db;
 
-        public ScheduleController(TheaterScheduleContext context)
-        {
-            db = context;
-        }
+        //public ScheduleController(TheaterScheduleContext context)
+        //{
+        //    db = context;
+        //}
 
-        [HttpGet("FilterByDate")]
-        public IEnumerable<Schedule> FilterByDate(DateTime? startDate, DateTime? endDate)
-        {
-            using (TheaterScheduleUnitOfWork uow = new TheaterScheduleUnitOfWork(db))
-            {
-                return uow.Schedule.GetListPerformancesByDateRange(startDate, endDate).ToList();
-            }
-        }
+        //[HttpGet("FilterByDate")]
+        //public IEnumerable<Schedule> FilterByDate(DateTime? startDate, DateTime? endDate)
+        //{
+        //    using (TheaterScheduleUnitOfWork uow = new TheaterScheduleUnitOfWork(db))
+        //    {
+        //       // return uow.Schedule.GetListPerformancesByDateRange(startDate, endDate).ToList();
+        //    }
+        //}
     }
 }

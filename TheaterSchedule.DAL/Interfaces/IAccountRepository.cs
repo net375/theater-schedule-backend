@@ -5,9 +5,9 @@ using TheaterSchedule.DAL.Entities;
 
 namespace TheaterSchedule.DAL.Interfaces
 {
-    public interface ISettingsRepository : IRepository<Settings>
+    public interface IAccountRepository
     {
-        void Add(Settings settings);
-        Settings GetSettingsByPhoneId(string SettingsId);
+        void Add(Account account);
+        Account GetAccountByPhoneId(string phoneId);
     }
 }

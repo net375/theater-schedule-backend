@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TheaterSchedule.BLL.DTO;
+using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Contexts;
 using TheaterSchedule.DAL.Entities;
 using TheaterSchedule.DAL.Repositories;
@@ -16,38 +18,26 @@ namespace TheaterSchedule.Controllers
     public class SettingsController : Controller
     {
 
-        TheaterScheduleContext db;
+        ISettingsService settingsService;
 
-        public SettingsController(TheaterScheduleContext context)
+        public SettingsController(ISettingsService settingsService)
         {
-            db = context;
+            this.settingsService = settingsService;
         }
-        //https://localhost:XXXXX/api/settings/XXX
+
         [HttpGet("{phoneId}")]
-        public Settings Get(string phoneId)
+        public SettingsRequestDTO Get(string phoneId)
         {
-            using (TheaterSettingsUnitOfWork uow = new TheaterSettingsUnitOfWork(db))
-            {
-                return uow.Settings.GetSettingsByPhoneId(phoneId);
-            }
-
+            return settingsService.LoadSettings(phoneId);
         }
 
-
-        //https://localhost:XXXXX/api/settings/XXX 
-        /*{
-          "languageId": "2"
-           }*/
         [HttpPut("{phoneId}")]
-        public Settings Put(string phoneId, [FromBody]Settings settings)
-        {        
-            using (TheaterSettingsUnitOfWork uow = new TheaterSettingsUnitOfWork(db))
-            {
-               uow.Settings.ChangeSettingsWithCurrentPhoneIdOrCreateNew(phoneId, settings);
-               uow.Save();
+        public ActionResult Put(string phoneId, [FromBody]SettingsRequestDTO settings)
+        {
 
-                return uow.Settings.GetSettingsByPhoneId(phoneId);
-            }
+            settingsService.StoreSettings(phoneId, settings);
+            return Ok();
         }
     }
 }
+

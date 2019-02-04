@@ -10,7 +10,7 @@ using TheaterSchedule.DAL.Interfaces;
 
 namespace TheaterSchedule.DAL.Repositories
 {
-    class SettingsRepository : ISettingsRepository
+    public class SettingsRepository : ISettingsRepository
     {
 
         private TheaterScheduleContext db;
@@ -20,40 +20,22 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = context;
         }
 
-        //Get
-        public Settings GetSettingsByPhoneId(string phoneId)
-        {
-           Settings settings = null;
-           settings  = db.Settings.Select(a => a).Where(a => a.Account.PhoneIdentifier== phoneId).SingleOrDefault();
-           return settings;
-        }
-
-        //Put
-        public void ChangeSettingsWithCurrentPhoneIdOrCreateNew(string phoneId, Settings settings)
-        {
-            Settings ResultSettings = null;
-            if (db.Settings.Any(s => s.Account.PhoneIdentifier == phoneId))
-            {            
-                ResultSettings = db.Settings.Select(a => a).Where(a => a.Account.PhoneIdentifier == phoneId).SingleOrDefault();
-                ResultSettings.LanguageId = settings.LanguageId;
-            }
-            else
-            {
-                //Post
-                db.Settings.Add(settings);
-                db.Account.Add(new Account { PhoneIdentifier = phoneId, SettingsId = settings.SettingsId });                            
-            }        
-           
-        }
-
-
         public IEnumerable<Settings> GetWithInclude(params Expression<Func<Settings, object>>[] includeProperties)
         {
             IQueryable<Settings> query = db.Settings.AsNoTracking();
             IQueryable<Settings> scheduleList = includeProperties
                 .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
-
             return scheduleList;
+        }
+
+        public void Add(Settings settings)
+        {
+            db.Settings.Add(settings);
+        }
+
+        public Settings GetSettingsByPhoneId(string phoneId)
+        {
+            return db.Settings.Where(a => a.Account.PhoneIdentifier == phoneId).SingleOrDefault();
         }
 
     }
