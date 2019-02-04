@@ -34,7 +34,6 @@ namespace TheaterSchedule.Controllers
         [HttpPut("{phoneId}")]
         public ActionResult Put(string phoneId, [FromBody]SettingsDTO settings)
         {
-
             settingsService.StoreSettings(phoneId, settings);
             return Ok();
         }

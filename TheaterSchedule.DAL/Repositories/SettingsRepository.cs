@@ -20,14 +20,6 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = context;
         }
 
-        public IEnumerable<Settings> GetWithInclude(params Expression<Func<Settings, object>>[] includeProperties)
-        {
-            IQueryable<Settings> query = db.Settings.AsNoTracking();
-            IQueryable<Settings> scheduleList = includeProperties
-                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
-            return scheduleList;
-        }
-
         public void Add(Settings settings)
         {
             db.Settings.Add(settings);
@@ -35,10 +27,7 @@ namespace TheaterSchedule.DAL.Repositories
 
         public Settings GetSettingsByPhoneId(string phoneId)
         {
-            Settings settings = null;
-            settings = db.Settings.Where(a => a.Account.PhoneIdentifier == phoneId).Include(a => a.Language).SingleOrDefault();
-
-            return settings;
+            return db.Settings.Include(s => s.Language).SingleOrDefault(a => a.Account.PhoneIdentifier == phoneId);       
         }
 
     }
