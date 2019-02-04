@@ -35,7 +35,10 @@ namespace TheaterSchedule.DAL.Repositories
 
         public Settings GetSettingsByPhoneId(string phoneId)
         {
-            return db.Settings.Where(a => a.Account.PhoneIdentifier == phoneId).SingleOrDefault();
+            Settings settings = null;
+            settings = db.Settings.Where(a => a.Account.PhoneIdentifier == phoneId).Include(a => a.Language).SingleOrDefault();
+
+            return settings;
         }
 
     }

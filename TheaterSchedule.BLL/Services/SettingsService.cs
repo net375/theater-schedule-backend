@@ -28,23 +28,18 @@ namespace TheaterSchedule.BLL.Services
             this.languageRepository = languageRepository;
 
         }
-        public SettingsRequestDTO LoadSettings(string phoneId)
+        public SettingsDTO LoadSettings(string phoneId)
         {
-            SettingsRequestDTO settingsRequest = new SettingsRequestDTO();
+            SettingsDTO settingsRequest = null;
             Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
-                Language language = languageRepository.GetLanguageById(settings.LanguageId);
-                settingsRequest.LanguageName = language.LanguageName;
-            }
-            else
-            {
-                settingsRequest = null;
-            }
+                settingsRequest = new SettingsDTO() { LanguageName = settings.Language.LanguageName};
+            }         
             return settingsRequest;
         }
 
-        public void StoreSettings(string phoneId, SettingsRequestDTO settingsRequest)
+        public void StoreSettings(string phoneId, SettingsDTO settingsRequest)
         {
             Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageName);
             if (language == null)

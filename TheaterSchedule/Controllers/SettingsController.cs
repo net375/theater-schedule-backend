@@ -26,13 +26,13 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpGet("{phoneId}")]
-        public SettingsRequestDTO Get(string phoneId)
+        public SettingsDTO Get(string phoneId)
         {
             return settingsService.LoadSettings(phoneId);
         }
 
         [HttpPut("{phoneId}")]
-        public ActionResult Put(string phoneId, [FromBody]SettingsRequestDTO settings)
+        public ActionResult Put(string phoneId, [FromBody]SettingsDTO settings)
         {
 
             settingsService.StoreSettings(phoneId, settings);

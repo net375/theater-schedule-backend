@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheaterSchedule.BLL.DTO
 {
-    public class SettingsRequestDTO
+    public class SettingsDTO
     {
         public string LanguageName { get; set; }
     }
