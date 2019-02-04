@@ -5,7 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TheaterSchedule.BLL.Interfaces;
+using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Contexts;
+using TheaterSchedule.DAL.Interfaces;
+using TheaterSchedule.DAL.Repositories;
 
 namespace TheaterSchedule
 {
@@ -30,7 +34,13 @@ namespace TheaterSchedule
             });
 
             services.AddDbContext<TheaterScheduleContext>(options => options.UseSqlServer
-                (Configuration.GetConnectionString("DefaultConnection")));
+                (Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
+            services.AddScoped<ISettingsRepository, SettingsRepository>();
+            services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
+            services.AddScoped<ISettingsService, SettingsService>();         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

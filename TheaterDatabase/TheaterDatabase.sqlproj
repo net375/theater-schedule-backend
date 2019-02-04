@@ -77,4 +77,7 @@
     <Build Include="dbo\Tables\CreativeTeamMember_TR.sql" />
     <Build Include="dbo\Tables\PerformanceCreativeTeamMember_TR.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="TheaterDatabase.refactorlog" />
+  </ItemGroup>
 </Project>
