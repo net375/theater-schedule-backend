@@ -59,6 +59,7 @@
     <Folder Include="Properties" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
+    <Folder Include="TestData" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Account.sql" />
@@ -76,5 +77,7 @@
     <Build Include="dbo\Tables\Language.sql" />
     <Build Include="dbo\Tables\CreativeTeamMember_TR.sql" />
     <Build Include="dbo\Tables\PerformanceCreativeTeamMember_TR.sql" />
+    <None Include="TestData\CleanupDatabase.sql" />
+    <None Include="TestData\FillByTestData.sql" />
   </ItemGroup>
 </Project>
