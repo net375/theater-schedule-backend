@@ -33,7 +33,7 @@ namespace TheaterSchedule
 
             services.AddDbContext<TheaterScheduleContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
+            services.AddTransient<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
