@@ -26,10 +26,6 @@
             <label for="age">Minimum age:</label>
             <input type="number" class="form-control" name="minimumAge" />
         </div>
-        <div class="form-group">
-            <label for="age">Description:</label>
-            <input type="text" class="form-control" name="description" />
-        </div>
         <div class="panel-body">
             <label>Select main image file:</label>
             <input type="file" id="files" name="mainImage" class="form-control" />
@@ -43,7 +39,7 @@
 
     <script>             
        /*
-          function CreateUser(img, vduration, vminPrice, vmaxPrice, vminimumAge, vdescription) {
+          function CreateUser(img, vduration, vminPrice, vmaxPrice, vminimumAge) {
             $.ajax({
                 url: "/api/DBHelper/Performances",
                 dataType: 'json',
@@ -55,7 +51,6 @@
                     minPrice: vminPrice,
                     maxPrice: vmaxPrice,
                     minimumAge: vminimumAge,
-                    description: vdescription,
                     galleryImage: [],
                     hashTagPerformance: [],
                     performanceCreativeTeamMember: [],
@@ -117,14 +112,13 @@
 
         $("form").submit(function (e) {
             e.preventDefault();
-            //img, vduration, vminPrice, vmaxPrice, vminimumAge, vdescription
+
             var duration = this.elements["duration"].value;
             var minPrice = this.elements["minPrice"].value;
             var maxPrice = this.elements["maxPrice"].value;
             var vminimumAge = this.elements["minimumAge"].value;
-            var description = this.elements["description"].value;
             
-            CreateUser(document.getElementById("result").innerHTML, duration, minPrice, maxPrice, vminimumAge, description);
+            CreateUser(document.getElementById("result").innerHTML, duration, minPrice, maxPrice, vminimumAge);
         });
         */
     </script>

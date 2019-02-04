@@ -40,8 +40,8 @@ namespace TheaterSchedule.Controllers
         {
             string path = Path.Combine(appEnvironment.ContentRootPath, "static/media/");
 
-            uow.Performances.Create(new Performance { MainImage = ImageHelper.ImageToByteArray(path + "dva-levy.png"), Duration = 100, MinPrice = 40, MaxPrice = 120, MinimumAge = 2, Description = "Two Lions" });
-            uow.Performances.Create(new Performance { MainImage = ImageHelper.ImageToByteArray(path + "kit-u-chobotjah.png"), Duration = 70, MinPrice = 35, MaxPrice = 80, MinimumAge = 3, Description = "Puss in Boots" });
+            uow.Performances.Create(new Performance { MainImage = ImageHelper.ImageToByteArray(path + "dva-levy.png"), Duration = 100, MinPrice = 40, MaxPrice = 120, MinimumAge = 2 });
+            uow.Performances.Create(new Performance { MainImage = ImageHelper.ImageToByteArray(path + "kit-u-chobotjah.png"), Duration = 70, MinPrice = 35, MaxPrice = 80, MinimumAge = 3 });
 
             //...filling_other_tables...
             uow.Save();
