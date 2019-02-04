@@ -80,4 +80,7 @@
     <None Include="TestData\CleanupDatabase.sql" />
     <None Include="TestData\FillByTestData.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="TheaterDatabase.refactorlog" />
+  </ItemGroup>
 </Project>

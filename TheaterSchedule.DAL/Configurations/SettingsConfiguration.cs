@@ -8,6 +8,7 @@ namespace TheaterSchedule.Configurations
     {
         public void Configure(EntityTypeBuilder<Settings> builder)
         {
+
             builder.HasOne(d => d.Language)
                     .WithMany(p => p.Settings)
                     .HasForeignKey(d => d.LanguageId)

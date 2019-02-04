@@ -7,21 +7,10 @@ namespace TheaterSchedule.DAL.Repositories
     public class TheaterScheduleUnitOfWork : ITheaterScheduleUnitOfWork
     {
         private TheaterScheduleContext db;
-        private ScheduleRepository scheduleRepository;
-
+       
         public TheaterScheduleUnitOfWork(TheaterScheduleContext context)
         {
             db = context;
-        }
-
-        public IScheduleRepository Schedule
-        {
-            get
-            {
-                if (scheduleRepository == null)
-                    scheduleRepository = new ScheduleRepository(db);
-                return scheduleRepository;
-            }
         }
 
         public void Save()

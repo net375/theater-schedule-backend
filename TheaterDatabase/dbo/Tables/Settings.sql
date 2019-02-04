@@ -4,4 +4,3 @@
     CONSTRAINT [PK_Settings] PRIMARY KEY CLUSTERED ([SettingsId] ASC),
 	CONSTRAINT [FK_Settings_Language] FOREIGN KEY ([LanguageId]) REFERENCES [dbo].[Language]([LanguageId]),
 );
-
