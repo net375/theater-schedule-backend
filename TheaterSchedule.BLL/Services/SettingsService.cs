@@ -60,7 +60,7 @@ namespace TheaterSchedule.BLL.Services
                 accountRepository.Add(new Account
                 {
                     PhoneIdentifier = phoneId,
-                    AccountNavigation = newSettings
+                    Settings = newSettings
                 });
             }
 
