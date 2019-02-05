@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TheaterSchedule.DAL.Entities
+namespace Entities.Models
 {
     public partial class HashTag
     {
@@ -13,7 +15,9 @@ namespace TheaterSchedule.DAL.Entities
 
         public int HashTagId { get; set; }
 
+        [InverseProperty("HashTag")]
         public virtual ICollection<HashTagPerformance> HashTagPerformance { get; set; }
+        [InverseProperty("HashTag")]
         public virtual ICollection<HashTagTr> HashTagTr { get; set; }
     }
 }

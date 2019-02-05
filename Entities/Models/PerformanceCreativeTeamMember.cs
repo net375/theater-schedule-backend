@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TheaterSchedule.DAL.Entities
+namespace Entities.Models
 {
     public partial class PerformanceCreativeTeamMember
     {
@@ -14,7 +16,11 @@ namespace TheaterSchedule.DAL.Entities
         public int CreativeTeamMemberId { get; set; }
         public int PerformanceId { get; set; }
 
+        [ForeignKey("CreativeTeamMemberId")]
+        [InverseProperty("PerformanceCreativeTeamMember")]
         public virtual CreativeTeamMember CreativeTeamMember { get; set; }
+        [ForeignKey("PerformanceId")]
+        [InverseProperty("PerformanceCreativeTeamMember")]
         public virtual Performance Performance { get; set; }
         public virtual ICollection<PerformanceCreativeTeamMemberTr> PerformanceCreativeTeamMemberTr { get; set; }
     }

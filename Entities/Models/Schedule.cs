@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TheaterSchedule.DAL.Entities
+namespace Entities.Models
 {
     public partial class Schedule
     {
@@ -11,10 +13,14 @@ namespace TheaterSchedule.DAL.Entities
         }
 
         public int ScheduleId { get; set; }
+        [Column(TypeName = "datetime")]
         public DateTime Beginning { get; set; }
         public int PerformanceId { get; set; }
 
+        [ForeignKey("PerformanceId")]
+        [InverseProperty("Schedule")]
         public virtual Performance Performance { get; set; }
+        [InverseProperty("Schedule")]
         public virtual ICollection<Watchlist> Watchlist { get; set; }
     }
 }

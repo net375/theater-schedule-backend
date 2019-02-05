@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using TheaterSchedule.DAL.Contexts;
-using TheaterSchedule.DAL.Entities;
+using Entities.Models;
 using TheaterSchedule.DAL.Interfaces;
 
 namespace TheaterSchedule.DAL.Repositories
@@ -13,9 +12,9 @@ namespace TheaterSchedule.DAL.Repositories
     public class SettingsRepository : ISettingsRepository
     {
 
-        private TheaterScheduleContext db;
+        private TheaterDatabaseContext db;
 
-        public SettingsRepository(TheaterScheduleContext context)
+        public SettingsRepository(TheaterDatabaseContext context)
         {
             this.db = context;
         }

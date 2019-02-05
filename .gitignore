@@ -8,6 +8,10 @@
 *.userosscache
 *.sln.docstates
 
+# Generated DBContext & Models
+/test/Project.Api.Test/Common/Models/**/*.cs
+
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

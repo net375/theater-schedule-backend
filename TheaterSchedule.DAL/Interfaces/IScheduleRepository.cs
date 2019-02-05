@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TheaterSchedule.DAL.Entities;
+using Entities.Models;
 
 namespace TheaterSchedule.DAL.Interfaces
 {
