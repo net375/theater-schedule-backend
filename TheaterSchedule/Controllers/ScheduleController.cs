@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using TheaterSchedule.DAL.Contexts;
-using TheaterSchedule.DAL.Entities;
 using TheaterSchedule.DAL.Repositories;
 
 namespace TheaterSchedule.Controllers

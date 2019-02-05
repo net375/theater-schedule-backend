@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TheaterSchedule.DAL.Entities;
+using Entities.Models;
 
 namespace TheaterSchedule.DAL.Interfaces
 {

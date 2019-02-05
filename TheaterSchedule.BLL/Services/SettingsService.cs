@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
-using TheaterSchedule.DAL.Entities;
 using TheaterSchedule.DAL.Interfaces;
+using Entities.Models;
 
 namespace TheaterSchedule.BLL.Services
 {

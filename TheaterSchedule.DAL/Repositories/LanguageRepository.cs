@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TheaterSchedule.DAL.Contexts;
-using TheaterSchedule.DAL.Entities;
 using TheaterSchedule.DAL.Interfaces;
+using Entities.Models;
 
 namespace TheaterSchedule.DAL.Repositories
 {
     public class LanguageRepository : ILanguageRepository
     {
 
-        private TheaterScheduleContext db;
+        private TheaterDatabaseContext db;
 
-        public LanguageRepository(TheaterScheduleContext context)
+        public LanguageRepository(TheaterDatabaseContext context)
         {
             this.db = context;
         }

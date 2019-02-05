@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
-using TheaterSchedule.DAL.Contexts;
-using TheaterSchedule.DAL.Entities;
 using TheaterSchedule.DAL.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

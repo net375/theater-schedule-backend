@@ -3,17 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using TheaterSchedule.DAL.Contexts;
-using TheaterSchedule.DAL.Entities;
 using TheaterSchedule.DAL.Interfaces;
+using Entities.Models;
 
 namespace TheaterSchedule.DAL.Repositories
 {
     public class ScheduleRepository : IScheduleRepository
     {
-        private TheaterScheduleContext db;
+        private TheaterDatabaseContext db;
 
-        public ScheduleRepository(TheaterScheduleContext context)
+        public ScheduleRepository(TheaterDatabaseContext context)
         {
             this.db = context;
         }

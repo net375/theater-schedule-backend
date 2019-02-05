@@ -7,9 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.Services;
-using TheaterSchedule.DAL.Contexts;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
+using Entities.Models;
 
 namespace TheaterSchedule
 {
@@ -33,7 +33,7 @@ namespace TheaterSchedule
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<TheaterScheduleContext>(options => options.UseSqlServer
+            services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();

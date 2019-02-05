@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TheaterSchedule.DAL.Contexts;
-using TheaterSchedule.DAL.Entities;
+﻿using System.Linq;
 using TheaterSchedule.DAL.Interfaces;
+using Entities.Models;
 
 namespace TheaterSchedule.DAL.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
-        private TheaterScheduleContext db;
+        private TheaterDatabaseContext db;
 
-        public AccountRepository(TheaterScheduleContext context)
+        public AccountRepository(TheaterDatabaseContext context)
         {
             this.db = context;
         }

@@ -1,14 +1,14 @@
 ﻿using System;
-using TheaterSchedule.DAL.Contexts;
 using TheaterSchedule.DAL.Interfaces;
+using Entities.Models;
 
 namespace TheaterSchedule.DAL.Repositories
 {
     public class TheaterScheduleUnitOfWork : ITheaterScheduleUnitOfWork
     {
-        private TheaterScheduleContext db;
+        private TheaterDatabaseContext db;
        
-        public TheaterScheduleUnitOfWork(TheaterScheduleContext context)
+        public TheaterScheduleUnitOfWork(TheaterDatabaseContext context)
         {
             db = context;
         }
