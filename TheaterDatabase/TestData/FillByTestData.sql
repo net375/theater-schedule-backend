@@ -1,3 +1,6 @@
+USE TheaterDatabase
+go
+
 --
 -- Inserting data into table dbo.CreativeTeamMember
 --
@@ -41,11 +44,11 @@ GO
 --
 SET IDENTITY_INSERT dbo.Language ON
 GO
-INSERT dbo.Language(LanguageId, LanguageName) VALUES (1, N'English')
-INSERT dbo.Language(LanguageId, LanguageName) VALUES (2, N'Українська')
-INSERT dbo.Language(LanguageId, LanguageName) VALUES (3, N'Polski')
-INSERT dbo.Language(LanguageId, LanguageName) VALUES (4, N'Español')
-INSERT dbo.Language(LanguageId, LanguageName) VALUES (5, N'Русский')
+INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (1, N'English', 'en')
+INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (2, N'Українська', 'uk')
+INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (3, N'Polski', 'pl')
+INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (4, N'Español', 'es')
+INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (5, N'Русский', 'ru')
 GO
 SET IDENTITY_INSERT dbo.Language OFF
 GO
@@ -131,16 +134,16 @@ GO
 --
 SET IDENTITY_INSERT dbo.Account ON
 GO
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier) VALUES (6, N'061A269220293916GY', N'Bolt@nowhere.com', N'Letha', N'Wahl', '1950-03-09', N'(459) 613-9467')
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier) VALUES (10, N'D4G1H66LQ8SI15W457', N'Morehead@example.com', N'Kraig', N'Boucher', '1930-03-09', N'(730) 955-6764')
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier) VALUES (2, N'5115I09IOJ232X9E64WZ507C02627871M5U1V6', N'qpzre411@example.com', N'Harlan', N'Ludwig', '1981-09-13', N'(681) 747-0352')
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier) VALUES (7, N'NAMS722HRM8INU36V71KJ12T6S09DCX7JHN4N3USVDCUE720Y0KCZ', N'Bray162@example.com', N'Brad', N'Craven', '1978-10-25', N'(513) 643-0254')
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier) VALUES (3, N'D8257J9C9HT2W39O2QGSX55MD8WQ4V48JVFPP', N'Sidney_Agnew3@nowhere.com', N'Enrique', N'Sizemore', '1951-03-23', N'(776) 960-1978')
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier) VALUES (8, N'74198D85DH', N'xmhz1900@nowhere.com', N'Bennie', N'Flowers', '1964-03-15', N'(943) 664-5705')
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier) VALUES (4, N'B1XLA34H7BP8U098SA9NB4RU5W92', N'Monroe.Rinehart@nowhere.com', N'Francis', N'Conway', '1972-04-02', N'(282) 510-9326')
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier) VALUES (9, N'9SKKLJB914O9J5U80I57Q', N'Gutierrez73@example.com', N'Nickie', N'Waite', '2002-03-09', N'(350) 234-6559')
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier) VALUES (5, N'UK311H1D5I0530I', N'FelipaAbernathy@nowhere.com', N'Boyd', N'Skaggs', NULL, N'(157) 934-3116')
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier) VALUES (1, N'83HED0WQMG0RNZ23CLW0U21', N'Adler@example.com', N'Alonzo', N'Peacock', '1944-10-28', N'(465) 454-8347')
+INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (6, N'061A269220293916GY', N'Bolt@nowhere.com', N'Letha', N'Wahl', '1950-03-09', N'(459) 613-9467', 1)
+INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (10, N'D4G1H66LQ8SI15W457', N'Morehead@example.com', N'Kraig', N'Boucher', '1930-03-09', N'(730) 955-6764',2)
+INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (2, N'5115I09IOJ232X9E64WZ507C02627871M5U1V6', N'qpzre411@example.com', N'Harlan', N'Ludwig', '1981-09-13', N'(681) 747-0352',3)
+INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (7, N'NAMS722HRM8INU36V71KJ12T6S09DCX7JHN4N3USVDCUE720Y0KCZ', N'Bray162@example.com', N'Brad', N'Craven', '1978-10-25', N'(513) 643-0254',4)
+INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (3, N'D8257J9C9HT2W39O2QGSX55MD8WQ4V48JVFPP', N'Sidney_Agnew3@nowhere.com', N'Enrique', N'Sizemore', '1951-03-23', N'(776) 960-1978',5)
+INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (8, N'74198D85DH', N'xmhz1900@nowhere.com', N'Bennie', N'Flowers', '1964-03-15', N'(943) 664-5705',6)
+INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (4, N'B1XLA34H7BP8U098SA9NB4RU5W92', N'Monroe.Rinehart@nowhere.com', N'Francis', N'Conway', '1972-04-02', N'(282) 510-9326',7)
+INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (9, N'9SKKLJB914O9J5U80I57Q', N'Gutierrez73@example.com', N'Nickie', N'Waite', '2002-03-09', N'(350) 234-6559',8)
+INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (5, N'UK311H1D5I0530I', N'FelipaAbernathy@nowhere.com', N'Boyd', N'Skaggs', NULL, N'(157) 934-3116',9)
+INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (1, N'83HED0WQMG0RNZ23CLW0U21', N'Adler@example.com', N'Alonzo', N'Peacock', '1944-10-28', N'(465) 454-8347',10)
 GO
 SET IDENTITY_INSERT dbo.Account OFF
 GO
