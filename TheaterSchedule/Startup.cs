@@ -34,7 +34,7 @@ namespace TheaterSchedule
             });
 
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
-                (Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
+                (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
