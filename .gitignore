@@ -635,3 +635,5 @@ healthchecksdb
 # Local History for Visual Studio
 
 # BeatPulse healthcheck temp database
+/TheaterSchedule/appsettings.Development.json
+/TheaterSchedule/appsettings.json
