@@ -29,14 +29,7 @@ namespace TheaterSchedule.DAL.Repositories
             var definedPerformances = db.Performance.Include(a => a.PerformanceTr);
             List<string> selectedTitles = new List<string>();
             List<Performance> selectedPerformances = db.Performance.Include(k => k.PerformanceTr).Where(t => t.PerformanceTr.Any(P => P.LanguageId == languageId)).ToList();
-            //foreach(var performance in definedPerformances)
-            //{
-            //    foreach(var perfDetails in performance.PerformanceTr)
-            //    {
-            //        var Selectedtitle = perfDetails.Title;
-            //        selectedTitles.Add(perfDetails.Title);
-            //    }
-            //}
+           
 
             return selectedPerformances;
         }
