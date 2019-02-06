@@ -7,6 +7,6 @@ namespace TheaterSchedule.DAL.Interfaces
 {
     public interface IPerformanceRepository
     {
-        IEnumerable<PerformanceDataModel> GetInformationAboutPerformanceScreen( string languageCode, int id );
+        PerformanceDataModel GetInformationAboutPerformanceScreen( string languageCode, int id );
     }
 }

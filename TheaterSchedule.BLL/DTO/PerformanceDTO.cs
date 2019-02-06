@@ -12,9 +12,8 @@ namespace TheaterSchedule.BLL.DTO
         public int MaxPrice { get; set; }
         public int MinimumAge { get; set; }
         public string Description { get; set; }
-        //public List<string> Role { get; set; }
-        //public List<string> FirstName { get; set; }
-        //public List<string> LastName { get; set; }
+        public IEnumerable<string> FirstName { get; set; }
+        public IEnumerable<string> LastName { get; set; }
     }
 }
 

@@ -23,7 +23,7 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpGet("{languageCode}/GetInfo")]
-        public IEnumerable<PerformanceDTO> GetInfo( string languageCode, int id )
+        public PerformanceDTO GetInfo( string languageCode, int id )
         {
             return performanceService.LoadPerformance(languageCode, id);
         }
