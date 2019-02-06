@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
-using TheaterSchedule.DAL.Models;
+using TheaterSchedule.Entities.Models;
 
 namespace TheaterSchedule.BLL.Services
 {
