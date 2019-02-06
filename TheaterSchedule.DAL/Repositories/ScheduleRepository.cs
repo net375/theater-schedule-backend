@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using TheaterSchedule.DAL.Interfaces;
-using Entities.Models;
+using TheaterSchedule.DAL.Models;
+
 
 namespace TheaterSchedule.DAL.Repositories
 {
@@ -26,13 +28,21 @@ namespace TheaterSchedule.DAL.Repositories
             return scheduleList;
         }
 
-        public IEnumerable<Schedule> GetListPerformancesByDateRange(DateTime? startDate, DateTime? endDate)
+        public IEnumerable<ScheduleDataModel> GetListPerformancesByDateRange(string languageCode, DateTime? startDate, DateTime? endDate)
         {
-            IEnumerable<Schedule> listPerfomances = null;
+            IEnumerable<ScheduleDataModel> listPerfomances = null;
 
-            listPerfomances = GetWithInclude(p => p.Performance)
-                .Where(p => (!startDate.HasValue || p.Beginning >= startDate)
-                         && (!endDate.HasValue || p.Beginning <= endDate));
+            listPerfomances = from schedule in db.Schedule
+                join performance in db.Performance on schedule.PerformanceId equals performance.PerformanceId
+                join performanceTr in db.PerformanceTr on performance.PerformanceId equals performanceTr.PerformanceId
+                join language in db.Language on performanceTr.LanguageId equals language.LanguageId
+                where ((!startDate.HasValue || schedule.Beginning >= startDate) && (!endDate.HasValue || schedule.Beginning <= endDate) && (language.LanguageCode == languageCode))
+                select new ScheduleDataModel
+                {
+                    Beginning = schedule.Beginning,
+                    MainImage = performance.MainImage,
+                    Title = performanceTr.Title
+                };
 
             return listPerfomances;
         }
