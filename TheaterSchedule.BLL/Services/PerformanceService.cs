@@ -25,29 +25,11 @@ namespace TheaterSchedule.BLL.Services
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.performanceRepository = performanceRepository;
         }
-        public IEnumerable<PerformanceDTO> LoadPerformance( int id )
+        public IEnumerable<PerformanceDTO> LoadPerformance( string languageCode, int id )
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<PerformanceDataModel, PerformanceDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<PerformanceDataModel>, List<PerformanceDTO>>(performanceRepository.GetInformationAboutPerformanceScreen(id));
+            return mapper.Map<IEnumerable<PerformanceDataModel>, List<PerformanceDTO>>(performanceRepository.GetInformationAboutPerformanceScreen(languageCode, id));
 
-
-            //IEnumerable<PerformanceDataModel> performance =
-            //    performanceRepository.GetInformationAboutPerformanceScreen(id);
-            //if (performance != null)
-            //{
-            //    performanceRequest = new PerformanceDTO()
-            //    {
-            //        MainImage = performance[0.MainImage,
-            //        Duration = performance[0].Duration,
-            //        //MinPrice = performance.MinPrice,
-            //        //MaxPrice = performance.MaxPrice,
-            //        //MinimumAge = performance.MinimumAge,
-            //        //Description = performance.
-            //    };
-            //}
-
-
-            //return performanceRequest;
         }
     }
 }

@@ -21,14 +21,14 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = context;
         }
 
-        public IEnumerable<PerformanceDataModel> GetInformationAboutPerformanceScreen( int id )
+        public IEnumerable<PerformanceDataModel> GetInformationAboutPerformanceScreen( string languageCode, int id )
         {
             IEnumerable<PerformanceDataModel> listPerfomances = null;
 
             listPerfomances = from performance in db.Performance
                               join performanceTr in db.PerformanceTr on performance.PerformanceId equals performanceTr.PerformanceId
                               join language in db.Language on performanceTr.LanguageId equals language.LanguageId
-                              where ((performance.PerformanceId == id) && (language.LanguageName == "Polski"))
+                              where ((performance.PerformanceId == id) && (language.LanguageCode == languageCode))
                               select new PerformanceDataModel
                               {
                                   MainImage = performance.MainImage,

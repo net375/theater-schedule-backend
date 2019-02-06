@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace TheaterSchedule.BLL.DTO
+namespace TheaterSchedule.DAL.Models
 {
-    public class ScheduleDTO
+    public class ScheduleDataModel
     {
         public int ScheduleId { get; set; }
         public DateTime Beginning { get; set; }

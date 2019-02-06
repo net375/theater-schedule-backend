@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using TheaterSchedule.DAL.Interfaces;
-using TheaterSchedule.Entities.Models;
+using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DAL.Repositories
 {
@@ -38,6 +38,7 @@ namespace TheaterSchedule.DAL.Repositories
                 where ((!startDate.HasValue || schedule.Beginning >= startDate) && (!endDate.HasValue || schedule.Beginning <= endDate) && (language.LanguageCode == languageCode))
                 select new ScheduleDataModel
                 {
+                    ScheduleId = schedule.ScheduleId,
                     Beginning = schedule.Beginning,
                     MainImage = performance.MainImage,
                     Title = performanceTr.Title
