@@ -2,28 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using TheaterSchedule.DAL.Repositories;
+using TheaterSchedule.BLL.DTO;
+using TheaterSchedule.BLL.Interfaces;
 
 namespace TheaterSchedule.Controllers
 {
-    [Route("api/Schedule")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ScheduleController : Controller
     {
-        //  TheaterScheduleContext db;
+        private IScheduleService service;
 
-        //public ScheduleController(TheaterScheduleContext context)
-        //{
-        //    db = context;
-        //}
+        public ScheduleController(IScheduleService scheduleService)
+        {
+            service = scheduleService;
+        }
 
-        //[HttpGet("FilterByDate")]
-        //public IEnumerable<Schedule> FilterByDate(DateTime? startDate, DateTime? endDate)
-        //{
-        //    using (TheaterScheduleUnitOfWork uow = new TheaterScheduleUnitOfWork(db))
-        //    {
-        //       // return uow.Schedule.GetListPerformancesByDateRange(startDate, endDate).ToList();
-        //    }
-        //}
+        [HttpGet("{languageCode}/FilterByDate")]
+        public IEnumerable<ScheduleDTO> FilterByDate(string languageCode, DateTime? startDate, DateTime? endDate)
+        {
+            return service.FilterByDate(languageCode, startDate, endDate).ToList();
+        }
     }
 }

@@ -1,4 +1,4 @@
-USE TheaterSchedule
+USE TheaterDatabase
 GO
 --
 -- Delete data from the table 'dbo.Watchlist'
