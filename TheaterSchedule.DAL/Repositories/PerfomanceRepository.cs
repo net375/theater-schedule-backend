@@ -6,6 +6,7 @@ using System.Linq;
 using TheaterSchedule.DAL.Models;
 using Entities.Models;
 using TheaterSchedule.DAL.Interfaces;
+using TheaterSchedule.DAL.Models;
 namespace TheaterSchedule.DAL.Repositories
 {
     public class PerfomanceRepository : IPerfomanceRepository
