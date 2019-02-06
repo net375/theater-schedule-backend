@@ -27,13 +27,6 @@ namespace TheaterSchedule.Controllers
             //return postersService.LoadPostersData(settingsId);
         }
 
-        // GET: api/Posters/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
         // POST: api/Posters
         [HttpPost]
         public void Post([FromBody] string value)
