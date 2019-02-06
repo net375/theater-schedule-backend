@@ -1,4 +1,4 @@
-﻿USE TheaterDatabase
+USE TheaterDatabase
 go
 
 --

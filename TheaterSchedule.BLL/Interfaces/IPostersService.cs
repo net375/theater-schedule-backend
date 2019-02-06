@@ -6,6 +6,6 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface IPostersService
     {
-        List<PostersDTO> LoadPostersData(int settingsId);
+        List<PostersDTO> LoadPostersData(string languageCode);
     }
 }

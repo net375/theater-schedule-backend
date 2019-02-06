@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Entities.Models;
 using TheaterSchedule.DAL.Interfaces;
-
+using TheaterSchedule.DAL.Models;
 namespace TheaterSchedule.DAL.Interfaces
 {
     public interface IPerfomanceRepository
     {
-        IEnumerable<byte[]> GetAllPerformanceImages();
-        List<Performance> GetPerformanceTitles(int settingsId);
+        List<PerformanceDataModel> GetPerformanceTitlesAndImages(string languageCode);
     }
 }

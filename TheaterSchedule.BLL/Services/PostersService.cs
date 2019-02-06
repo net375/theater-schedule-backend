@@ -7,40 +7,37 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using Entities.Models;
 using TheaterSchedule.DAL.Interfaces;
-using System.IO;
-using TheaterSchedule.BLL.Services;
+using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.BLL.Services
 {
-    public class PostersService:IPostersService
+    public class PostersService : IPostersService
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IPerfomanceRepository perfomanceRepository;
         private IImageService imageService;
 
-        public PostersService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IPerfomanceRepository perfomanceRepository,IImageService imageService)
+        public PostersService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IPerfomanceRepository perfomanceRepository, IImageService imageService)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.perfomanceRepository = perfomanceRepository;
             this.imageService = imageService;
         }
 
-        public List<PostersDTO> LoadPostersData(int settingsId)
+        public List<PostersDTO> LoadPostersData(string languageCode)
         {
             List<PostersDTO> postersRequest = new List<PostersDTO>();
-            List<Performance> selectedPerformances =  perfomanceRepository.GetPerformanceTitles(settingsId);
+            List<PerformanceDataModel> selectedPerformances = perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
+
             foreach (var performance in selectedPerformances)
             {
                 postersRequest.Add(new PostersDTO()
                 {
                     MainImage = imageService.ImageToBase64(performance.MainImage),
-                    Title = performance.PerformanceTr.Select(t => t.Title).FirstOrDefault()
+                    Title = performance.Title
                 });
             }
-
-           // string outputJson = JsonConvert.SerializeObject(postersRequest);
             return postersRequest;
-
         }
     }
 }

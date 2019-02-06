@@ -18,38 +18,12 @@ namespace TheaterSchedule.Controllers
             this.postersService = postersService;
         }
 
-
         // GET: api/Posters
-        [HttpGet("{settingsId}")]
-        public JsonResult Get(int settingsId)
+        [HttpGet("{languageCode}")]
+        public JsonResult Get(string languageCode)
         {
-            return new JsonResult(postersService.LoadPostersData(settingsId));
-            //return postersService.LoadPostersData(settingsId);
+            return new JsonResult(postersService.LoadPostersData(languageCode));
         }
 
-        // GET: api/Posters/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST: api/Posters
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/Posters/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
