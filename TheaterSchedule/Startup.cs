@@ -34,13 +34,16 @@ namespace TheaterSchedule
             });
 
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
-                (Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
+                (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
-            services.AddScoped<ISettingsService, SettingsService>();         
+            services.AddScoped<ISettingsService, SettingsService>();
+            services.AddScoped<IPerfomanceRepository, PerfomanceRepository>();
+            services.AddScoped<IPostersService, PostersService>();
+            services.AddScoped<IImageService, ImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
