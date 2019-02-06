@@ -17,12 +17,6 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = db;
         }
        
-
-        public IEnumerable<byte[]> GetAllPerformanceImages()
-        {
-            return db.Performance.Select(a=>a.MainImage);
-        }
-
         public List<Performance> GetPerformanceTitles(int settingsId)
         {
             int languageId = db.Settings.Where(a => a.SettingsId == settingsId).Select(c => c.LanguageId).First();
