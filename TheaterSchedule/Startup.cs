@@ -41,7 +41,10 @@ namespace TheaterSchedule
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             services.AddScoped<ISettingsService, SettingsService>();
-            services.AddScoped<IScheduleService, ScheduleService>();           
+            services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<IPostersService, PostersService>();
+            services.AddScoped<IPerfomanceRepository, PerfomanceRepository>();
+            services.AddScoped<IImageService, ImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
