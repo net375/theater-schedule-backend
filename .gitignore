@@ -638,3 +638,4 @@ healthchecksdb
 /TheaterSchedule/appsettings.Development.json
 /TheaterSchedule/appsettings.json
 /Entities/Models
+/TheaterSchedule/web.config
