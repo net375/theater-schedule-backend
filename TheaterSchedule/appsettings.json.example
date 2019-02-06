@@ -7,6 +7,6 @@
 
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "TheaterConnectionString": "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=TheaterDatabase;"
+    "TheaterConnectionString": "Data Source=<SQL_SERVER>; Initial Catalog=<DATABASE_NAME>; User id=<USER_NAME>; Password=<PASSWORD>;"
   }
 }
