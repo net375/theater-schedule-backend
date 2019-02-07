@@ -32,21 +32,23 @@ namespace TheaterSchedule.DAL.Repositories
                      Duration = performance.Duration,
                      Description = performanceTr.Description,
 
-                     FirstName = (from creativeTeamMemberTr in db.CreativeTeamMemberTr
-                                  join creativeTeamMember in db.CreativeTeamMember on creativeTeamMemberTr.CreativeTeamMemberId
-                                      equals creativeTeamMember.CreativeTeamMemberId
-                                  join performanceCreativeTeamMember in db.PerformanceCreativeTeamMember on creativeTeamMember
-                                      .CreativeTeamMemberId equals performanceCreativeTeamMember.CreativeTeamMemberId
-                                  where ((performanceCreativeTeamMember.PerformanceId == id) && (language.LanguageId == creativeTeamMemberTr.LanguageId))
-                                  select creativeTeamMemberTr.FistName),
+                     TeamMember = (from ctm_tm in db.CreativeTeamMemberTr
+                                   join ctm in db.CreativeTeamMember on ctm_tm.CreativeTeamMemberId equals ctm.CreativeTeamMemberId
+                                   join pctm in db.PerformanceCreativeTeamMember on ctm.CreativeTeamMemberId equals pctm.CreativeTeamMemberId
+                                   join pctm_tr in db.PerformanceCreativeTeamMemberTr on pctm.PerformanceCreativeTeamMemberId equals pctm_tr.PerformanceCreativeTeamMemberId
+                                       into pctm_tr_join
+                                   from role in pctm_tr_join.DefaultIfEmpty()
+                                   where ((pctm.PerformanceId == id)
+                                          && (ctm_tm.LanguageId == language.LanguageId)
+                                          && (role.LanguageId == language.LanguageId))
+                                   select new TeamMember
+                                   {
+                                       Role = role.Role,
+                                       FirstName = ctm_tm.FistName,
+                                       LastName = ctm_tm.LastName,
+                                       id = pctm.PerformanceId,
 
-                     LastName = (from creativeTeamMemberTr in db.CreativeTeamMemberTr
-                                 join creativeTeamMember in db.CreativeTeamMember on creativeTeamMemberTr.CreativeTeamMemberId
-                                     equals creativeTeamMember.CreativeTeamMemberId
-                                 join performanceCreativeTeamMember in db.PerformanceCreativeTeamMember on creativeTeamMember
-                                     .CreativeTeamMemberId equals performanceCreativeTeamMember.CreativeTeamMemberId
-                                 where ((performanceCreativeTeamMember.PerformanceId == id) && (language.LanguageId == creativeTeamMemberTr.LanguageId))
-                                 select creativeTeamMemberTr.LastName),
+                                   }).ToList()
 
                  }).SingleOrDefault();
 
