@@ -1,4 +1,4 @@
-﻿using Entities.Models;
+﻿﻿using Entities.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -43,6 +43,9 @@ namespace TheaterSchedule
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<IPostersService, PostersService>();
+            services.AddScoped<IPerfomanceRepository, PerfomanceRepository>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsService>();
         }
 

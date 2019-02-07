@@ -38,7 +38,6 @@ namespace TheaterSchedule.DAL.Repositories
                 where ((!startDate.HasValue || schedule.Beginning >= startDate) && (!endDate.HasValue || schedule.Beginning <= endDate) && (language.LanguageCode == languageCode))
                 select new ScheduleDataModel
                 {
-                    ScheduleId = schedule.ScheduleId,
                     Beginning = schedule.Beginning,
                     MainImage = performance.MainImage,
                     Title = performanceTr.Title
