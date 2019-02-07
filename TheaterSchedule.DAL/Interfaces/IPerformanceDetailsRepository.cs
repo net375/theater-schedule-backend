@@ -5,8 +5,8 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DAL.Interfaces
 {
-    public interface IPerformanceRepository
+    public interface IPerformanceDetailsRepository
     {
-        PerformanceDataModel GetInformationAboutPerformanceScreen( string languageCode, int id );
+        PerformanceDetailsDataModel GetInformationAboutPerformanceScreen( string languageCode, int id );
     }
 }
