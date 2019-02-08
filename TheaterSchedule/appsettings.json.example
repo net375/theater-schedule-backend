@@ -8,7 +8,5 @@
   "AllowedHosts": "*",
   "ConnectionStrings": {
     "TheaterConnectionString": "Data Source=<SQL_SERVER>; Initial Catalog=<DATABASE_NAME>; User id=<USER_NAME>; Password=<PASSWORD>;"
-    // "Data Source=<SQL_SERVER>; Initial Catalog=<DATABASE_NAME>; User id=<USER_NAME>; Password=<PASSWORD>;"
-    // "Server=DESKTOP-MRJFJOT;Database=TheaterDatabase;Trusted_Connection=True;ConnectRetryCount=0"
   }
 }
