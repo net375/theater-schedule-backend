@@ -22,9 +22,9 @@ namespace TheaterSchedule.DAL.Repositories
             return db.Language.SingleOrDefault(l => l.LanguageId == id);
         }
 
-        public Language GetLanguageByName(string languageName)
+        public Language GetLanguageByName(string languageCode)
         {
-            return db.Language.SingleOrDefault(l => l.LanguageName == languageName);
+            return db.Language.SingleOrDefault(l => l.LanguageCode == languageCode);
         }
 
 
