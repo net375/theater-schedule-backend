@@ -21,14 +21,21 @@ namespace TheaterSchedule.BLL.Services
         }
 
         public IEnumerable<WatchlistDTO> GetWatchlist(
-            string languageCode, string phoneIdentifier )
+            string phoneId, string languageCode)
         {
             return new MapperConfiguration(
                     cfg => cfg.CreateMap<WatchlistDataModel, WatchlistDTO>() )
                 .CreateMapper()
-                .Map<IEnumerable<WatchlistDataModel>, List<WatchlistDTO>>(
+                .Map<IEnumerable<WatchlistDataModel>, IEnumerable<WatchlistDTO>>(
                     watchlistRepository.GetWatchlistByPhoneIdentifier(
-                        languageCode, phoneIdentifier ) );
+                        phoneId, languageCode ) );
+        }
+
+        public void SaveOrDeletePerformance( string phoneId, int scheduleId )
+        {
+
+
+            watchlistRepository.SaveOrDeletePerformance(phoneId, scheduleId);
         }
     }
 }

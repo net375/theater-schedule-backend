@@ -5,7 +5,7 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface IWatchlistService
     {
-        IEnumerable<WatchlistDTO> GetWatchlist(
-            string languageCode, string phoneIdentifier );
+        IEnumerable<WatchlistDTO> GetWatchlist(string phoneId, string languageCode );
+        void SaveOrDeletePerformance( string phoneId, int scheduleId );
     }
 }

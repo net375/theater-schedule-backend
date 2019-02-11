@@ -21,7 +21,7 @@ namespace TheaterSchedule.DAL.Repositories
         }
 
         public IEnumerable<WatchlistDataModel> GetWatchlistByPhoneIdentifier(
-            string languageCode, string phoneIdentifier )
+            string phoneId, string languageCode )
         {
             IEnumerable<WatchlistDataModel> resultWatchlist = null;
 
@@ -36,17 +36,22 @@ namespace TheaterSchedule.DAL.Repositories
                                   on performance.PerformanceId equals performanceTr.PerformanceId
                               join language in db.Language
                                   on performanceTr.LanguageId equals language.LanguageId
-                              where account.PhoneIdentifier == phoneIdentifier
+                              where account.PhoneIdentifier == phoneId
                                     && languageCode == language.LanguageCode
                               select new WatchlistDataModel()
                               {
-                                  PerformanceId = performance.PerformanceId,
+                                  ScheduleId = performance.PerformanceId,
                                   Beginning = schedule.Beginning,
                                   MainImage = performance.MainImage,
                                   Title = performanceTr.Title
                               };
 
-            return resultWatchlist;
+           return resultWatchlist;
+        }
+
+        public void SaveOrDeletePerformance( string phoneId, int scheduleId )
+        {
+            
         }
     }
 }

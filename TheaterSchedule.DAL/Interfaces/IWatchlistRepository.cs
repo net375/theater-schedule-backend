@@ -6,6 +6,7 @@ namespace TheaterSchedule.DAL.Interfaces
     public interface IWatchlistRepository
     {
         IEnumerable<WatchlistDataModel> GetWatchlistByPhoneIdentifier(
-            string languageCode, string phoneIdentifier );
+            string phoneId, string languageCode );
+        void SaveOrDeletePerformance( string phoneId, int scheduleId );
     }
 }
