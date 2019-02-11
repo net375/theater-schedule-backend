@@ -60,6 +60,7 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="TestData" />
+    <Folder Include="TestData\MainImages" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Account.sql" />
@@ -82,5 +83,37 @@
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TheaterDatabase.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestData\MainImages\Cat_resize.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\MainImages\doroga_resize.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\MainImages\kolobok_resize.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\MainImages\kotyk_pivnyk_resize.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\MainImages\Koza_resize.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\MainImages\lisovychok_resize.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\MainImages\pidkova_resize.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\MainImages\sadok_resize.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\MainImages\sny_resize.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\MainImages\Taras_resize.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
