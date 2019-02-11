@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System.IO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
+using TheaterSchedule.Logger;
+using TheaterSchedule.MiddlewareComponents;
 
 namespace TheaterSchedule
 {
@@ -42,11 +46,13 @@ namespace TheaterSchedule
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<IScheduleService, ScheduleService>();
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+                          
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,6 +63,8 @@ namespace TheaterSchedule
                 app.UseHsts();
             }
 
+            loggerFactory.AddFile("Logs/myapp-{Date}.txt");
+            app.UseToken();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

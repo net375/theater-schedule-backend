@@ -5,6 +5,8 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
+using System.Net;
+using TheaterSchedule.Infrastructure;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -34,37 +36,46 @@ namespace TheaterSchedule.BLL.Services
             Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
-                settingsRequest = new SettingsDTO() { LanguageCode = settings.Language.LanguageCode};
-            }         
+                settingsRequest = new SettingsDTO() { LanguageCode = settings.Language.LanguageCode };
+            }
             return settingsRequest;
         }
 
         public void StoreSettings(string phoneId, SettingsDTO settingsRequest)
         {
-            Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
-            if (language == null)
+            try
             {
-                throw new ArgumentException("Invalid language");
-            }
-
-            Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
-            if (settings != null)
-            {
-                settings.Language = language;
-            }
-            else
-            {
-                Settings newSettings = new Settings { Language = language };
-                settingsRepository.Add(newSettings);
-
-                accountRepository.Add(new Account
+                Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
+                if (language == null)
                 {
-                    PhoneIdentifier = phoneId,
-                    Settings = newSettings
-                });
+                    throw new HttpStatusCodeException(HttpStatusCode.NotFound, "Invalid language");
+                }
+
+
+                Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
+                if (settings != null)
+                {
+                    settings.Language = language;
+                }
+                else
+                {
+                    Settings newSettings = new Settings { Language = language };
+                    settingsRepository.Add(newSettings);
+
+                    accountRepository.Add(new Account
+                    {
+                        PhoneIdentifier = phoneId,
+                        Settings = newSettings
+                    });
+                }
+
+                theaterScheduleUnitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                throw  ex;
             }
 
-            theaterScheduleUnitOfWork.Save();
         }
     }
 }

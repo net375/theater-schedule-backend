@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace TheaterSchedule.Controllers
 {
@@ -7,10 +8,17 @@ namespace TheaterSchedule.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+        readonly ILogger<TestController> _log;
+
+        public TestController(ILogger<TestController> log)
+        {
+            _log = log;
+        }
         // GET api/test
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            _log.LogInformation("Hello, world!");
             return new string[] { "testValue1", "testValue2", "testValue2" };
         }
 
