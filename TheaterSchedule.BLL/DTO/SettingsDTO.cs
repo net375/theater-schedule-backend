@@ -6,6 +6,6 @@ namespace TheaterSchedule.BLL.DTO
 {
     public class SettingsDTO
     {
-        public string LanguageName { get; set; }
+        public string LanguageCode { get; set; }
     }
 }

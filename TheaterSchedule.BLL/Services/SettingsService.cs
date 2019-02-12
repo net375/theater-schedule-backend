@@ -34,14 +34,14 @@ namespace TheaterSchedule.BLL.Services
             Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
-                settingsRequest = new SettingsDTO() { LanguageName = settings.Language.LanguageName};
+                settingsRequest = new SettingsDTO() { LanguageCode = settings.Language.LanguageCode};
             }         
             return settingsRequest;
         }
 
         public void StoreSettings(string phoneId, SettingsDTO settingsRequest)
         {
-            Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageName);
+            Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
             if (language == null)
             {
                 throw new ArgumentException("Invalid language");

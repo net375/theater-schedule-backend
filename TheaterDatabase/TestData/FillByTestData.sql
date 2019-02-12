@@ -53,6 +53,7 @@ DELETE dbo.HashTag_TR
 DELETE dbo.HashTag_Performance
 DELETE dbo.GalleryImage
 DELETE dbo.CreativeTeamMember_TR
+DELETE dbo.Message
 DELETE dbo.Account
 DELETE dbo.Settings
 DELETE dbo.Schedule
@@ -62,8 +63,10 @@ DELETE dbo.Language
 DELETE dbo.HashTag
 DELETE dbo.CreativeTeamMember'
 
+
 DECLARE @CreativeTeamMember nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.CreativeTeamMember ON
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (1)
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (2)
@@ -79,6 +82,7 @@ SET IDENTITY_INSERT dbo.CreativeTeamMember OFF'
 
 DECLARE @HashTag nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.HashTag ON
 INSERT dbo.HashTag(HashTagId) VALUES (1)
 INSERT dbo.HashTag(HashTagId) VALUES (2)
@@ -95,6 +99,7 @@ SET IDENTITY_INSERT dbo.HashTag OFF'
 
 DECLARE @Language nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Language ON
 
 INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (1, N' + '''English'''+', ' + '''en'''+')
@@ -103,8 +108,11 @@ INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (2, N' + '''У
 SET IDENTITY_INSERT dbo.Language OFF'
 
 
+
+
 DECLARE @Performance nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Performance ON
 
 INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (1, (SELECT * FROM OPENROWSET(BULK N' + '''$(FullScriptDir)\TheaterDatabase\TestData\MainImages\lisovychok_resize.jpg'''+', SINGLE_BLOB) image), 83, 65, 408, 8)
@@ -122,6 +130,7 @@ SET IDENTITY_INSERT dbo.Performance OFF'
 
 DECLARE @PerformanceCreativeTeamMember nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember ON
 
 INSERT dbo.PerformanceCreativeTeamMember(CreativeTeamMemberId, PerformanceId, PerformanceCreativeTeamMemberId) VALUES (10, 10, 1)
@@ -139,6 +148,7 @@ SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember OFF'
 
 DECLARE @Schedule nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Schedule ON
 INSERT dbo.Schedule(ScheduleId, Beginning, PerformanceId) VALUES (1, '+ '''2019-02-13 14:13:15.880'''+', 4)
 INSERT dbo.Schedule(ScheduleId, Beginning, PerformanceId) VALUES (2, '+ '''2019-03-26 11:54:04.750'''+', 3)
@@ -154,6 +164,7 @@ SET IDENTITY_INSERT dbo.Schedule OFF'
 
 DECLARE @Settings nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Settings ON
 INSERT dbo.Settings(SettingsId, LanguageId) VALUES (1, 2)
 INSERT dbo.Settings(SettingsId, LanguageId) VALUES (2, 1)
@@ -185,8 +196,25 @@ INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, P
 
 SET IDENTITY_INSERT dbo.Account OFF'
 
+DECLARE @Message nvarchar(max) =
+'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
+SET IDENTITY_INSERT dbo.Message ON
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (1,  N'+ '''Mystery of the forest'''+',        N'+ '''The best performance i have ever seen!'''+',	N'+ '''Thank you for your message, it is important for us :)'''+',3)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (2,  N'+ '''The road to Bethlehem'''+',        N'+ '''Super!'''+', N'+ '''Thank you for your message, it is important for us :)'''+',8)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (3,  N'+ '''Тарас'''+',                        N'+ '''Дуже цікава та пізнавальна вистава)'''+', N'+ '''Дякуємо вам, надіюсь, ви гарно провели час)'''+',10)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (4,  N'+ '''Cвяткові сни'''+',                 N'+ '''Дуже цікава та пізнавальна вистава)'''+', N'+ '''Дякуємо вам, надіюсь, ви гарно провели час)'''+',5)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (5,  N'+ '''Cedar seedlings'''+',              N'+ '''The best performance i have ever seen!'''+',	N'+ '''Thank you, we do best for you)'''+', 8)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (6,  N'+ '''Goat-Dereza'''+',                  N'+ '''Amazing performance, I will come here again!'''+', N'+ '''Thank you, we do best for you)'''+',6)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (7,  N'+ '''Підкова на щастя'''+',             N'+ '''Дякую за гарний проведений час, вистава була чудовою!'''+' ,N'+ '''Дякуємо за відгук, ми завжди раді бачити задоволених клієнтів)'''+',9)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (8,  N'+ '''Наш веселий колобок'''+',          N'+ '''Дякую за гарний проведений час, вистава була чудовою!'''+', N'+ '''Дякуємо за відгук, ми завжди раді бачити задоволених клієнтів)'''+',7)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (9,  N'+ '''Chanterelle, Cat and Cockerel'''+',N'+ '''Super!'''+', N'+ '''Thank you for your message)'''+',9)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (10, N'+ '''Кіт у чоботях '''+',               N'+ '''The best performance i have ever seen!'''+',	N'+ '''Thank you for your message, it is important for us :)'''+',7)
+SET IDENTITY_INSERT dbo.Message OFF'
+
 DECLARE @CreativeTeamMember_TR nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.CreativeTeamMember_TR ON
 
 INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (1, 1, 1, N'+'''Conrad'''+', N'+'''Baumann'''+')
@@ -204,6 +232,7 @@ SET IDENTITY_INSERT dbo.CreativeTeamMember_TR OFF'
 
 DECLARE @GalleryImage nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.GalleryImage ON
 
 INSERT dbo.GalleryImage(GalleryImageId, Image, PerformanceId) VALUES (1, 0x06081A0B07C55EB32309648F63F42A8EF75CEA460190A0F3A81FD403381004ADFD6606866190450B1E599E032EC265, 3)
@@ -221,6 +250,7 @@ SET IDENTITY_INSERT dbo.GalleryImage OFF'
 
 DECLARE @HashTag_Performance nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.HashTag_Performance ON
 
 INSERT dbo.HashTag_Performance(HashTagPerformanceID, PerformanceId, HashTagId) VALUES (1, 6, 3)
@@ -256,6 +286,7 @@ SET IDENTITY_INSERT dbo.HashTag_TR OFF'
 
 DECLARE @Performance_TR nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Performance_TR ON
 
 INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (1,  N'+ '''Mystery of the forest'''+', 1,         N'+ '''The charming forest of foresters is very similar to man. There are also good and evil creatures among them. One thing is cool to freeze the baby and the other desperately saves her. Will a little girl lost in the winter forest find help to escape the bad weather conditions? Or just learn to distinguish the truth from honesty and hypocrisy and flattery? Find out what is really important and necessary in this life with the Girl, which only spoils and amuses. ''' + ', 1)
@@ -273,6 +304,7 @@ SET IDENTITY_INSERT dbo.Performance_TR OFF'
 
 DECLARE @PerformanceCreativeTeamMember_TR nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR ON
 
 INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (1,  N'+'''Художник'''+', 2, 1)
@@ -290,6 +322,7 @@ SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR OFF'
 
 DECLARE @Watchlist nvarchar(max) =
 'USE ' + @Database + '
+SET QUOTED_IDENTIFIER ON 
 INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (1, 10)
 INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (3, 5)
 INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (6, 1)
@@ -311,6 +344,7 @@ EXECUTE(@PerformanceCreativeTeamMember);
 EXECUTE(@Schedule);
 EXECUTE(@Settings);
 EXECUTE(@Account);
+EXECUTE(@Message);
 EXECUTE(@CreativeTeamMember_TR);
 EXECUTE(@GalleryImage);
 EXECUTE(@HashTag_Performance);

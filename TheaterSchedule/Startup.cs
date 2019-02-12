@@ -31,22 +31,27 @@ namespace TheaterSchedule
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            }); 
 
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);
+            //repositories
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<IPerfomanceRepository, PerfomanceRepository>();
             services.AddScoped<IPerformanceDetailsRepository, PerformanceDetailsRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
+            //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
+            //services
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IPostersService, PostersService>();
-            services.AddScoped<IPerfomanceRepository, PerfomanceRepository>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsService>();
+            services.AddScoped<IMessageService, MessageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
