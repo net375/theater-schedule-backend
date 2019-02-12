@@ -47,6 +47,9 @@ namespace TheaterSchedule
             services.AddScoped<IPerfomanceRepository, PerfomanceRepository>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsService>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
