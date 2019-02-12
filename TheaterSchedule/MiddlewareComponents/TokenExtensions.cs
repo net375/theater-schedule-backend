@@ -12,6 +12,5 @@ namespace TheaterSchedule.MiddlewareComponents
         {
             return builder.UseMiddleware<CustomExceptionMiddleware>();
         }
-
     }
 }

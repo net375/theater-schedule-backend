@@ -1,4 +1,4 @@
-﻿USE TheaterDatabase
+USE TheaterDatabase
 go
 
 --
@@ -46,9 +46,6 @@ SET IDENTITY_INSERT dbo.Language ON
 GO
 INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (1, N'English', 'en')
 INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (2, N'Українська', 'uk')
-INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (3, N'Polski', 'pl')
-INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (4, N'Español', 'es')
-INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (5, N'Русский', 'ru')
 GO
 SET IDENTITY_INSERT dbo.Language OFF
 GO
@@ -115,15 +112,15 @@ GO
 --
 SET IDENTITY_INSERT dbo.Settings ON
 GO
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (1, 5)
+INSERT dbo.Settings(SettingsId, LanguageId) VALUES (1, 2)
 INSERT dbo.Settings(SettingsId, LanguageId) VALUES (2, 1)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (3, 4)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (4, 3)
+INSERT dbo.Settings(SettingsId, LanguageId) VALUES (3, 1)
+INSERT dbo.Settings(SettingsId, LanguageId) VALUES (4, 2)
 INSERT dbo.Settings(SettingsId, LanguageId) VALUES (5, 1)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (6, 5)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (7, 3)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (8, 4)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (9, 3)
+INSERT dbo.Settings(SettingsId, LanguageId) VALUES (6, 2)
+INSERT dbo.Settings(SettingsId, LanguageId) VALUES (7, 2)
+INSERT dbo.Settings(SettingsId, LanguageId) VALUES (8, 1)
+INSERT dbo.Settings(SettingsId, LanguageId) VALUES (9, 1)
 INSERT dbo.Settings(SettingsId, LanguageId) VALUES (10, 2)
 GO
 SET IDENTITY_INSERT dbo.Settings OFF
@@ -153,16 +150,16 @@ GO
 --
 SET IDENTITY_INSERT dbo.CreativeTeamMember_TR ON
 GO
-INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (1, 4, 3, N'Conrad', N'Baumann')
-INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (2, 5, 3, N'Михаил', N'Николаев')
-INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (3, 1, 8, N'Micheal', N'Neeley')
-INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (4, 3, 2, N'Adam', N'Reyes')
-INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (5, 4, 10, N'Kittie', N'Mathews')
-INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (6, 4, 6, N'Stefani', N'Keenan')
-INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (7, 3, 10, N'Madelene', N'Neely')
-INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (8, 4, 8, N'Ramiro', N'Galindo')
+INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (1, 1, 1, N'Conrad', N'Baumann')
+INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (2, 2, 2, N'Михайло', N'Ніколаєв')
+INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (3, 1, 3, N'Micheal', N'Neeley')
+INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (4, 2, 4, N'Василь', N'Стадник')
+INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (5, 2, 5, N'Микола', N'Старицький')
+INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (6, 1, 6, N'Stefani', N'Keenan')
+INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (7, 1, 7, N'Madelene', N'Neely')
+INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (8, 2, 8, N'Олег', N'Лисович')
 INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (9, 2, 9, N'Каріна', N'Чепурна')
-INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (10, 5, 7, N'Сергей', N'Ковалев')
+INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (10, 2, 10, N'Сергій', N'Ковальов')
 GO
 SET IDENTITY_INSERT dbo.CreativeTeamMember_TR OFF
 GO
@@ -210,16 +207,16 @@ GO
 --
 SET IDENTITY_INSERT dbo.HashTag_TR ON
 GO
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (1, N'#do oglądania rodzin', 3, 10)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (1, N'#for family viewing', 1, 10)
 INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (2, N'#підліткова вистава', 2, 10)
 INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (3, N'#for family viewing', 1, 1)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (4, N'#juego adolescente', 4, 8)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (5, N'#nastoletnia gra', 3, 5)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (6, N'#pokaz kognitywny', 3, 5)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (7, N'#para ver en familia', 4, 7)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (8, N'#для семейного просмотра', 5, 5)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (9, N'#для сімейного перегляду', 2, 9)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (10, N'#teenage play', 1, 4)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (4, N'#підліткова вистава', 2, 8)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (5, N'#for family viewing', 1, 5)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (6, N'#підліткова вистава', 2, 5)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (7, N'#підліткова вистава', 2, 7)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (8, N'#for family viewing', 1, 5)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (9, N'#підліткова вистава', 2, 9)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (10, N'#підліткова вистава', 2, 4)
 GO
 SET IDENTITY_INSERT dbo.HashTag_TR OFF
 GO
@@ -229,16 +226,16 @@ GO
 --
 SET IDENTITY_INSERT dbo.Performance_TR ON
 GO
-INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (1, N'Tajemnica lasu', 3, N'Urokliwy las leśników jest bardzo podobny do człowieka. Są wśród nich także dobre i złe stworzenia. Jedno jest fajne, aby zamrozić dziecko, a drugie rozpaczliwie ratuje ją. Czy mała dziewczynka zagubiona w zimowym lesie znajdzie pomoc, by uciec przed złymi warunkami pogodowymi? Lub po prostu nauczyć się odróżniać prawdę od szczerości od hipokryzji i pochlebstw? Dowiedz się z Dziewczyną, co jest naprawdę ważne i konieczne w tym życiu, a co tylko psuje i bawi.', 4)
-INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (2, N'Droga do Betlejem', 3, N'Sztuka "Droga do Betlejem" to więcej niż opowieść o narodzinach Jezusa. Los osła, który nosi małego chłopca na rowerze, to opowieść o tym, jak zostać człowiekiem. Mały osioł szuka Boga i marzy o zostaniu gwiazdą. Czy zrozumie, jakie jest jego powołanie? Odpowiedź na to pytanie może być przeszukiwana przez całą rodzinę w spektaklu "Droga do Betlejem".', 9)
-INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (3, N'Тарас', 5, N'По одноименному произведению Б. Стельмаха. Предлагаем вашему вниманию очень контрастный и символический спектакль "Тарас". Ребенок, который не имел и половины возможностей современных людей продемонстрировала своим примером, что значит борьба. Это действительно история успеха мальчика без которого не было бы Украины. Черное и белое в спектакле подчеркивает уникальность личности Тараса Шевченко.', 4)
-INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (4, N'Праздничные сны', 5, N'От Романа до Иордана. Для семейного просмотра - от 3 до 103 лет. Ожидаемая ночь для всех детей вот-вот наступит! Праздничные и его сестренка Звонка в предвкушении подарков и других праздничных приятностей. Наконец устроившись в своих кроватях, дети вдруг замечают яркий луч света и немедленно бегут за ним. За несколько мгновений Святко и Звонка оказываются в сказочном мареве, где обоих ждут удивительные приключения и где обоим придется проявить мудрость, отвагу и любовь. Взамен дети получают волшебные подарки, которые останутся с ними навсегда. Спектакль наполнен этническими символами и видениями, колядками и прекрасным праздничным настроением.', 8)
-INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (5, N'Sadzonki cedru', 3, N'Spektakl "The Cherry Seducer" jest wizualnym świętem duszy. Wdycha wiosną i przyciąga jej żywą scenografię, która pogłębia światopogląd Tarasa Szewczenki. Energia poezji wypełnia spektakl głębokim znaczeniem, które staje się jasne dla wszystkich. Będziesz zaskoczony animacją piasku, która jest filigranowa połączona z niezwykłym muzycznym designem. Ten spektakl nie pozostanie obojętny dla tych, którzy doceniają nowe oblicza na drodze do zrozumienia twórczości T. Szewczenki.', 3)
-INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (6, N'Goat-Dereza', 1, N'Once, one very cunning Goat got into one very good family, where she was terribly loved by all. But most of all cares about her master. And it would have been nice if Goat was not such a "Dereza"! Despite the love of the family, Goza has been tricked, deceived and behaved very nicely with their masters. Do you know what happens with dishonest kits? This is a fairy tale telling you about it.', 10)
-INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (7, N'Fortuna de miel', 4, N'¡Qué difícil es superar tu pereza! Cuando un pequeño Toro no quiere trabajar, está listo para todo para que no lo ocupe. Y, una vez, huyó del abuelo con Babu al bosque. ¡Pero una libertad tan atractiva no era tan fácil! ¿Este difícil viaje enseñará a nuestro héroe a amar el trabajo y su hogar?', 4)
-INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (8, N'Наш веселий колобок', 2, N'Кожен знає стару-добру казку про Колобка та його подорож лісом. А що як цього разу Колобок знайде собі друга, який допоможе не потрапити в халепу? Тоді всі загрози, що спіткають маленьких героїв стануть цікавими пригодами. Приєднуйтесь до нашого веселого Колобка, познайомтесь з його новим другом та проведіть свій час в казковому лісі дуже весело та цікаво!', 6)
-INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (9, N'Chanterelle, gato y gallo', 4, N'Vivían un gato y una polla para sí mismos. Juntos lograron y cantaron canciones. Pero una vez un astuto zorro robó un gallo y un valiente gatito tuvo que salvarlo. Sin embargo, esta maldita aventura solo favoreció a la imprudente cucaracha: se volvió valiente y prometió obedecer a su hermano. Recomendamos este espectáculo para pequeños espectadores.', 2)
-INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (10, N'Кіт у чоботях', 2, N'Вистава за казкою видатного французького письменника Шарля Перро “Кіт у Чоботях”. Лялькова вистава в стилі “бароко” розповідає про винахідливого Кота, справжню дружбу та про те, що немає недосяжних цілей, якщо є розум, наполегливість та віра в себе. Це музичне, динамічне, веселе дійство не залишить байдужим маленьких глядачів.', 6)
+INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (1, N'Mystery of the forest', 1, N'The charming forest of foresters is very similar to man. There are also good and evil creatures among them. One thing is cool to freeze the baby and the other desperately saves her. Will a little girl lost in the winter forest find help to escape the bad weather conditions? Or just learn to distinguish the truth from honesty and hypocrisy and flattery? Find out what is really important and necessary in this life with the Girl, which only spoils and amuses.', 1)
+INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (2, N'The road to Bethlehem', 1, N'The play "The Way to Bethlehem" is more than a story about the birth of Jesus. The fate of a donkey who wears a small boy on a bicycle is a story about how to become a human. The little donkey is looking for God and dreams of becoming a star. Will he understand his calling? The answer to this question can be searched by the whole family in the play "The Way to Bethlehem".', 2)
+INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (3, N'Тарас', 2, N'За однойменним твором Б. Стельмаха. Пропонуємо вашій увазі дуже контрастний і символічний спектакль "Тарас". Дитина, яка не мала і половини можливостей сучасних людей продемонструвала своїм прикладом, що означає боротьба. Це дійсно історія успіху хлопчика без якого не було б України. Чорне і біле в спектаклі підкреслює унікальність особистості Тараса Шевченка.', 3)
+INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (4, N'Cвяткові сни', 2, N'Від Романа до Йордана. Для сімейного перегляду - від 3 до 103 років. Очікувана ніч для всіх дітей ось-ось настане! Святкові і його сестричка Дзвінка в передчутті подарунків і інших святкових приємностей. Нарешті влаштувавшись в своїх ліжках, діти раптом помічають яскравий промінь світла і негайно біжать за ним. За кілька миттєвостей Святко і Дзвінка виявляються в казковому мареві, де обох чекають дивовижні пригоди і де обом доведеться проявити мудрість, відвагу і любов. Натомість діти отримують чарівні подарунки, які залишаться з ними назавжди. Вистава наповнена етнічними символами і баченнями, колядками і прекрасним святковим настроєм.', 4)
+INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (5, N'Cedar seedlings', 1, N'The performance "The Cherry Seducer" is a visual celebration of the soul. Breathes in the spring and attracted by her vivid set design, which deepens the worldview of Taras Shevchenko. The energy of poetry fills the show with deep meaning, which becomes clear to everyone. You will be surprised by the animation of sand, which is delicate and combined with an unusual musical design. This spectacle will not remain indifferent to those who appreciate new faces on the way to understanding the works of T. Shevchenko.', 5)
+INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (6, N'Goat-Dereza', 1, N'Once, one very cunning Goat got into one very good family, where she was terribly loved by all. But most of all cares about her master. And it would have been nice if Goat was not such a "Dereza"! Despite the love of the family, Goza has been tricked, deceived and behaved very nicely with their masters. Do you know what happens with dishonest kits? This is a fairy tale telling you about it.', 6)
+INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (7, N'Підкова на щастя', 2, N'Як важко побороти свою лінь! Коли маленький Віслючок не хоче працювати – він ладен на все, щоб його не займали. І, одного разу, таки тікає від Діда з Бабою до лісу. Та така приваблива свобода виявилась не такою вже й простою! Чи зможе ця важка подорож навчити нашого героя любити роботу та свою домівку?', 7)
+INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (8, N'Наш веселий колобок', 2, N'Кожен знає стару-добру казку про Колобка та його подорож лісом. А що як цього разу Колобок знайде собі друга, який допоможе не потрапити в халепу? Тоді всі загрози, що спіткають маленьких героїв стануть цікавими пригодами. Приєднуйтесь до нашого веселого Колобка, познайомтесь з його новим другом та проведіть свій час в казковому лісі дуже весело та цікаво!', 8)
+INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (9, N'Chanterelle, Cat and Cockerel', 1, N'Cat and Cockerel lived for themselves. Together they managed and sing songs. But once the cunning Fox stole the Cockerel, and the brave Cat had to save him. However, such an accursed adventure went only in favor of the reckless Hive - he became brave and in all promised to obey his brother. We recommend this show for small viewers.', 9)
+INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (10, N'Кіт у чоботях', 2, N'Вистава за казкою видатного французького письменника Шарля Перро “Кіт у Чоботях”. Лялькова вистава в стилі “бароко” розповідає про винахідливого Кота, справжню дружбу та про те, що немає недосяжних цілей, якщо є розум, наполегливість та віра в себе. Це музичне, динамічне, веселе дійство не залишить байдужим маленьких глядачів.', 10)
 GO
 SET IDENTITY_INSERT dbo.Performance_TR OFF
 GO
@@ -248,16 +245,16 @@ GO
 --
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR ON
 GO
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (1, N'Художник', 5, 2)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (2, N'Композитор', 5, 4)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (3, N'Coreógrafo', 4, 5)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (4, N'Producer', 1, 2)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (5, N'Kompozytor', 3, 6)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (6, N'Художник', 5, 7)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (7, N'Dirigido por', 4, 9)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (8, N'Композитор', 2, 7)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (9, N'Хореограф', 5, 8)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (10, N'Kompozytor', 3, 2)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (1, N'Художник', 2, 1)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (2, N'Композитор', 2, 2)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (3, N'Choreographer', 1, 3)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (4, N'Producer', 1, 4)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (5, N'Composer', 1, 5)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (6, N'Художник', 2, 6)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (7, N'Хореограф', 2, 7)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (8, N'Композитор', 2, 8)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (9, N'Choreographer', 1, 9)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (10, N'Composer', 1, 10)
 GO
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR OFF
 GO

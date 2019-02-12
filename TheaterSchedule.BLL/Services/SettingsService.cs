@@ -12,7 +12,6 @@ namespace TheaterSchedule.BLL.Services
 {
     public class SettingsService : ISettingsService
     {
-
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IScheduleRepository scheduleRepository;
         private ISettingsRepository settingsRepository;
@@ -70,7 +69,6 @@ namespace TheaterSchedule.BLL.Services
                     Settings = newSettings
                 });
             }
-
             theaterScheduleUnitOfWork.Save();
         }
     }
