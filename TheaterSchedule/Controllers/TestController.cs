@@ -7,18 +7,12 @@ namespace TheaterSchedule.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class TestController : ControllerBase
-    {
-        readonly ILogger<TestController> _log;
-
-        public TestController(ILogger<TestController> log)
-        {
-            _log = log;
-        }
+    {       
+        
         // GET api/test
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
-        {
-            _log.LogInformation("Hellofdsfd, world!");
+        {          
             return new string[] { "testValue1", "testValue2", "testValue2" };
         }
 

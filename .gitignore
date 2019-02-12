@@ -5,6 +5,9 @@
 # string connection to database
 TheaterSchedule/appsettings.json
 
+#UpdateModels 
+UpdateModels.bat
+
 # User-specific files
 *.suo
 *.user
