@@ -1,7 +1,6 @@
-:connect $(server) 
-
 DECLARE @ConnectionStrings VARCHAR(max)
-DECLARE @TheaterConnectionString VARCHAR(max) 
+DECLARE @TheaterConnectionString VARCHAR(max)
+DECLARE @Server VARCHAR(100); 
 DECLARE @Database VARCHAR(100);
 DECLARE @value VARCHAR(100); 
 DECLARE @indexstart INT; 
@@ -27,6 +26,15 @@ SET @TheaterConnectionString =	(	SELECT *
 			PRINT 'JSON is failed';
         END
 
+
+SET @value = ( SELECT value FROM STRING_SPLIT(@TheaterConnectionString, ';')
+WHERE value LIKE 'Data Source%');
+
+SET @indexstart = (SELECT CHARINDEX('=', @value));  
+SET @indexend = (SELECT LEN(@value));
+SET @Server = SUBSTRING(@value, @indexstart + 1, @indexend);
+SELECT @Server;
+
 SET @value = ( SELECT value FROM STRING_SPLIT(@TheaterConnectionString, ';')
 WHERE value LIKE 'Initial catalog%');
 
@@ -38,26 +46,28 @@ SELECT @Database;
 DECLARE @Clear nvarchar(max) =
 'USE ' + @Database + '
 SET QUOTED_IDENTIFIER ON 
-DELETE dbo.Watchlist
-DELETE dbo.PerformanceCreativeTeamMember_TR
-DELETE dbo.Performance_TR
-DELETE dbo.HashTag_TR
-DELETE dbo.HashTag_Performance
-DELETE dbo.GalleryImage
-DELETE dbo.CreativeTeamMember_TR
-DELETE dbo.Message
-DELETE dbo.Account
-DELETE dbo.Settings
-DELETE dbo.Schedule
-DELETE dbo.PerformanceCreativeTeamMember
-DELETE dbo.Performance
-DELETE dbo.Language
-DELETE dbo.HashTag
-DELETE dbo.CreativeTeamMember'
+DELETE ['+@Server+'].'+ @Database +'.dbo.Watchlist
+DELETE ['+@Server+'].'+ @Database +'.dbo.PerformanceCreativeTeamMember_TR
+DELETE ['+@Server+'].'+ @Database +'.dbo.Performance_TR
+DELETE ['+@Server+'].'+ @Database +'.dbo.HashTag_TR
+DELETE ['+@Server+'].'+ @Database +'.dbo.HashTag_Performance
+DELETE ['+@Server+'].'+ @Database +'.dbo.GalleryImage
+DELETE ['+@Server+'].'+ @Database +'.dbo.CreativeTeamMember_TR
+DELETE ['+@Server+'].'+ @Database +'.dbo.Message
+DELETE ['+@Server+'].'+ @Database +'.dbo.Account
+DELETE ['+@Server+'].'+ @Database +'.dbo.Settings
+DELETE ['+@Server+'].'+ @Database +'.dbo.Schedule
+DELETE ['+@Server+'].'+ @Database +'.dbo.PerformanceCreativeTeamMember
+DELETE ['+@Server+'].'+ @Database +'.dbo.Performance
+DELETE ['+@Server+'].'+ @Database +'.dbo.Language
+DELETE ['+@Server+'].'+ @Database +'.dbo.HashTag
+DELETE ['+@Server+'].'+ @Database +'.dbo.CreativeTeamMember'
 
 
 DECLARE @CreativeTeamMember nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.CreativeTeamMember ON
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (1)
@@ -70,10 +80,13 @@ INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (7)
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (8)
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (9)
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (10)
-SET IDENTITY_INSERT dbo.CreativeTeamMember OFF'
+SET IDENTITY_INSERT dbo.CreativeTeamMember OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @HashTag nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.HashTag ON
 INSERT dbo.HashTag(HashTagId) VALUES (1)
@@ -87,23 +100,26 @@ INSERT dbo.HashTag(HashTagId) VALUES (8)
 INSERT dbo.HashTag(HashTagId) VALUES (9)
 INSERT dbo.HashTag(HashTagId) VALUES (10)
 
-SET IDENTITY_INSERT dbo.HashTag OFF'
+SET IDENTITY_INSERT dbo.HashTag OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @Language nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Language ON
 
 INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (1, N' + '''English'''+', ' + '''en'''+')
 INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (2, N' + '''Українська'''+', ' + '''uk'''+')
 
-SET IDENTITY_INSERT dbo.Language OFF'
-
-
-
+SET IDENTITY_INSERT dbo.Language OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @Performance nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Performance ON
 
@@ -118,10 +134,13 @@ INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, M
 INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (9, (SELECT * FROM OPENROWSET(BULK N'+ '''$(FullScriptDir)\TheaterDatabase\TestData\MainImages\kotyk_pivnyk_resize.jpg'''+', SINGLE_BLOB) image), 126, 56, 462, 9)
 INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (10, (SELECT * FROM OPENROWSET(BULK N' + '''$(FullScriptDir)\TheaterDatabase\TestData\MainImages\Cat_resize.jpg'''+', SINGLE_BLOB) image), 159, 54, 340, 3)
 
-SET IDENTITY_INSERT dbo.Performance OFF'
+SET IDENTITY_INSERT dbo.Performance OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @PerformanceCreativeTeamMember nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember ON
 
@@ -136,10 +155,13 @@ INSERT dbo.PerformanceCreativeTeamMember(CreativeTeamMemberId, PerformanceId, Pe
 INSERT dbo.PerformanceCreativeTeamMember(CreativeTeamMemberId, PerformanceId, PerformanceCreativeTeamMemberId) VALUES (4, 4, 9)
 INSERT dbo.PerformanceCreativeTeamMember(CreativeTeamMemberId, PerformanceId, PerformanceCreativeTeamMemberId) VALUES (9, 9, 10)
 
-SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember OFF'
+SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @Schedule nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Schedule ON
 INSERT dbo.Schedule(ScheduleId, Beginning, PerformanceId) VALUES (1, '+ '''2019-02-13 14:13:15.880'''+', 4)
@@ -152,10 +174,13 @@ INSERT dbo.Schedule(ScheduleId, Beginning, PerformanceId) VALUES (7, '+ '''2019-
 INSERT dbo.Schedule(ScheduleId, Beginning, PerformanceId) VALUES (8, '+ '''2019-03-15 14:53:03.480'''+', 8)
 INSERT dbo.Schedule(ScheduleId, Beginning, PerformanceId) VALUES (9, '+ '''2019-03-28 23:10:31.780'''+', 5)
 INSERT dbo.Schedule(ScheduleId, Beginning, PerformanceId) VALUES (10,' + '''2019-03-04 11:07:00.680'''+', 2)
-SET IDENTITY_INSERT dbo.Schedule OFF'
+SET IDENTITY_INSERT dbo.Schedule OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @Settings nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Settings ON
 INSERT dbo.Settings(SettingsId, LanguageId) VALUES (1, 2)
@@ -168,10 +193,13 @@ INSERT dbo.Settings(SettingsId, LanguageId) VALUES (7, 2)
 INSERT dbo.Settings(SettingsId, LanguageId) VALUES (8, 1)
 INSERT dbo.Settings(SettingsId, LanguageId) VALUES (9, 1)
 INSERT dbo.Settings(SettingsId, LanguageId) VALUES (10, 2)
-SET IDENTITY_INSERT dbo.Settings OFF'
+SET IDENTITY_INSERT dbo.Settings OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @Account nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Account ON
 
@@ -186,10 +214,13 @@ INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, P
 INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (5, N'+ '''UK311H1D5I0530I'''+',									   N'+ '''FelipaAbernathy@nowhere.com'''+', N'+ '''Boyd'''+',      N'+ '''Skaggs'''+', NULL, N'+ '''(157) 934-3116 '''+',9)
 INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (1, N'+ '''83HED0WQMG0RNZ23CLW0U21'''+',							   N'+ '''Adler@example.com'''+',           N'+ '''Alonzo'''+',    N'+ '''Peacock'''+', '+ '''1944-10-28'''+', N'+ '''(465) 454-8347 '''+'  ,10)
 
-SET IDENTITY_INSERT dbo.Account OFF'
+SET IDENTITY_INSERT dbo.Account OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @Message nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Message ON
 INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (1,  N'+ '''Mystery of the forest'''+',        N'+ '''The best performance i have ever seen!'''+',	N'+ '''Thank you for your message, it is important for us :)'''+',3)
@@ -202,10 +233,13 @@ INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES
 INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (8,  N'+ '''Наш веселий колобок'''+',          N'+ '''Дякую за гарний проведений час, вистава була чудовою!'''+', N'+ '''Дякуємо за відгук, ми завжди раді бачити задоволених клієнтів)'''+',7)
 INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (9,  N'+ '''Chanterelle, Cat and Cockerel'''+',N'+ '''Super!'''+', N'+ '''Thank you for your message)'''+',9)
 INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (10, N'+ '''Кіт у чоботях '''+',               N'+ '''The best performance i have ever seen!'''+',	N'+ '''Thank you for your message, it is important for us :)'''+',7)
-SET IDENTITY_INSERT dbo.Message OFF'
+SET IDENTITY_INSERT dbo.Message OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @CreativeTeamMember_TR nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.CreativeTeamMember_TR ON
 
@@ -220,10 +254,13 @@ INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTe
 INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (9, 2, 9, N'+'''Каріна'''+', N'+'''Чепурна'''+')
 INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (10, 2, 10, N'+'''Сергій'''+', N'+'''Ковальов'''+')
 
-SET IDENTITY_INSERT dbo.CreativeTeamMember_TR OFF'
+SET IDENTITY_INSERT dbo.CreativeTeamMember_TR OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @GalleryImage nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.GalleryImage ON
 
@@ -238,10 +275,13 @@ INSERT dbo.GalleryImage(GalleryImageId, Image, PerformanceId) VALUES (8, 0x0FC03
 INSERT dbo.GalleryImage(GalleryImageId, Image, PerformanceId) VALUES (9, 0x4A4626AE82B942343ED3D9F3208B0507E0248074AE15A63B44911E5358478373BC068EB42C40000EDC2C027EE6BDFE90069A, 9)
 INSERT dbo.GalleryImage(GalleryImageId, Image, PerformanceId) VALUES (10, 0x079E5E51E35E08A9C4F6EBFCFE3DF3113527F2035817B235676A79B6E0E08A251E8A0960B031BC2263A2A507E9D7054FC9173D64219702436F56C04C05C72396F7EAF9644ACB3955606006CD00181BC1E489B0DC70BFE3194874A2045BE059E39DAC2E1B4B6697DE84038B40CE56F99005BB002F4CE868D937935D8697695BB600D81F3BB2FCF843A8AC79432DD037DE086BC691993783B306872E27F620169FA8C15479F5DDE24201CC77975176360D, NULL)
 
-SET IDENTITY_INSERT dbo.GalleryImage OFF'
+SET IDENTITY_INSERT dbo.GalleryImage OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @HashTag_Performance nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.HashTag_Performance ON
 
@@ -256,10 +296,13 @@ INSERT dbo.HashTag_Performance(HashTagPerformanceID, PerformanceId, HashTagId) V
 INSERT dbo.HashTag_Performance(HashTagPerformanceID, PerformanceId, HashTagId) VALUES (9, 6, 9)
 INSERT dbo.HashTag_Performance(HashTagPerformanceID, PerformanceId, HashTagId) VALUES (10, 2, 1)
 
-SET IDENTITY_INSERT dbo.HashTag_Performance OFF'
+SET IDENTITY_INSERT dbo.HashTag_Performance OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @HashTag_TR nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON
 SET IDENTITY_INSERT dbo.HashTag_TR ON
 
@@ -274,10 +317,13 @@ INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (8,  N'+ 
 INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (9,  N'+ '''#підліткова вистава'''+', 2, 9)
 INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (10, N'+ '''#підліткова вистава'''+', 2, 4)
 
-SET IDENTITY_INSERT dbo.HashTag_TR OFF'
+SET IDENTITY_INSERT dbo.HashTag_TR OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @Performance_TR nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.Performance_TR ON
 
@@ -292,10 +338,13 @@ INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, Perf
 INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (9,  N'+ '''Chanterelle, Cat and Cockerel'''+', 1, N'+ '''Cat and Cockerel lived for themselves. Together they managed and sing songs. But once the cunning Fox stole the Cockerel, and the brave Cat had to save him. However, such an accursed adventure went only in favor of the reckless Hive - he became brave and in all promised to obey his brother. We recommend this show for small viewers.'''+ ', 9)
 INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (10, N'+ '''Кіт у чоботях '''+', 2,                 N'+ '''Вистава за казкою видатного французького письменника Шарля Перро “Кіт у Чоботях”. Лялькова вистава в стилі “бароко” розповідає про винахідливого Кота, справжню дружбу та про те, що немає недосяжних цілей, якщо є розум, наполегливість та віра в себе. Це музичне, динамічне, веселе дійство не залишить байдужим маленьких глядачів.'''+', 10)
 
-SET IDENTITY_INSERT dbo.Performance_TR OFF'
+SET IDENTITY_INSERT dbo.Performance_TR OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @PerformanceCreativeTeamMember_TR nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR ON
 
@@ -310,10 +359,13 @@ INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, 
 INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (9,  N'+'''Choreographer'''+', 1, 9)
 INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (10, N'+'''Composer'''+', 1, 10)
 
-SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR OFF'
+SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 DECLARE @Watchlist nvarchar(max) =
 'USE ' + @Database + '
+DECLARE @Query nvarchar(max)
+SET @Query = N''''
 SET QUOTED_IDENTIFIER ON 
 INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (1, 10)
 INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (3, 5)
@@ -325,7 +377,8 @@ INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (2, 3)
 INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (9, 8)
 INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (7, 4)
 INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (5, 9)
-SET QUOTED_IDENTIFIER OFF'
+SET QUOTED_IDENTIFIER OFF
+EXEC ' + @Server + '.'+ @Database +'.dbo.CreativeTeamMember @Query'
 
 EXECUTE(@Clear);
 EXECUTE(@CreativeTeamMember);

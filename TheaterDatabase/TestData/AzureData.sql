@@ -1,7 +1,6 @@
-:connect $(server) 
-
 DECLARE @ConnectionStrings VARCHAR(max)
-DECLARE @TheaterConnectionString VARCHAR(max) 
+DECLARE @AzureConnectionString VARCHAR(max)
+DECLARE @Server VARCHAR(100); 
 DECLARE @Database VARCHAR(100);
 DECLARE @value VARCHAR(100); 
 DECLARE @indexstart INT; 
@@ -15,10 +14,10 @@ SELECT @ConnectionStrings =
 		BEGIN
         PRINT 'JSON is valid';
 
-SET @TheaterConnectionString =	(	SELECT *
+SET @AzureConnectionString =	(	SELECT *
 		FROM OPENJSON(@ConnectionStrings, '$.ConnectionStrings')
 		WITH(
-		TheaterConnectionString varchar(MAX) '$.TheaterConnectionString'
+		TheaterConnectionString varchar(MAX) '$.AzureConnectionString'
 		
 		))
 		END
@@ -27,7 +26,16 @@ SET @TheaterConnectionString =	(	SELECT *
 			PRINT 'JSON is failed';
         END
 
-SET @value = ( SELECT value FROM STRING_SPLIT(@TheaterConnectionString, ';')
+
+SET @value = ( SELECT value FROM STRING_SPLIT(@AzureConnectionString, ';')
+WHERE value LIKE 'Server%');
+
+SET @indexstart = (SELECT CHARINDEX('=', @value));  
+SET @indexend = (SELECT LEN(@value));
+SET @Server = SUBSTRING(@value, @indexstart + 1, @indexend);
+SELECT @Server;
+
+SET @value = ( SELECT value FROM STRING_SPLIT(@AzureConnectionString, ';')
 WHERE value LIKE 'Initial catalog%');
 
 SET @indexstart = (SELECT CHARINDEX('=', @value));  
@@ -36,10 +44,11 @@ SET @Database = SUBSTRING(@value, @indexstart + 1, @indexend);
 SELECT @Database;
 
 DECLARE @Clear nvarchar(max) =
-'USE ' + @Database + '
-SET QUOTED_IDENTIFIER ON 
-DELETE dbo.Watchlist
-DELETE dbo.PerformanceCreativeTeamMember_TR
+'SET QUOTED_IDENTIFIER ON 
+DELETE ['+@Server+'].'+ @Database +'.dbo.Watchlist
+'
+
+/*DELETE dbo.PerformanceCreativeTeamMember_TR
 DELETE dbo.Performance_TR
 DELETE dbo.HashTag_TR
 DELETE dbo.HashTag_Performance
@@ -53,9 +62,9 @@ DELETE dbo.PerformanceCreativeTeamMember
 DELETE dbo.Performance
 DELETE dbo.Language
 DELETE dbo.HashTag
-DELETE dbo.CreativeTeamMember'
+DELETE dbo.CreativeTeamMember*/
 
-
+/*
 DECLARE @CreativeTeamMember nvarchar(max) =
 'USE ' + @Database + '
 SET QUOTED_IDENTIFIER ON 
@@ -98,9 +107,6 @@ INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (1, N' + '''E
 INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (2, N' + '''Українська'''+', ' + '''uk'''+')
 
 SET IDENTITY_INSERT dbo.Language OFF'
-
-
-
 
 DECLARE @Performance nvarchar(max) =
 'USE ' + @Database + '
@@ -311,6 +317,7 @@ INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, 
 INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (10, N'+'''Composer'''+', 1, 10)
 
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR OFF'
+*/
 
 DECLARE @Watchlist nvarchar(max) =
 'USE ' + @Database + '
@@ -328,7 +335,7 @@ INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (5, 9)
 SET QUOTED_IDENTIFIER OFF'
 
 EXECUTE(@Clear);
-EXECUTE(@CreativeTeamMember);
+/*EXECUTE(@CreativeTeamMember);
 EXECUTE(@HashTag);
 EXECUTE(@Language);
 EXECUTE(@Performance);
@@ -342,5 +349,5 @@ EXECUTE(@GalleryImage);
 EXECUTE(@HashTag_Performance);
 EXECUTE(@HashTag_TR);
 EXECUTE(@Performance_TR);
-EXECUTE(@PerformanceCreativeTeamMember_TR);
+EXECUTE(@PerformanceCreativeTeamMember_TR);*/
 EXECUTE(@Watchlist);
