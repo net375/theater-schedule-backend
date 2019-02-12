@@ -10,10 +10,9 @@ namespace TheaterSchedule.Infrastructure
     {
         public int StatusCode { get; set; }
         public string Message { get; set; }
-
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this);
+            return string.Format($"StatusCode: {StatusCode}, Message: {Message}");
         }
     }
 }

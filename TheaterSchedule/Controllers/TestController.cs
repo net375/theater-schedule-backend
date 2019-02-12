@@ -18,7 +18,7 @@ namespace TheaterSchedule.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            _log.LogInformation("Hello, world!");
+            _log.LogInformation("Hellofdsfd, world!");
             return new string[] { "testValue1", "testValue2", "testValue2" };
         }
 

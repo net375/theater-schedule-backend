@@ -38,44 +38,40 @@ namespace TheaterSchedule.BLL.Services
             {
                 settingsRequest = new SettingsDTO() { LanguageCode = settings.Language.LanguageCode };
             }
+            else
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Phone id [{phoneId}] doesn't exist");
+            }
             return settingsRequest;
         }
 
         public void StoreSettings(string phoneId, SettingsDTO settingsRequest)
         {
-            try
+
+            Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
+            if (language == null)
             {
-                Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
-                if (language == null)
-                {
-                    throw new HttpStatusCodeException(HttpStatusCode.NotFound, "Invalid language");
-                }
-
-
-                Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
-                if (settings != null)
-                {
-                    settings.Language = language;
-                }
-                else
-                {
-                    Settings newSettings = new Settings { Language = language };
-                    settingsRepository.Add(newSettings);
-
-                    accountRepository.Add(new Account
-                    {
-                        PhoneIdentifier = phoneId,
-                        Settings = newSettings
-                    });
-                }
-
-                theaterScheduleUnitOfWork.Save();
-            }
-            catch (Exception ex)
-            {
-                throw  ex;
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Language [{settingsRequest.LanguageCode}] doesn't exist");
             }
 
+            Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
+            if (settings != null)
+            {
+                settings.Language = language;
+            }
+            else
+            {
+                Settings newSettings = new Settings { Language = language };
+                settingsRepository.Add(newSettings);
+
+                accountRepository.Add(new Account
+                {
+                    PhoneIdentifier = phoneId,
+                    Settings = newSettings
+                });
+            }
+
+            theaterScheduleUnitOfWork.Save();
         }
     }
 }

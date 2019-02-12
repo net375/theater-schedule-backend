@@ -18,18 +18,15 @@ namespace TheaterSchedule.Controllers
     {
 
         ISettingsService settingsService;
-        readonly ILogger<SettingsController> _log;
-
-        public SettingsController(ISettingsService settingsService, ILogger<SettingsController> log)
+   
+        public SettingsController(ISettingsService settingsService)
         {
-            this.settingsService = settingsService;
-            this._log = log;
+            this.settingsService = settingsService;         
         }
 
         [HttpGet("{phoneId}")]
         public SettingsDTO Get(string phoneId)
-        {
-            _log.LogInformation("get phone id!");
+        {          
             return settingsService.LoadSettings(phoneId);
         }
 
