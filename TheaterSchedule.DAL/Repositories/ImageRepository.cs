@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TheaterSchedule.DAL.Interfaces;
-using TheaterSchedule.DAL.Models;
 using Entities.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -39,12 +36,6 @@ namespace TheaterSchedule.DAL.Repositories
 
             return galleryImages;
         }
-
-        public async Task<int> GetGalleryImagesCountAsync(int performanceId)
-        {
-            return await (from galleryImage in db.GalleryImage
-                          where galleryImage.PerformanceId == performanceId
-                          select galleryImage.Image).CountAsync();
-        }
+     
     }
 }

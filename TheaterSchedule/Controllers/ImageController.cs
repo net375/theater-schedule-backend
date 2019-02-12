@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 
 
 namespace TheaterSchedule.Controllers
-{    
+{
     [Route("api/[controller]")]
     [ApiController]
     public class ImageController : ControllerBase
@@ -26,9 +24,17 @@ namespace TheaterSchedule.Controllers
         [HttpGet]
         public async Task<ActionResult<ImageBase64DTO>> Get(int performanceId)
         {
-            ImageBase64DTO imageDTO = await imageService.LoadPerformanceMainImageBase64Async(performanceId);
+            ImageBytesDTO imageDTO = await imageService.LoadPerformanceMainImageBytesAsync(performanceId);
             if (imageDTO != null)
-                return imageDTO;
+            {
+                ImageBase64DTO imageBase64DTO = new ImageBase64DTO()
+                {
+                    Image = imageService.ImageToBase64(imageDTO.Image),
+                    ImageFormat = imageDTO.ImageFormat
+                };
+
+                return imageBase64DTO;
+            }
 
             return NotFound();
         }
@@ -37,8 +43,20 @@ namespace TheaterSchedule.Controllers
         [HttpGet("GetGalleryImages")]
         public async Task<ActionResult<List<ImageBase64DTO>>> GetGalleryImages(int performanceId)
         {
-            return await imageService.LoadPerformanceGalleryBase64Async(performanceId);
-        }       
+            List<ImageBase64DTO> result = new List<ImageBase64DTO>();
+            List<ImageBytesDTO> images = await imageService.LoadPerformanceGalleryBytesAsync(performanceId);
+
+            await Task.Run(() =>
+            {
+                result = images.Select(image => new ImageBase64DTO()
+                {
+                    Image = imageService.ImageToBase64(image.Image),
+                    ImageFormat = image.ImageFormat
+                }).ToList<ImageBase64DTO>();
+            });
+
+            return result;
+        }
 
         [ProducesResponseType(404)]
         [HttpGet("GetAsFile")]
@@ -52,6 +70,6 @@ namespace TheaterSchedule.Controllers
 
             return NotFound();
         }
-        
+
     }
 }

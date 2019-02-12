@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Threading.Tasks;
-using System.Reflection;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Microsoft.Extensions.Caching.Memory;
@@ -20,7 +18,7 @@ namespace TheaterSchedule.BLL.Services
         private IImageRepository imageRepository;
         private IMemoryCache cache;
 
-        private int cacheExpirationMinutes = 20;
+        private readonly int cacheExpirationMinutes = 20;
 
         public ImageService(IImageRepository imgRepository, IMemoryCache memoryCache)
         {
@@ -50,27 +48,7 @@ namespace TheaterSchedule.BLL.Services
             {
                 return "text/plain";
             }
-        }
-
-        public async Task<ImageBase64DTO> LoadPerformanceMainImageBase64Async(int id)
-        {
-            ImageBase64DTO imageDTO = null;
-            byte[] image = await TryAddPerformanceImageToCacheAsync(id);
-
-            if (image != null)
-            {
-                await Task.Run(() =>
-                {
-                    imageDTO = new ImageBase64DTO()
-                    {
-                        Image = ImageToBase64(image),
-                        ImageFormat = GeMimeTypeFromImageByteArray(image)
-                    };
-                });
-            }
-
-            return imageDTO;
-        }
+        }   
 
         public async Task<ImageBytesDTO> LoadPerformanceMainImageBytesAsync(int id)
         {
@@ -92,26 +70,6 @@ namespace TheaterSchedule.BLL.Services
             return imageDTO;
         }
 
-        public async Task<List<ImageBase64DTO>> LoadPerformanceGalleryBase64Async(int id)
-        {
-            List<ImageBase64DTO> imagesDTO = new List<ImageBase64DTO>();
-            IEnumerable<byte[]> images = await TryAddGalleryImagesToCacheAsync(id);
-
-            await Task.Run(() =>
-            {
-                foreach (var image in images)
-                {
-                    imagesDTO.Add(new ImageBase64DTO()
-                    {
-                        Image = ImageToBase64(image),
-                        ImageFormat = GeMimeTypeFromImageByteArray(image)
-                    });
-                }
-            });
-
-            return imagesDTO;
-        }
-
         public async Task<List<ImageBytesDTO>> LoadPerformanceGalleryBytesAsync(int id)
         {
             List<ImageBytesDTO> imagesDTO = new List<ImageBytesDTO>();
@@ -119,48 +77,27 @@ namespace TheaterSchedule.BLL.Services
 
             await Task.Run(() =>
             {
-                foreach (var image in images)
+                imagesDTO = images.Select(image => new ImageBytesDTO()
                 {
-                    imagesDTO.Add(new ImageBytesDTO()
-                    {
-                        Image = image,
-                        ImageFormat = GeMimeTypeFromImageByteArray(image)
-                    });
-                }
+                    Image = image,
+                    ImageFormat = GeMimeTypeFromImageByteArray(image)
+                }).ToList<ImageBytesDTO>();               
             });
 
             return imagesDTO;
         }
 
-
         public async Task<IEnumerable<byte[]>> TryAddGalleryImagesToCacheAsync(int performanceId)
         {
-            bool needUpdateCache = false;
-            IEnumerable<byte[]> images = new List<byte[]>();
-            int imgsNumber = await imageRepository.GetGalleryImagesCountAsync(performanceId);
+            IEnumerable<byte[]> images = new List<byte[]>();        
+            string key = typeof(Performance).Name + typeof(ImageService).Name + typeof(GalleryImage).Name + performanceId.ToString();
 
-            for (int nImg = 0; nImg < imgsNumber; nImg++)
+            if (!cache.TryGetValue(key, out images))
             {
-                byte[] image = null;
-                string key = typeof(Performance).Name + performanceId.ToString() + typeof(GalleryImage).Name + nImg;
-
-                if (!cache.TryGetValue(key, out image))
+                images = await imageRepository.GetGalleryImagesAsync(performanceId);
+                if (images.Count() > 0)
                 {
-                    images = await imageRepository.GetGalleryImagesAsync(performanceId);
-                    needUpdateCache = true;
-                    break;
-                }
-                else
-                    images.Append(image);
-            }
-
-            if (needUpdateCache)
-            {
-                int nImg = 0;
-                foreach (var image in images)
-                {
-                    string key = typeof(Performance).Name + performanceId.ToString() + typeof(GalleryImage).Name + nImg++;
-                    cache.Set(key, image, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(cacheExpirationMinutes)));
+                    cache.Set(key, images, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(cacheExpirationMinutes)));
                 }
             }
 
