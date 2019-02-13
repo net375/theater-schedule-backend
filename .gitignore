@@ -6,7 +6,7 @@
 TheaterSchedule/appsettings.json
 
 # batch files
-FillDatabase.bat
+/FillDatabase.bat
 
 # User-specific files
 *.suo
