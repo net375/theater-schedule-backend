@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Entities.Models;
 using System.Collections.Generic;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
@@ -11,17 +12,20 @@ namespace TheaterSchedule.BLL.Services
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IWatchlistRepository watchlistRepository;
+        private IAccountRepository accountRepository;
 
         public WatchlistService(
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
-            IWatchlistRepository watchlistRepository )
+            IWatchlistRepository watchlistRepository,
+            IAccountRepository accountRepository )
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.watchlistRepository = watchlistRepository;
+            this.accountRepository = accountRepository;
         }
 
-        public IEnumerable<WatchlistDTO> GetWatchlist(
-            string phoneId, string languageCode)
+        public IEnumerable<WatchlistDTO> LoadWatchlist(
+            string phoneId, string languageCode )
         {
             return new MapperConfiguration(
                     cfg => cfg.CreateMap<WatchlistDataModel, WatchlistDTO>() )
@@ -33,9 +37,26 @@ namespace TheaterSchedule.BLL.Services
 
         public void SaveOrDeletePerformance( string phoneId, int scheduleId )
         {
+            Watchlist performance =
+                watchlistRepository.GetPerformanceByPhoneIdAndScheduleId(
+                    phoneId, scheduleId );
 
+            if ( performance == null )
+            {
+                int accountId = accountRepository.GetAccountByPhoneId( phoneId ).AccountId;
+                performance = new Watchlist()
+                {
+                    AccountId = accountId,
+                    ScheduleId = scheduleId
+                };
+                watchlistRepository.Add( performance );
+            }
+            else
+            {
+                watchlistRepository.Remove( performance );
+            }
 
-            watchlistRepository.SaveOrDeletePerformance(phoneId, scheduleId);
+            theaterScheduleUnitOfWork.Save();
         }
     }
 }

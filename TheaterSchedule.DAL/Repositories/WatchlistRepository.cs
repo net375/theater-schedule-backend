@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using TheaterSchedule.DAL.Interfaces;
@@ -13,11 +14,6 @@ namespace TheaterSchedule.DAL.Repositories
         public WatchlistRepository( TheaterDatabaseContext context )
         {
             db = context;
-        }
-
-        public void AddPerformanceToWatchList( Watchlist performance )
-        {
-            db.Watchlist.Add( performance );
         }
 
         public IEnumerable<WatchlistDataModel> GetWatchlistByPhoneIdentifier(
@@ -40,18 +36,33 @@ namespace TheaterSchedule.DAL.Repositories
                                     && languageCode == language.LanguageCode
                               select new WatchlistDataModel()
                               {
-                                  ScheduleId = performance.PerformanceId,
+                                  ScheduleId = schedule.ScheduleId,
+                                  PerformanceId = performance.PerformanceId,
                                   Beginning = schedule.Beginning,
                                   MainImage = performance.MainImage,
                                   Title = performanceTr.Title
                               };
 
-           return resultWatchlist;
+            return resultWatchlist;
         }
 
-        public void SaveOrDeletePerformance( string phoneId, int scheduleId )
+        public Watchlist GetPerformanceByPhoneIdAndScheduleId(
+            string phoneId, int scheduleId )
         {
-            
+            return db.Watchlist
+                .Include( w => w.Account )
+                .FirstOrDefault( a => a.Account.PhoneIdentifier == phoneId &&
+                                      a.ScheduleId == scheduleId );
+        }
+
+        public void Add( Watchlist performance )
+        {
+            db.Watchlist.Add( performance );
+        }
+
+        public void Remove( Watchlist performance )
+        {
+            db.Watchlist.Remove( performance );
         }
     }
 }

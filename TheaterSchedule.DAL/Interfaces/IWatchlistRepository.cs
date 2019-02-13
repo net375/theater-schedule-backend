@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Entities.Models;
+using System.Collections.Generic;
 using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DAL.Interfaces
@@ -7,6 +8,9 @@ namespace TheaterSchedule.DAL.Interfaces
     {
         IEnumerable<WatchlistDataModel> GetWatchlistByPhoneIdentifier(
             string phoneId, string languageCode );
-        void SaveOrDeletePerformance( string phoneId, int scheduleId );
+        Watchlist GetPerformanceByPhoneIdAndScheduleId( 
+            string phoneId, int scheduleId );
+        void Add( Watchlist performance );
+        void Remove( Watchlist performance );
     }
 }

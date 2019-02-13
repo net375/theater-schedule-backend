@@ -17,15 +17,15 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpGet( "{phoneId}/{languageCode}" )]
-        public IEnumerable<WatchlistDTO> GetWatchlist(
+        public IEnumerable<WatchlistDTO> LoadWatchlist(
             string phoneId, string languageCode )
         {
-            return watchlistService.GetWatchlist( phoneId, languageCode );
+            return watchlistService.LoadWatchlist( phoneId, languageCode );
         }
 
-        [HttpPost( "{phoneId}/{scheduleId}" )]
+        [HttpPost( "{phoneId}" )]
         public IActionResult SaveOrDeletePerformance(
-            string phoneId, int scheduleId )
+            string phoneId, [FromQuery]int scheduleId )
         {
             watchlistService.SaveOrDeletePerformance( phoneId, scheduleId );
             return Ok();
