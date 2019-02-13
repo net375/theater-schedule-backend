@@ -27,8 +27,9 @@ namespace TheaterSchedule.DAL.Repositories
         }
 
         public List<Message> GetUnrepliedMessages()
-        {
-            return db.Message.Where(m => m.ReplyId == null).ToList();
+        { 
+            //return db.Message.Where(m => m.ReplyId == null).ToList();
+            return db.Message.ToList();
         }
     }
 }

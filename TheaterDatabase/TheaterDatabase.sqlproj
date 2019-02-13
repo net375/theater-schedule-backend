@@ -77,10 +77,10 @@
     <Build Include="dbo\Tables\CreativeTeamMember_TR.sql" />
     <Build Include="dbo\Tables\PerformanceCreativeTeamMember_TR.sql" />
     <Build Include="dbo\Tables\Language.sql" />
-    <None Include="TestData\CleanupDatabase.sql" />
     <None Include="TestData\FillByTestData.sql" />
     <Build Include="dbo\Tables\Message.sql" />
-    <Build Include="dbo\Tables\Reply.sql" />
+    <Build Include="dbo\Tables\PromoAction_TR.sql" />
+    <Build Include="dbo\Tables\PromoAction.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TheaterDatabase.refactorlog" />

@@ -18,15 +18,6 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = context;
         }
 
-        public IEnumerable<Schedule> GetWithInclude( params Expression<Func<Schedule, object>>[] includeProperties )
-        {
-            IQueryable<Schedule> query = db.Schedule.AsNoTracking();
-            IQueryable<Schedule> scheduleList = includeProperties
-                .Aggregate( query, ( current, includeProperty ) => current.Include( includeProperty ) );
-
-            return scheduleList;
-        }
-
         public IEnumerable<ScheduleDataModel> GetListPerformancesByDateRange(
             string phoneId, string languageCode,
             DateTime? startDate, DateTime? endDate )
