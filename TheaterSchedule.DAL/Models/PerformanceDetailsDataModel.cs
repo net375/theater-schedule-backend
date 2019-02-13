@@ -13,6 +13,6 @@ namespace TheaterSchedule.DAL.Models
         public string Description { get; set; }
         public IEnumerable<TeamMember> TeamMember { get; set; }
         public IEnumerable<string> HashTag { get; set; }
-        public IEnumerable<byte []> GalleryImage { get; set; }
+        public IEnumerable<byte []> GalleryImage { get; set; }        
     }
 }
