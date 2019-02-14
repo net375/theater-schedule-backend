@@ -2,20 +2,18 @@
 <configuration>
   <connectionStrings>
     <add name="TheaterConnectionString"
-   connectionString="Server=DESKTOP-1SL3KUF;Database=TheaterDatabase;User ID=sa;Password=admin;ConnectRetryCount=0"
+   connectionString="Server=tcp:theater-schedule-server.database.windows.net,1433;Initial Catalog=theater-schedule-backend-db;Persist Security Info=False;User ID={dbadmin};Password={Lv-375.Net};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
    providerName="System.Data.SqlClient"
 />
   </connectionStrings>
-  <!-- To customize the asp.net core module uncomment and edit the following section. 
-  For more info see https://go.microsoft.com/fwlink/?linkid=838655 -->
-  <!--
+ 
   <system.webServer>
     <handlers>
       <remove name="aspNetCore"/>
       <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModule" resourceType="Unspecified"/>
     </handlers>
-    <aspNetCore processPath="%LAUNCHER_PATH%" arguments="%LAUNCHER_ARGS%" stdoutLogEnabled="false" stdoutLogFile=".\logs\stdout" />
+    <aspNetCore processPath="dotnet" arguments=".\TheaterSchedule.dll" stdoutLogEnabled="false" stdoutLogFile=".\logs\stdout" />
   </system.webServer>
-  -->
+
 
 </configuration>

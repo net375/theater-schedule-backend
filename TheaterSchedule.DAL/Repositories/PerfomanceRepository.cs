@@ -28,7 +28,8 @@ namespace TheaterSchedule.DAL.Repositories
                 (perfdetails, performance) => new PerformanceDataModel
                 {
                     Title = perfdetails.Title,
-                    MainImage = performance.MainImage
+                    MainImage = performance.MainImage,
+                    PerformanceId = performance.PerformanceId
                 }).ToList();
             return result;
         }

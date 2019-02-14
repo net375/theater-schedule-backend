@@ -24,6 +24,5 @@ namespace TheaterSchedule.Controllers
         {
             return new JsonResult(postersService.LoadPostersData(languageCode));
         }
-
     }
 }
