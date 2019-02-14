@@ -52,7 +52,7 @@ namespace TheaterSchedule.MiddlewareComponents
             {
                 result = new ErrorDetails() { Message = "Runtime Error", StatusCode = (int)HttpStatusCode.BadRequest };
                 log.LogWarning(result.ToString());
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
             return context.Response.WriteAsync(JsonConvert.SerializeObject(result));
         }
