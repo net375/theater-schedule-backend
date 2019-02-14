@@ -46,8 +46,8 @@ INSERT dbo.HashTag(HashTagId) VALUES (10)
 SET IDENTITY_INSERT dbo.HashTag OFF
 SET IDENTITY_INSERT dbo.Language ON
 
-INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (1, N'English', 'en')
-INSERT dbo.Language(LanguageId, LanguageName, LanguageCode) VALUES (2, N'Українська', 'uk')
+INSERT dbo.Language(LanguageId, LanguageCode) VALUES (1, 'en')
+INSERT dbo.Language(LanguageId, LanguageCode) VALUES (2, 'uk')
 
 SET IDENTITY_INSERT dbo.Language OFF
 SET IDENTITY_INSERT dbo.Performance ON
