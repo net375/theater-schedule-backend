@@ -10,5 +10,6 @@ namespace TheaterSchedule.BLL.DTO
     {
         public string Title { get; set; }
         public string MainImage { get; set; } 
+        public int PerformanceId { get; set; }
     }
 }
