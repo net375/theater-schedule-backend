@@ -5,8 +5,13 @@
 # string connection to database
 TheaterSchedule/appsettings.json
 
+
+#UpdateModels 
+UpdateModels.bat
+
 # batch files
 /FillDatabase.bat
+
 
 # User-specific files
 *.suo
@@ -354,7 +359,7 @@ StyleCopReport.xml
 # Web workbench (sass)
 
 # Installshield output folder
-
+TheaterSchedule/Logs
 # DocProject is a documentation generator add-in
 
 # Click-Once directory

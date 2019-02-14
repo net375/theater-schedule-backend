@@ -30,7 +30,7 @@ namespace TheaterSchedule.BLL.Services
             {
                 return null;
             }
-            return new MessageDTO { MessageId = message.MessageId, Subject = message.Subject, Text = message.Text };
+            return new MessageDTO { MessageId = message.MessageId, Subject = message.Subject, MessageText=message.MessageText };
         }
 
         public void SendMessage(MessageDTO newMessage)
@@ -44,7 +44,7 @@ namespace TheaterSchedule.BLL.Services
             var message = new Message()
             {
                 Subject = newMessage.Subject,
-                Text = newMessage.Text,
+                MessageText = newMessage.MessageText,
                 AccountId = account.AccountId
             };
 
