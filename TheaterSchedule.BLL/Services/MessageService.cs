@@ -49,7 +49,7 @@ namespace TheaterSchedule.BLL.Services
             var message = new Message()
             {
                 Subject = newMessage.Subject,
-                //Text = newMessage.Text,
+                MessageText = newMessage.MessageText,
                 AccountId = account.AccountId
             };
 
