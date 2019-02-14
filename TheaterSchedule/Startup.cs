@@ -46,6 +46,7 @@ namespace TheaterSchedule
             services.AddScoped<IPerformanceDetailsRepository, PerformanceDetailsRepository>();
             services.AddScoped<IWatchlistRepository, WatchlistRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IExcursionRepository, ExcursionRepository>();
             services.AddScoped<IPromoActionRepository, PromoActionRepository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
@@ -57,6 +58,7 @@ namespace TheaterSchedule
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsService>();
             services.AddScoped<IWatchlistService, WatchlistService>();
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IExcursionService, ExcursionService>();
             services.AddScoped<IPromoActionService, PromoActionService>();
         }
 

@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Excursion]
+(
+	[ExcursionId] INT IDENTITY NOT NULL,
+	[Image] VARBINARY (MAX) NOT NULL,
+	[Date] DATETIME NOT NULL,
+
+	CONSTRAINT [PK_Excursion] PRIMARY KEY CLUSTERED ([ExcursionId] ASC)
+)
