@@ -18,10 +18,12 @@ namespace TheaterSchedule.Controllers
             service = scheduleService;
         }
 
-        [HttpGet("{languageCode}/FilterByDate")]
-        public IEnumerable<ScheduleDTO> FilterByDate(string languageCode, DateTime? startDate, DateTime? endDate)
+        [HttpGet("{phoneId}/{languageCode}/FilterByDate")]
+        public IEnumerable<ScheduleDTO> FilterByDate(
+            string phoneId, string languageCode, 
+            DateTime? startDate, DateTime? endDate)
         {
-            return service.FilterByDate(languageCode, startDate, endDate).ToList();
+            return service.FilterByDate(phoneId, languageCode, startDate, endDate).ToList();
         }
     }
 }
