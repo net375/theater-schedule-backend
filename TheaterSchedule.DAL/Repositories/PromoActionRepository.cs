@@ -21,17 +21,17 @@ namespace TheaterSchedule.DAL.Repositories
         {
             IEnumerable<PromoActionDataModel> listPromoActions = null;
 
-            //listPromoActions = from promoAction in db.PromoAction
-            //    join promoActionTr in db.PromoActionTr on promoAction.PromoActionId equals promoActionTr.PromoActionId
-            //    join language in db.Language on promoActionTr.LanguageId equals language.LanguageId
-            //    where ((languageCode == language.LanguageCode) && (promoAction.StartDate <= DateTime.Now) && (promoAction.EndDate >= DateTime.Now))
-            //    select new PromoActionDataModel
-            //    {
-            //        PromoActionName = promoActionTr.PromoActionName,
-            //        Description = promoActionTr.Description,
-            //        StartDate = promoAction.StartDate,
-            //        EndDate = promoAction.EndDate,
-            //    };
+            listPromoActions = from promoAction in db.PromoAction
+                join promoActionTr in db.PromoActionTr on promoAction.PromoActionId equals promoActionTr.PromoActionId
+                join language in db.Language on promoActionTr.LanguageId equals language.LanguageId
+                where ((languageCode == language.LanguageCode) && (promoAction.StartDate <= DateTime.Now) && (promoAction.EndDate >= DateTime.Now))
+                select new PromoActionDataModel
+                {
+                    PromoActionName = promoActionTr.PromoActionName,
+                    Description = promoActionTr.Description,
+                    StartDate = promoAction.StartDate,
+                    EndDate = promoAction.EndDate,
+                };
 
             return listPromoActions;
         }
