@@ -43,7 +43,7 @@ namespace TheaterSchedule.Controllers
         [HttpGet("GetGalleryImages")]
         public async Task<ActionResult<List<ImageBase64DTO>>> GetGalleryImages(int performanceId)
         {
-            List<ImageBase64DTO> result = new List<ImageBase64DTO>();
+            List<ImageBase64DTO> result = null;
             List<ImageBytesDTO> images = await imageService.LoadPerformanceGalleryBytesAsync(performanceId);
 
             await Task.Run(() =>

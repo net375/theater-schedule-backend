@@ -72,7 +72,7 @@ namespace TheaterSchedule.BLL.Services
 
         public async Task<List<ImageBytesDTO>> LoadPerformanceGalleryBytesAsync(int id)
         {
-            List<ImageBytesDTO> imagesDTO = new List<ImageBytesDTO>();
+            List<ImageBytesDTO> imagesDTO = null;
             IEnumerable<byte[]> images = await TryAddGalleryImagesToCacheAsync(id);
 
             await Task.Run(() =>
@@ -89,13 +89,13 @@ namespace TheaterSchedule.BLL.Services
 
         public async Task<IEnumerable<byte[]>> TryAddGalleryImagesToCacheAsync(int performanceId)
         {
-            IEnumerable<byte[]> images = new List<byte[]>();        
-            string key = typeof(Performance).Name + typeof(ImageService).Name + typeof(GalleryImage).Name + performanceId.ToString();
+            IEnumerable<byte[]> images = null;        
+            string key = String.Format("{0}{1}{2}{3}", nameof(Performance), nameof(ImageService), nameof(GalleryImage), performanceId.ToString());
 
             if (!cache.TryGetValue(key, out images))
             {
                 images = await imageRepository.GetGalleryImagesAsync(performanceId);
-                if (images.Count() > 0)
+                if (images.Any())
                 {
                     cache.Set(key, images, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(cacheExpirationMinutes)));
                 }
@@ -107,7 +107,7 @@ namespace TheaterSchedule.BLL.Services
         public async Task<byte[]> TryAddPerformanceImageToCacheAsync(int id)
         {
             byte[] image = null;
-            string key = typeof(Performance).Name + typeof(ImageService).Name + id.ToString();
+            string key = String.Format("{0}{1}{2}", nameof(Performance), nameof(ImageService), id.ToString());
 
             if (!cache.TryGetValue(key, out image))
             {
