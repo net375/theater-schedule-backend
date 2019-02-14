@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheaterSchedule.BLL.DTO
 {
-    class ExcursionDTO
+    public class ExcursionDTO
     {
         public string ExcursionName { get; set; }
         public string ShortDescription { get; set; }

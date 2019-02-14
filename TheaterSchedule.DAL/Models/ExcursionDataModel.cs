@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheaterSchedule.DAL.Models
 {
-    class ExcursionDataModel
+    public class ExcursionDataModel
     {
         public string ExcursionName { get; set; }
         public string ShortDescription { get; set; }
