@@ -8,8 +8,7 @@ namespace TheaterSchedule.BLL.DTO
     {
         public int MessageId { get; set; }
         public string Subject { get; set; }
-        public string Text { get; set; }
-        //public int AccountId { get; set; }
+        public string MessageText { get; set; }       
         public string PhoneId { get; set; }
     }
 }
