@@ -34,7 +34,9 @@ namespace TheaterSchedule.BLL.Services
                 postersRequest.Add(new PostersDTO()
                 {
                     MainImage = imageService.ImageToBase64(performance.MainImage),
-                    Title = performance.Title
+                    Title = performance.Title,
+                    PerformanceId=performance.PerformanceId
+
                 });
             }
             return postersRequest;

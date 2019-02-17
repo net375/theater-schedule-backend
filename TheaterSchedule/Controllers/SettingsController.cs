@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
@@ -17,15 +18,15 @@ namespace TheaterSchedule.Controllers
     {
 
         ISettingsService settingsService;
-
+   
         public SettingsController(ISettingsService settingsService)
         {
-            this.settingsService = settingsService;
+            this.settingsService = settingsService;         
         }
 
         [HttpGet("{phoneId}")]
         public SettingsDTO Get(string phoneId)
-        {
+        {          
             return settingsService.LoadSettings(phoneId);
         }
 

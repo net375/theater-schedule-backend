@@ -6,7 +6,6 @@ using System.Linq;
 using TheaterSchedule.DAL.Models;
 using Entities.Models;
 using TheaterSchedule.DAL.Interfaces;
-using TheaterSchedule.DAL.Models;
 namespace TheaterSchedule.DAL.Repositories
 {
     public class PerfomanceRepository : IPerfomanceRepository
@@ -28,7 +27,9 @@ namespace TheaterSchedule.DAL.Repositories
                 (perfdetails, performance) => new PerformanceDataModel
                 {
                     Title = perfdetails.Title,
-                    MainImage = performance.MainImage
+                    MainImage = performance.MainImage,
+                    PerformanceId = performance.PerformanceId
+  
                 }).ToList();
             return result;
         }

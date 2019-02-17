@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Performance_TR]
 (
 	[Performance_TRId] INT IDENTITY(1,1) NOT NULL,
-	[Title] NVARCHAR(30) NOT NULL,
+	[Title] NVARCHAR(50) NOT NULL,
 	[LanguageId] INT NOT NULL,
 	[Description] NVARCHAR(MAX) NULL,
 	[PerformanceId] INT NOT NULL,

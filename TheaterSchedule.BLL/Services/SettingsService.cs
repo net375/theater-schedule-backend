@@ -5,12 +5,13 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
+using System.Net;
+using TheaterSchedule.Infrastructure;
 
 namespace TheaterSchedule.BLL.Services
 {
     public class SettingsService : ISettingsService
     {
-
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IScheduleRepository scheduleRepository;
         private ISettingsRepository settingsRepository;
@@ -34,17 +35,22 @@ namespace TheaterSchedule.BLL.Services
             Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
-                settingsRequest = new SettingsDTO() { LanguageCode = settings.Language.LanguageCode};
-            }         
+                settingsRequest = new SettingsDTO() { LanguageCode = settings.Language.LanguageCode };
+            }
+            else
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Phone id [{phoneId}] doesn't exist");
+            }
             return settingsRequest;
         }
 
         public void StoreSettings(string phoneId, SettingsDTO settingsRequest)
         {
+
             Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
             if (language == null)
             {
-                throw new ArgumentException("Invalid language");
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Language [{settingsRequest.LanguageCode}] doesn't exist");
             }
 
             Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
@@ -63,7 +69,6 @@ namespace TheaterSchedule.BLL.Services
                     Settings = newSettings
                 });
             }
-
             theaterScheduleUnitOfWork.Save();
         }
     }
