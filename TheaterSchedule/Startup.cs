@@ -60,6 +60,8 @@ namespace TheaterSchedule
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IExcursionService, ExcursionService>();
             services.AddScoped<IPromoActionService, PromoActionService>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
