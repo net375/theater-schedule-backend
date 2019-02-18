@@ -6,7 +6,7 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
-    class TagRepository: ITagRepository
+    class TagRepositoryWp : ITagRepository
     {
     }
 }

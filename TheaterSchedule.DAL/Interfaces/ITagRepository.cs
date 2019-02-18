@@ -6,6 +6,6 @@ namespace TheaterSchedule.DAL.Interfaces
 {
     public interface ITagRepository
     {
-      
+      //TODO
     }
 }

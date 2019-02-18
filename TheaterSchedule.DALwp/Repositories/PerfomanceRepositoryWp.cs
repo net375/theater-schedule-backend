@@ -6,7 +6,7 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
-    class PerfomanceRepository : IPerfomanceRepository
+    class PerfomanceRepositoryWp : IPerfomanceRepository
     {
         public List<PerformanceDataModel> GetPerformanceTitlesAndImages(string languageCode)
         {
