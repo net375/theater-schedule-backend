@@ -12,7 +12,7 @@ namespace TheaterSchedule.DALwp.Repositories
         {
             throw new NotImplementedException();
             //TODO
-            //No such fields in API : MinPrice, MaxPrice, MinimumAge, Duration        
+            //No such fields in API : MinPrice, MaxPrice, MinimumAge, Duration. But they exist in site        
         }
     }
 }
