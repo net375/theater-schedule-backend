@@ -6,13 +6,13 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
-    class PerformanceDetailsRepositoryWp : IPerformanceDetailsRepository
+    class ScheduleRepositoryWp : IScheduleRepository
     {
-        public PerformanceDetailsDataModel GetInformationAboutPerformanceScreen(string languageCode, int id)
+        public IEnumerable<ScheduleDataModel> GetListPerformancesByDateRange(string phoneId, string languageCode, DateTime? startDate, DateTime? endDate)
         {
             throw new NotImplementedException();
             //TODO
-            //No such fields in API : MinPrice, MaxPrice, MinimumAge, Duration        
+            //No such fields in API: Beginning. But they exist in site
         }
     }
 }
