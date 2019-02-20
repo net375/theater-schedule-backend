@@ -1,22 +1,25 @@
 SET QUOTED_IDENTIFIER ON
 
 DELETE dbo.Watchlist
+DELETE dbo.PromoAction_TR
 DELETE dbo.PerformanceCreativeTeamMember_TR
 DELETE dbo.Performance_TR
+DELETE dbo.Message
 DELETE dbo.HashTag_TR
 DELETE dbo.HashTag_Performance
 DELETE dbo.GalleryImage
+DELETE dbo.Excursion_TR
 DELETE dbo.CreativeTeamMember_TR
-DELETE dbo.Message
 DELETE dbo.Account
 DELETE dbo.Settings
 DELETE dbo.Schedule
 DELETE dbo.PerformanceCreativeTeamMember
+DELETE dbo.PromoAction
 DELETE dbo.Performance
 DELETE dbo.Language
 DELETE dbo.HashTag
+DELETE dbo.Excursion
 DELETE dbo.CreativeTeamMember
-
 
 SET IDENTITY_INSERT dbo.CreativeTeamMember ON
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (1)
@@ -30,6 +33,19 @@ INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (8)
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (9)
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (10)
 SET IDENTITY_INSERT dbo.CreativeTeamMember OFF
+
+SET IDENTITY_INSERT dbo.Excursion ON
+INSERT dbo.Excursion(ExcursionId, Image, Date) VALUES (1, 0xB5469D005817D9000708A204E7A932601C29B1D8C534259D8510DC370407BEAF27F5D6F31132ADBBC00460267200F8CF03403BC889638B2FAA0358F207B6B8070A72BF44514B3195B60150BE5C7F7166A7095F089EBC39BF796982224A8D8A581F599C9C677D1F832A3B3E258F2209027E3B, '2003-12-11 16:13:25.590')
+INSERT dbo.Excursion(ExcursionId, Image, Date) VALUES (2, 0x2208410E1D0C0A24318E9CC9390D06E8DCD74F573C2D7699859AB72FEC0809EBA65E70F1, '1970-01-24 03:17:34.320')
+INSERT dbo.Excursion(ExcursionId, Image, Date) VALUES (3, 0x602E04B5F4F458AFB340FF53B1403321DB3F0EC05527F4131A07528AE6CB1429625A7575446E859C03EC4D5E109418DE988CD9, '2000-09-24 07:04:24.500')
+INSERT dbo.Excursion(ExcursionId, Image, Date) VALUES (4, 0x0492C91C023D47A1E7420A076631B76E722864856DB444601B6F799771E866BC29E0BB8AB74FDFB1A6003971C501B1E0394E5C, '1991-10-12 01:24:59.010')
+INSERT dbo.Excursion(ExcursionId, Image, Date) VALUES (5, 0x1839405872891551E7003F2E1CE30854760ACA03091D3B7B203C2F8627895B512D2977F1BFDABE3568020072FC1FC63C09E12BD8C7F51074C42AC7DBA500FEE28DB0C4380DE94D1E989AD58A045162E7A7C3EA9BB1226E08088C00021A11C2C6452BE3EA2B4683832542CA1E0A750924DA7D495753078CDB03E55A880A1762ED553411AF06D797989E06D630F10A99A5F7045F2CE606A15E8A02E187FF15, '2011-02-12 02:14:58.020')
+INSERT dbo.Excursion(ExcursionId, Image, Date) VALUES (6, 0x1603E6A66FCD070F0212E7411332F6458F82088B8029BDE40450BF63F823399D2E9563625703AD60FC1FE6CE89739408D20603DD27F40230A7BA4BBC804C, '1983-03-27 14:45:15.290')
+INSERT dbo.Excursion(ExcursionId, Image, Date) VALUES (7, 0x045506D306739C22E348CA9BBA9D5712FE1C3643A89E292B04038C294C42E128AFF449090526D52F6745C88FDC50041C68CE232ABFE736F96EB5DC06C508480231DECA1A8E44DF8398FB80E50DACE399BE274B1A85ABC4CE63, '1996-11-28 18:40:17.090')
+INSERT dbo.Excursion(ExcursionId, Image, Date) VALUES (8, 0x3160DD39FD2F58EE07E606C81056D532D7020258087F536A575A03D5C03689782F924232FF90A100E805220928B307E44B04FD7A057C4BC4245019A5A02E9AC2B3009B552B0362ABA189D7035C762EFBB8579F5DC161FDA104F175C74812A97C04001DA73405895DB0116ED16CFE33CC84696F4C07EE323B02CE7F005FCC5A07CF7DF20450A14FD90B5C0C6D071582D7221FC80B80F07E140427, '2015-02-01 18:09:36.280')
+INSERT dbo.Excursion(ExcursionId, Image, Date) VALUES (9, 0xB3CB017FAF32000601297223B240A76A7E909E0449E05D1A8E062683AA104FE1F6D77199B00278705D26DF22AEA6926B8677DE0C070000DA8C33EBEE49268FEE9E07088C8DFFB1CAD3A8B67504C62439A9, '1992-09-04 01:21:03.520')
+INSERT dbo.Excursion(ExcursionId, Image, Date) VALUES (10, 0x6DF23E3D52C2F9462FA07B43CF0F53A070DAE6592E5BE3F05206440C69EFD6D7495C59, '2001-05-22 17:16:52.150')
+SET IDENTITY_INSERT dbo.Excursion OFF
 
 SET IDENTITY_INSERT dbo.HashTag ON
 INSERT dbo.HashTag(HashTagId) VALUES (1)
@@ -64,6 +80,20 @@ INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, M
 INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (10, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\Cat_resize.jpg', SINGLE_BLOB) image), 159, 54, 340, 3)
 
 SET IDENTITY_INSERT dbo.Performance OFF
+
+SET IDENTITY_INSERT dbo.PromoAction ON
+INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (1, '2007-09-09 14:37:05.760', '1987-05-25 00:17:11.320')
+INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (2, '1970-07-11 08:39:34.220', '2012-08-30 09:32:54.900')
+INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (3, '2016-03-25 06:39:26.120', '1988-09-05 01:03:20.780')
+INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (4, '1992-09-21 05:41:37.250', '1975-04-21 13:42:03.710')
+INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (5, '1986-06-07 09:06:14.000', '1991-01-10 02:11:47.070')
+INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (6, '1979-10-03 22:55:11.230', '1999-10-05 11:18:46.090')
+INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (7, '1991-07-06 18:09:43.670', '2005-02-24 12:10:39.950')
+INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (8, '2008-04-25 16:13:12.150', '2011-11-28 18:29:29.700')
+INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (9, '1982-06-20 13:26:42.930', '1975-07-05 10:31:33.970')
+INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (10, '1971-09-12 06:21:06.460', '2016-12-24 22:52:08.110')
+SET IDENTITY_INSERT dbo.PromoAction OFF
+
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember ON
 
 INSERT dbo.PerformanceCreativeTeamMember(CreativeTeamMemberId, PerformanceId, PerformanceCreativeTeamMemberId) VALUES (10, 10, 1)
@@ -78,6 +108,7 @@ INSERT dbo.PerformanceCreativeTeamMember(CreativeTeamMemberId, PerformanceId, Pe
 INSERT dbo.PerformanceCreativeTeamMember(CreativeTeamMemberId, PerformanceId, PerformanceCreativeTeamMemberId) VALUES (9, 9, 10)
 
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember OFF
+
 SET IDENTITY_INSERT dbo.Schedule ON
 
 INSERT dbo.Schedule(ScheduleId, Beginning, PerformanceId) VALUES (1, '2019-02-13 14:13:15.880', 4)
@@ -148,6 +179,20 @@ INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTe
 INSERT dbo.CreativeTeamMember_TR(CreativeTeamMember_TRId, LanguageId, CreativeTeamMemberId, FistName, LastName) VALUES (10, 2, 10, N'Сергій', N'Ковальов')
 
 SET IDENTITY_INSERT dbo.CreativeTeamMember_TR OFF
+
+SET IDENTITY_INSERT dbo.Excursion_TR ON
+INSERT dbo.Excursion_TR(Excursion_TRId, ExcursionName, ShortDescription, FullDescription, LanguageId, ExcursionId) VALUES (1, N'Tour № 1', N'Here is a short tour description №1', N'There will be a full description of the tour № 1', 1, 1)
+INSERT dbo.Excursion_TR(Excursion_TRId, ExcursionName, ShortDescription, FullDescription, LanguageId, ExcursionId) VALUES (2, N'Екскурсія № 2', N'Тут буде короткий опис екскурсії №2', N'Тут буде повний опис екскурсії № 2', 2, 2)
+INSERT dbo.Excursion_TR(Excursion_TRId, ExcursionName, ShortDescription, FullDescription, LanguageId, ExcursionId) VALUES (3, N'Екскурсія № 3', N'Тут буде короткий опис екскурсії №3', N'Тут буде повний опис екскурсії № 3', 2, 3)
+INSERT dbo.Excursion_TR(Excursion_TRId, ExcursionName, ShortDescription, FullDescription, LanguageId, ExcursionId) VALUES (4, N'Tour № 4', N'Here is a short tour description №4', N'There will be a full description of the tour № 4', 1, 4)
+INSERT dbo.Excursion_TR(Excursion_TRId, ExcursionName, ShortDescription, FullDescription, LanguageId, ExcursionId) VALUES (5, N'Tour № 5', N'Here is a short tour description №5', N'There will be a full description of the tour № 5', 1, 5)
+INSERT dbo.Excursion_TR(Excursion_TRId, ExcursionName, ShortDescription, FullDescription, LanguageId, ExcursionId) VALUES (6, N'Екскурсія № 6', N'Тут буде короткий опис екскурсії №6', N'Тут буде повний опис екскурсії № 6', 2, 6)
+INSERT dbo.Excursion_TR(Excursion_TRId, ExcursionName, ShortDescription, FullDescription, LanguageId, ExcursionId) VALUES (7, N'Екскурсія № 7', N'Тут буде короткий опис екскурсії №7', N'Тут буде повний опис екскурсії № 7', 2, 7)
+INSERT dbo.Excursion_TR(Excursion_TRId, ExcursionName, ShortDescription, FullDescription, LanguageId, ExcursionId) VALUES (8, N'Tour № 8', N'Here is a short tour description №8', N'There will be a full description of the tour № 8', 1, 8)
+INSERT dbo.Excursion_TR(Excursion_TRId, ExcursionName, ShortDescription, FullDescription, LanguageId, ExcursionId) VALUES (9, N'Tour № 9', N'Here is a short tour description №9', N'There will be a full description of the tour № 9', 1, 9)
+INSERT dbo.Excursion_TR(Excursion_TRId, ExcursionName, ShortDescription, FullDescription, LanguageId, ExcursionId) VALUES (10, N'Екскурсія № 10', N'Тут буде короткий опис екскурсії № 10', N'Тут буде повний опис екскурсії № 10', 2, 10)
+SET IDENTITY_INSERT dbo.Excursion_TR OFF
+
 SET IDENTITY_INSERT dbo.GalleryImage ON
 
 INSERT dbo.GalleryImage(GalleryImageId, Image, PerformanceId) VALUES (1, 0x06081A0B07C55EB32309648F63F42A8EF75CEA460190A0F3A81FD403381004ADFD6606866190450B1E599E032EC265, 3)
@@ -180,14 +225,14 @@ SET IDENTITY_INSERT dbo.HashTag_TR ON
 
 INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (1,  N'#for family viewing', 1, 10)
 INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (2,  N'#підліткова вистава', 2, 10)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (3,  N'#for family viewing', 1, 1)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (4,  N'#підліткова вистава', 2, 8)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (5,  N'#for family viewing', 1, 5)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (6,  N'#підліткова вистава', 2, 5)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (7,  N'#підліткова вистава', 2, 7)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (8,  N'#for family viewing', 1, 5)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (9,  N'#підліткова вистава', 2, 9)
-INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (10, N'#підліткова вистава', 2, 4)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (3,  N'#art', 1, 1)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (4,  N'#арт', 2, 8)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (5,  N'#fairy tale', 1, 5)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (6,  N'#для сімейного перегляду', 2, 5)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (7,  N'#казка', 2, 7)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (8,  N'#culture of the world', 1, 5)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (9,  N'#казка', 2, 9)
+INSERT dbo.HashTag_TR(HashTag_TRId, Tag, LanguageId, HashTagId) VALUES (10, N'#культури світу', 2, 4)
 
 SET IDENTITY_INSERT dbo.HashTag_TR OFF
 SET IDENTITY_INSERT dbo.Performance_TR ON
@@ -218,6 +263,22 @@ INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, 
 INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (10, N'Composer', 1, 10)
 
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR OFF
+
+SET IDENTITY_INSERT dbo.PromoAction_TR ON
+GO
+INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (1, N'There will be a description of the promo action № 1', N'Promo action № 1', 1, 1)
+INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (2, N'Тут буде опис промоакції № 2', N'Промоакція № 2', 2, 2)
+INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (3, N'Тут буде опис промоакції № 3', N'Промоакція № 3', 2, 3)
+INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (4, N'There will be a description of the promo action № 4', N'Promo action № 4', 1, 4)
+INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (5, N'There will be a description of the promo action № 5', N'Promo action № 5', 1, 5)
+INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (6, N'Тут буде опис промоакції № 6', N'Промоакція № 6', 2, 6)
+INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (7, N'Тут буде опис промоакції № 7', N'Промоакція № 7', 2, 7)
+INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (8, N'There will be a description of the promo action № 8', N'Promo action № 8', 1, 8)
+INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (9, N'There will be a description of the promo action № 9', N'Promo action № 9', 1, 9)
+INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (10, N'Тут буде опис промоакції № 10', N'Промоакція № 10', 2, 10)
+GO
+SET IDENTITY_INSERT dbo.PromoAction_TR OFF
+GO
 
 INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (1, 10)
 INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (3, 5)

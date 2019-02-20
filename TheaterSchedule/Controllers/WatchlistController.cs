@@ -25,9 +25,9 @@ namespace TheaterSchedule.Controllers
 
         [HttpPost( "{phoneId}" )]
         public IActionResult SaveOrDeletePerformance(
-            string phoneId, [FromQuery]int scheduleId )
+            string phoneId, [FromQuery]int performanceId )
         {
-            watchlistService.SaveOrDeletePerformance( phoneId, scheduleId );
+            watchlistService.SaveOrDeletePerformance( phoneId, performanceId);
             return Ok();
         }
     }
