@@ -5,7 +5,9 @@ using TheaterSchedule.BLL.Interfaces;
 
 namespace TheaterSchedule.Controllers
 {
-    public class CreativeTeamController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CreativeTeamController : Controller
     {
         private ICreativeTeamService creativeTeamService;
 

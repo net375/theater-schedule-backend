@@ -11,6 +11,7 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
+using TheaterSchedule.DALwp.Repositories;
 using TheaterSchedule.MiddlewareComponents;
 
 namespace TheaterSchedule
@@ -48,6 +49,7 @@ namespace TheaterSchedule
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IExcursionRepository, ExcursionRepository>();
             services.AddScoped<IPromoActionRepository, PromoActionRepository>();
+            services.AddScoped<ICreativeTeamRepository, CreativeTeamRepositoryWp>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             //services
@@ -61,6 +63,7 @@ namespace TheaterSchedule
             services.AddScoped<IExcursionService, ExcursionService>();
             services.AddScoped<IPromoActionService, PromoActionService>();
             services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<ICreativeTeamService, CreativeTeamService>();
             services.AddMemoryCache();
         }
 
