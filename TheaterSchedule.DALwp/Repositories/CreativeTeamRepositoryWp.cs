@@ -35,7 +35,6 @@ namespace TheaterSchedule.DALwp.Repositories
                     where (pctm.PerformanceId == performanceId)
                 select new TeamMember
                 {
-                    PerfId = pctm.PerformanceId,
                     Role = role.Role,
                     FirstName = ctmTr.FistName,
                     LastName = ctmTr.LastName,
