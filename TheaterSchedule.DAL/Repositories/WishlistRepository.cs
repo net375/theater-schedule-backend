@@ -7,58 +7,58 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DAL.Repositories
 {
-    public class WatchlistRepository : IWatchlistRepository
+    public class WishlistRepository : IWishlistRepository
     {
         private TheaterDatabaseContext db;
 
-        public WatchlistRepository(TheaterDatabaseContext context)
+        public WishlistRepository(TheaterDatabaseContext context)
         {
             db = context;
         }
 
-        public IEnumerable<WatchlistDataModel> GetWatchlistByPhoneIdentifier(
+        public IEnumerable<WishlistDataModel> GetWishlistByPhoneIdentifier(
             string phoneId, string languageCode)
         {
-            IEnumerable<WatchlistDataModel> resultWatchlist = null;
+            IEnumerable<WishlistDataModel> resultWishlist = null;
 
-            resultWatchlist = from account in db.Account
-                join watchlist in db.Watchlist
-                    on account.AccountId equals watchlist.AccountId
+            resultWishlist = from account in db.Account
+                join Wishlist in db.Wishlist
+                    on account.AccountId equals Wishlist.AccountId
                 join performance in db.Performance
-                    on watchlist.PerformanceId equals performance.PerformanceId
+                    on Wishlist.PerformanceId equals performance.PerformanceId
                 join performanceTr in db.PerformanceTr
                     on performance.PerformanceId equals performanceTr.PerformanceId
                 join language in db.Language
                     on performanceTr.LanguageId equals language.LanguageId
                 where account.PhoneIdentifier == phoneId
                       && languageCode == language.LanguageCode
-                select new WatchlistDataModel()
+                select new WishlistDataModel()
                 {
-                    PerformanceId = watchlist.PerformanceId,
+                    PerformanceId = Wishlist.PerformanceId,
                     MainImage = performance.MainImage,
                     Title = performanceTr.Title
                 };
 
-            return resultWatchlist;
+            return resultWishlist;
         }
 
-        public Watchlist GetPerformanceByPhoneIdAndScheduleId(
+        public Wishlist GetPerformanceByPhoneIdAndPerformanceId(
             string phoneId, int performanceId)
         {
-            return db.Watchlist
+            return db.Wishlist
                 .Include(w => w.Account)
                 .FirstOrDefault(a => a.Account.PhoneIdentifier == phoneId &&
                                      a.PerformanceId == performanceId);
         }
 
-        public void Add(Watchlist performance)
+        public void Add(Wishlist performance)
         {
-            db.Watchlist.Add(performance);
+            db.Wishlist.Add(performance);
         }
 
-        public void Remove(Watchlist performance)
+        public void Remove(Wishlist performance)
         {
-            db.Watchlist.Remove(performance);
+            db.Wishlist.Remove(performance);
         }
     }
 }

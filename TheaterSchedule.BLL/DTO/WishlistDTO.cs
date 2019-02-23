@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace TheaterSchedule.DAL.Models
+namespace TheaterSchedule.BLL.DTO
 {
-    public class WatchlistDataModel
+    public class WishlistDTO
     {
         public int PerformanceId { get; set; }
         public string Title { get; set; }

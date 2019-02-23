@@ -15,9 +15,9 @@
     <Property Name="NewName" Value="MessageText" />
   </Operation>
   <Operation Name="Rename Refactor" Key="b1e2fbb3-1875-448a-b525-ddaab5dd81d9" ChangeDateTime="02/19/2019 20:27:37">
-    <Property Name="ElementName" Value="[dbo].[Watchlist].[ScheduleId]" />
+    <Property Name="ElementName" Value="[dbo].[Wishlist].[ScheduleId]" />
     <Property Name="ElementType" Value="SqlSimpleColumn" />
-    <Property Name="ParentElementName" Value="[dbo].[Watchlist]" />
+    <Property Name="ParentElementName" Value="[dbo].[Wishlist]" />
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="PerformanceId" />
   </Operation>

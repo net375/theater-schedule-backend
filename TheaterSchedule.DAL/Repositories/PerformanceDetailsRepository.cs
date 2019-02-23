@@ -34,9 +34,9 @@ namespace TheaterSchedule.DAL.Repositories
                      Description = performanceTr.Description,
                      Title = performanceTr.Title,
                      IsChecked = (from performance in db.Performance
-                                  join watchlist in db.Watchlist on performance.PerformanceId equals watchlist.PerformanceId
-                                  into watchlist_join
-                                  from w in watchlist_join.DefaultIfEmpty()
+                                  join Wishlist in db.Wishlist on performance.PerformanceId equals Wishlist.PerformanceId
+                                  into Wishlist_join
+                                  from w in Wishlist_join.DefaultIfEmpty()
                                   where (w != null && w.Account.PhoneIdentifier == phoneId && (performance.PerformanceId) == id)
                                   select w).Any(),
                      TeamMember = (from ctm_tm in db.CreativeTeamMemberTr

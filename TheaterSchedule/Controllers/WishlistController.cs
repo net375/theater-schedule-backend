@@ -7,27 +7,27 @@ namespace TheaterSchedule.Controllers
 {
     [Route( "api/[controller]" )]
     [ApiController]
-    public class WatchlistController : Controller
+    public class WishlistController : Controller
     {
-        private IWatchlistService watchlistService;
+        private IWishlistService WishlistService;
 
-        public WatchlistController( IWatchlistService watchlistService )
+        public WishlistController( IWishlistService WishlistService )
         {
-            this.watchlistService = watchlistService;
+            this.WishlistService = WishlistService;
         }
 
         [HttpGet( "{phoneId}/{languageCode}" )]
-        public IEnumerable<WatchlistDTO> LoadWatchlist(
+        public IEnumerable<WishlistDTO> LoadWishlist(
             string phoneId, string languageCode )
         {
-            return watchlistService.LoadWatchlist( phoneId, languageCode );
+            return WishlistService.LoadWishlist( phoneId, languageCode );
         }
 
         [HttpPost( "{phoneId}" )]
         public IActionResult SaveOrDeletePerformance(
             string phoneId, [FromQuery]int performanceId )
         {
-            watchlistService.SaveOrDeletePerformance( phoneId, performanceId);
+            WishlistService.SaveOrDeletePerformance( phoneId, performanceId);
             return Ok();
         }
     }

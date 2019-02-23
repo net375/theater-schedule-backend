@@ -8,52 +8,52 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.BLL.Services
 {
-    public class WatchlistService : IWatchlistService
+    public class WishlistService : IWishlistService
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
-        private IWatchlistRepository watchlistRepository;
+        private IWishlistRepository WishlistRepository;
         private IAccountRepository accountRepository;
 
-        public WatchlistService(
+        public WishlistService(
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
-            IWatchlistRepository watchlistRepository,
+            IWishlistRepository WishlistRepository,
             IAccountRepository accountRepository)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
-            this.watchlistRepository = watchlistRepository;
+            this.WishlistRepository = WishlistRepository;
             this.accountRepository = accountRepository;
         }
 
-        public IEnumerable<WatchlistDTO> LoadWatchlist(
+        public IEnumerable<WishlistDTO> LoadWishlist(
             string phoneId, string languageCode)
         {
             return new MapperConfiguration(
-                    cfg => cfg.CreateMap<WatchlistDataModel, WatchlistDTO>())
+                    cfg => cfg.CreateMap<WishlistDataModel, WishlistDTO>())
                 .CreateMapper()
-                .Map<IEnumerable<WatchlistDataModel>, IEnumerable<WatchlistDTO>>(
-                    watchlistRepository.GetWatchlistByPhoneIdentifier(
+                .Map<IEnumerable<WishlistDataModel>, IEnumerable<WishlistDTO>>(
+                    WishlistRepository.GetWishlistByPhoneIdentifier(
                         phoneId, languageCode));
         }
 
         public void SaveOrDeletePerformance(string phoneId, int performanceId)
         {
-            Watchlist performance =
-                watchlistRepository.GetPerformanceByPhoneIdAndScheduleId(
+            Wishlist performance =
+                WishlistRepository.GetPerformanceByPhoneIdAndPerformanceId(
                     phoneId, performanceId);
 
             if (performance == null)
             {
                 int accountId = accountRepository.GetAccountByPhoneId(phoneId).AccountId;
-                performance = new Watchlist()
+                performance = new Wishlist()
                 {
                     AccountId = accountId,
                     PerformanceId = performanceId
                 };
-                watchlistRepository.Add(performance);
+                WishlistRepository.Add(performance);
             }
             else
             {
-                watchlistRepository.Remove(performance);
+                WishlistRepository.Remove(performance);
             }
 
             theaterScheduleUnitOfWork.Save();

@@ -1,6 +1,6 @@
 SET QUOTED_IDENTIFIER ON
 
-DELETE dbo.Watchlist
+DELETE dbo.Wishlist
 DELETE dbo.PromoAction_TR
 DELETE dbo.PerformanceCreativeTeamMember_TR
 DELETE dbo.Performance_TR
@@ -280,14 +280,14 @@ GO
 SET IDENTITY_INSERT dbo.PromoAction_TR OFF
 GO
 
-INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (1, 10)
-INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (3, 5)
-INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (6, 1)
-INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (8, 6)
-INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (10, 2)
-INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (4, 7)
-INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (2, 3)
-INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (9, 8)
-INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (7, 4)
-INSERT dbo.Watchlist(AccountId, ScheduleId) VALUES (5, 9)
+INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (1, 10)
+INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (3, 5)
+INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (6, 1)
+INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (8, 6)
+INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (10, 2)
+INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (4, 7)
+INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (2, 3)
+INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (9, 8)
+INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (7, 4)
+INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (5, 9)
 

@@ -3,9 +3,9 @@ using TheaterSchedule.BLL.DTO;
 
 namespace TheaterSchedule.BLL.Interfaces
 {
-    public interface IWatchlistService
+    public interface IWishlistService
     {
-        IEnumerable<WatchlistDTO> LoadWatchlist(
+        IEnumerable<WishlistDTO> LoadWishlist(
             string phoneId, string languageCode );
         void SaveOrDeletePerformance( string phoneId, int performanceId );
     }
