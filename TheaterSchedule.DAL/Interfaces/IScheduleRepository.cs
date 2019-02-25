@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Entities.Models;
 using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DAL.Interfaces
 {
-    public interface IScheduleRepository 
+    public interface IScheduleRepository
     {
         IEnumerable<ScheduleDataModel> GetListPerformancesByDateRange(
-            string phoneId, string languageCode, 
+            string languageCode,
             DateTime? startDate, DateTime? endDate);
     }
 }

@@ -11,6 +11,7 @@ namespace TheaterSchedule.BLL.DTO
         public int MinimumAge { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }
+        public bool IsChecked { get; set; }
         public IEnumerable<TeamMemberDTO> TeamMember { get; set; }
         public IEnumerable<string> HashTag { get; set; }
         public IEnumerable<byte []> GalleryImage { get; set; }

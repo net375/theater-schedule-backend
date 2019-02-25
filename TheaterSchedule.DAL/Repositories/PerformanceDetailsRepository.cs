@@ -15,7 +15,7 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = context;
         }
 
-        public PerformanceDetailsDataModel GetInformationAboutPerformanceScreen( string languageCode, int id )
+        public PerformanceDetailsDataModel GetInformationAboutPerformanceScreen(string phoneId, string languageCode, int id )
         {
             PerformanceDetailsDataModel perfomanceData = null;
             perfomanceData =
@@ -33,6 +33,12 @@ namespace TheaterSchedule.DAL.Repositories
                      Duration = performance.Duration,
                      Description = performanceTr.Description,
                      Title = performanceTr.Title,
+                     IsChecked = (from performance in db.Performance
+                                  join Wishlist in db.Wishlist on performance.PerformanceId equals Wishlist.PerformanceId
+                                  into Wishlist_join
+                                  from w in Wishlist_join.DefaultIfEmpty()
+                                  where (w != null && w.Account.PhoneIdentifier == phoneId && (performance.PerformanceId) == id)
+                                  select w).Any(),
                      TeamMember = (from ctm_tm in db.CreativeTeamMemberTr
                                    join ctm in db.CreativeTeamMember on ctm_tm.CreativeTeamMemberId equals ctm.CreativeTeamMemberId
                                    join pctm in db.PerformanceCreativeTeamMember on ctm.CreativeTeamMemberId equals pctm.CreativeTeamMemberId
