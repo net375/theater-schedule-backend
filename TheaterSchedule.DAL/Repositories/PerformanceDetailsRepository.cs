@@ -43,14 +43,16 @@ namespace TheaterSchedule.DAL.Repositories
                                    join ctm in db.CreativeTeamMember on ctm_tm.CreativeTeamMemberId equals ctm.CreativeTeamMemberId
                                    join pctm in db.PerformanceCreativeTeamMember on ctm.CreativeTeamMemberId equals pctm.CreativeTeamMemberId
                                    join pctm_tr in db.PerformanceCreativeTeamMemberTr on pctm.PerformanceCreativeTeamMemberId equals pctm_tr.PerformanceCreativeTeamMemberId
-                                       into pctm_tr_join
-                                   from role in pctm_tr_join.DefaultIfEmpty()
+                                   join role_tr in db.RoleTr on pctm_tr.RoleTrid equals role_tr.RoleTrid
+                                       into role_tr_join
+                                   from role in role_tr_join.DefaultIfEmpty()
                                    where ((pctm.PerformanceId == id)
                                           && (ctm_tm.LanguageId == language.LanguageId)
                                           && (role.LanguageId == language.LanguageId))
                                    select new TeamMember
                                    {
                                        Role = role.Role,
+                                       RoleKey = role.RoleKey,
                                        FirstName = ctm_tm.FistName,
                                        LastName = ctm_tm.LastName,
 
