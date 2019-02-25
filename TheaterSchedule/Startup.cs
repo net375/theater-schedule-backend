@@ -34,7 +34,7 @@ namespace TheaterSchedule
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             }); 
-
+            
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);
             //repositories
