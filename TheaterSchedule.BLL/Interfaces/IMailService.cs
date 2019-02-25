@@ -6,6 +6,6 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface IMailService
     {
-        Task<bool> Send(EmailMessageDTO messageDTO);
+        Task Send(EmailMessageDTO messageDTO);
     }
 }
