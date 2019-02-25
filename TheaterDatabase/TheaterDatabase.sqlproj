@@ -71,7 +71,7 @@
     <Build Include="dbo\Tables\PerformanceCreativeTeamMember.sql" />
     <Build Include="dbo\Tables\Schedule.sql" />
     <Build Include="dbo\Tables\Settings.sql" />
-    <Build Include="dbo\Tables\Watchlist.sql" />
+    <Build Include="dbo\Tables\Wishlist.sql" />
     <Build Include="dbo\Tables\HashTag_TR.sql" />
     <Build Include="dbo\Tables\Performance_TR.sql" />
     <Build Include="dbo\Tables\CreativeTeamMember_TR.sql" />
@@ -83,8 +83,12 @@
     <Build Include="dbo\Tables\Excursion_TR.sql" />
     <Build Include="dbo\Tables\PromoAction_TR.sql" />
     <Build Include="dbo\Tables\PromoAction.sql" />
+    <Build Include="dbo\Tables\Role_TR.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TheaterDatabase.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TheaterDatabase.publish.xml" />
   </ItemGroup>
 </Project>
