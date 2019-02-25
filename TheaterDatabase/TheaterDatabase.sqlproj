@@ -88,4 +88,7 @@
   <ItemGroup>
     <RefactorLog Include="TheaterDatabase.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="TheaterDatabase.publish.xml" />
+  </ItemGroup>
 </Project>
