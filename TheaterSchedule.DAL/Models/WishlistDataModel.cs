@@ -1,12 +1,10 @@
 ﻿using System;
 
-namespace TheaterSchedule.BLL.DTO
+namespace TheaterSchedule.DAL.Models
 {
-    public class WatchlistDTO
+    public class WishlistDataModel
     {
-        public int ScheduleId { get; set; }
         public int PerformanceId { get; set; }
-        public DateTime Beginning { get; set; }
         public string Title { get; set; }
         public byte[] MainImage { get; set; }
     }
