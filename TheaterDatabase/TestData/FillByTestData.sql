@@ -1,5 +1,6 @@
 SET QUOTED_IDENTIFIER ON
 
+DELETE dbo.Role_TR
 DELETE dbo.Wishlist
 DELETE dbo.PromoAction_TR
 DELETE dbo.PerformanceCreativeTeamMember_TR
@@ -249,18 +250,30 @@ INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, Perf
 INSERT dbo.Performance_TR(Performance_TRId, Title, LanguageId, Description, PerformanceId) VALUES (10, N'Кіт у чоботях', 2,                 N'Вистава за казкою видатного французького письменника Шарля Перро “Кіт у Чоботях”. Лялькова вистава в стилі “бароко” розповідає про винахідливого Кота, справжню дружбу та про те, що немає недосяжних цілей, якщо є розум, наполегливість та віра в себе. Це музичне, динамічне, веселе дійство не залишить байдужим маленьких глядачів.', 10)
 
 SET IDENTITY_INSERT dbo.Performance_TR OFF
+SET IDENTITY_INSERT dbo.Role_TR ON
+
+INSERT dbo.Role_TR (Role_TRId, Role, ROLE_KEY, LanguageId) VALUES (1,  N'Художник',  N'Painter', 2)
+INSERT dbo.Role_TR (Role_TRId, Role, ROLE_KEY, LanguageId) VALUES (2,  N'Painter',  N'Painter', 1)
+INSERT dbo.Role_TR (Role_TRId, Role, ROLE_KEY, LanguageId) VALUES (3,  N'Хореограф',  N'Choreographer', 2)
+INSERT dbo.Role_TR (Role_TRId, Role, ROLE_KEY, LanguageId) VALUES (4,  N'Choreographer',  N'Choreographer', 1)
+INSERT dbo.Role_TR (Role_TRId, Role, ROLE_KEY, LanguageId) VALUES (5,  N'Композитор',  N'Composer', 2)
+INSERT dbo.Role_TR (Role_TRId, Role, ROLE_KEY, LanguageId) VALUES (6,  N'Composer',  N'Composer', 1)
+INSERT dbo.Role_TR (Role_TRId, Role, ROLE_KEY, LanguageId) VALUES (7,  N'Автор',  N'Author', 2)
+INSERT dbo.Role_TR (Role_TRId, Role, ROLE_KEY, LanguageId) VALUES (8,  N'Author',  N'Author', 1)
+
+SET IDENTITY_INSERT dbo.Role_TR OFF
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR ON
 
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (1,  N'Художник', 2, 1)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (2,  N'Композитор', 2, 2)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (3,  N'Choreographer', 1, 3)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (4,  N'Producer', 1, 4)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (5,  N'Composer', 1, 5)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (6,  N'Художник', 2, 6)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (7,  N'Хореограф', 2, 7)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (8,  N'Композитор', 2, 8)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (9,  N'Choreographer', 1, 9)
-INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role, LanguageId, PerformanceCreativeTeamMemberId) VALUES (10, N'Composer', 1, 10)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role_TRId, PerformanceCreativeTeamMemberId) VALUES (1, 1, 1)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role_TRId, PerformanceCreativeTeamMemberId) VALUES (2, 2, 2)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role_TRId, PerformanceCreativeTeamMemberId) VALUES (3, 3, 3)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role_TRId, PerformanceCreativeTeamMemberId) VALUES (4, 4, 4)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role_TRId, PerformanceCreativeTeamMemberId) VALUES (5, 5, 5)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role_TRId, PerformanceCreativeTeamMemberId) VALUES (6, 6, 6)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role_TRId, PerformanceCreativeTeamMemberId) VALUES (7, 7, 7)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role_TRId, PerformanceCreativeTeamMemberId) VALUES (8, 8, 8)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role_TRId, PerformanceCreativeTeamMemberId) VALUES (9, 1, 9)
+INSERT dbo.PerformanceCreativeTeamMember_TR(PerformanceCreativeTeamMember_TRId, Role_TRId, PerformanceCreativeTeamMemberId) VALUES (10,2, 10)
 
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR OFF
 
