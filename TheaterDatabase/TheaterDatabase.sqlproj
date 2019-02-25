@@ -71,7 +71,7 @@
     <Build Include="dbo\Tables\PerformanceCreativeTeamMember.sql" />
     <Build Include="dbo\Tables\Schedule.sql" />
     <Build Include="dbo\Tables\Settings.sql" />
-    <Build Include="dbo\Tables\Watchlist.sql" />
+    <Build Include="dbo\Tables\Wishlist.sql" />
     <Build Include="dbo\Tables\HashTag_TR.sql" />
     <Build Include="dbo\Tables\Performance_TR.sql" />
     <Build Include="dbo\Tables\CreativeTeamMember_TR.sql" />
