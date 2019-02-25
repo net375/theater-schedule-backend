@@ -15,7 +15,7 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = context;
         }
 
-        public PerformanceDetailsDataModel GetInformationAboutPerformanceScreen( string languageCode, int id )
+        public PerformanceDetailsDataModel GetInformationAboutPerformanceScreen(string phoneId, string languageCode, int id )
         {
             PerformanceDetailsDataModel perfomanceData = null;
             perfomanceData =
@@ -33,18 +33,26 @@ namespace TheaterSchedule.DAL.Repositories
                      Duration = performance.Duration,
                      Description = performanceTr.Description,
                      Title = performanceTr.Title,
+                     IsChecked = (from performance in db.Performance
+                                  join Wishlist in db.Wishlist on performance.PerformanceId equals Wishlist.PerformanceId
+                                  into Wishlist_join
+                                  from w in Wishlist_join.DefaultIfEmpty()
+                                  where (w != null && w.Account.PhoneIdentifier == phoneId && (performance.PerformanceId) == id)
+                                  select w).Any(),
                      TeamMember = (from ctm_tm in db.CreativeTeamMemberTr
                                    join ctm in db.CreativeTeamMember on ctm_tm.CreativeTeamMemberId equals ctm.CreativeTeamMemberId
                                    join pctm in db.PerformanceCreativeTeamMember on ctm.CreativeTeamMemberId equals pctm.CreativeTeamMemberId
                                    join pctm_tr in db.PerformanceCreativeTeamMemberTr on pctm.PerformanceCreativeTeamMemberId equals pctm_tr.PerformanceCreativeTeamMemberId
-                                       into pctm_tr_join
-                                   from role in pctm_tr_join.DefaultIfEmpty()
+                                   join role_tr in db.RoleTr on pctm_tr.RoleTrid equals role_tr.RoleTrid
+                                       into role_tr_join
+                                   from role in role_tr_join.DefaultIfEmpty()
                                    where ((pctm.PerformanceId == id)
                                           && (ctm_tm.LanguageId == language.LanguageId)
                                           && (role.LanguageId == language.LanguageId))
                                    select new TeamMember
                                    {
                                        Role = role.Role,
+                                       RoleKey = role.RoleKey,
                                        FirstName = ctm_tm.FistName,
                                        LastName = ctm_tm.LastName,
 
