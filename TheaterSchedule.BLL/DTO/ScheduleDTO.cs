@@ -9,6 +9,5 @@ namespace TheaterSchedule.BLL.DTO
         public DateTime Beginning { get; set; }
         public string Title { get; set; }
         public byte[] MainImage { get; set; }
-        public bool IsChecked { get; set; }
     }
 }

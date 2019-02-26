@@ -6,7 +6,7 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
-    class ScheduleRepositoryWp : IScheduleRepository
+    class ScheduleRepositoryWp //: IScheduleRepository
     {
         public IEnumerable<ScheduleDataModel> GetListPerformancesByDateRange(string phoneId, string languageCode, DateTime? startDate, DateTime? endDate)
         {

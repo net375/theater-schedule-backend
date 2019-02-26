@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
-
-
 
 namespace TheaterSchedule.Controllers
 {
@@ -17,15 +10,15 @@ namespace TheaterSchedule.Controllers
     {
         IPerformanceDetailsService performanceDetailsService;
 
-        public PerformanceDetailsController( IPerformanceDetailsService performanceDetailsService )
+        public PerformanceDetailsController(IPerformanceDetailsService performanceDetailsService)
         {
             this.performanceDetailsService = performanceDetailsService;
         }
 
-        [HttpGet("{languageCode}/GetInfo")]
-        public PerformanceDetailsDTO GetInfo( string languageCode, int id )
+        [HttpGet("{phoneId}/{languageCode}/GetInfo")]
+        public PerformanceDetailsDTO GetInfo(string phoneId, string languageCode, int id)
         {
-            return performanceDetailsService.LoadPerformanceDetails(languageCode, id);
+            return performanceDetailsService.LoadPerformanceDetails(phoneId, languageCode, id);
         }
     }
 }
