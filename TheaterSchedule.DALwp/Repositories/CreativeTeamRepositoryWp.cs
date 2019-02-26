@@ -42,16 +42,7 @@ namespace TheaterSchedule.DALwp.Repositories
                     RoleKey = creativeTeamMemberWp.RoleKey
                 } );
             }
-
-            creativeTeam = new List<TeamMember>
-            {
-                new TeamMember { FirstName = "a" },
-                new TeamMember { FirstName = "b" },
-                new TeamMember { FirstName = "c" },
-                new TeamMember { FirstName = "d" },
-                new TeamMember { FirstName = "e" }
-            };
-
+            
             return creativeTeam;
         }
     }
