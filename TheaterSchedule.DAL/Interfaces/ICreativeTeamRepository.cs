@@ -6,6 +6,6 @@ namespace TheaterSchedule.DAL.Interfaces
     public interface ICreativeTeamRepository
     {
         IEnumerable<TeamMember>
-            GetCreativeTeamByPerformanceId( int performanceId );
+            GetCreativeTeam( string languageCode, int performanceId );
     }
 }

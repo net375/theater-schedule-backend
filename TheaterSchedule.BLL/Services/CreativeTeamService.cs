@@ -21,14 +21,14 @@ namespace TheaterSchedule.BLL.Services
         }
 
         public IEnumerable<TeamMemberDTO> LoadCreativeTeam(
-            int performanceId )
+            string languageCode, int performanceId )
         {
             return new MapperConfiguration(
                     cfg => cfg.CreateMap<TeamMember, TeamMemberDTO>() )
                 .CreateMapper()
                 .Map<IEnumerable<TeamMember>, IEnumerable<TeamMemberDTO>>(
-                    creativeTeamRepository.GetCreativeTeamByPerformanceId(
-                        performanceId ) );
+                    creativeTeamRepository.GetCreativeTeam(
+                        languageCode, performanceId ) );
         }
     }
 }

@@ -16,11 +16,11 @@ namespace TheaterSchedule.Controllers
             this.creativeTeamService = creativeTeamService;
         }
 
-        [HttpGet( "{performanceId}" )]
+        [HttpGet( "{languageCode}/{performanceId}" )]
         public IEnumerable<TeamMemberDTO> LoadCreativeTeam(
-            int performanceId )
+            string languageCode, int performanceId )
         {
-            return creativeTeamService.LoadCreativeTeam( performanceId );
+            return creativeTeamService.LoadCreativeTeam( languageCode, performanceId );
         }
     }
 }

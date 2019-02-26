@@ -1,8 +1,10 @@
-﻿using Entities.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TheaterSchedule.DAL.Interfaces;
+using System.Threading.Tasks;
+using WordPressPCL;
+using TheaterSchedule.DALwp.Models;
+using Entities.Models;
 using TheaterSchedule.DAL.Models;
-using System.Linq;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
@@ -15,32 +17,42 @@ namespace TheaterSchedule.DALwp.Repositories
             db = context;
         }
 
-        public IEnumerable<TeamMember>
-            GetCreativeTeamByPerformanceId( int performanceId )
+        private async Task<IEnumerable<CreativeTeamMemberWp>> GetCreativeTeamFromWPApi(
+            string languageCode, int performanceId )
         {
-            IEnumerable<TeamMember> resultCreativeTeam = null;
+            var client = new WordPressClient( "https://lvivpuppet.com/wp-json" );
 
-            resultCreativeTeam = from ctmTr in db.CreativeTeamMemberTr
-                join ctm in db.CreativeTeamMember 
-                    on ctmTr.CreativeTeamMemberId 
-                    equals ctm.CreativeTeamMemberId
-                join pctm in db.PerformanceCreativeTeamMember 
-                    on ctm.CreativeTeamMemberId 
-                    equals pctm.CreativeTeamMemberId
-                join pctmTr in db.PerformanceCreativeTeamMemberTr 
-                    on pctm.PerformanceCreativeTeamMemberId 
-                    equals pctmTr.PerformanceCreativeTeamMemberId
-                    into pctmTrJoin
-                from role in pctmTrJoin.DefaultIfEmpty()
-                    where (pctm.PerformanceId == performanceId)
-                select new TeamMember
+            return await client.CustomRequest
+                .Get<IEnumerable<CreativeTeamMemberWp>>(
+                    $"wp/v2/{languageCode}/performance/{performanceId}/creativeteam" );
+        }
+
+        public IEnumerable<TeamMember> GetCreativeTeam( string languageCode, int performanceId )
+        {
+            var taskResult = GetCreativeTeamFromWPApi( languageCode, performanceId );
+            List<TeamMember> creativeTeam = new List<TeamMember>();
+
+            foreach ( var creativeTeamMemberWp in taskResult.Result )
+            {
+                creativeTeam.Add( new TeamMember
                 {
-                    Role = role.Role,
-                    FirstName = ctmTr.FistName,
-                    LastName = ctmTr.LastName,
-                };
+                    FirstName = creativeTeamMemberWp.FirstName,
+                    LastName = creativeTeamMemberWp.LastName,
+                    Role = creativeTeamMemberWp.Role,
+                    RoleKey = creativeTeamMemberWp.RoleKey
+                } );
+            }
 
-            return resultCreativeTeam;
+            creativeTeam = new List<TeamMember>
+            {
+                new TeamMember { FirstName = "a" },
+                new TeamMember { FirstName = "b" },
+                new TeamMember { FirstName = "c" },
+                new TeamMember { FirstName = "d" },
+                new TeamMember { FirstName = "e" }
+            };
+
+            return creativeTeam;
         }
     }
 }
