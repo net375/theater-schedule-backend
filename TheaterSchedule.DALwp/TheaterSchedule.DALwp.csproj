@@ -5,15 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="WordPressPCL" Version="1.6.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TheaterSchedule.BLL\TheaterSchedule.BLL.csproj" />
     <ProjectReference Include="..\TheaterSchedule.DAL\TheaterSchedule.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

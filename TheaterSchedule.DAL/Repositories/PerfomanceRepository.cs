@@ -6,6 +6,8 @@ using System.Linq;
 using TheaterSchedule.DAL.Models;
 using Entities.Models;
 using TheaterSchedule.DAL.Interfaces;
+using System.Threading.Tasks;
+
 namespace TheaterSchedule.DAL.Repositories
 {
     public class PerfomanceRepository : IPerfomanceRepository
@@ -29,9 +31,15 @@ namespace TheaterSchedule.DAL.Repositories
                     Title = perfdetails.Title,
                     MainImage = performance.MainImage,
                     PerformanceId = performance.PerformanceId
-  
+
                 }).ToList();
             return result;
+        }
+
+
+        Task<IEnumerable<PerformanceDataModel>> IPerfomanceRepository.GetPerformanceTitlesAndImagesAsync(string languageCode)
+        {
+            throw new NotImplementedException();
         }
     }
 }

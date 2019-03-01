@@ -8,12 +8,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheaterSchedule.DAL", "TheaterSchedule.DAL\TheaterSchedule.DAL.csproj", "{70DAEA2D-DF69-4017-B237-3251288E1977}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheaterSchedule", "TheaterSchedule\TheaterSchedule.csproj", "{CF5C553B-DC5D-478B-8947-9FAE695B9155}"
+	ProjectSection(ProjectDependencies) = postProject
+		{05A9ACCA-283C-4A13-83A9-F54D869ED224} = {05A9ACCA-283C-4A13-83A9-F54D869ED224}
+	EndProjectSection
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TheaterDatabase", "TheaterDatabase\TheaterDatabase.sqlproj", "{23EE4713-DA38-41CB-8B1E-A233DD3909C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{44DB1505-9B18-4BCD-B059-E677C4B9C95B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheaterSchedule.DALwp", "TheaterSchedule.DALwp\TheaterSchedule.DALwp.csproj", "{05A9ACCA-283C-4A13-83A9-F54D869ED224}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheaterSchedule.DALwp", "TheaterSchedule.DALwp\TheaterSchedule.DALwp.csproj", "{05A9ACCA-283C-4A13-83A9-F54D869ED224}"
 	ProjectSection(ProjectDependencies) = postProject
 		{70DAEA2D-DF69-4017-B237-3251288E1977} = {70DAEA2D-DF69-4017-B237-3251288E1977}
 	EndProjectSection

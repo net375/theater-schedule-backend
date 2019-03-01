@@ -11,6 +11,7 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
+using TheaterSchedule.DALwp.Repositories;
 using TheaterSchedule.MiddlewareComponents;
 
 namespace TheaterSchedule
@@ -34,15 +35,18 @@ namespace TheaterSchedule
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             }); 
-            
+          
+
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);
+
+          
             //repositories
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
-            services.AddScoped<IPerfomanceRepository, PerfomanceRepository>();
+            services.AddScoped<IPerfomanceRepository, PerfomanceRepositoryWp>();
             services.AddScoped<IPerformanceDetailsRepository, PerformanceDetailsRepository>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();

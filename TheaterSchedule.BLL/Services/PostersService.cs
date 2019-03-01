@@ -8,6 +8,7 @@ using TheaterSchedule.BLL.Interfaces;
 using Entities.Models;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
+using System.Threading.Tasks;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -24,16 +25,18 @@ namespace TheaterSchedule.BLL.Services
             this.imageService = imageService;
         }
 
-        public List<PostersDTO> LoadPostersData(string languageCode)
+        public async Task<List<PostersDTO>> LoadPostersData(string languageCode)
         {
             List<PostersDTO> postersRequest = new List<PostersDTO>();
-            List<PerformanceDataModel> selectedPerformances = perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
+          
+            var selectedPerformances =await perfomanceRepository.GetPerformanceTitlesAndImagesAsync(languageCode);
 
             foreach (var performance in selectedPerformances)
             {
                 postersRequest.Add(new PostersDTO()
                 {
-                    MainImage = imageService.ImageToBase64(performance.MainImage),
+                    MainImage = performance.MainImageUrl ==null ? imageService.ImageToBase64(performance.MainImage) : performance.MainImageUrl,
+                    
                     Title = performance.Title,
                     PerformanceId=performance.PerformanceId
 

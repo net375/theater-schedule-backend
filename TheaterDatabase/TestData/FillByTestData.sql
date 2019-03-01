@@ -22,6 +22,8 @@ DELETE dbo.HashTag
 DELETE dbo.Excursion
 DELETE dbo.CreativeTeamMember
 
+SET IDENTITY_INSERT dbo.Performance OFF
+SET IDENTITY_INSERT dbo.PromoAction_TR OFF
 SET IDENTITY_INSERT dbo.CreativeTeamMember ON
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (1)
 INSERT dbo.CreativeTeamMember(CreativeTeamMemberId) VALUES (2)
@@ -69,16 +71,16 @@ INSERT dbo.Language(LanguageId, LanguageCode) VALUES (2, 'uk')
 SET IDENTITY_INSERT dbo.Language OFF
 SET IDENTITY_INSERT dbo.Performance ON
 
-INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (1, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\lisovychok_resize.jpg', SINGLE_BLOB) image), 83, 65, 408, 8)
-INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (2, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\doroga_resize.jpg', SINGLE_BLOB) image), 126, 61, 400, 2)
-INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (3, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\Taras_resize.jpg', SINGLE_BLOB) image), 114, 50, 430, 4)
-INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (4, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\sny_resize.jpg', SINGLE_BLOB) image), 180, 62, 478, 3)
-INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (5, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\sadok_resize.jpg', SINGLE_BLOB) image), 165, 54, 305, 2)
-INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (6, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\Koza_resize.jpg', SINGLE_BLOB) image), 61, 52, 360, 5)
-INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (7, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\pidkova_resize.jpg', SINGLE_BLOB) image), 135, 66, 346, 5)
-INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (8, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\kolobok_resize.jpg', SINGLE_BLOB) image), 71, 55, 386, 5)
-INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (9, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\kotyk_pivnyk_resize.jpg', SINGLE_BLOB) image), 126, 56, 462, 9)
-INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (10, (SELECT * FROM OPENROWSET(BULK N'$(FullScriptDir)\TheaterDatabase\TestData\MainImages\Cat_resize.jpg', SINGLE_BLOB) image), 159, 54, 340, 3)
+INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (1, (SELECT * FROM OPENROWSET(BULK 'C:\\inetpub\\wwwroot\\theater-schedule-backend\\TheaterDatabase\\TestData\\MainImages\\lisovychok_resize.jpg', SINGLE_BLOB) image), 83, 65, 408, 8)
+INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (2, (SELECT * FROM OPENROWSET(BULK 'C:\\inetpub\\wwwroot\\theater-schedule-backend\\TheaterDatabase\\TestData\\MainImages\\doroga_resize.jpg', SINGLE_BLOB) image), 126, 61, 400, 2)
+INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (3, (SELECT * FROM OPENROWSET(BULK 'C:\\inetpub\\wwwroot\\theater-schedule-backend\\TheaterDatabase\\TestData\\MainImages\\Taras_resize.jpg', SINGLE_BLOB) image), 114, 50, 430, 4)
+INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (4, (SELECT * FROM OPENROWSET(BULK 'C:\\inetpub\\wwwroot\\theater-schedule-backend\\TheaterDatabase\\TestData\\MainImages\\sny_resize.jpg', SINGLE_BLOB) image), 180, 62, 478, 3)
+INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (5, (SELECT * FROM OPENROWSET(BULK 'C:\\inetpub\\wwwroot\\theater-schedule-backend\\TheaterDatabase\\TestData\\MainImages\\sadok_resize.jpg', SINGLE_BLOB) image), 165, 54, 305, 2)
+INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (6, (SELECT * FROM OPENROWSET(BULK 'C:\\inetpub\\wwwroot\\theater-schedule-backend\\TheaterDatabase\\TestData\\MainImages\\Koza_resize.jpg', SINGLE_BLOB) image), 61, 52, 360, 5)
+INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (7, (SELECT * FROM OPENROWSET(BULK 'C:\\inetpub\\wwwroot\\theater-schedule-backend\\TheaterDatabase\\TestData\\MainImages\\pidkova_resize.jpg', SINGLE_BLOB) image), 135, 66, 346, 5)
+INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (8, (SELECT * FROM OPENROWSET(BULK 'C:\\inetpub\\wwwroot\\theater-schedule-backend\\TheaterDatabase\\TestData\\MainImages\\kolobok_resize.jpg', SINGLE_BLOB) image), 71, 55, 386, 5)
+INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (9, (SELECT * FROM OPENROWSET(BULK 'C:\\inetpub\\wwwroot\\theater-schedule-backend\\TheaterDatabase\\TestData\\MainImages\\kotyk_pivnyk_resize.jpg', SINGLE_BLOB) image), 126, 56, 462, 9)
+INSERT dbo.Performance(PerformanceId, MainImage, Duration, MinPrice, MaxPrice, MinimumAge) VALUES (10, (SELECT * FROM OPENROWSET(BULK 'C:\\inetpub\\wwwroot\\theater-schedule-backend\\TheaterDatabase\\TestData\\MainImages\\Cat_resize.jpg', SINGLE_BLOB) image), 159, 54, 340, 3)
 
 SET IDENTITY_INSERT dbo.Performance OFF
 
@@ -94,6 +96,9 @@ INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (8, '2008-04-25
 INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (9, '1982-06-20 13:26:42.930', '1975-07-05 10:31:33.970')
 INSERT dbo.PromoAction(PromoActionId, StartDate, EndDate) VALUES (10, '1971-09-12 06:21:06.460', '2016-12-24 22:52:08.110')
 SET IDENTITY_INSERT dbo.PromoAction OFF
+
+SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember ON
+
 
 SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember ON
 
@@ -279,28 +284,10 @@ SET IDENTITY_INSERT dbo.PerformanceCreativeTeamMember_TR OFF
 
 SET IDENTITY_INSERT dbo.PromoAction_TR ON
 GO
-INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (1, N'There will be a description of the promo action № 1', N'Promo action № 1', 1, 1)
-INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (2, N'Тут буде опис промоакції № 2', N'Промоакція № 2', 2, 2)
-INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (3, N'Тут буде опис промоакції № 3', N'Промоакція № 3', 2, 3)
-INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (4, N'There will be a description of the promo action № 4', N'Promo action № 4', 1, 4)
-INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (5, N'There will be a description of the promo action № 5', N'Promo action № 5', 1, 5)
-INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (6, N'Тут буде опис промоакції № 6', N'Промоакція № 6', 2, 6)
-INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (7, N'Тут буде опис промоакції № 7', N'Промоакція № 7', 2, 7)
-INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (8, N'There will be a description of the promo action № 8', N'Promo action № 8', 1, 8)
-INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (9, N'There will be a description of the promo action № 9', N'Promo action № 9', 1, 9)
-INSERT dbo.PromoAction_TR(PromoAction_TRId, Description, PromoActionName, LanguageId, PromoActionId) VALUES (10, N'Тут буде опис промоакції № 10', N'Промоакція № 10', 2, 10)
-GO
-SET IDENTITY_INSERT dbo.PromoAction_TR OFF
+
+
 GO
 
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (1, 10)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (3, 5)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (6, 1)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (8, 6)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (10, 2)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (4, 7)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (2, 3)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (9, 8)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (7, 4)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (5, 9)
+
+
 

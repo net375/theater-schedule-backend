@@ -20,9 +20,9 @@ namespace TheaterSchedule.Controllers
 
         // GET: api/Posters
         [HttpGet("{languageCode}")]
-        public JsonResult Get(string languageCode)
+        public async Task<JsonResult> Get(string languageCode)
         {
-            return new JsonResult(postersService.LoadPostersData(languageCode));
+            return new JsonResult(await postersService.LoadPostersData(languageCode));
         }
 
     }
