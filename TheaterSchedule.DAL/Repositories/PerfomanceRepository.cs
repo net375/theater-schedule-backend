@@ -39,6 +39,7 @@ namespace TheaterSchedule.DAL.Repositories
 
         Task<IEnumerable<PerformanceDataModel>> IPerfomanceRepository.GetPerformanceTitlesAndImagesAsync(string languageCode)
         {
+            //TODO
             throw new NotImplementedException();
         }
     }
