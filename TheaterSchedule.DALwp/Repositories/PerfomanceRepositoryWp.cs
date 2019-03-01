@@ -56,6 +56,8 @@ namespace TheaterSchedule.DALwp.Repositories
     {
         public async Task<IEnumerable<PerformanceDataModel>> GetPerformanceTitlesAndImagesAsync(string languageCode)
         {
+            //no localisation yet
+
             var client = new WordPressClient("https://lvivpuppet.com/wp-json");
             var performances = await client.CustomRequest.Get<IEnumerable<Performance>>($"wp/v2/performance");
             List<Media> medias = new List<Media>();

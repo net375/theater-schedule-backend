@@ -17,7 +17,6 @@ namespace TheaterSchedule.Controllers
         {
             this.postersService = postersService;
         }
-
         // GET: api/Posters
         [HttpGet("{languageCode}")]
         public async Task<JsonResult> Get(string languageCode)
