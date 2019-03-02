@@ -22,20 +22,20 @@ namespace TheaterSchedule.DAL.Repositories
             IEnumerable<WishlistDataModel> resultWishlist = null;
 
             resultWishlist = from account in db.Account
-                join Wishlist in db.Wishlist
-                    on account.AccountId equals Wishlist.AccountId
+                join wishlist in db.Wishlist
+                    on account.AccountId equals wishlist.AccountId
                 join performance in db.Performance
-                    on Wishlist.PerformanceId equals performance.PerformanceId
+                    on wishlist.PerformanceId equals performance.PerformanceId
                 join performanceTr in db.PerformanceTr
                     on performance.PerformanceId equals performanceTr.PerformanceId
                 join language in db.Language
                     on performanceTr.LanguageId equals language.LanguageId
                 where account.PhoneIdentifier == phoneId
                       && languageCode == language.LanguageCode
-                orderby Wishlist.WishPerformanceId descending 
+                orderby wishlist.WishPerformanceId descending 
                 select new WishlistDataModel()
                 {
-                    PerformanceId = Wishlist.PerformanceId,
+                    PerformanceId = wishlist.PerformanceId,
                     MainImage = performance.MainImage,
                     Title = performanceTr.Title
                 };
