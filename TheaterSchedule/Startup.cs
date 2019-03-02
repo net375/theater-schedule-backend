@@ -28,7 +28,8 @@ namespace TheaterSchedule
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMemoryCache();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);         
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -62,7 +63,7 @@ namespace TheaterSchedule
             services.AddScoped<IExcursionService, ExcursionService>();
             services.AddScoped<IPromoActionService, PromoActionService>();
             services.AddScoped<IImageRepository, ImageRepository>();
-            services.AddMemoryCache();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

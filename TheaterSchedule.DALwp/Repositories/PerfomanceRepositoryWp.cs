@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,29 +55,29 @@ namespace TheaterSchedule.DALwp.Repositories
 
     public class PerfomanceRepositoryWp : IPerfomanceRepository
     {
+
         public async Task<IEnumerable<PerformanceDataModel>> GetPerformanceTitlesAndImagesAsync(string languageCode)
         {
             //no localisation yet
-
-            var client = new WordPressClient("https://lvivpuppet.com/wp-json");
-            var performances = await client.CustomRequest.Get<IEnumerable<Performance>>($"wp/v2/performance");
-            List<Media> medias = new List<Media>();
-            foreach (var p in performances)
-            {
-                medias.Add(await client.CustomRequest.Get<Media>($"wp/v2/media/{p.Featured_media}"));
-            }
-
-            List<PerformanceDataModel> result = performances.Join(medias,
-                p => p.Featured_media,
-                m => m.Id,
-                (p, m) => new PerformanceDataModel()
+           
+                var client = new WordPressClient("https://lvivpuppet.com/wp-json");
+                var performances = await client.CustomRequest.Get<IEnumerable<Performance>>($"wp/v2/performance");
+                List<Media> medias = new List<Media>();
+                foreach (var p in performances)
                 {
-                    PerformanceId = p.Id,
-                    Title = p.Title.Rendered,
-                    MainImageUrl = m.Media_details.Sizes.Full.Source_url
-                }).ToList();
-
-            return result;
+                    medias.Add(await client.CustomRequest.Get<Media>($"wp/v2/media/{p.Featured_media}"));
+                }
+            List<PerformanceDataModel> performancesData = performances.Join(medias,
+                   p => p.Featured_media,
+                   m => m.Id,
+                   (p, m) => new PerformanceDataModel()
+                   {
+                       PerformanceId = p.Id,
+                       Title = p.Title.Rendered,
+                       MainImageUrl = m.Media_details.Sizes.Full.Source_url
+                   }).ToList();            
+            
+            return performancesData;
         }
     }
 }
