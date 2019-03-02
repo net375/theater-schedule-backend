@@ -6,7 +6,7 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
-    class PerformanceDetailsRepositoryWp : IPerformanceDetailsRepository
+    class PerformanceDetailsRepositoryWp //: IPerformanceDetailsRepository
     {
         public PerformanceDetailsDataModel GetInformationAboutPerformanceScreen(string languageCode, int id)
         {
