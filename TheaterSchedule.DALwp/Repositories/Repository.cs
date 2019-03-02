@@ -2,7 +2,7 @@
 using TheaterSchedule.DAL.Interfaces;
 
 
-namespace TheaterSchedule.DAL.Repositories
+namespace TheaterSchedule.DALwp.Repositories
 {
     public class Repository: IRepository
     {

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using WordPressPCL;
 using WordPressPCL.Models;
 using TheaterSchedule.DAL.Models;
-using TheaterSchedule.DAL.Repositories;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
