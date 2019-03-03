@@ -293,14 +293,20 @@ GO
 SET IDENTITY_INSERT dbo.PromoAction_TR OFF
 GO
 
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (1, 10)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (3, 5)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (6, 1)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (8, 6)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (10, 2)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (4, 7)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (2, 3)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (9, 8)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (7, 4)
-INSERT dbo.Wishlist(AccountId, PerformanceId) VALUES (5, 9)
+SET IDENTITY_INSERT dbo.Wishlist ON
+GO
+
+INSERT dbo.Wishlist(WishPerformanceId, AccountId, PerformanceId) VALUES (1, 1,10)
+INSERT dbo.Wishlist(WishPerformanceId, AccountId, PerformanceId) VALUES (2, 3, 5)
+INSERT dbo.Wishlist(WishPerformanceId, AccountId, PerformanceId) VALUES (3, 6, 1)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (4, 8, 6)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (5,10, 2)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (6, 4, 7)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (7, 2, 3)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (8, 9, 8)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (9, 7, 4)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (10,5, 9)
+GO
+SET IDENTITY_INSERT dbo.Wishlist OFF
+GO
 
