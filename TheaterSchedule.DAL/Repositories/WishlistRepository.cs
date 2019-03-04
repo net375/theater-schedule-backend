@@ -32,7 +32,7 @@ namespace TheaterSchedule.DAL.Repositories
                                  on performanceTr.LanguageId equals language.LanguageId
                              where account.PhoneIdentifier == phoneId
                                    && languageCode == language.LanguageCode
-                             //orderby wishlist.WishPerformanceId descending
+                             orderby wishlist.WishPerformanceId descending
                              select new WishlistDataModel()
                              {
                                  PerformanceId = wishlist.PerformanceId,
