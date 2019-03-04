@@ -6,6 +6,6 @@ namespace TheaterSchedule.BLL.DTO
 {
     public class TagDTO
     {
-        public string TagName { get; set; }
+        public IEnumerable<string> TagName { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace TheaterSchedule.DAL.Interfaces
 {
     public interface ITagRepository
     {
-        Task<Tag> GetTagById(int id);
+        IEnumerable<string> GetTagByPerformanceId( int id);
     }
 }
