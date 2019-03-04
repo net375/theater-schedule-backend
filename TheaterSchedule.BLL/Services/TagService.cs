@@ -18,7 +18,7 @@ namespace TheaterSchedule.BLL.Services
 
         public TagDTO LoadTagsById(int id)
         {
-            TagDTO tagRequest = new TagDTO() { TagName = tagRepository.GetTagByPerformanceId(id) };
+            TagDTO tagRequest = new TagDTO() { TagName = tagRepository.GetTagsByPerformanceId(id).Result };
             return tagRequest;
         }
     }

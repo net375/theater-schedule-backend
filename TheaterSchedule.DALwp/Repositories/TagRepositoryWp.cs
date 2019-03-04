@@ -10,8 +10,6 @@ using Newtonsoft.Json;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
-
-
     public class TagRepositoryWp : Repository, ITagRepository
     {
         private class TagsItem : WordPressPCL.Models.Base
@@ -19,18 +17,15 @@ namespace TheaterSchedule.DALwp.Repositories
             [JsonProperty("tags", DefaultValueHandling = DefaultValueHandling.Ignore)]
             public IEnumerable<int> Tags { get; set; }
         }
-        private async Task<TagsItem> GetTags( int perforamanceid )
+   
+        public async Task<IEnumerable<string>> GetTagsByPerformanceId(int id)
         {
-            return await InitializeClient().CustomRequest.Get<TagsItem>($"wp/v2/performance/{perforamanceid}");
-        }
-        public IEnumerable<string> GetTagByPerformanceId( int performanceId )
-        {
-            var tagsId = GetTags(performanceId).Result.Tags;
-            List<string> tags = new List<string>();
+            var tagsId = await InitializeClient().CustomRequest.Get<TagsItem>($"wp/v2/performance/{id}");
 
-            foreach ( var tagId in tagsId )
+            List<string> tags = new List<string>();
+            foreach (var tag in tagsId.Tags)
             {
-                tags.Add(InitializeClient().Tags.GetByID(tagId).Result.Name);
+                tags.Add(InitializeClient().Tags.GetByID(tag).Result.Name);
             }
             return tags;
         }
