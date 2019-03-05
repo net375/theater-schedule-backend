@@ -8,6 +8,6 @@ namespace TheaterSchedule.DAL.Interfaces
     public interface IPushTokenRepository
     {
         void Add(PushToken pushToken);
-        IEnumerable<string> GetAllPushTokens();
+        IEnumerable<string> GetAllPushTokensToSendNotifications();
     }
 }

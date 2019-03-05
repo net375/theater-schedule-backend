@@ -12,6 +12,7 @@ using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
 using TheaterSchedule.MiddlewareComponents;
+using Hangfire;
 
 namespace TheaterSchedule
 {
@@ -27,6 +28,11 @@ namespace TheaterSchedule
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHangfire(configuration =>
+            {
+                configuration.UseSqlServerStorage(Configuration.GetConnectionString("TheaterConnectionString"));
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -63,6 +69,7 @@ namespace TheaterSchedule
             services.AddScoped<IPromoActionService, PromoActionService>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IPushTokenService, PushTokenService>();
+            services.AddScoped<IPushNotificationsService, PushNotificationsService>();
 
             services.AddMemoryCache();
         }
@@ -70,7 +77,9 @@ namespace TheaterSchedule
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-                          
+            app.UseHangfireServer();
+            app.UseHangfireDashboard();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

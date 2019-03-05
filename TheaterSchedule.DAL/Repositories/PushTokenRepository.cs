@@ -22,10 +22,17 @@ namespace TheaterSchedule.DAL.Repositories
             db.PushToken.Add(pushToken);
         }
 
-        public IEnumerable<string> GetAllPushTokens()
+        public IEnumerable<string> GetAllPushTokensToSendNotifications()
         {
-            var tokens = from t in db.PushToken
-                         select t.Token;
+            var tokens = (from token in db.PushToken
+                            join account in db.Account on token.AccountId equals account.AccountId
+                            join wishlist in db.Wishlist on account.AccountId equals wishlist.AccountId
+                            join performance in db.Performance on wishlist.PerformanceId equals performance.PerformanceId
+                            join schedule in db.Schedule on performance.PerformanceId equals schedule.PerformanceId
+                            where (schedule.Beginning.Day == (DateTime.Today.Day + 7) //notify in a week
+                                    && (schedule.PerformanceId == wishlist.PerformanceId))
+
+                            select token.Token).Distinct().ToList();
 
             return tokens;
         }
