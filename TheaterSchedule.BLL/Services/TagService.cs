@@ -23,7 +23,7 @@ namespace TheaterSchedule.BLL.Services
 
         public TagDTO LoadTagsById(int id)
         {
-            string memoryCacheKey = id.ToString();
+            string memoryCacheKey = "Tag_"+id.ToString();
             if(!memoryCache.TryGetValue(memoryCache,out tagRequest))
             {
                 tagRequest = new TagDTO() { TagName = tagRepository.GetTagsByPerformanceId(id).Result };
