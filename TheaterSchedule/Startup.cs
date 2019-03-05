@@ -1,4 +1,5 @@
-﻿﻿using Entities.Models;
+﻿﻿using System;
+using Entities.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
+using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.DALwp.Repositories;
 using TheaterSchedule.MiddlewareComponents;
 
@@ -18,16 +20,19 @@ namespace TheaterSchedule
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var expirationTimeInHours = 
+                double.Parse(Configuration.GetSection("AppSettings")["ExpirationTimeInHours"]);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -49,6 +54,7 @@ namespace TheaterSchedule
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IExcursionRepository, ExcursionRepository>();
             services.AddScoped<IPromoActionRepository, PromoActionRepository>();
+            services.AddScoped<ICreativeTeamRepository, CreativeTeamRepositoryWpFake>();
             services.AddScoped<ITagRepository, TagRepositoryWp>();
             services.AddScoped<IRepository, Repository>();
             //uow
@@ -64,8 +70,11 @@ namespace TheaterSchedule
             services.AddScoped<IExcursionService, ExcursionService>();
             services.AddScoped<IPromoActionService, PromoActionService>();
             services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<ICreativeTeamService, CreativeTeamService>();
             services.AddScoped<ITagService, TagService>();
-            services.AddMemoryCache();
+            services.AddMemoryCache(options => 
+                options.ExpirationScanFrequency = 
+                    TimeSpan.FromHours(expirationTimeInHours));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
