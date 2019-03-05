@@ -17,9 +17,11 @@
 
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="WordPressPCL" Version="1.6.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TheaterSchedule.DALwp\TheaterSchedule.DALwp.csproj" />
     <ProjectReference Include="..\TheaterSchedule.DAL\TheaterSchedule.DAL.csproj" />
   </ItemGroup>
 

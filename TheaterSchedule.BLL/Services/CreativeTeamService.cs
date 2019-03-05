@@ -44,7 +44,7 @@ namespace TheaterSchedule.BLL.Services
 
         private string GetCacheKey(string languageCode, int id)
         {
-            return $"{languageCode}{id}";
+            return $"TeamMember {languageCode} {id}";
         }
     }
 }

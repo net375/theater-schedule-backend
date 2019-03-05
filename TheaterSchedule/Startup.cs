@@ -21,7 +21,6 @@ namespace TheaterSchedule
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        private const int expirationTimeInHours = 12;
 
         public Startup(IConfiguration configuration)
         {
@@ -31,6 +30,9 @@ namespace TheaterSchedule
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var expirationTimeInHours = 
+                double.Parse(Configuration.GetSection("AppSettings")["ExpirationTimeInHours"]);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -53,6 +55,8 @@ namespace TheaterSchedule
             services.AddScoped<IExcursionRepository, ExcursionRepository>();
             services.AddScoped<IPromoActionRepository, PromoActionRepository>();
             services.AddScoped<ICreativeTeamRepository, CreativeTeamRepositoryWpFake>();
+            services.AddScoped<ITagRepository, TagRepositoryWp>();
+            services.AddScoped<IRepository, Repository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             //services
@@ -67,8 +71,10 @@ namespace TheaterSchedule
             services.AddScoped<IPromoActionService, PromoActionService>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
+            services.AddScoped<ITagService, TagService>();
             services.AddMemoryCache(options => 
-                options.ExpirationScanFrequency = TimeSpan.FromHours(expirationTimeInHours));
+                options.ExpirationScanFrequency = 
+                    TimeSpan.FromHours(expirationTimeInHours));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

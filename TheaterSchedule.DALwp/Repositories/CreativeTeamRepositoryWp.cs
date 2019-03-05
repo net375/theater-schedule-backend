@@ -1,38 +1,42 @@
 ﻿using System.Collections.Generic;
 using TheaterSchedule.DAL.Interfaces;
 using System.Threading.Tasks;
-using WordPressPCL;
-using TheaterSchedule.DALwp.Models;
-using Entities.Models;
 using TheaterSchedule.DAL.Models;
+using Newtonsoft.Json;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
-    public class CreativeTeamRepositoryWp : ICreativeTeamRepository
+    public class CreativeTeamRepositoryWp : Repository, ICreativeTeamRepository
     {
-        private TheaterDatabaseContext db;
-
-        public CreativeTeamRepositoryWp( TheaterDatabaseContext context )
+        private class TeamMemberWp : WordPressPCL.Models.Base
         {
-            db = context;
+            [JsonProperty( "rendered", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public string FirstName { get; set; }
+
+            [JsonProperty( "rendered", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public string LastName { get; set; }
+
+            [JsonProperty( "rendered", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public string Role { get; set; }
+
+            [JsonProperty( "rendered", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public string RoleKey { get; set; }
         }
 
-        private async Task<IEnumerable<CreativeTeamMemberWp>> GetCreativeTeamFromWPApi(
+        private async Task<IEnumerable<TeamMemberWp>> GetCreativeTeamFromWpApi(
             string languageCode, int performanceId )
         {
-            var client = new WordPressClient( "https://lvivpuppet.com/wp-json" );
-
-            return await client.CustomRequest
-                .Get<IEnumerable<CreativeTeamMemberWp>>(
+            return await InitializeClient().CustomRequest
+                .Get<IEnumerable<TeamMemberWp>>(
                     $"wp/v2/{languageCode}/performance/{performanceId}/creativeteam" );
         }
 
-        public IEnumerable<TeamMember> GetCreativeTeam( string languageCode, int performanceId )
+        private IEnumerable<TeamMember> ConvertTeamMemberWpToTeamMember(
+            IEnumerable<TeamMemberWp> creativeTeamWp)
         {
-            var taskResult = GetCreativeTeamFromWPApi( languageCode, performanceId );
             List<TeamMember> creativeTeam = new List<TeamMember>();
 
-            foreach ( var creativeTeamMemberWp in taskResult.Result )
+            foreach ( var creativeTeamMemberWp in creativeTeamWp)
             {
                 creativeTeam.Add( new TeamMember
                 {
@@ -42,8 +46,15 @@ namespace TheaterSchedule.DALwp.Repositories
                     RoleKey = creativeTeamMemberWp.RoleKey
                 } );
             }
-            
+
             return creativeTeam;
+        }
+
+        public IEnumerable<TeamMember> GetCreativeTeam( string languageCode, int performanceId )
+        {
+            var taskResult = GetCreativeTeamFromWpApi( languageCode, performanceId );
+            
+            return ConvertTeamMemberWpToTeamMember(taskResult.Result);
         }
     }
 }
