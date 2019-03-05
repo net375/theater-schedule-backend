@@ -2,9 +2,9 @@
 
 namespace TheaterSchedule.BLL.DTO
 {
-    public class PerformanceDetailsDTO
+    public class PerformanceDetailsDTOWp
     {
-        public byte [] MainImage { get; set; }
+        public string MainImage { get; set; }
         public int Duration { get; set; }
         public int MinPrice { get; set; }
         public int MaxPrice { get; set; }
@@ -14,7 +14,7 @@ namespace TheaterSchedule.BLL.DTO
         public bool IsChecked { get; set; }
         public IEnumerable<TeamMemberDTO> TeamMember { get; set; }
         public IEnumerable<string> HashTag { get; set; }
-        public IEnumerable<byte []> GalleryImage { get; set; }
+        public IEnumerable<string> GalleryImage { get; set; }
     }
 }
 
