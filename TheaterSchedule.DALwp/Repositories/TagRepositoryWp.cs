@@ -2,12 +2,32 @@
 using System.Collections.Generic;
 using System.Text;
 using TheaterSchedule.DAL.Interfaces;
+using System.Threading.Tasks;
+using WordPressPCL;
+using WordPressPCL.Models;
 using TheaterSchedule.DAL.Models;
+using Newtonsoft.Json;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
-    class TagRepositoryWp : ITagRepository
+    public class TagRepositoryWp : Repository, ITagRepository
     {
-        //TODO
+        private class TagsItem : WordPressPCL.Models.Base
+        {
+            [JsonProperty("tags", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public IEnumerable<int> Tags { get; set; }
+        }
+   
+        public async Task<IEnumerable<string>> GetTagsByPerformanceId(int id)
+        {
+            var tagsId = await InitializeClient().CustomRequest.Get<TagsItem>($"wp/v2/performance/{id}");
+
+            List<string> tags = new List<string>();
+            foreach (var tag in tagsId.Tags)
+            {
+                tags.Add(InitializeClient().Tags.GetByID(tag).Result.Name);
+            }
+            return tags;
+        }
     }
 }
