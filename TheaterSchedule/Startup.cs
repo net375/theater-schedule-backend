@@ -12,8 +12,8 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
-using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.DALwp.Repositories;
+using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.MiddlewareComponents;
 
 namespace TheaterSchedule
@@ -64,7 +64,7 @@ namespace TheaterSchedule
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IPostersService, PostersService>();
             services.AddScoped<IImageService, ImageService>();
-            services.AddScoped<IPerformanceDetailsService, PerformanceDetailsService>();
+            services.AddScoped<IPerformanceDetailsService, PerformanceDetailsServiceDb>();
             services.AddScoped<IWishlistService, WishlistService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IExcursionService, ExcursionService>();

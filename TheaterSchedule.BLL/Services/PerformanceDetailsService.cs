@@ -1,6 +1,7 @@
 ﻿using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 using TheaterSchedule.DAL.Models;
 using AutoMapper;
 
@@ -9,24 +10,31 @@ namespace TheaterSchedule.BLL.Services
     public class PerformanceDetailsService : IPerformanceDetailsService
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
-        private IPerformanceDetailsRepository performanceDetailsRepository;
+        private IPerformanceDetailsService performanceDetailsService;
+        private IMemoryCache memoryCache;
+        public PerformanceDetailsDTOBase performanceDetailsRequest;
 
         public PerformanceDetailsService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
-            IPerformanceDetailsRepository performanceDetailsRepository)
+            IPerformanceDetailsService performanceDetailsService, IMemoryCache memoryCache )
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
-            this.performanceDetailsRepository = performanceDetailsRepository;
+            this.performanceDetailsService = performanceDetailsService;
+            this.memoryCache = memoryCache;
         }
 
-        public PerformanceDetailsDTO LoadPerformanceDetails(string phoneId, string languageCode, int id)
+        public PerformanceDetailsDTOBase LoadPerformanceDetails(string phoneId, string languageCode, int performanceId)
         {
-            var mapper =
-                new MapperConfiguration(cfg => cfg.CreateMap<PerformanceDetailsDataModel, PerformanceDetailsDTO>())
-                    .CreateMapper();
-            return mapper.Map<PerformanceDetailsDataModel, PerformanceDetailsDTO>(
-                performanceDetailsRepository.GetInformationAboutPerformanceScreen(phoneId, languageCode, id));
-
-
+            string memoryCacheKey = GetCacheKey(languageCode, performanceId);
+            if ( !memoryCache.TryGetValue(memoryCache, out performanceDetailsRequest) )
+            {
+                performanceDetailsRequest = performanceDetailsService.LoadPerformanceDetails(phoneId, languageCode, performanceId);
+                memoryCache.Set(memoryCacheKey, performanceDetailsRequest);
+            }
+            return performanceDetailsRequest;
+        }
+        private string GetCacheKey( string languageCode, int id )
+        {
+            return $"PerformanceDetails {languageCode} {id}";
         }
     }
 }

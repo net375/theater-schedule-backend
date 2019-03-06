@@ -15,22 +15,22 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = context;
         }
 
-        public PerformanceDetailsDataModel GetInformationAboutPerformanceScreen(string phoneId, string languageCode, int id)
+        public PerformanceDetailsDataModelBase GetInformationAboutPerformance(string phoneId, string languageCode, int id)
         {
             PerformanceDetailsDataModel perfomanceData = null;
             perfomanceData =
-                (from performance in db.Performance
-                 join performanceTr in db.PerformanceTr on performance.PerformanceId equals performanceTr.PerformanceId
+                (from perform in db.Performance
+                 join performanceTr in db.PerformanceTr on perform.PerformanceId equals performanceTr.PerformanceId
                  join language in db.Language on performanceTr.LanguageId equals language.LanguageId
 
-                 where ((performance.PerformanceId) == id && (language.LanguageCode == languageCode))//
+                 where ((perform.PerformanceId) == id && (language.LanguageCode == languageCode))//
                  select new PerformanceDetailsDataModel
                  {
-                     MainImage = performance.MainImage,
-                     MinPrice = performance.MinPrice,
-                     MaxPrice = performance.MaxPrice,
-                     MinimumAge = performance.MinimumAge,
-                     Duration = performance.Duration,
+                     MainImage = perform.MainImage,
+                     MinPrice = perform.MinPrice,
+                     MaxPrice = perform.MaxPrice,
+                     MinimumAge = perform.MinimumAge,
+                     Duration = perform.Duration,
                      Description = performanceTr.Description,
                      Title = performanceTr.Title,
                      IsChecked = (from performance in db.Performance

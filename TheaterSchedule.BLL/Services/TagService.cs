@@ -26,7 +26,7 @@ namespace TheaterSchedule.BLL.Services
             string memoryCacheKey = "Tag_"+id.ToString();
             if(!memoryCache.TryGetValue(memoryCache,out tagRequest))
             {
-                tagRequest = new TagDTO() { TagName = tagRepository.GetTagsByPerformanceId(id).Result };
+                tagRequest = new TagDTO() { HashTag = tagRepository.GetTagsByPerformanceId(id).Result };
                 memoryCache.Set(memoryCacheKey, tagRequest);
             }
             return tagRequest;
