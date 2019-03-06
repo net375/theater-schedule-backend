@@ -9,24 +9,20 @@ namespace TheaterSchedule.BLL.Services
     public class PerformanceDetailsService : IPerformanceDetailsService
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
-        private IPerformanceDetailsRepository performanceDetailsRepository;
-
+        private IPerformanceDetailsService performanceDetailsService;
+        // вони мають бути організовані за однією логіку тому повинні використовувати один інтерфейс
+        // в цьому сервісі цього не треба робити
+        // Просто використовувати 
         public PerformanceDetailsService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
-            IPerformanceDetailsRepository performanceDetailsRepository)
+            IPerformanceDetailsService performanceDetailsService)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
-            this.performanceDetailsRepository = performanceDetailsRepository;
+            this.performanceDetailsService = performanceDetailsService;
         }
 
-        public PerformanceDetailsDTO LoadPerformanceDetails(string phoneId, string languageCode, int id)
+        public PerformanceDetailsDTOBase LoadPerformanceDetails(string phoneId, string languageCode, int id)
         {
-            var mapper =
-                new MapperConfiguration(cfg => cfg.CreateMap<PerformanceDetailsDataModel, PerformanceDetailsDTO>())
-                    .CreateMapper();
-            return mapper.Map<PerformanceDetailsDataModel, PerformanceDetailsDTO>(
-                performanceDetailsRepository.GetInformationAboutPerformanceScreen(phoneId, languageCode, id));
-
-
+            return performanceDetailsService.LoadPerformanceDetails(phoneId, languageCode, id);
         }
     }
 }
