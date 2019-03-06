@@ -8,6 +8,7 @@ using TheaterSchedule.BLL.Interfaces;
 using Entities.Models;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -16,29 +17,37 @@ namespace TheaterSchedule.BLL.Services
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IPerfomanceRepository perfomanceRepository;
         private IImageService imageService;
+        private IMemoryCache memoryCache;
 
-        public PostersService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IPerfomanceRepository perfomanceRepository, IImageService imageService)
+        public PostersService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IPerfomanceRepository perfomanceRepository, IImageService imageService, IMemoryCache memoryCache)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.perfomanceRepository = perfomanceRepository;
             this.imageService = imageService;
+            this.memoryCache = memoryCache;
         }
 
         public List<PostersDTO> LoadPostersData(string languageCode)
         {
-            List<PostersDTO> postersRequest = new List<PostersDTO>();
-            List<PerformanceDataModel> selectedPerformances = perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
+            List<PostersDTO> postersRequest = null;
 
-            foreach (var performance in selectedPerformances)
+            string memoryCacheKey = languageCode;        
+            if (!memoryCache.TryGetValue(memoryCacheKey, out postersRequest))
             {
-                postersRequest.Add(new PostersDTO()
-                {
-                    MainImage = imageService.ImageToBase64(performance.MainImage),
-                    Title = performance.Title,
-                    PerformanceId=performance.PerformanceId
-
-                });
+                postersRequest = new List<PostersDTO>();
+                List<PerformanceDataModel> selectedPerformances = perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
+                foreach (var performance in selectedPerformances)
+                {               
+                    postersRequest.Add(new PostersDTO()
+                    {
+                        MainImage = performance.MainImageUrl == null ? imageService.ImageToBase64(performance.MainImage) : performance.MainImageUrl,
+                        Title = performance.Title,
+                        PerformanceId = performance.PerformanceId
+                    });
+                }             
+                memoryCache.Set(memoryCacheKey, postersRequest);
             }
+
             return postersRequest;
         }
     }

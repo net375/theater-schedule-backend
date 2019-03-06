@@ -48,7 +48,7 @@ namespace TheaterSchedule
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
-            services.AddScoped<IPerfomanceRepository, PerfomanceRepository>();
+            services.AddScoped<IPerfomanceRepository, PerfomanceRepositoryWp>();
             services.AddScoped<IPerformanceDetailsRepository, PerformanceDetailsRepository>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
