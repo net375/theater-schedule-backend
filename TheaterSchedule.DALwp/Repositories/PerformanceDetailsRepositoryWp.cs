@@ -17,6 +17,24 @@ namespace TheaterSchedule.DALwp.Repositories
         public string Rendered { get; set; }
     }
 
+    public class AboutGroup : WordPressPCL.Models.Base
+    {
+    [JsonProperty("age", DefaultValueHandling = DefaultValueHandling.Ignore)]
+    public int Age { get; set; }
+
+    [JsonProperty("price", DefaultValueHandling = DefaultValueHandling.Ignore)]
+    public string Price { get; set; }
+
+    [JsonProperty("duration", DefaultValueHandling = DefaultValueHandling.Ignore)]
+    public int Duration { get; set; }
+    }
+
+    public class ACF : WordPressPCL.Models.Base
+    {
+        [JsonProperty("about_group", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public AboutGroup AboutGroup { get; set; }
+    }
+
     public class Performance: WordPressPCL.Models.Base
     {
         [JsonProperty( "title", DefaultValueHandling = DefaultValueHandling.Ignore )]
@@ -27,7 +45,13 @@ namespace TheaterSchedule.DALwp.Repositories
 
         [JsonProperty( "featured_media", DefaultValueHandling = DefaultValueHandling.Ignore )]
         public int Featured_media { get; set; }
+
+        [JsonProperty("acf", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public ACF AcfInfo { get; set; }
+
+
     }
+
 
     public class Media_detailsItem: WordPressPCL.Models.Base
     {
@@ -79,6 +103,9 @@ namespace TheaterSchedule.DALwp.Repositories
             {
                 galleryImage.Add( image.Media_details.Sizes.Large.Source_url );
             }
+
+            string [] a = (performance.AcfInfo.AboutGroup.Price).Split('-');  // want to change DB 
+
             return new PerformanceDetailsDataModelWp()
             {
                 Title = performance.Title.Rendered,
@@ -87,10 +114,10 @@ namespace TheaterSchedule.DALwp.Repositories
                 GalleryImage = galleryImage,
                 //TODO
                 //No such fields in API : MinPrice, MaxPrice, MinimumAge, Duration. But they exist in site        
-                MinimumAge = 3,
-                MinPrice = 30,
-                MaxPrice = 70,
-                Duration = 40,
+                MinimumAge = performance.AcfInfo.AboutGroup.Age,
+                MinPrice = Convert.ToInt32(a [0]),
+                MaxPrice = Convert.ToInt32(a [1]),
+                Duration = performance.AcfInfo.AboutGroup.Duration,
             };
 
         }
