@@ -16,7 +16,7 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpGet("{phoneId}/{languageCode}/GetInfo")]
-        public PerformanceDetailsDTO GetInfo(string phoneId, string languageCode, int id)
+        public PerformanceDetailsDTOBase GetInfo(string phoneId, string languageCode, int id)
         {
             return performanceDetailsService.LoadPerformanceDetails(phoneId, languageCode, id);
         }

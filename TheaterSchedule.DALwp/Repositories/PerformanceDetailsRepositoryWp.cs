@@ -56,24 +56,22 @@ namespace TheaterSchedule.DALwp.Repositories
         public Media_detailsItem Media_details { get; set; }
     }
 
-    public class PerformanceDetailsRepositoryWp: IPerformanceDetailsRepository
+    public class PerformanceDetailsRepositoryWp: Repository, IPerformanceDetailsRepository
     {
-        public static async Task<Performance> GetPerformance( int perforamanceid )
+        public static async Task<Performance> GetPerformance( WordPressClient client, int perforamanceId )
         {
-            var client = new WordPressClient( "https://lvivpuppet.com/wp-json" );
-            return await client.CustomRequest.Get<Performance>( $"wp/v2/performance/411" );
+            return await client.CustomRequest.Get<Performance>( $"wp/v2/performance/{perforamanceId}" );
         }
 
-        public static async Task<IEnumerable<Media>> GetMediaOfPerformance( int perforamanceid )
+        public static async Task<IEnumerable<Media>> GetMediaOfPerformance( WordPressClient client, int perforamanceId )
         {
-            var client = new WordPressClient( "https://lvivpuppet.com/wp-json" );
-            return await client.CustomRequest.Get<IEnumerable<Media>>( $"wp/v2/media?parent=411" );
+            return await client.CustomRequest.Get<IEnumerable<Media>>( $"wp/v2/media?parent={perforamanceId}" );
         }
 
-        public PerformanceDetailsDataModelBase GetInformationAboutPerformance( string phoneId, string languageCode, int id )
+        public PerformanceDetailsDataModelBase GetInformationAboutPerformance( string phoneId, string languageCode, int perforamanceId )
         {
-            var performance = GetPerformance( id ).Result;
-            var media =  GetMediaOfPerformance( performance.Featured_media ).Result;
+            var performance = GetPerformance( InitializeClient(), perforamanceId ).Result;
+            var media = GetMediaOfPerformance( InitializeClient(), perforamanceId ).Result;
             var mainImage = media.First().Media_details.Sizes.Full.Source_url;
             List<string> galleryImage = new List<string>();
 
@@ -81,16 +79,20 @@ namespace TheaterSchedule.DALwp.Repositories
             {
                 galleryImage.Add( image.Media_details.Sizes.Large.Source_url );
             }
-
             return new PerformanceDetailsDataModelWp()
             {
                 Title = performance.Title.Rendered,
                 Description = performance.Content.Rendered,
                 MainImage = mainImage,
                 GalleryImage = galleryImage,
+                //TODO
+                //No such fields in API : MinPrice, MaxPrice, MinimumAge, Duration. But they exist in site        
+                MinimumAge = 3,
+                MinPrice = 30,
+                MaxPrice = 70,
+                Duration = 40,
             };
-            //TODO
-            //No such fields in API : MinPrice, MaxPrice, MinimumAge, Duration. But they exist in site        
+
         }
     }
 }
