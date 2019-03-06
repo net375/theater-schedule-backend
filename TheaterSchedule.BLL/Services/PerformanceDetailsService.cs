@@ -1,6 +1,7 @@
 ﻿using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 using TheaterSchedule.DAL.Models;
 using AutoMapper;
 
@@ -10,19 +11,30 @@ namespace TheaterSchedule.BLL.Services
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IPerformanceDetailsService performanceDetailsService;
-        // вони мають бути організовані за однією логіку тому повинні використовувати один інтерфейс
-        // в цьому сервісі цього не треба робити
-        // Просто використовувати 
+        private IMemoryCache memoryCache;
+        public PerformanceDetailsDTOBase performanceDetailsRequest;
+
         public PerformanceDetailsService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
-            IPerformanceDetailsService performanceDetailsService)
+            IPerformanceDetailsService performanceDetailsService, IMemoryCache memoryCache )
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.performanceDetailsService = performanceDetailsService;
+            this.memoryCache = memoryCache;
         }
 
-        public PerformanceDetailsDTOBase LoadPerformanceDetails(string phoneId, string languageCode, int id)
+        public PerformanceDetailsDTOBase LoadPerformanceDetails(string phoneId, string languageCode, int performanceId)
         {
-            return performanceDetailsService.LoadPerformanceDetails(phoneId, languageCode, id);
+            string memoryCacheKey = GetCacheKey(languageCode, performanceId);
+            if ( !memoryCache.TryGetValue(memoryCache, out performanceDetailsRequest) )
+            {
+                performanceDetailsRequest = performanceDetailsService.LoadPerformanceDetails(phoneId, languageCode, performanceId);
+                memoryCache.Set(memoryCacheKey, performanceDetailsRequest);
+            }
+            return performanceDetailsRequest;
+        }
+        private string GetCacheKey( string languageCode, int id )
+        {
+            return $"PerformanceDetails {languageCode} {id}";
         }
     }
 }

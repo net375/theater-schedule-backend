@@ -111,9 +111,7 @@ namespace TheaterSchedule.DALwp.Repositories
                 Title = performance.Title.Rendered,
                 Description = performance.Content.Rendered,
                 MainImage = mainImage,
-                GalleryImage = galleryImage,
-                //TODO
-                //No such fields in API : MinPrice, MaxPrice, MinimumAge, Duration. But they exist in site        
+                GalleryImage = galleryImage, 
                 MinimumAge = performance.AcfInfo.AboutGroup.Age,
                 MinPrice = Convert.ToInt32(a [0]),
                 MaxPrice = Convert.ToInt32(a [1]),
