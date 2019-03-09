@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using WordPressPCL;
+using System.Text.RegularExpressions;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
@@ -99,10 +100,11 @@ namespace TheaterSchedule.DALwp.Repositories
 
             string [] a = (performance.AcfInfo.AboutGroup.Price).Split( '-' );
 
+            var description = Regex.Replace( performance.Content.Rendered, @"(<.*?>)", string.Empty );
             return new PerformanceDetailsDataModelWp()
             {
                 Title = performance.Title.Rendered,
-                Description = performance.Content.Rendered,
+                Description = description,
                 MainImage = mainImage[0],
                 GalleryImage = galleryImage,
                 MinimumAge = performance.AcfInfo.AboutGroup.Age,
