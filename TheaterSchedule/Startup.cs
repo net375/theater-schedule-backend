@@ -12,6 +12,7 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
+using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.DALwp.Repositories;
 using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.MiddlewareComponents;
