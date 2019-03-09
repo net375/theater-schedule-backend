@@ -4,6 +4,7 @@ using System.Text;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
+using TheaterSchedule.DAL.Models;
 using System.Net.Http;
 using System.Linq;
 using Newtonsoft.Json;
@@ -21,14 +22,15 @@ namespace TheaterSchedule.BLL.Services
 
         public void SendPushNotification()
         {
-            string[] pushTokens = pushTokenRepository.GetAllPushTokensToSendNotifications().ToArray();
+            PushTokenDataModel[] pushTokens = pushTokenRepository.GetAllPushTokensToSendNotifications().ToArray();
 
             PushNotificationDTO[] reqBody = Enumerable.Range(0, pushTokens.Length).Select(i =>
                 new PushNotificationDTO
                 {
-                    To = pushTokens[i],
-                    Title = "Lviv Puppet Theater",
-                    Body = "The perfomances you have liked coming soon",
+                    To = pushTokens[i].Token,
+                    Title = pushTokens[i].LanguageCode == "en" ? "Lviv Puppet Theater" : "Львівський театр ляльок",
+                    Body = pushTokens[i].LanguageCode == "en" ? 
+                        "The perfomances you have liked coming soon" : "Вистави, які вам сподобались, скоро в прокаті"
                 }).ToArray();
             
             using (System.Net.WebClient client = new System.Net.WebClient())

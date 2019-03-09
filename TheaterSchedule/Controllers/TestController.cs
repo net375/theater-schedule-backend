@@ -1,11 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using TheaterSchedule.BLL.Services;
-using TheaterSchedule.BLL.Interfaces;
-using TheaterSchedule.BLL.DTO;
-using Entities.Models;
-using System.Linq;
 
 namespace TheaterSchedule.Controllers
 {
@@ -13,21 +8,11 @@ namespace TheaterSchedule.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-        IPushNotificationsService pushNotificationsService;
         
-        public TestController(IPushNotificationsService pushNotificationsService)
-        {
-            this.pushNotificationsService = pushNotificationsService;
-        }
         // GET api/test
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            //Hangfire.BackgroundJob.Enqueue(() => pushNotificationsService.SendPushNotification());
-
-            Hangfire.RecurringJob.AddOrUpdate(() => pushNotificationsService.SendPushNotification(),
-                                                "0 9 * * *");
-
             return new string[] { "testValue1", "testValue2", "testValue2" };
         }
 

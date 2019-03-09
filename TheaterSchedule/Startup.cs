@@ -69,7 +69,7 @@ namespace TheaterSchedule
             services.AddScoped<IPromoActionService, PromoActionService>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IPushTokenService, PushTokenService>();
-            services.AddScoped<IPushNotificationsService, PushNotificationsService>();
+            services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
 
             services.AddMemoryCache();
         }
@@ -79,6 +79,8 @@ namespace TheaterSchedule
         {
             app.UseHangfireServer();
             app.UseHangfireDashboard();
+
+            RecurringJob.AddOrUpdate<PushNotificationsService>(service => service.SendPushNotification(), "0 9 * * *");
 
             if (env.IsDevelopment())
             {
