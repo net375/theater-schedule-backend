@@ -18,8 +18,6 @@ namespace TheaterSchedule.BLL.Services
         private IImageRepository imageRepository;
         private IMemoryCache cache;
 
-        private readonly int cacheExpirationMinutes = 20;
-
         public ImageService(IImageRepository imgRepository, IMemoryCache memoryCache)
         {
             imageRepository = imgRepository;
@@ -97,7 +95,7 @@ namespace TheaterSchedule.BLL.Services
                 images = await imageRepository.GetGalleryImagesAsync(performanceId);
                 if (images.Any())
                 {
-                    cache.Set(key, images, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(cacheExpirationMinutes)));
+                    cache.Set(key, images);
                 }
             }
 
@@ -114,7 +112,7 @@ namespace TheaterSchedule.BLL.Services
                 image = await imageRepository.GetPerformanceImageAsync(id);
                 if (image != null)
                 {
-                    cache.Set(key, image, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(cacheExpirationMinutes)));
+                    cache.Set(key, image);
                 }
             }
 

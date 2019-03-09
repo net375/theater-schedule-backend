@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DAL.Interfaces
 {
     public interface ICreativeTeamRepository
     {
-        //TODO
+        IEnumerable<TeamMember>
+            GetCreativeTeam( string languageCode, int performanceId );
     }
 }

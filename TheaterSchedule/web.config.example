@@ -6,6 +6,9 @@
    providerName="System.Data.SqlClient"
 />
   </connectionStrings>
+  <appSettings>
+    <add key="ExpirationTimeInHours" value="12"/>
+  </appSettings>
   <!-- To customize the asp.net core module uncomment and edit the following section. 
   For more info see https://go.microsoft.com/fwlink/?linkid=838655 -->
   <!--

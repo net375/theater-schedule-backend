@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Performance] (
-    [PerformanceId] INT identity(1,1) NOT NULL,
+    [PerformanceId] INT NOT NULL,
 	[MainImage]    VARBINARY (MAX) NOT NULL,
     [Duration]      INT  NOT NULL,
     [MinPrice]      INT  NOT NULL,
