@@ -17,6 +17,7 @@ using TheaterSchedule.DALwp.Repositories;
 using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.MiddlewareComponents;
 using Hangfire;
+using Hangfire.Dashboard;
 
 namespace TheaterSchedule
 {
@@ -93,7 +94,11 @@ namespace TheaterSchedule
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseHangfireServer();
-            app.UseHangfireDashboard();
+            //app.UseHangfireDashboard();
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new AllowAllAuthorizationFilter() }
+            });
 
             RecurringJob.AddOrUpdate<PushNotificationsService>(service => service.SendPushNotification(), "0 9 * * *");
 
@@ -111,6 +116,14 @@ namespace TheaterSchedule
             app.UseToken();
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+    }
+
+    internal class AllowAllAuthorizationFilter : IDashboardAuthorizationFilter
+    {
+        public bool Authorize(DashboardContext context)
+        {
+            return true;
         }
     }
 }
