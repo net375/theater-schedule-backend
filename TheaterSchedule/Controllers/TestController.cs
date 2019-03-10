@@ -7,12 +7,12 @@ namespace TheaterSchedule.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class TestController : ControllerBase
-    {       
+    {
         
         // GET api/test
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
-        {          
+        {
             return new string[] { "testValue1", "testValue2", "testValue2" };
         }
 

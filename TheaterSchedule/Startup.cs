@@ -16,6 +16,8 @@ using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.DALwp.Repositories;
 using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.MiddlewareComponents;
+using Hangfire;
+using Hangfire.Dashboard;
 
 namespace TheaterSchedule
 {
@@ -31,6 +33,11 @@ namespace TheaterSchedule
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHangfire(configuration =>
+            {
+                configuration.UseSqlServerStorage(Configuration.GetConnectionString("TheaterConnectionString"));
+            });
+
             var expirationTimeInHours = 
                 double.Parse(Configuration.GetSection("AppSettings")["ExpirationTimeInHours"]);
 
@@ -56,6 +63,7 @@ namespace TheaterSchedule
             services.AddScoped<IExcursionRepository, ExcursionRepository>();
             services.AddScoped<IIsCheckedPerformanceRepository, IsCheckedPerformanceRepository>();
             services.AddScoped<IPromoActionRepository, PromoActionRepository>();
+            services.AddScoped<IPushTokenRepository, PushTokenRepository>();
             services.AddScoped<ICreativeTeamRepository, CreativeTeamRepositoryWpFake>();
             services.AddScoped<ITagRepository, TagRepositoryWp>();
             services.AddScoped<IRepository, Repository>();
@@ -72,8 +80,11 @@ namespace TheaterSchedule
             services.AddScoped<IExcursionService, ExcursionService>();
             services.AddScoped<IPromoActionService, PromoActionService>();
             services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IPushTokenService, PushTokenService>();
+            services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
             services.AddScoped<ITagService, TagService>();
+
             services.AddMemoryCache(options => 
                 options.ExpirationScanFrequency = 
                     TimeSpan.FromHours(expirationTimeInHours));
@@ -82,7 +93,15 @@ namespace TheaterSchedule
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-                          
+            app.UseHangfireServer();
+            //app.UseHangfireDashboard();
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new AllowAllAuthorizationFilter() }
+            });
+
+            RecurringJob.AddOrUpdate<PushNotificationsService>(service => service.SendPushNotification(), "0 9 * * *");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -97,6 +116,14 @@ namespace TheaterSchedule
             app.UseToken();
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+    }
+
+    internal class AllowAllAuthorizationFilter : IDashboardAuthorizationFilter
+    {
+        public bool Authorize(DashboardContext context)
+        {
+            return true;
         }
     }
 }
