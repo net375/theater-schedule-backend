@@ -15,7 +15,8 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = context;
         }
 
-        public PerformanceDetailsDataModelBase GetInformationAboutPerformance(string phoneId, string languageCode, int id)
+        public PerformanceDetailsDataModelBase GetInformationAboutPerformance(
+            string phoneId, string languageCode, int id)
         {
             PerformanceDetailsDataModel perfomanceData = null;
             perfomanceData =
@@ -23,7 +24,7 @@ namespace TheaterSchedule.DAL.Repositories
                  join performanceTr in db.PerformanceTr on perform.PerformanceId equals performanceTr.PerformanceId
                  join language in db.Language on performanceTr.LanguageId equals language.LanguageId
 
-                 where ((perform.PerformanceId) == id && (language.LanguageCode == languageCode))//
+                 where ((perform.PerformanceId) == id && (language.LanguageCode == languageCode))
                  select new PerformanceDetailsDataModel
                  {
                      MainImage = perform.MainImage,

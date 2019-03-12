@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TheaterSchedule.DAL.Interfaces
+﻿namespace TheaterSchedule.DAL.Interfaces
 {
     public interface IIsCheckedPerformanceRepository
     {
