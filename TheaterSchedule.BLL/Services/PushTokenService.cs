@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
@@ -16,7 +15,9 @@ namespace TheaterSchedule.BLL.Services
         private IPushTokenRepository pushTokenRepository;
 
 
-        public PushTokenService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IAccountRepository accountRepository,
+        public PushTokenService(
+            ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, 
+            IAccountRepository accountRepository,
             IPushTokenRepository pushTokenRepository)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
@@ -35,7 +36,8 @@ namespace TheaterSchedule.BLL.Services
 
             if (account == null)
             {
-                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Account [{phoneId}] doesn't exist");
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.NotFound, $"Account [{phoneId}] doesn't exist");
             }
             else
             {

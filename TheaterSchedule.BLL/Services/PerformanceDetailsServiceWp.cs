@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using System.Linq;
+﻿using System.Linq;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
-using TheaterSchedule.DALwp.Repositories;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -16,7 +14,8 @@ namespace TheaterSchedule.BLL.Services
         private ICreativeTeamRepository creativeTeamRepository;
         private IIsCheckedPerformanceRepository isCheckedPerformanceRepository;
 
-        public PerformanceDetailsServiceWp( ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
+        public PerformanceDetailsServiceWp( 
+            ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
             IPerformanceDetailsRepository performanceDetailsRepository, 
             ITagRepository tagRepository, 
             ICreativeTeamRepository creativeTeamRepository,
@@ -59,7 +58,6 @@ namespace TheaterSchedule.BLL.Services
                                  RoleKey = tm.RoleKey,
                              },
             };
-
         }
     }
 }

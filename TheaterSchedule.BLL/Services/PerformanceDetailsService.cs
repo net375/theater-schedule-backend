@@ -2,8 +2,6 @@
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
-using TheaterSchedule.DAL.Models;
-using AutoMapper;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -14,20 +12,24 @@ namespace TheaterSchedule.BLL.Services
         private IMemoryCache memoryCache;
         public PerformanceDetailsDTOBase performanceDetailsRequest;
 
-        public PerformanceDetailsService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
-            IPerformanceDetailsService performanceDetailsService, IMemoryCache memoryCache )
+        public PerformanceDetailsService(
+            ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
+            IPerformanceDetailsService performanceDetailsService, 
+            IMemoryCache memoryCache )
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.performanceDetailsService = performanceDetailsService;
             this.memoryCache = memoryCache;
         }
 
-        public PerformanceDetailsDTOBase LoadPerformanceDetails(string phoneId, string languageCode, int performanceId)
+        public PerformanceDetailsDTOBase LoadPerformanceDetails(
+            string phoneId, string languageCode, int performanceId)
         {
             string memoryCacheKey = GetCacheKey(languageCode, performanceId);
             if ( !memoryCache.TryGetValue(memoryCache, out performanceDetailsRequest) )
             {
-                performanceDetailsRequest = performanceDetailsService.LoadPerformanceDetails(phoneId, languageCode, performanceId);
+                performanceDetailsRequest = performanceDetailsService.LoadPerformanceDetails(
+                        phoneId, languageCode, performanceId);
                 memoryCache.Set(memoryCacheKey, performanceDetailsRequest);
             }
             return performanceDetailsRequest;
