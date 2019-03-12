@@ -10,15 +10,18 @@ namespace TheaterSchedule.Controllers
     {
         IPerformanceDetailsService performanceDetailsService;
 
-        public PerformanceDetailsController(IPerformanceDetailsService performanceDetailsService)
+        public PerformanceDetailsController(
+            IPerformanceDetailsService performanceDetailsService)
         {
             this.performanceDetailsService = performanceDetailsService;
         }
 
         [HttpGet("{phoneId}/{languageCode}/GetInfo")]
-        public PerformanceDetailsDTOBase GetInfo(string phoneId, string languageCode, int id)
+        public PerformanceDetailsDTOBase GetInfo(
+            string phoneId, string languageCode, int id)
         {
-            return performanceDetailsService.LoadPerformanceDetails(phoneId, languageCode, id);
+            return performanceDetailsService
+                .LoadPerformanceDetails(phoneId, languageCode, id);
         }
     }
 }
