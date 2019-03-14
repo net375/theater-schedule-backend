@@ -18,7 +18,9 @@ namespace TheaterSchedule.BLL.Services
         private IImageRepository imageRepository;
         private IMemoryCache cache;
 
-        public ImageService(IImageRepository imgRepository, IMemoryCache memoryCache)
+        public ImageService(
+            IImageRepository imgRepository, 
+            IMemoryCache memoryCache)
         {
             imageRepository = imgRepository;
             cache = memoryCache;
@@ -38,7 +40,8 @@ namespace TheaterSchedule.BLL.Services
                 {
                     using (Image image = Image.FromStream(stream))
                     {
-                        return ImageCodecInfo.GetImageEncoders().First(codec => codec.FormatID == image.RawFormat.Guid).MimeType;
+                        return ImageCodecInfo.GetImageEncoders()
+                            .First(codec => codec.FormatID == image.RawFormat.Guid).MimeType;
                     }
                 }
             }
@@ -88,7 +91,12 @@ namespace TheaterSchedule.BLL.Services
         public async Task<IEnumerable<byte[]>> TryAddGalleryImagesToCacheAsync(int performanceId)
         {
             IEnumerable<byte[]> images = null;        
-            string key = String.Format("{0}{1}{2}{3}", nameof(Performance), nameof(ImageService), nameof(GalleryImage), performanceId.ToString());
+            string key = string.Format(
+                "{0}{1}{2}{3}", 
+                nameof(Performance), 
+                nameof(ImageService), 
+                nameof(GalleryImage), 
+                performanceId.ToString());
 
             if (!cache.TryGetValue(key, out images))
             {
@@ -105,7 +113,11 @@ namespace TheaterSchedule.BLL.Services
         public async Task<byte[]> TryAddPerformanceImageToCacheAsync(int id)
         {
             byte[] image = null;
-            string key = String.Format("{0}{1}{2}", nameof(Performance), nameof(ImageService), id.ToString());
+            string key = string.Format(
+                "{0}{1}{2}", 
+                nameof(Performance), 
+                nameof(ImageService), 
+                id.ToString());
 
             if (!cache.TryGetValue(key, out image))
             {
@@ -118,6 +130,5 @@ namespace TheaterSchedule.BLL.Services
 
             return image;
         }
-
     }
 }

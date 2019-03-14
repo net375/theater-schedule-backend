@@ -12,7 +12,9 @@ namespace TheaterSchedule.BLL.Services
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IPromoActionRepository promoActionRepository;
 
-        public PromoActionService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IPromoActionRepository promoActionRepository)
+        public PromoActionService(
+            ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, 
+            IPromoActionRepository promoActionRepository)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.promoActionRepository = promoActionRepository;
@@ -20,8 +22,11 @@ namespace TheaterSchedule.BLL.Services
 
         public IEnumerable<PromoActionDTO> LoadAvailable(string languageCode)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<PromoActionDataModel, PromoActionDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<PromoActionDataModel>, List<PromoActionDTO>>(promoActionRepository.GetAllCurrentPromoActions(languageCode));
+            var mapper = new MapperConfiguration(cfg => 
+                cfg.CreateMap<PromoActionDataModel, PromoActionDTO>())
+                .CreateMapper();
+            return mapper.Map<IEnumerable<PromoActionDataModel>, List<PromoActionDTO>>(
+                promoActionRepository.GetAllCurrentPromoActions(languageCode));
         }
     }
 }

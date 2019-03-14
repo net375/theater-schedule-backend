@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
-using Entities.Models;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using Microsoft.Extensions.Caching.Memory;
@@ -19,7 +14,11 @@ namespace TheaterSchedule.BLL.Services
         private IImageService imageService;
         private IMemoryCache memoryCache;
 
-        public PostersService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IPerfomanceRepository perfomanceRepository, IImageService imageService, IMemoryCache memoryCache)
+        public PostersService(
+            ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, 
+            IPerfomanceRepository perfomanceRepository, 
+            IImageService imageService, 
+            IMemoryCache memoryCache)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.perfomanceRepository = perfomanceRepository;
@@ -35,12 +34,16 @@ namespace TheaterSchedule.BLL.Services
             if (!memoryCache.TryGetValue(memoryCacheKey, out postersRequest))
             {
                 postersRequest = new List<PostersDTO>();
-                List<PerformanceDataModel> selectedPerformances = perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
+                List<PerformanceDataModel> selectedPerformances = 
+                    perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
                 foreach (var performance in selectedPerformances)
                 {               
                     postersRequest.Add(new PostersDTO()
                     {
-                        MainImage = performance.MainImageUrl == null ? imageService.ImageToBase64(performance.MainImage) : performance.MainImageUrl,
+                        MainImage = 
+                            performance.MainImageUrl == null 
+                                ? imageService.ImageToBase64(performance.MainImage) 
+                                : performance.MainImageUrl,
                         Title = performance.Title,
                         PerformanceId = performance.PerformanceId
                     });
