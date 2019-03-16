@@ -10,4 +10,11 @@ namespace TheaterSchedule.BLL.Interfaces
             string languageCode, 
             DateTime? startDate, DateTime? endDate);
     }
+
+    public interface IScheduleServiceWp
+    {
+        IEnumerable<ScheduleDTOWp> FilterByDate(
+            string languageCode,
+            DateTime? startDate, DateTime? endDate);
+    }
 }

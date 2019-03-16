@@ -10,4 +10,11 @@ namespace TheaterSchedule.DAL.Interfaces
             string languageCode,
             DateTime? startDate, DateTime? endDate);
     }
+
+    public interface IScheduleRepositoryWp
+    {
+        IEnumerable<ScheduleDataModelWp> GetPerformancesByDateRange(
+            string languageCode,
+            DateTime? startDate, DateTime? endDate);
+    }
 }

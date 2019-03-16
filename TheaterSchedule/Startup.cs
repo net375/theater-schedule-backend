@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using Entities.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,7 +14,6 @@ using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
 using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.DALwp.Repositories;
-using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.MiddlewareComponents;
 using Hangfire;
 using Hangfire.Dashboard;
@@ -55,7 +54,8 @@ namespace TheaterSchedule
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
-            services.AddScoped<IScheduleRepository, ScheduleRepository>();
+              services.AddScoped<IScheduleRepository, ScheduleRepository>();
+           // services.AddScoped<IScheduleRepositoryWp, ScheduleRepositoryWp>();
             services.AddScoped<IPerfomanceRepository, PerfomanceRepositoryWp>();
             services.AddScoped<IPerformanceDetailsRepository, PerformanceDetailsRepositoryWp>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
@@ -72,6 +72,7 @@ namespace TheaterSchedule
             //services
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<IScheduleService, ScheduleService>();
+           // services.AddScoped<IScheduleServiceWp, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsServiceWp>();
