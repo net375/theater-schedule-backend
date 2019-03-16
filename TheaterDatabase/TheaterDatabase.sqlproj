@@ -60,6 +60,7 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="TestData" />
+    <Folder Include="TestData\MainImages" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Account.sql" />
@@ -89,5 +90,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TheaterDatabase.publish.xml" />
+    <None Include="TestData\MainImages\Cat_resize.jpg" />
+    <None Include="TestData\MainImages\doroga_resize.jpg" />
+    <None Include="TestData\MainImages\kolobok_resize.jpg" />
+    <None Include="TestData\MainImages\kotyk_pivnyk_resize.jpg" />
+    <None Include="TestData\MainImages\Koza_resize.jpg" />
+    <None Include="TestData\MainImages\lisovychok_resize.jpg" />
+    <None Include="TestData\MainImages\pidkova_resize.jpg" />
+    <None Include="TestData\MainImages\sadok_resize.jpg" />
+    <None Include="TestData\MainImages\sny_resize.jpg" />
+    <None Include="TestData\MainImages\Taras_resize.jpg" />
   </ItemGroup>
 </Project>
