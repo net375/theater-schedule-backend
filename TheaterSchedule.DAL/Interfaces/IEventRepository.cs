@@ -5,8 +5,8 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DAL.Interfaces
 {
-    public interface IPromoActionRepository
+    public interface IEventRepository
     {
-        IEnumerable<PromoActionDataModel> GetAllCurrentPromoActions(string languageCode);
+        IEnumerable<EventDataModel> GetAllEvents(string languageCode);
     }
 }

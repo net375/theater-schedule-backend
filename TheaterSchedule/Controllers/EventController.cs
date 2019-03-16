@@ -11,17 +11,17 @@ namespace TheaterSchedule.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PromoActionController : Controller
+    public class EventController : Controller
     {
-        IPromoActionService service;
+        IEventService service;
 
-        public PromoActionController(IPromoActionService service)
+        public EventController(IEventService service)
         {
             this.service = service;
         }
 
         [HttpGet("{languageCode}/LoadAvailable")]
-        public IEnumerable<PromoActionDTO> LoadAvailable(string languageCode)
+        public IEnumerable<EventDTO> LoadAvailable(string languageCode)
         {
             return service.LoadAvailable(languageCode).ToList();
         }

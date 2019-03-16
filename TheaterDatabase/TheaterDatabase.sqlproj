@@ -79,10 +79,8 @@
     <Build Include="dbo\Tables\Language.sql" />
     <None Include="TestData\FillByTestData.sql" />
     <Build Include="dbo\Tables\Message.sql" />
-    <Build Include="dbo\Tables\Excursion.sql" />
-    <Build Include="dbo\Tables\Excursion_TR.sql" />
-    <Build Include="dbo\Tables\PromoAction_TR.sql" />
-    <Build Include="dbo\Tables\PromoAction.sql" />
+    <Build Include="dbo\Tables\Event.sql" />
+    <Build Include="dbo\Tables\Event_TR.sql" />
     <Build Include="dbo\Tables\Role_TR.sql" />
     <Build Include="dbo\Tables\PushToken.sql" />
   </ItemGroup>
