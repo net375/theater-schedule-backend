@@ -2,11 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
-using WordPressPCL;
 
 namespace TheaterSchedule.DALwp.Repositories
 {

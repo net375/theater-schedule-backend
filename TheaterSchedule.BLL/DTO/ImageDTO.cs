@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TheaterSchedule.BLL.DTO
+﻿namespace TheaterSchedule.BLL.DTO
 {
     public class ImageBase64DTO
     {

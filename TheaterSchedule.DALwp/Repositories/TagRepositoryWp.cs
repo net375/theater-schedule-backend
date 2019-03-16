@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TheaterSchedule.DAL.Interfaces;
 using System.Threading.Tasks;
-using WordPressPCL;
-using WordPressPCL.Models;
-using TheaterSchedule.DAL.Models;
 using Newtonsoft.Json;
 
 namespace TheaterSchedule.DALwp.Repositories
@@ -27,6 +22,7 @@ namespace TheaterSchedule.DALwp.Repositories
             {
                 tags.Add(InitializeClient().Tags.GetByID(tag).Result.Name);
             }
+
             return tags;
         }
     }

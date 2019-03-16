@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
@@ -15,7 +13,9 @@ namespace TheaterSchedule.BLL.Services
         private IAccountRepository accountRepository;
 
 
-        public MessageService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IMessageRepository messageRepository,
+        public MessageService(
+            ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, 
+            IMessageRepository messageRepository,
             IAccountRepository accountRepository)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
@@ -33,8 +33,7 @@ namespace TheaterSchedule.BLL.Services
             return new MessageDTO
             {
                 MessageId = message.MessageId,
-                Subject = message.Subject,
-                //Text = message.Text
+                Subject = message.Subject
             };
         }
 

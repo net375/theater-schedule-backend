@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TheaterSchedule.BLL.DTO;
+﻿using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
-using System.Net.Http;
 using System.Linq;
 using Newtonsoft.Json;
 
@@ -22,7 +18,8 @@ namespace TheaterSchedule.BLL.Services
 
         public void SendPushNotification()
         {
-            PushTokenDataModel[] pushTokens = pushTokenRepository.GetAllPushTokensToSendNotifications().ToArray();
+            PushTokenDataModel[] pushTokens = 
+                pushTokenRepository.GetAllPushTokensToSendNotifications().ToArray();
 
             PushNotificationDTO[] reqBody = Enumerable.Range(0, pushTokens.Length).Select(i =>
                 new PushNotificationDTO
@@ -38,7 +35,9 @@ namespace TheaterSchedule.BLL.Services
                 client.Headers.Add("accept", "application/json");
                 client.Headers.Add("accept-encoding", "gzip, deflate");
                 client.Headers.Add("Content-Type", "application/json");
-                client.UploadString("https://exp.host/--/api/v2/push/send", JsonConvert.SerializeObject(reqBody));
+                client.UploadString(
+                    "https://exp.host/--/api/v2/push/send", 
+                    JsonConvert.SerializeObject(reqBody));
             }   
         }
     }

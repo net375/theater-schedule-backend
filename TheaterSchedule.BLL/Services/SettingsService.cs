@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TheaterSchedule.BLL.DTO;
+﻿using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
@@ -19,8 +16,12 @@ namespace TheaterSchedule.BLL.Services
         private ILanguageRepository languageRepository;
 
 
-        public SettingsService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IScheduleRepository scheduleRepository, ISettingsRepository settingsRepository,
-            IAccountRepository accountRepository, ILanguageRepository languageRepository)
+        public SettingsService(
+            ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, 
+            IScheduleRepository scheduleRepository, 
+            ISettingsRepository settingsRepository,
+            IAccountRepository accountRepository, 
+            ILanguageRepository languageRepository)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.scheduleRepository = scheduleRepository;
@@ -35,7 +36,10 @@ namespace TheaterSchedule.BLL.Services
             Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
-                settingsRequest = new SettingsDTO() { LanguageCode = settings.Language.LanguageCode };
+                settingsRequest = new SettingsDTO()
+                {
+                    LanguageCode = settings.Language.LanguageCode
+                };
             }
             else
             {
@@ -50,7 +54,9 @@ namespace TheaterSchedule.BLL.Services
             Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
             if (language == null)
             {
-                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Language [{settingsRequest.LanguageCode}] doesn't exist");
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.NotFound, 
+                    $"Language [{settingsRequest.LanguageCode}] doesn't exist");
             }
 
             Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
