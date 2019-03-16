@@ -1,7 +1,6 @@
 ﻿using Entities.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using System.Linq;

@@ -1,4 +1,3 @@
-﻿using System;
 using Entities.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,21 +28,17 @@ namespace TheaterSchedule
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHangfire(configuration =>
             {
-                configuration.UseSqlServerStorage(Configuration.GetConnectionString("TheaterConnectionString"));
+                configuration.UseSqlServerStorage(
+                    Configuration.GetConnectionString("TheaterConnectionString"));
             });
-
-            var expirationTimeInHours = 
-                double.Parse(Configuration.GetSection("AppSettings")["ExpirationTimeInHours"]);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             }); 
@@ -85,17 +80,12 @@ namespace TheaterSchedule
             services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
             services.AddScoped<ITagService, TagService>();
-
-            services.AddMemoryCache(options => 
-                options.ExpirationScanFrequency = 
-                    TimeSpan.FromHours(expirationTimeInHours));
+            services.AddMemoryCache();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseHangfireServer();
-            //app.UseHangfireDashboard();
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
                 Authorization = new[] { new AllowAllAuthorizationFilter() }
@@ -109,7 +99,6 @@ namespace TheaterSchedule
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

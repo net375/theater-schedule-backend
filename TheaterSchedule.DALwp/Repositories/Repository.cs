@@ -1,7 +1,6 @@
 ﻿using WordPressPCL;
 using TheaterSchedule.DAL.Interfaces;
 
-
 namespace TheaterSchedule.DALwp.Repositories
 {
     public class Repository: IRepository
@@ -12,6 +11,5 @@ namespace TheaterSchedule.DALwp.Repositories
         {
             return new WordPressClient(uri);
         }
-
     }
 }

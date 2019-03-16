@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Entities.Models;
-using TheaterSchedule.DAL.Interfaces;
+﻿using System.Collections.Generic;
 using TheaterSchedule.DAL.Models;
 namespace TheaterSchedule.DAL.Interfaces
 {

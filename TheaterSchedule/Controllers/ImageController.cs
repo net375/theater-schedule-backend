@@ -24,7 +24,8 @@ namespace TheaterSchedule.Controllers
         [HttpGet]
         public async Task<ActionResult<ImageBase64DTO>> Get(int performanceId)
         {
-            ImageBytesDTO imageDTO = await imageService.LoadPerformanceMainImageBytesAsync(performanceId);
+            ImageBytesDTO imageDTO = 
+                await imageService.LoadPerformanceMainImageBytesAsync(performanceId);
             if (imageDTO != null)
             {
                 ImageBase64DTO imageBase64DTO = new ImageBase64DTO()
@@ -44,7 +45,8 @@ namespace TheaterSchedule.Controllers
         public async Task<ActionResult<List<ImageBase64DTO>>> GetGalleryImages(int performanceId)
         {
             List<ImageBase64DTO> result = null;
-            List<ImageBytesDTO> images = await imageService.LoadPerformanceGalleryBytesAsync(performanceId);
+            List<ImageBytesDTO> images = 
+                await imageService.LoadPerformanceGalleryBytesAsync(performanceId);
 
             await Task.Run(() =>
             {
@@ -62,7 +64,8 @@ namespace TheaterSchedule.Controllers
         [HttpGet("GetAsFile")]
         public async Task<IActionResult> GetAsFile(int performanceId)
         {
-            ImageBytesDTO imageDTO = await imageService.LoadPerformanceMainImageBytesAsync(performanceId);
+            ImageBytesDTO imageDTO = 
+                await imageService.LoadPerformanceMainImageBytesAsync(performanceId);
             if (imageDTO != null && imageDTO.Image != null)
             {
                 return File(imageDTO.Image, imageDTO.ImageFormat);

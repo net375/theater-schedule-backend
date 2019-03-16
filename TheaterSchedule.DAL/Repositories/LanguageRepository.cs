@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
 
@@ -26,7 +23,5 @@ namespace TheaterSchedule.DAL.Repositories
         {
             return db.Language.SingleOrDefault(l => l.LanguageCode == languageCode);
         }
-
-
     }
 }

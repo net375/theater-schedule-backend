@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
@@ -20,7 +16,6 @@ namespace TheaterSchedule.Controllers
             this.messageService = messageService;
         }
 
-        // GET: api/message/1
         [HttpGet("{id}")]
         public ActionResult<MessageDTO> GetMessage(int id)
         {
@@ -34,7 +29,6 @@ namespace TheaterSchedule.Controllers
             return message;
         }
 
-        // POST api/message
         [HttpPost]
         public ActionResult<MessageDTO> PostMessage([FromBody] MessageDTO message)
         {
