@@ -34,6 +34,8 @@ namespace TheaterSchedule.DALwp.Repositories
 
         private class AboutGroup : WordPressPCL.Models.Base
         {
+            //Type object, because if in 'schedule' data not exists, it returns not 'null', but 'false' and after that throws exception
+
             [JsonProperty("schedule", DefaultValueHandling = DefaultValueHandling.Ignore)]
             public object Schedule { get; set; }
         }
@@ -59,33 +61,6 @@ namespace TheaterSchedule.DALwp.Repositories
             public ACF AcfInfo { get; set; }
         }
 
-        private class Media_detailsItem : WordPressPCL.Models.Base
-        {
-            [JsonProperty("sizes", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            public SizesItem Sizes { get; set; }
-        }
-
-        private class SizesItem : WordPressPCL.Models.Base
-        {
-            [JsonProperty("large", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            public ImageItem Large { get; set; }
-
-            [JsonProperty("full", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            public ImageItem Full { get; set; }
-        }
-
-        private class ImageItem : WordPressPCL.Models.Base
-        {
-            [JsonProperty("source_url", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            public string Source_url { get; set; }
-        }
-
-        private class Media : WordPressPCL.Models.Base
-        {
-            [JsonProperty("media_details", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            public Media_detailsItem Media_details { get; set; }
-        }
-
         private async Task<IEnumerable<Performance>> GetPerformances(WordPressClient client)
         {
             string uriForGettingTotalPages = $"{client.WordPressUri}{CUSTOM_URL}?per_page=1";
@@ -95,7 +70,7 @@ namespace TheaterSchedule.DALwp.Repositories
             IEnumerable<Performance> newPerformances = null;
             string customRequest = $"wp/v2/performance?per_page=100&page=";
 
-            for (int i = 1; i <= totalPages; ++i) // i equals 1 at the beginning for more convenient creating of url
+            for (int i = 1; i <= totalPages; ++i)
             {
                 newPerformances = await client.CustomRequest
                     .Get<IEnumerable<Performance>>($"{customRequest}{i}");
@@ -105,17 +80,14 @@ namespace TheaterSchedule.DALwp.Repositories
             return newPerformances;
         }
 
-        private static async Task<IEnumerable<Media>> GetMediaOfPerformance(WordPressClient client, int perforamanceId)
-        {
-            return await client.CustomRequest.Get<IEnumerable<Media>>($"wp/v2/media?parent={perforamanceId}");
-        }
-
         public IEnumerable<ScheduleDataModelWp> GetPerformancesByDateRange(string languageCode,
             DateTime? startDate, DateTime? endDate)
         {
+            //No localization yet
+
             var performances = GetPerformances(InitializeClient()).Result;
             List<ScheduleDataModelWp> schedule = new List<ScheduleDataModelWp>();
-            int index = 0;
+
             foreach (var performance in performances)
             {
                 var scheduleObj = performance.AcfInfo.AboutGroup.Schedule;
@@ -140,7 +112,7 @@ namespace TheaterSchedule.DALwp.Repositories
                             schedule.Add(new ScheduleDataModelWp()
                             {
                                 PerformanceId = performance.PerformanceId,
-                                ScheduleId = index++,
+                                //Here will be a MainImage
                                 Title = performance.Title.Rendered,
                                 Beginning = beginningDate,
                                 redirectToTicket = Convert.ToString(property[2])

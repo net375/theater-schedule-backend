@@ -11,26 +11,6 @@ namespace TheaterSchedule.Controllers
     [ApiController]
     public class ScheduleController : Controller
     {
-        private IScheduleService service;
-
-        public ScheduleController(IScheduleService scheduleService)
-        {
-            service = scheduleService;
-        }
-
-        [HttpGet("{languageCode}/FilterByDate")]
-        public IEnumerable<ScheduleDTO> FilterByDate(
-            string languageCode, 
-            DateTime? startDate, DateTime? endDate)
-        {
-            return service.FilterByDate(languageCode, startDate, endDate).ToList();
-        }
-    }
-
-    /*[Route("api/[controller]")]
-    [ApiController]
-    public class ScheduleController : Controller
-    {
         private IScheduleServiceWp service;
 
         public ScheduleController(IScheduleServiceWp scheduleService)
@@ -45,5 +25,5 @@ namespace TheaterSchedule.Controllers
         {
             return service.FilterByDate(languageCode, startDate, endDate).ToList();
         }
-    }*/
+    }
 }

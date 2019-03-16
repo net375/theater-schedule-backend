@@ -14,7 +14,8 @@ namespace TheaterSchedule.BLL.Services
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IScheduleRepositoryWp scheduleRepositoryWp;
 
-        public ScheduleServiceWp(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IScheduleRepositoryWp scheduleRepositoryWp)
+        public ScheduleServiceWp(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
+            IScheduleRepositoryWp scheduleRepositoryWp)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.scheduleRepositoryWp = scheduleRepositoryWp;
@@ -24,8 +25,10 @@ namespace TheaterSchedule.BLL.Services
             string languageCode,
             DateTime? startDate, DateTime? endDate)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ScheduleDataModelWp, ScheduleDTOWp>()).CreateMapper();
-            return mapper.Map<IEnumerable<ScheduleDataModelWp>, List<ScheduleDTOWp>>(scheduleRepositoryWp.GetPerformancesByDateRange(languageCode, startDate, endDate));
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ScheduleDataModelWp, ScheduleDTOWp>())
+                .CreateMapper();
+            return mapper.Map<IEnumerable<ScheduleDataModelWp>, List<ScheduleDTOWp>>(
+                scheduleRepositoryWp.GetPerformancesByDateRange(languageCode, startDate, endDate));
         }
     }
 }

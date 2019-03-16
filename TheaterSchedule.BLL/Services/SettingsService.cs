@@ -10,7 +10,6 @@ namespace TheaterSchedule.BLL.Services
     public class SettingsService : ISettingsService
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
-        private IScheduleRepository scheduleRepository;
         private ISettingsRepository settingsRepository;
         private IAccountRepository accountRepository;
         private ILanguageRepository languageRepository;
@@ -18,13 +17,11 @@ namespace TheaterSchedule.BLL.Services
 
         public SettingsService(
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, 
-            IScheduleRepository scheduleRepository, 
             ISettingsRepository settingsRepository,
             IAccountRepository accountRepository, 
             ILanguageRepository languageRepository)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
-            this.scheduleRepository = scheduleRepository;
             this.settingsRepository = settingsRepository;
             this.accountRepository = accountRepository;
             this.languageRepository = languageRepository;
