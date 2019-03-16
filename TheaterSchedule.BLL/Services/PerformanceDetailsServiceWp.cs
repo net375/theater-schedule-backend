@@ -5,7 +5,6 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 
-
 namespace TheaterSchedule.BLL.Services
 {
     public class PerformanceDetailsServiceWp: IPerformanceDetailsService
@@ -18,9 +17,10 @@ namespace TheaterSchedule.BLL.Services
         private IMemoryCache memoryCache;
         private PerformanceDetailsDTOBase performanceDetailsRequest;
 
-        public PerformanceDetailsServiceWp( ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
-            IPerformanceDetailsRepository performanceDetailsRepository,
-            ITagRepository tagRepository,
+        public PerformanceDetailsServiceWp( 
+            ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
+            IPerformanceDetailsRepository performanceDetailsRepository, 
+            ITagRepository tagRepository, 
             ICreativeTeamRepository creativeTeamRepository,
             IIsCheckedPerformanceRepository isCheckedPerformanceRepository,
             IMemoryCache memoryCache )
@@ -38,7 +38,10 @@ namespace TheaterSchedule.BLL.Services
             string memoryCacheKey = GetCacheKey( languageCode, performanceId );
             if ( !memoryCache.TryGetValue( memoryCacheKey, out performanceDetailsRequest ) )
             {
-                var performance = performanceDetailsRepository.GetInformationAboutPerformance( phoneId, languageCode, performanceId ) as PerformanceDetailsDataModelWp;
+                var performance = performanceDetailsRepository
+                    .GetInformationAboutPerformance( phoneId, languageCode, performanceId ) 
+                    as PerformanceDetailsDataModelWp;
+
                 var tags = tagRepository.GetTagsByPerformanceId( performanceId ).Result;
                 var creativeTeam = creativeTeamRepository.GetCreativeTeam( languageCode, performanceId );
                 var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId );

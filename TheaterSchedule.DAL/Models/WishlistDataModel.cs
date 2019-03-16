@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TheaterSchedule.DAL.Models
+﻿namespace TheaterSchedule.DAL.Models
 {
     public class WishlistDataModel
     {

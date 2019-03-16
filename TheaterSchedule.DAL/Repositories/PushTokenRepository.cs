@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
 using System.Linq;
-using System.Linq.Expressions;
 using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DAL.Repositories

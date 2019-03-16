@@ -1,9 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace TheaterSchedule.Infrastructure
 {
@@ -16,7 +12,8 @@ namespace TheaterSchedule.Infrastructure
             this.StatusCode = statusCode;
         }
 
-        public HttpStatusCodeException(HttpStatusCode statusCode, string message) : base(message)
+        public HttpStatusCodeException(HttpStatusCode statusCode, string message) 
+            : base(message)
         {
             this.StatusCode = statusCode;
         }       

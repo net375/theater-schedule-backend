@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TheaterSchedule.DAL.Models;
 using Entities.Models;
@@ -31,6 +28,7 @@ namespace TheaterSchedule.DAL.Repositories
                     PerformanceId = performance.PerformanceId
   
                 }).ToList();
+
             return result;
         }
     }
