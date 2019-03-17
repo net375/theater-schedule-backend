@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -83,10 +84,27 @@ namespace TheaterSchedule.DALwp.Repositories
 
         private class AboutGroup : WordPressPCL.Models.Base
         {
-            //Type object, because if in 'schedule' data not exists, it returns not 'null', but 'false' and after that throws exception
-
             [JsonProperty("schedule", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            public object Schedule { get; set; }
+            [DefaultValue(false)]
+            public IEnumerable<Schedule> Schedule { get; set; }
+        }
+
+        private class Schedule : WordPressPCL.Models.Base
+        {
+            [JsonProperty("schedule_shows", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public IEnumerable<ScheduleShows> ScheduleShows { get; set; }
+        }
+
+        private class ScheduleShows : WordPressPCL.Models.Base
+        {
+            [JsonProperty("schedule_day", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public string scheduleDay { get; set; }
+
+            [JsonProperty("schedule_time", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public string scheduleTime { get; set; }
+
+            [JsonProperty("schedule_link", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public string scheduleLink { get; set; }
         }
 
         private class RenderedItem : WordPressPCL.Models.Base
@@ -132,41 +150,37 @@ namespace TheaterSchedule.DALwp.Repositories
 
             foreach (var performance in performances)
             {
-                var scheduleObj = performance.AcfInfo.AboutGroup.Schedule;
-
-                if (Convert.ToString(scheduleObj).ToLower() == "false")
-                    continue;
-                else
+                IEnumerable<Schedule> scheduleObj = performance.AcfInfo.AboutGroup.Schedule;
+                if (scheduleObj != null)
                 {
-                    var media = GetMainImage(InitializeClient(), performance.Featured_media).Result;
-
-                    var scheduleList = JArray.Parse(scheduleObj.ToString()).Last.Last.Last
-                        .Children();
-
-                    foreach (var scheduleItem in scheduleList)
+                    foreach (var scheduleList in scheduleObj)
                     {
-                        var property = scheduleItem.Children().Children().ToList();
-                        DateTime dateOnly = DateTime.ParseExact(property[0].ToString(), "dd/MM/yyyy", null);
-                        DateTime timeOnly = Convert.ToDateTime(property[1]);
-                        DateTime beginningDate = dateOnly.Date.Add(timeOnly.TimeOfDay);
+                        var media = GetMainImage(InitializeClient(), performance.Featured_media).Result;
+                        IEnumerable<ScheduleShows> scheduleListItem = scheduleList.ScheduleShows;
 
-                        if (!startDate.HasValue || beginningDate >= startDate && beginningDate <= startDate.Value.AddMonths(1))
+                        foreach (var scheduleItem in scheduleListItem)
                         {
-                            schedule.Add(new ScheduleDataModelWp()
+                            DateTime dateOnly = DateTime.ParseExact(scheduleItem.scheduleDay, "dd/MM/yyyy", null);
+                            DateTime timeOnly = Convert.ToDateTime(scheduleItem.scheduleTime);
+                            DateTime beginningDate = dateOnly.Date.Add(timeOnly.TimeOfDay);
+
+                            if (!startDate.HasValue || beginningDate >= startDate &&
+                                beginningDate <= startDate.Value.AddMonths(1))
                             {
-                                PerformanceId = performance.PerformanceId,
-                                MainImage = media.Media_details.Sizes.Full.Source_url,
-                                Title = performance.Title.Rendered,
-                                Beginning = beginningDate,
-                                redirectToTicket = Convert.ToString(property[2])
-                            });
+                                schedule.Add(new ScheduleDataModelWp()
+                                {
+                                    PerformanceId = performance.PerformanceId,
+                                    MainImage = media.Media_details.Sizes.Full.Source_url,
+                                    Title = performance.Title.Rendered,
+                                    Beginning = beginningDate,
+                                    redirectToTicket = scheduleItem.scheduleLink
+                                });
+                            }
                         }
                     }
                 }
             }
-
             schedule.Sort((x, y) => x.Beginning.CompareTo(y.Beginning));
-
             return schedule;
         }
     }
