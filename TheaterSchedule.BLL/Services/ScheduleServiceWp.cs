@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
@@ -9,26 +10,46 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.BLL.Services
 {
-    public class ScheduleServiceWp : IScheduleServiceWp
+    public class ScheduleServiceWp : IScheduleService
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
-        private IScheduleRepositoryWp scheduleRepositoryWp;
+        private IScheduleRepository scheduleRepositoryWp;
+        private IMemoryCache memoryCache;
 
         public ScheduleServiceWp(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
-            IScheduleRepositoryWp scheduleRepositoryWp)
+            IScheduleRepository scheduleRepositoryWp, IMemoryCache memoryCache)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.scheduleRepositoryWp = scheduleRepositoryWp;
+            this.memoryCache = memoryCache;
         }
 
-        public IEnumerable<ScheduleDTOWp> FilterByDate(
+        public IEnumerable<ScheduleDTOBase> FilterByDate(
             string languageCode,
             DateTime? startDate, DateTime? endDate)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ScheduleDataModelWp, ScheduleDTOWp>())
+            IEnumerable<ScheduleDataModelBase> schedule = null;
+
+            string memoryCacheKey = GetCacheKey(languageCode);
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ScheduleDTOBase, ScheduleDTOWp>())
                 .CreateMapper();
-            return mapper.Map<IEnumerable<ScheduleDataModelWp>, List<ScheduleDTOWp>>(
-                scheduleRepositoryWp.GetPerformancesByDateRange(languageCode, startDate, endDate));
+
+            if (!memoryCache.TryGetValue(memoryCacheKey, out schedule))
+            {
+                schedule = scheduleRepositoryWp.GetListPerformancesByDateRange(languageCode, startDate, endDate);
+                memoryCache.Set(memoryCacheKey, schedule);
+            }
+
+            IEnumerable<ScheduleDTOWp> scheduleList =
+                mapper.Map<IEnumerable<ScheduleDataModelBase>, List<ScheduleDTOWp>>(schedule);
+
+            return scheduleList = scheduleList.Where(s => !endDate.HasValue || s.Beginning <= endDate);
+        }
+
+        private string GetCacheKey(string languageCode)
+        {
+            return $"Schedule {languageCode}";
         }
     }
 }

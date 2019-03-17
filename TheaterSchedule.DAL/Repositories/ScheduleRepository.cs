@@ -16,7 +16,7 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = context;
         }
 
-        public IEnumerable<ScheduleDataModel> GetListPerformancesByDateRange(
+        public IEnumerable<ScheduleDataModelBase> GetListPerformancesByDateRange(
             string languageCode,
             DateTime? startDate, DateTime? endDate )
         {

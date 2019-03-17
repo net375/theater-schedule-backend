@@ -11,15 +11,15 @@ namespace TheaterSchedule.Controllers
     [ApiController]
     public class ScheduleController : Controller
     {
-        private IScheduleServiceWp service;
+        private IScheduleService service;
 
-        public ScheduleController(IScheduleServiceWp scheduleService)
+        public ScheduleController(IScheduleService scheduleService)
         {
             service = scheduleService;
         }
 
         [HttpGet("{languageCode}/FilterByDate")]
-        public IEnumerable<ScheduleDTOWp> FilterByDate(
+        public IEnumerable<ScheduleDTOBase> FilterByDate(
             string languageCode,
             DateTime? startDate, DateTime? endDate)
         {

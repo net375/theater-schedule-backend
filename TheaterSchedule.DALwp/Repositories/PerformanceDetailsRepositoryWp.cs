@@ -2,37 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using WordPressPCL;
-using System.Text.RegularExpressions;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
     public class PerformanceDetailsRepositoryWp: Repository, IPerformanceDetailsRepository
     {
-        private class RenderedItem: WordPressPCL.Models.Base
-        {
-            [JsonProperty( "rendered", DefaultValueHandling = DefaultValueHandling.Ignore )]
-            public string Rendered { get; set; }
-        }
-        private class AboutGroup: WordPressPCL.Models.Base
-        {
-            [JsonProperty( "age", DefaultValueHandling = DefaultValueHandling.Ignore )]
-            public int Age { get; set; }
-
-            [JsonProperty( "price", DefaultValueHandling = DefaultValueHandling.Ignore )]
-            public string Price { get; set; }
-
-            [JsonProperty( "duration", DefaultValueHandling = DefaultValueHandling.Ignore )]
-            public int Duration { get; set; }
-        }
-        private class ACF: WordPressPCL.Models.Base
-        {
-            [JsonProperty( "about_group", DefaultValueHandling = DefaultValueHandling.Ignore )]
-            public AboutGroup AboutGroup { get; set; }
-        }
+        // Information about performance (Title, Description, Min-Max Price, Gallery of images, Duration, Min age)
+        #region Access to json without Main image
         private class Performance: WordPressPCL.Models.Base
         {
             [JsonProperty( "title", DefaultValueHandling = DefaultValueHandling.Ignore )]
@@ -47,70 +28,109 @@ namespace TheaterSchedule.DALwp.Repositories
             [JsonProperty( "acf", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public ACF AcfInfo { get; set; }
         }
-        private class Media_detailsItem: WordPressPCL.Models.Base
+
+        private class RenderedItem: WordPressPCL.Models.Base
+        {
+            [JsonProperty( "rendered", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public string Rendered { get; set; }
+        }
+
+        private class ACF: WordPressPCL.Models.Base
+        {
+            [JsonProperty( "about_group", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public AboutGroup AboutGroup { get; set; }
+        }
+
+        private class AboutGroup: WordPressPCL.Models.Base
+        {
+            [JsonProperty( "age", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public int Age { get; set; }
+
+            [JsonProperty( "price", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public string Price { get; set; }
+
+            [JsonProperty( "duration", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public int Duration { get; set; }
+
+            [JsonProperty( "gallery", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public IEnumerable<GalleryOfImages> Gallery { get; set; }
+        }
+
+        private class GalleryOfImages: WordPressPCL.Models.Base
         {
             [JsonProperty( "sizes", DefaultValueHandling = DefaultValueHandling.Ignore )]
-            public SizesItem Sizes { get; set; }
+            public LargeItem Sizes { get; set; }
         }
-        private class SizesItem: WordPressPCL.Models.Base
+
+        private class LargeItem: WordPressPCL.Models.Base
         {
             [JsonProperty( "large", DefaultValueHandling = DefaultValueHandling.Ignore )]
-            public ImageItem Large { get; set; }
+            public string Large { get; set; }
+        }
+        #endregion
 
-            [JsonProperty( "full", DefaultValueHandling = DefaultValueHandling.Ignore )]
-            public ImageItem Full { get; set; }
-        }
-        private class ImageItem: WordPressPCL.Models.Base
-        {
-            [JsonProperty( "source_url", DefaultValueHandling = DefaultValueHandling.Ignore )]
-            public string Source_url { get; set; }
-        }
+        // Information about performance (Main Image)
+        #region Access to Main Image
         private class Media: WordPressPCL.Models.Base
         {
             [JsonProperty( "media_details", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public Media_detailsItem Media_details { get; set; }
         }
+
+        private class Media_detailsItem: WordPressPCL.Models.Base
+        {
+            [JsonProperty( "sizes", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public SizesItem Sizes { get; set; }
+        }
+
+        private class SizesItem: WordPressPCL.Models.Base
+        {
+            [JsonProperty( "full", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public FullItem Full { get; set; }
+        }
+
+        private class FullItem: WordPressPCL.Models.Base
+        {
+            [JsonProperty( "source_url", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public string Source_url { get; set; }
+        }
+        #endregion
+
         private static async Task<Performance> GetPerformance( WordPressClient client, int perforamanceId )
         {
             return await client.CustomRequest.Get<Performance>( $"wp/v2/performance/{perforamanceId}" );
         }
-        private static async Task<IEnumerable<Media>> GetMediaOfPerformance( WordPressClient client, int perforamanceId )
+
+        private static async Task<Media> GetMainImage( WordPressClient client, int featured_media )
         {
-            return await client.CustomRequest.Get<IEnumerable<Media>>( $"wp/v2/media?parent={perforamanceId}" );
+            return await client.CustomRequest.Get<Media>( $"wp/v2/media/{featured_media}" );
         }
+
         public PerformanceDetailsDataModelBase GetInformationAboutPerformance( string phoneId, string languageCode, int perforamanceId )
         {
             var performance = GetPerformance( InitializeClient(), perforamanceId ).Result;
-            var media = GetMediaOfPerformance( InitializeClient(), perforamanceId ).Result;
-            //string mainImage = media.First().Media_details.Sizes.Full.Source_url;
-            List<string> mainImage = new List<string>();
-            List<string> galleryImage = new List<string>();
-            mainImage.Add( media.First().Media_details.Sizes.Full.Source_url);
-            foreach ( var image in media ) // Skip Main Image
-            {
-                if ( image.Media_details.Sizes.Large!= null )
-                    // need to investigate  gallery in WP
-                    // The main image is not always first
-                    galleryImage.Add( image.Media_details.Sizes.Large.Source_url );
-                else
-                    mainImage[0] =image.Media_details.Sizes.Full.Source_url ;
-            }
+            var media = GetMainImage( InitializeClient(), performance.Featured_media ).Result;
 
-            string [] a = (performance.AcfInfo.AboutGroup.Price).Split( '-' );
+            var galleryImage = (from image in performance.AcfInfo.AboutGroup.Gallery
+                                select image.Sizes.Large).ToList();
 
-            var description = Regex.Replace( performance.Content.Rendered, @"(<.*?>)", string.Empty );
+            string [] Prices = (performance.AcfInfo.AboutGroup.Price).Split( '-' );
+            
+            string description = Regex.Replace( performance.Content.Rendered, @"(</p>)", "\n" );
+            description = Regex.Replace( description, @"(<.*?>)", string.Empty );
+            description = System.Net.WebUtility.HtmlDecode( description );
+
             return new PerformanceDetailsDataModelWp()
             {
                 Title = performance.Title.Rendered,
                 Description = description,
-                MainImage = mainImage[0],
+                MainImage = media.Media_details.Sizes.Full.Source_url,
                 GalleryImage = galleryImage,
                 MinimumAge = performance.AcfInfo.AboutGroup.Age,
-                MinPrice = Convert.ToInt32( a [0] ),
-                MaxPrice = Convert.ToInt32( a [1] ),
+                MinPrice = Convert.ToInt32( Prices [0] ),
+                MaxPrice = Convert.ToInt32( Prices [1] ),
                 Duration = performance.AcfInfo.AboutGroup.Duration,
             };
-
         }
     }
 }

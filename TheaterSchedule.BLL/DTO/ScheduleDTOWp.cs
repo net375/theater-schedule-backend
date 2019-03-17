@@ -1,13 +1,8 @@
-﻿using System;
-
-namespace TheaterSchedule.BLL.DTO
+﻿namespace TheaterSchedule.BLL.DTO
 {
-    public class ScheduleDTOWp
+    public class ScheduleDTOWp : ScheduleDTOBase
     {
-        public int PerformanceId { get; set; }
-        public string Title { get; set; }
         public string MainImage { get; set; }
-        public DateTime Beginning { get; set; }
         public string redirectToTicket { get; set; }
     }
 }

@@ -6,15 +6,8 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface IScheduleService
     {
-        IEnumerable<ScheduleDTO> FilterByDate(
+        IEnumerable<ScheduleDTOBase> FilterByDate(
             string languageCode, 
-            DateTime? startDate, DateTime? endDate);
-    }
-
-    public interface IScheduleServiceWp
-    {
-        IEnumerable<ScheduleDTOWp> FilterByDate(
-            string languageCode,
             DateTime? startDate, DateTime? endDate);
     }
 }
