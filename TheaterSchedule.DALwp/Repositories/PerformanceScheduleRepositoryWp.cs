@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TheaterSchedule.DAL.Models;
 using TheaterSchedule.DAL.Interfaces;
 using System.Linq;
+using System.ComponentModel;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
@@ -35,7 +36,8 @@ namespace TheaterSchedule.DALwp.Repositories
 
         private class AboutGroup : WordPressPCL.Models.Base
         {
-            [JsonProperty("schedule")]
+            [JsonProperty("schedule", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [DefaultValue(false)]
             public IEnumerable<Schedule> schedule { get; set; }
 
             [JsonProperty("age", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -98,45 +100,60 @@ namespace TheaterSchedule.DALwp.Repositories
 
         public async Task<PerformanceScheduleDataModel> GetPerfomanceScheduleInfo(int performanceId)
         {
+            PerformanceScheduleDataModel dataModel;
+
             var client = new Repository().InitializeClient();
             var gettingSchedule = await client.CustomRequest.Get<Performance>($"wp/v2/performance/{performanceId}");
-            PerformanceScheduleDataModel dataModel;
-            List<PerformanceScheduleDataModelBase> scheduleList = new List<PerformanceScheduleDataModelBase>();
-
             int PerformanceId = gettingSchedule.PerformanceId;
             string Title = gettingSchedule.Title.Rendered;
             int MediaId = gettingSchedule.Featured_media;
             int Age = gettingSchedule.AcfInfo.aboutGroup.Age;
             int Duration = gettingSchedule.AcfInfo.aboutGroup.Duration;
             string Price = gettingSchedule.AcfInfo.aboutGroup.Price;
-
             var gettingImages = await client.CustomRequest.Get<Media>($"wp/v2/media/{MediaId}");
             string MainImageUrl = gettingImages.Media_details.Sizes.Full.Source_url;
-            
 
-            foreach (var info in gettingSchedule.AcfInfo.aboutGroup.schedule)
+            if (gettingSchedule.AcfInfo.aboutGroup.schedule == null)
             {
-                foreach (var schedule in info.scheduleDetails)
+                dataModel = new PerformanceScheduleDataModel()
                 {
-                    
-                    DateTime date = ConvertStringToDateTime(schedule.ScheduleDay);
-                    DateTime time = Convert.ToDateTime(schedule.ScheduleTime);
-                    if(date.Date>=DateTime.Now)
-                    {
-                        if (scheduleList.Exists(tempData => tempData.Day == date))
-                        {
-                            scheduleList.First(tempData => tempData.Day == date).TimeLinkList.Add(new TimeLink() { Time = time, Link = schedule.ScheduleLink });
-                        }
-                        else
-                        {
-                            List<TimeLink> times = new List<TimeLink>() { new TimeLink() { Time = time, Link = schedule.ScheduleLink } };
-                            scheduleList.Add(new PerformanceScheduleDataModelBase() { Day = date, TimeLinkList = times });
-                        }
-                    }
-                    
-                }
+                    PerformanceId = PerformanceId,
+                    Title = Title,
+                    MainImage = MainImageUrl,
+                    Age = Age,
+                    Duration = Duration,
+                    Price = Price,
+                };
+                return dataModel;
             }
+            
+            List<PerformanceScheduleDataModelBase> scheduleList = new List<PerformanceScheduleDataModelBase>();
+            var temp = gettingSchedule.AcfInfo.aboutGroup.schedule;
 
+            
+                foreach (var info in gettingSchedule.AcfInfo.aboutGroup.schedule)
+                {
+                    foreach (var schedule in info.scheduleDetails)
+                    {
+                        DateTime date = ConvertStringToDateTime(schedule.ScheduleDay);
+                        DateTime time = Convert.ToDateTime(schedule.ScheduleTime);
+                        if (date.Date >= DateTime.Now)
+                        {
+                            if (scheduleList.Exists(tempData => tempData.Day == date))
+                            {
+                                scheduleList.First(tempData => tempData.Day == date).TimeLinkList.Add(new TimeLink() { Time = time, Link = schedule.ScheduleLink });
+                            }
+                            else
+                            {
+                                List<TimeLink> times = new List<TimeLink>() { new TimeLink() { Time = time, Link = schedule.ScheduleLink } };
+                                scheduleList.Add(new PerformanceScheduleDataModelBase() { Day = date, TimeLinkList = times });
+                            }
+                        }
+
+                    }
+                }
+            
+     
             dataModel = new PerformanceScheduleDataModel()
             {
                 PerformanceId = PerformanceId,
