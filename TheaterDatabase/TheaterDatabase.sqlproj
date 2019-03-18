@@ -60,6 +60,7 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="TestData" />
+    <Folder Include="TestData\MainImages" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Account.sql" />
@@ -79,10 +80,8 @@
     <Build Include="dbo\Tables\Language.sql" />
     <None Include="TestData\FillByTestData.sql" />
     <Build Include="dbo\Tables\Message.sql" />
-    <Build Include="dbo\Tables\Excursion.sql" />
-    <Build Include="dbo\Tables\Excursion_TR.sql" />
-    <Build Include="dbo\Tables\PromoAction_TR.sql" />
-    <Build Include="dbo\Tables\PromoAction.sql" />
+    <Build Include="dbo\Tables\Event.sql" />
+    <Build Include="dbo\Tables\Event_TR.sql" />
     <Build Include="dbo\Tables\Role_TR.sql" />
     <Build Include="dbo\Tables\PushToken.sql" />
   </ItemGroup>
@@ -91,5 +90,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TheaterDatabase.publish.xml" />
+    <None Include="TestData\MainImages\Cat_resize.jpg" />
+    <None Include="TestData\MainImages\doroga_resize.jpg" />
+    <None Include="TestData\MainImages\kolobok_resize.jpg" />
+    <None Include="TestData\MainImages\kotyk_pivnyk_resize.jpg" />
+    <None Include="TestData\MainImages\Koza_resize.jpg" />
+    <None Include="TestData\MainImages\lisovychok_resize.jpg" />
+    <None Include="TestData\MainImages\pidkova_resize.jpg" />
+    <None Include="TestData\MainImages\sadok_resize.jpg" />
+    <None Include="TestData\MainImages\sny_resize.jpg" />
+    <None Include="TestData\MainImages\Taras_resize.jpg" />
   </ItemGroup>
 </Project>

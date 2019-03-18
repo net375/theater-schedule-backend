@@ -3,8 +3,8 @@ using TheaterSchedule.BLL.DTO;
 
 namespace TheaterSchedule.BLL.Interfaces
 {
-    public interface IExcursionService
+    public interface IEventService
     {
-        IEnumerable<ExcursionDTO> LoadAvailable(string languageCode);
+        IEnumerable<EventDTO> LoadAvailable(string languageCode);
     }
 }

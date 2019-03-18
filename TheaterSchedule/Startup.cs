@@ -54,9 +54,8 @@ namespace TheaterSchedule
             services.AddScoped<IPerformanceDetailsRepository, PerformanceDetailsRepositoryWp>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
-            services.AddScoped<IExcursionRepository, ExcursionRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IIsCheckedPerformanceRepository, IsCheckedPerformanceRepository>();
-            services.AddScoped<IPromoActionRepository, PromoActionRepository>();
             services.AddScoped<IPushTokenRepository, PushTokenRepository>();
             services.AddScoped<ICreativeTeamRepository, CreativeTeamRepositoryWpFake>();
             services.AddScoped<ITagRepository, TagRepositoryWp>();
@@ -71,8 +70,7 @@ namespace TheaterSchedule
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsServiceWp>();
             services.AddScoped<IWishlistService, WishlistService>();
             services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<IExcursionService, ExcursionService>();
-            services.AddScoped<IPromoActionService, PromoActionService>();
+            services.AddScoped<IEventService, EventService>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IPushTokenService, PushTokenService>();
             services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
