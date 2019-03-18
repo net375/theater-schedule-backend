@@ -1,4 +1,4 @@
-﻿using Entities.Models;
+using Entities.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -49,7 +49,7 @@ namespace TheaterSchedule
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
-            services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<IScheduleRepository, ScheduleRepositoryWp>();
             services.AddScoped<IPerfomanceRepository, PerfomanceRepositoryWp>();
             services.AddScoped<IPerformanceDetailsRepository, PerformanceDetailsRepositoryWp>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
@@ -65,7 +65,7 @@ namespace TheaterSchedule
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             //services
             services.AddScoped<ISettingsService, SettingsService>();
-            services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<IScheduleService, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsServiceWp>();

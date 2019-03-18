@@ -19,8 +19,8 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpGet("{languageCode}/FilterByDate")]
-        public IEnumerable<ScheduleDTO> FilterByDate(
-            string languageCode, 
+        public IEnumerable<ScheduleDTOBase> FilterByDate(
+            string languageCode,
             DateTime? startDate, DateTime? endDate)
         {
             return service.FilterByDate(languageCode, startDate, endDate).ToList();
