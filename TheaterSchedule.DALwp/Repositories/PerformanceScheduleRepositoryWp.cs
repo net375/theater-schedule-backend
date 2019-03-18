@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TheaterSchedule.DAL.Models;
 using TheaterSchedule.DAL.Interfaces;
 using System.Linq;
+using System.ComponentModel;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
@@ -35,7 +36,8 @@ namespace TheaterSchedule.DALwp.Repositories
 
         private class AboutGroup : WordPressPCL.Models.Base
         {
-            [JsonProperty("schedule")]
+            [JsonProperty("schedule", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [DefaultValue(false)]
             public IEnumerable<Schedule> schedule { get; set; }
 
             [JsonProperty("age", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -98,11 +100,10 @@ namespace TheaterSchedule.DALwp.Repositories
 
         public async Task<PerformanceScheduleDataModel> GetPerfomanceScheduleInfo(int performanceId)
         {
+            PerformanceScheduleDataModel dataModel;
+
             var client = new Repository().InitializeClient();
             var gettingSchedule = await client.CustomRequest.Get<Performance>($"wp/v2/performance/{performanceId}");
-            PerformanceScheduleDataModel dataModel;
-            List<PerformanceScheduleDataModelBase> scheduleList = new List<PerformanceScheduleDataModelBase>();
-
             int PerformanceId = gettingSchedule.PerformanceId;
             string Title = gettingSchedule.Title.Rendered;
             int MediaId = gettingSchedule.Featured_media;
@@ -112,16 +113,30 @@ namespace TheaterSchedule.DALwp.Repositories
 
             var gettingImages = await client.CustomRequest.Get<Media>($"wp/v2/media/{MediaId}");
             string MainImageUrl = gettingImages.Media_details.Sizes.Full.Source_url;
-            
+
+            if (gettingSchedule.AcfInfo.aboutGroup.schedule == null)
+            {
+                dataModel = new PerformanceScheduleDataModel()
+                {
+                    PerformanceId = PerformanceId,
+                    Title = Title,
+                    MainImage = MainImageUrl,
+                    Age = Age,
+                    Duration = Duration,
+                    Price = Price,
+                };
+                return dataModel;
+            }
+
+            List<PerformanceScheduleDataModelBase> scheduleList = new List<PerformanceScheduleDataModelBase>();
 
             foreach (var info in gettingSchedule.AcfInfo.aboutGroup.schedule)
             {
                 foreach (var schedule in info.scheduleDetails)
                 {
-                    
                     DateTime date = ConvertStringToDateTime(schedule.ScheduleDay);
                     DateTime time = Convert.ToDateTime(schedule.ScheduleTime);
-                    if(date.Date>=DateTime.Now)
+                    if (date.Date >= DateTime.Now)
                     {
                         if (scheduleList.Exists(tempData => tempData.Day == date))
                         {
@@ -133,9 +148,10 @@ namespace TheaterSchedule.DALwp.Repositories
                             scheduleList.Add(new PerformanceScheduleDataModelBase() { Day = date, TimeLinkList = times });
                         }
                     }
-                    
+
                 }
             }
+
 
             dataModel = new PerformanceScheduleDataModel()
             {
@@ -143,9 +159,9 @@ namespace TheaterSchedule.DALwp.Repositories
                 Title = Title,
                 MainImage = MainImageUrl,
                 ScheduleList = scheduleList,
-                Age=Age,
-                Duration=Duration,
-                Price=Price,
+                Age = Age,
+                Duration = Duration,
+                Price = Price,
             };
 
             return dataModel;
