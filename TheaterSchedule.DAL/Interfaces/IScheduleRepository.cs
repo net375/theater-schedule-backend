@@ -6,7 +6,7 @@ namespace TheaterSchedule.DAL.Interfaces
 {
     public interface IScheduleRepository
     {
-        IEnumerable<ScheduleDataModel> GetListPerformancesByDateRange(
+        IEnumerable<ScheduleDataModelBase> GetListPerformancesByDateRange(
             string languageCode,
             DateTime? startDate, DateTime? endDate);
     }

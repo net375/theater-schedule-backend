@@ -1,4 +1,4 @@
-﻿using Entities.Models;
+using Entities.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -49,36 +49,36 @@ namespace TheaterSchedule
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
-            services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<IScheduleRepository, ScheduleRepositoryWp>();
             services.AddScoped<IPerfomanceRepository, PerfomanceRepositoryWp>();
             services.AddScoped<IPerformanceDetailsRepository, PerformanceDetailsRepositoryWp>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
-            services.AddScoped<IExcursionRepository, ExcursionRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IIsCheckedPerformanceRepository, IsCheckedPerformanceRepository>();
-            services.AddScoped<IPromoActionRepository, PromoActionRepository>();
             services.AddScoped<IPushTokenRepository, PushTokenRepository>();
             services.AddScoped<ICreativeTeamRepository, CreativeTeamRepositoryWpFake>();
             services.AddScoped<ITagRepository, TagRepositoryWp>();
+            services.AddScoped<IPerformanceScheduleRepository, PerformanceScheduleRepositoryWp>();
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<INotificationFrequencyRepository, NotificationFrequencyRepository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             //services
             services.AddScoped<ISettingsService, SettingsService>();
-            services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<IScheduleService, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsServiceWp>();
             services.AddScoped<IWishlistService, WishlistService>();
             services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<IExcursionService, ExcursionService>();
-            services.AddScoped<IPromoActionService, PromoActionService>();
+            services.AddScoped<IEventService, EventService>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IPushTokenService, PushTokenService>();
             services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();
             services.AddMemoryCache();
         }
 

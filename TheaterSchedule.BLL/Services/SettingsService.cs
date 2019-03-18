@@ -18,7 +18,7 @@ namespace TheaterSchedule.BLL.Services
 
         public SettingsService(
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
-            INotificationFrequencyRepository notificationFrequencyRepository, 
+            INotificationFrequencyRepository notificationFrequencyRepository,  
             ISettingsRepository settingsRepository,
             IAccountRepository accountRepository, 
             ILanguageRepository languageRepository)

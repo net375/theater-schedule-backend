@@ -1,12 +1,14 @@
 ﻿using System;
 
-namespace TheaterSchedule.BLL.DTO
+namespace TheaterSchedule.DAL.Models
 {
-    public class ExcursionDTO
+    public class EventDataModel
     {
-        public string ExcursionName { get; set; }
+        public int EventId { get; set; }
+        public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
+        public string Type { get; set; }
         public byte[] Image { get; set; }
         public DateTime Date { get; set; }
     }

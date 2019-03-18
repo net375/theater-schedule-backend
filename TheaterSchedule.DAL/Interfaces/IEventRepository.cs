@@ -3,8 +3,8 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DAL.Interfaces
 {
-    public interface IExcursionRepository
+    public interface IEventRepository
     {
-        IEnumerable<ExcursionDataModel> GetAllExcursions(string languageCode);
+        IEnumerable<EventDataModel> GetAllEvents(string languageCode);
     }
 }
