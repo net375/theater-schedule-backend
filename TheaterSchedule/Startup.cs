@@ -59,6 +59,7 @@ namespace TheaterSchedule
             services.AddScoped<IPushTokenRepository, PushTokenRepository>();
             services.AddScoped<ICreativeTeamRepository, CreativeTeamRepositoryWpFake>();
             services.AddScoped<ITagRepository, TagRepositoryWp>();
+            services.AddScoped<IPerformanceScheduleRepository, PerformanceScheduleRepositoryWp>();
             services.AddScoped<IRepository, Repository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
@@ -76,6 +77,7 @@ namespace TheaterSchedule
             services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();
             services.AddMemoryCache();
         }
 
