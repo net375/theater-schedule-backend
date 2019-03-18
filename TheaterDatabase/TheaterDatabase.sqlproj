@@ -85,6 +85,7 @@
     <Build Include="dbo\Tables\PromoAction.sql" />
     <Build Include="dbo\Tables\Role_TR.sql" />
     <Build Include="dbo\Tables\PushToken.sql" />
+    <Build Include="dbo\Tables\NotificationFrequency.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TheaterDatabase.refactorlog" />
