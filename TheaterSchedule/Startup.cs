@@ -61,6 +61,7 @@ namespace TheaterSchedule
             services.AddScoped<ITagRepository, TagRepositoryWp>();
             services.AddScoped<IPerformanceScheduleRepository, PerformanceScheduleRepositoryWp>();
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<INotificationFrequencyRepository, NotificationFrequencyRepository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             //services

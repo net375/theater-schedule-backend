@@ -107,18 +107,30 @@ INSERT dbo.Schedule(ScheduleId, Beginning, PerformanceId) VALUES (9, '2019-03-18
 INSERT dbo.Schedule(ScheduleId, Beginning, PerformanceId) VALUES (10,'2019-03-04 11:07:00.680', 399)
 
 SET IDENTITY_INSERT dbo.Schedule OFF
+
+SET IDENTITY_INSERT dbo.NotificationFrequency ON
+
+INSERT dbo.NotificationFrequency(NotificationFrequencyId, Frequency) 
+VALUES
+(1, 3),
+(2, 7),
+(3, 14),
+(4, 30)
+																
+SET IDENTITY_INSERT dbo.NotificationFrequency OFF
+
 SET IDENTITY_INSERT dbo.Settings ON
 
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (1, 2)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (2, 1)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (3, 1)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (4, 2)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (5, 1)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (6, 2)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (7, 2)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (8, 1)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (9, 1)
-INSERT dbo.Settings(SettingsId, LanguageId) VALUES (10, 2)
+INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId) VALUES (1, 2, 1, 2)
+INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId) VALUES (2, 1, 1, 2)
+INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId) VALUES (3, 1, 1, 2)
+INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId) VALUES (4, 2, 1, 2)
+INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId) VALUES (5, 1, 1, 2)
+INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId) VALUES (6, 2, 1, 2)
+INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId) VALUES (7, 2, 1, 2)
+INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId) VALUES (8, 1, 1, 2)
+INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId) VALUES (9, 1, 1, 2)
+INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId) VALUES (10, 2, 1,2)
 
 SET IDENTITY_INSERT dbo.Settings OFF
 SET IDENTITY_INSERT dbo.Account ON

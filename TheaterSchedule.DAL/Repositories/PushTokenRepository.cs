@@ -27,17 +27,18 @@ namespace TheaterSchedule.DAL.Repositories
                             join account in db.Account on token.AccountId equals account.AccountId
                             join settings in db.Settings on account.SettingsId equals settings.SettingsId
                             join language in db.Language on settings.LanguageId equals language.LanguageId
+                            join frequency in db.NotificationFrequency on settings.NotificationFrequencyId equals frequency.NotificationFrequencyId
                             join wishlist in db.Wishlist on account.AccountId equals wishlist.AccountId
                             join performance in db.Performance on wishlist.PerformanceId equals performance.PerformanceId
                             join schedule in db.Schedule on performance.PerformanceId equals schedule.PerformanceId
-                            where (schedule.Beginning.Day == (DateTime.Today.Day + 7) //notify in a week
+                            where (schedule.Beginning.Day == (DateTime.Today.AddDays(frequency.Frequency).Day) 
                                     && (schedule.PerformanceId == wishlist.PerformanceId))
 
                             select new PushTokenDataModel
                             {
                                 Token =  token.Token,
                                 LanguageCode = language.LanguageCode
-                            }).ToList();
+                            }).Distinct().ToList();
 
             return tokenWithLanguage;
         }

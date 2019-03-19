@@ -10,18 +10,21 @@ namespace TheaterSchedule.BLL.Services
     public class SettingsService : ISettingsService
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
+        private INotificationFrequencyRepository notificationFrequencyRepository;
         private ISettingsRepository settingsRepository;
         private IAccountRepository accountRepository;
         private ILanguageRepository languageRepository;
 
 
         public SettingsService(
-            ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, 
+            ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
+            INotificationFrequencyRepository notificationFrequencyRepository,  
             ISettingsRepository settingsRepository,
             IAccountRepository accountRepository, 
             ILanguageRepository languageRepository)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
+            this.notificationFrequencyRepository = notificationFrequencyRepository;
             this.settingsRepository = settingsRepository;
             this.accountRepository = accountRepository;
             this.languageRepository = languageRepository;
@@ -35,7 +38,9 @@ namespace TheaterSchedule.BLL.Services
             {
                 settingsRequest = new SettingsDTO()
                 {
-                    LanguageCode = settings.Language.LanguageCode
+                    LanguageCode = settings.Language.LanguageCode,
+                    DoesNotify = settings.DoesNotify,
+                    NotificationFrequency = settings.NotificationFrequency.Frequency
                 };
             }
             else
@@ -47,7 +52,6 @@ namespace TheaterSchedule.BLL.Services
 
         public void StoreSettings(string phoneId, SettingsDTO settingsRequest)
         {
-
             Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
             if (language == null)
             {
@@ -56,14 +60,32 @@ namespace TheaterSchedule.BLL.Services
                     $"Language [{settingsRequest.LanguageCode}] doesn't exist");
             }
 
+            NotificationFrequency notificationFrequency =
+                notificationFrequencyRepository.GetNotificationFrequencyByFrequency(settingsRequest.NotificationFrequency);
+
+            if (notificationFrequency == null)
+            {
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.NotFound,
+                    $"Notification frequency [{settingsRequest.NotificationFrequency}] doesn't exist");
+            }
+
             Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
                 settings.Language = language;
+                settings.DoesNotify = settingsRequest.DoesNotify;
+                settings.NotificationFrequency = notificationFrequency;
             }
             else
             {
-                Settings newSettings = new Settings { Language = language };
+                Settings newSettings = new Settings
+                {
+                    Language = language,
+                    DoesNotify = true,
+                    NotificationFrequency = notificationFrequency
+                };
+
                 settingsRepository.Add(newSettings);
 
                 accountRepository.Add(new Account
