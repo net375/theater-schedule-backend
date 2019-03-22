@@ -90,7 +90,7 @@ namespace TheaterSchedule.DALwp.Repositories
                 p => new PerformanceDataModel
                 {
                     PerformanceId = p.Id,
-                    Title = p.Title.Rendered,
+                    Title = WebUtility.HtmlDecode( p.Title.Rendered ),
                     MainImageUrl = client.CustomRequest.Get<Media>(
                         $"wp/v2/media/{p.Featured_media}").Result.Media_details.Sizes.Full.Source_url
                 }).ToList();

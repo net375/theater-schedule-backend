@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -115,14 +116,17 @@ namespace TheaterSchedule.DALwp.Repositories
                                 select image.Sizes.Large).ToList();
 
             string [] Prices = (performance.AcfInfo.AboutGroup.Price).Split( '-' );
-            
+
             string description = Regex.Replace( performance.Content.Rendered, @"(</p>)", "\n" );
             description = Regex.Replace( description, @"(<.*?>)", string.Empty );
-            description = System.Net.WebUtility.HtmlDecode( description );
+            description = WebUtility.HtmlDecode( description );
+            description = description.Trim();
+
+            string title = WebUtility.HtmlDecode( performance.Title.Rendered );
 
             return new PerformanceDetailsDataModelWp()
             {
-                Title = performance.Title.Rendered,
+                Title = title,
                 Description = description,
                 MainImage = media.Media_details.Sizes.Full.Source_url,
                 GalleryImage = galleryImage,
