@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using System.Net;
 using WordPressPCL;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
@@ -105,7 +106,7 @@ namespace TheaterSchedule.DALwp.Repositories
             var client = new Repository().InitializeClient();
             var gettingSchedule = await client.CustomRequest.Get<Performance>($"wp/v2/performance/{performanceId}");
             int PerformanceId = gettingSchedule.PerformanceId;
-            string Title = gettingSchedule.Title.Rendered;
+            string Title = WebUtility.HtmlDecode( gettingSchedule.Title.Rendered );
             int MediaId = gettingSchedule.Featured_media;
             int Age = gettingSchedule.AcfInfo.aboutGroup.Age;
             int Duration = gettingSchedule.AcfInfo.aboutGroup.Duration;
