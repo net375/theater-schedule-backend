@@ -21,9 +21,10 @@ namespace TheaterSchedule.DAL.Repositories
         {
             return (from performance in performances
                     join wishlist in db.Wishlist on performance.PerformanceId equals wishlist.PerformanceId
+                    join account in db.Account on wishlist.AccountId equals account.AccountId
                         into wishlist_join
                     from w in wishlist_join.DefaultIfEmpty()
-                    where (w != null && w.Account.PhoneIdentifier == phoneId &&
+                    where (w != null && w.PhoneIdentifier == phoneId &&
                            (performance.PerformanceId) == performanceId)
                     select w).Any();
         }
