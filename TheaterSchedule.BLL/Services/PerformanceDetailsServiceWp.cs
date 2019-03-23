@@ -35,7 +35,9 @@ namespace TheaterSchedule.BLL.Services
 
         public PerformanceDetailsDTOBase LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
         {
+            var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId );
             string memoryCacheKey = GetCacheKey( languageCode, performanceId );
+
             if ( !memoryCache.TryGetValue( memoryCacheKey, out performanceDetailsRequest ) )
             {
                 var performance = performanceDetailsRepository
@@ -44,7 +46,7 @@ namespace TheaterSchedule.BLL.Services
 
                 var tags = tagRepository.GetTagsByPerformanceId( performanceId ).Result;
                 var creativeTeam = creativeTeamRepository.GetCreativeTeam( languageCode, performanceId );
-                var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId );
+               
 
                 performanceDetailsRequest = new PerformanceDetailsDTOWp()
                 {
@@ -56,7 +58,6 @@ namespace TheaterSchedule.BLL.Services
                     Description = performance.Description,
                     MainImage = performance.MainImage,
                     GalleryImage = performance.GalleryImage,
-                    IsChecked = isChecked,
                     HashTag = from tg in tags
                         select tg,
                     TeamMember = from tm in creativeTeam
@@ -70,6 +71,8 @@ namespace TheaterSchedule.BLL.Services
                 };               
                 memoryCache.Set( memoryCacheKey, performanceDetailsRequest );
             }
+
+            performanceDetailsRequest.IsChecked = isChecked;
             return performanceDetailsRequest;
         }
 
