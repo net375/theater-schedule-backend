@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
 using System.Linq;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
+using TheaterSchedule.BLL;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -16,6 +18,7 @@ namespace TheaterSchedule.BLL.Services
         private IIsCheckedPerformanceRepository isCheckedPerformanceRepository;
         private IMemoryCache memoryCache;
         private PerformanceDetailsDTOBase performanceDetailsRequest;
+        private IPerfomanceRepository perfomanceRepository;
 
         public PerformanceDetailsServiceWp( 
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
@@ -23,7 +26,8 @@ namespace TheaterSchedule.BLL.Services
             ITagRepository tagRepository, 
             ICreativeTeamRepository creativeTeamRepository,
             IIsCheckedPerformanceRepository isCheckedPerformanceRepository,
-            IMemoryCache memoryCache )
+            IMemoryCache memoryCache,
+            IPerfomanceRepository perfomanceRepository)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.performanceDetailsRepository = performanceDetailsRepository;
@@ -31,10 +35,24 @@ namespace TheaterSchedule.BLL.Services
             this.creativeTeamRepository = creativeTeamRepository;
             this.isCheckedPerformanceRepository = isCheckedPerformanceRepository;
             this.memoryCache = memoryCache;
+            this.perfomanceRepository = perfomanceRepository;
         }
 
         public PerformanceDetailsDTOBase LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
         {
+            List<PerformanceDataModel> performancesWp = null;
+
+            string performanceMemoryCacheKey = Constants.PerformancesCacheKey + languageCode;
+
+            if (!memoryCache.TryGetValue(performanceMemoryCacheKey, out performancesWp))
+            {
+                performancesWp =
+                    perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
+
+                memoryCache.Set(performanceMemoryCacheKey, performancesWp);
+            }
+
+
             string memoryCacheKey = GetCacheKey( languageCode, performanceId );
             if ( !memoryCache.TryGetValue( memoryCacheKey, out performanceDetailsRequest ) )
             {
@@ -44,7 +62,7 @@ namespace TheaterSchedule.BLL.Services
 
                 var tags = tagRepository.GetTagsByPerformanceId( performanceId ).Result;
                 var creativeTeam = creativeTeamRepository.GetCreativeTeam( languageCode, performanceId );
-                var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId );
+                //var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId, performancesWp);
 
                 performanceDetailsRequest = new PerformanceDetailsDTOWp()
                 {
@@ -56,7 +74,7 @@ namespace TheaterSchedule.BLL.Services
                     Description = performance.Description,
                     MainImage = performance.MainImage,
                     GalleryImage = performance.GalleryImage,
-                    IsChecked = isChecked,
+                    //IsChecked = isChecked,
                     HashTag = from tg in tags
                         select tg,
                     TeamMember = from tm in creativeTeam
@@ -70,6 +88,10 @@ namespace TheaterSchedule.BLL.Services
                 };               
                 memoryCache.Set( memoryCacheKey, performanceDetailsRequest );
             }
+
+            var isChecked = isCheckedPerformanceRepository.IsChecked(phoneId, performanceId, performancesWp);
+            performanceDetailsRequest.IsChecked = isChecked;
+
             return performanceDetailsRequest;
         }
 

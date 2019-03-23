@@ -7,7 +7,7 @@ namespace TheaterSchedule.DAL.Interfaces
     public interface IWishlistRepository
     {
         IEnumerable<WishlistDataModel> GetWishlistByPhoneIdentifier(
-            string phoneId, string languageCode );
+            string phoneId, string languageCode, List<PerformanceDataModel> performancesWp);
         Wishlist GetPerformanceByPhoneIdAndPerformanceId( 
             string phoneId, int scheduleId );
         void Add( Wishlist performance );

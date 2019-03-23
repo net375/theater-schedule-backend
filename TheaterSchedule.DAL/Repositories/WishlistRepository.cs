@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace TheaterSchedule.DAL.Repositories
 {
@@ -17,9 +18,9 @@ namespace TheaterSchedule.DAL.Repositories
         }
 
         public IEnumerable<WishlistDataModel> GetWishlistByPhoneIdentifier(
-            string phoneId, string languageCode)
+            string phoneId, string languageCode, List<PerformanceDataModel> performancesWp)
         {
-            IEnumerable<WishlistDataModel> resultWishlist = null;
+            /*IEnumerable<WishlistDataModel> resultWishlist = null;
 
             resultWishlist = from account in db.Account
                              join wishlist in db.Wishlist
@@ -38,6 +39,26 @@ namespace TheaterSchedule.DAL.Repositories
                                  PerformanceId = wishlist.PerformanceId,
                                  MainImage = performance.MainImage,
                                  Title = performanceTr.Title
+                             };
+
+            return resultWishlist;*/
+
+            IEnumerable<WishlistDataModel> resultWishlist = null;
+
+            resultWishlist = from account in db.Account
+                             join wishlist in db.Wishlist
+                                 on account.AccountId equals wishlist.AccountId
+                             join performance in performancesWp
+                                 on wishlist.PerformanceId equals performance.PerformanceId
+
+                             where account.PhoneIdentifier == phoneId
+
+                             orderby wishlist.WishPerformanceId descending
+                             select new WishlistDataModel()
+                             {
+                                 PerformanceId = wishlist.PerformanceId,
+                                 MainImage = performance.MainImageUrl,
+                                 Title = performance.Title
                              };
 
             return resultWishlist;

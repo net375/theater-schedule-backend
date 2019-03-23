@@ -4,22 +4,58 @@ using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using System.Linq;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
+using TheaterSchedule.BLL;
 
 namespace TheaterSchedule.BLL.Services
 {
     public class PushNotificationsService: IPushNotificationsService
     {
         private IPushTokenRepository pushTokenRepository;
+        private IScheduleRepository scheduleRepository;
+        private IPerfomanceRepository perfomanceRepository;
+        private IMemoryCache memoryCache;
 
-        public PushNotificationsService(IPushTokenRepository pushTokenRepository)
+        public PushNotificationsService(IPushTokenRepository pushTokenRepository, IScheduleRepository scheduleRepository,
+            IPerfomanceRepository perfomanceRepository, IMemoryCache memoryCache)
         {
             this.pushTokenRepository = pushTokenRepository;
+            this.scheduleRepository = scheduleRepository;
+            this.perfomanceRepository = perfomanceRepository;
+            this.memoryCache = memoryCache;
         }
 
         public void SendPushNotification()
         {
+            //performances
+            List<PerformanceDataModel> performancesWp = null;
+
+            string performanceMemoryCacheKey = Constants.PerformancesCacheKey + "uk";
+
+            if (!memoryCache.TryGetValue(performanceMemoryCacheKey, out performancesWp))
+            {
+                performancesWp =
+                    perfomanceRepository.GetPerformanceTitlesAndImages("uk");
+
+                memoryCache.Set(performanceMemoryCacheKey, performancesWp);
+            }
+
+            //schedule
+            string scheduleMemoryCacheKey = Constants.ScheduleCacheKey + "uk";
+
+            IEnumerable<ScheduleDataModelBase> schedule = null;
+
+            if (!memoryCache.TryGetValue(scheduleMemoryCacheKey, out schedule))
+            {
+                schedule = scheduleRepository.GetListPerformancesByDateRange("uk",
+                    new System.DateTime(2019,3,23), new System.DateTime(2099, 3, 23)); //needs to be changed when cache preload is implemented
+                memoryCache.Set(scheduleMemoryCacheKey, schedule);
+            }
+
+
             PushTokenDataModel[] pushTokens = 
-                pushTokenRepository.GetAllPushTokensToSendNotifications().ToArray();
+                pushTokenRepository.GetAllPushTokensToSendNotifications(performancesWp, schedule ).ToArray();
 
             PushNotificationDTO[] reqBody = Enumerable.Range(0, pushTokens.Length).Select(i =>
                 new PushNotificationDTO
@@ -38,7 +74,7 @@ namespace TheaterSchedule.BLL.Services
                 client.UploadString(
                     "https://exp.host/--/api/v2/push/send", 
                     JsonConvert.SerializeObject(reqBody));
-            }   
+            } 
         }
     }
 }
