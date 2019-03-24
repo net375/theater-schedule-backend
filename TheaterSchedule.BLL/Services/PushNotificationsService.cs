@@ -49,7 +49,7 @@ namespace TheaterSchedule.BLL.Services
             if (!memoryCache.TryGetValue(scheduleMemoryCacheKey, out schedule))
             {
                 schedule = scheduleRepository.GetListPerformancesByDateRange("uk",
-                    new System.DateTime(2019,3,23), new System.DateTime(2099, 3, 23)); //needs to be changed when cache preload is implemented
+                    null, null); //needs to be changed when cache preload is implemented
                 memoryCache.Set(scheduleMemoryCacheKey, schedule);
             }
 
@@ -74,7 +74,7 @@ namespace TheaterSchedule.BLL.Services
                 client.UploadString(
                     "https://exp.host/--/api/v2/push/send", 
                     JsonConvert.SerializeObject(reqBody));
-            } 
+            }
         }
     }
 }
