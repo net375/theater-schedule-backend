@@ -2,7 +2,7 @@
 
 namespace TheaterSchedule.BLL.DTO
 {
-    public class PushNotificationDTO
+    public class PushNotification
     {
         [JsonProperty("to")]
         public string To { get; set; }

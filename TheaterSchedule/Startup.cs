@@ -16,6 +16,10 @@ using TheaterSchedule.DALwp.Repositories;
 using TheaterSchedule.MiddlewareComponents;
 using Hangfire;
 using Hangfire.Dashboard;
+using Swashbuckle.AspNetCore.Swagger;
+using System.Reflection;
+using System.IO;
+using System;
 
 namespace TheaterSchedule
 {
@@ -45,6 +49,24 @@ namespace TheaterSchedule
 
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);
+
+
+            services.AddSwaggerGen(c =>
+            {
+
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1.0",
+                    Title = "Theater Schedule",
+                    Description = "Theater Schedule ASP.NET Core Web API",
+                });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+
             //repositories
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
@@ -100,6 +122,19 @@ namespace TheaterSchedule
             {
                 app.UseHsts();
             }
+
+            app.UseStaticFiles();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                c.RoutePrefix = string.Empty;
+            });
 
             loggerFactory.AddFile("Logs/myapp-{Date}.txt");
             app.UseToken();

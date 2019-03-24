@@ -5,6 +5,6 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface IPerformanceScheduleService
     {
-        PerformanceScheduleDTO LoadScheduleData(int performanceId);
+        PerformanceSchedule LoadScheduleData(int performanceId);
     }
 }

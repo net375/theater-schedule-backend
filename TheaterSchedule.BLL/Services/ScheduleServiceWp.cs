@@ -24,7 +24,7 @@ namespace TheaterSchedule.BLL.Services
             this.memoryCache = memoryCache;
         }
 
-        public IEnumerable<ScheduleDTOBase> FilterByDate(
+        public IEnumerable<ScheduleBase> FilterByDate(
             string languageCode,
             DateTime? startDate, DateTime? endDate)
         {
@@ -32,7 +32,7 @@ namespace TheaterSchedule.BLL.Services
 
             string memoryCacheKey = GetCacheKey(languageCode);
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ScheduleDTOBase, ScheduleDTOWp>())
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ScheduleBase, ScheduleWp>())
                 .CreateMapper();
 
             if (!memoryCache.TryGetValue(memoryCacheKey, out schedule))
@@ -41,8 +41,8 @@ namespace TheaterSchedule.BLL.Services
                 memoryCache.Set(memoryCacheKey, schedule);
             }
 
-            IEnumerable<ScheduleDTOWp> scheduleList =
-                mapper.Map<IEnumerable<ScheduleDataModelBase>, List<ScheduleDTOWp>>(schedule);
+            IEnumerable<ScheduleWp> scheduleList =
+                mapper.Map<IEnumerable<ScheduleDataModelBase>, List<ScheduleWp>>(schedule);
 
             return scheduleList = scheduleList.Where(s => !endDate.HasValue || s.Beginning <= endDate);
         }

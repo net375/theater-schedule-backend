@@ -4,6 +4,7 @@ using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
 using System.Net;
 using TheaterSchedule.Infrastructure;
+using Settings = TheaterSchedule.BLL.DTO.Settings;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -30,13 +31,13 @@ namespace TheaterSchedule.BLL.Services
             this.languageRepository = languageRepository;
 
         }
-        public SettingsDTO LoadSettings(string phoneId)
+        public Settings LoadSettings(string phoneId)
         {
-            SettingsDTO settingsRequest = null;
-            Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
+            Settings settingsRequest = null;
+            Entities.Models.Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
-                settingsRequest = new SettingsDTO()
+                settingsRequest = new Settings()
                 {
                     LanguageCode = settings.Language.LanguageCode,
                     DoesNotify = settings.DoesNotify,
@@ -50,7 +51,7 @@ namespace TheaterSchedule.BLL.Services
             return settingsRequest;
         }
 
-        public void StoreSettings(string phoneId, SettingsDTO settingsRequest)
+        public void StoreSettings(string phoneId, Settings settingsRequest)
         {
             Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
             if (language == null)
@@ -70,7 +71,7 @@ namespace TheaterSchedule.BLL.Services
                     $"Notification frequency [{settingsRequest.NotificationFrequency}] doesn't exist");
             }
 
-            Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
+            Entities.Models.Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
                 settings.Language = language;
@@ -79,7 +80,7 @@ namespace TheaterSchedule.BLL.Services
             }
             else
             {
-                Settings newSettings = new Settings
+                Entities.Models.Settings newSettings = new Entities.Models.Settings
                 {
                     Language = language,
                     DoesNotify = true,

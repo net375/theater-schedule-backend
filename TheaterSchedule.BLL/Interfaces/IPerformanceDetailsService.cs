@@ -4,6 +4,6 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface IPerformanceDetailsService
     {
-        PerformanceDetailsDTOBase LoadPerformanceDetails(string phoneId, string languageCode, int id );
+        PerformanceDetailsBase LoadPerformanceDetails(string phoneId, string languageCode, int id );
     }
 }

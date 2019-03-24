@@ -1,12 +1,12 @@
 ﻿namespace TheaterSchedule.BLL.DTO
 {
-    public class ImageBase64DTO
+    public class ImageBase64
     {
         public string ImageFormat { get; set; }
         public string Image { get; set; }
     }
 
-    public class ImageBytesDTO
+    public class ImageBytes
     {
         public string ImageFormat { get; set; }
         public byte[] Image { get; set; }

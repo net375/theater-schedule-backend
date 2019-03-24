@@ -2,7 +2,7 @@
 
 namespace TheaterSchedule.BLL.DTO
 {
-    public class PerformanceDetailsDTO: PerformanceDetailsDTOBase
+    public class PerformanceDetails: PerformanceDetailsBase
     {
         public byte [] MainImage { get; set; }
         public IEnumerable<byte []> GalleryImage { get; set; }

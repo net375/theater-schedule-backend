@@ -1,6 +1,6 @@
 ﻿namespace TheaterSchedule.BLL.DTO
 {
-    public class SettingsDTO
+    public class Settings
     {
         public string LanguageCode { get; set; }
         public bool DoesNotify { get; set; }

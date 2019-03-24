@@ -21,14 +21,14 @@ namespace TheaterSchedule.BLL.Services
             this.scheduleRepository = scheduleRepository;
         }
 
-        public IEnumerable<ScheduleDTOBase> FilterByDate(
+        public IEnumerable<ScheduleBase> FilterByDate(
             string languageCode, 
             DateTime? startDate, DateTime? endDate)
         {
             var mapper = new MapperConfiguration(cfg => 
-                cfg.CreateMap<ScheduleDTOBase, ScheduleDTO>())
+                cfg.CreateMap<ScheduleBase, Schedule>())
                 .CreateMapper();
-            return mapper.Map<IEnumerable<ScheduleDataModelBase>, List<ScheduleDTO>>(
+            return mapper.Map<IEnumerable<ScheduleDataModelBase>, List<Schedule>>(
                 scheduleRepository.GetListPerformancesByDateRange(
                     languageCode, startDate, endDate));
         }
