@@ -4,6 +4,6 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface ITagService
     {
-        TagDTO LoadTagsById(int id);
+        Tag LoadTagsById(int id);
     }
 }

@@ -5,6 +5,7 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
+using Wishlist = TheaterSchedule.BLL.DTO.Wishlist;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -24,27 +25,27 @@ namespace TheaterSchedule.BLL.Services
             this.accountRepository = accountRepository;
         }
 
-        public IEnumerable<WishlistDTO> LoadWishlist(
+        public IEnumerable<Wishlist> LoadWishlist(
             string phoneId, string languageCode)
         {
             return new MapperConfiguration(
-                    cfg => cfg.CreateMap<WishlistDataModel, WishlistDTO>())
+                    cfg => cfg.CreateMap<WishlistDataModel, Wishlist>())
                 .CreateMapper()
-                .Map<IEnumerable<WishlistDataModel>, IEnumerable<WishlistDTO>>(
+                .Map<IEnumerable<WishlistDataModel>, IEnumerable<Wishlist>>(
                     WishlistRepository.GetWishlistByPhoneIdentifier(
                         phoneId, languageCode));
         }
 
         public void SaveOrDeletePerformance(string phoneId, int performanceId)
         {
-            Wishlist performance =
+            Entities.Models.Wishlist performance =
                 WishlistRepository.GetPerformanceByPhoneIdAndPerformanceId(
                     phoneId, performanceId);
 
             if (performance == null)
             {
                 int accountId = accountRepository.GetAccountByPhoneId(phoneId).AccountId;
-                performance = new Wishlist()
+                performance = new Entities.Models.Wishlist()
                 {
                     AccountId = accountId,
                     PerformanceId = performanceId

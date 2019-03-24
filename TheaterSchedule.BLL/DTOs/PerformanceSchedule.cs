@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.BLL.DTO
 {
-    public class PerformanceScheduleDTO
+    public class PerformanceSchedule
     {
         public List<PerformanceScheduleDataModelBase> ScheduleList { get; set; }
         public int PerformanceId { get; set; }

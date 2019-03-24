@@ -3,6 +3,7 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
+using Message = TheaterSchedule.BLL.DTO.Message;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -23,21 +24,21 @@ namespace TheaterSchedule.BLL.Services
             this.accountRepository = accountRepository;
         }
 
-        public MessageDTO GetById(int id)
+        public Message GetById(int id)
         {
-            Message message = messageRepository.GetMessageById(id);
+            Entities.Models.Message message = messageRepository.GetMessageById(id);
             if (message == null)
             {
                 return null;
             }
-            return new MessageDTO
+            return new Message
             {
                 MessageId = message.MessageId,
                 Subject = message.Subject
             };
         }
 
-        public void SendMessage(MessageDTO newMessage)
+        public void SendMessage(Message newMessage)
         {
             Account account = accountRepository.GetAccountByPhoneId(newMessage.PhoneId);
             if (account == null)
@@ -45,7 +46,7 @@ namespace TheaterSchedule.BLL.Services
                 throw new ArgumentException("Non existent account");
             }
 
-            var message = new Message()
+            var message = new Entities.Models.Message()
             {
                 Subject = newMessage.Subject,
                 MessageText = newMessage.MessageText,

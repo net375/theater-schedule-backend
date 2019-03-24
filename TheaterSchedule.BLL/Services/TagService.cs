@@ -9,7 +9,7 @@ namespace TheaterSchedule.BLL.Services
     {
         private ITagRepository tagRepository;
         private IMemoryCache memoryCache;
-        public TagDTO tagRequest;
+        public Tag tagRequest;
 
 
         public TagService(ITagRepository tagRepository, IMemoryCache memoryCache)
@@ -18,12 +18,12 @@ namespace TheaterSchedule.BLL.Services
             this.memoryCache = memoryCache;
         }
 
-        public TagDTO LoadTagsById(int id)
+        public Tag LoadTagsById(int id)
         {
             string memoryCacheKey = "Tag_"+id.ToString();
             if(!memoryCache.TryGetValue(memoryCache,out tagRequest))
             {
-                tagRequest = new TagDTO()
+                tagRequest = new Tag()
                 {
                     HashTag = tagRepository.GetTagsByPerformanceId(id).Result
                 };

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace TheaterSchedule.Controllers
 {
@@ -17,11 +19,27 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpGet("{phoneId}/{languageCode}/GetInfo")]
-        public PerformanceDetailsDTOBase GetInfo(
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
+        public ActionResult<PerformanceDetailsBase> GetInfo(
             string phoneId, string languageCode, int id)
         {
-            return performanceDetailsService
-                .LoadPerformanceDetails(phoneId, languageCode, id);
+            try
+            {
+                PerformanceDetailsBase performanceDetails = performanceDetailsService
+                    .LoadPerformanceDetails(phoneId, languageCode, id);
+
+                if (performanceDetails == null)
+                    return NotFound();
+
+                return StatusCode(200, performanceDetails);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
     }
 }

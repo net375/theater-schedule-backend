@@ -5,7 +5,7 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface ICreativeTeamService
     {
-        IEnumerable<TeamMemberDTO> LoadCreativeTeam(
+        IEnumerable<TeamMember> LoadCreativeTeam(
             string languageCode, int performanceId );
     }
 }

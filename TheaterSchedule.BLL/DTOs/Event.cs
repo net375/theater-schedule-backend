@@ -2,7 +2,7 @@
 
 namespace TheaterSchedule.BLL.DTO
 {
-    public class EventDTO
+    public class Event
     {
         public int EventId { get; set; }
         public string Title { get; set; }

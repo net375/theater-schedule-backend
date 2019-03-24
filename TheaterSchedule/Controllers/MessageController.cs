@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
@@ -17,9 +18,12 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<MessageDTO> GetMessage(int id)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Message> GetMessage(int id)
         {
-            MessageDTO message = messageService.GetById(id);
+            Message message = messageService.GetById(id);
 
             if (message == null)
             {
@@ -30,7 +34,10 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpPost]
-        public ActionResult<MessageDTO> PostMessage([FromBody] MessageDTO message)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public ActionResult<Message> PostMessage([FromBody] Message message)
         {
             if (!ModelState.IsValid)
             {

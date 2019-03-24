@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.DTO;
+using Microsoft.AspNetCore.Http;
 
 namespace TheaterSchedule.Controllers
 {
@@ -17,7 +18,9 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpPost]
-        public ActionResult<string> PostToken([FromBody] PushTokenDTO pushToken)
+        [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public ActionResult<string> PostToken([FromBody] PushToken pushToken)
         {
             if (!ModelState.IsValid)
             {

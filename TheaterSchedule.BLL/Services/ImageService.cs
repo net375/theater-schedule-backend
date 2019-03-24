@@ -51,38 +51,38 @@ namespace TheaterSchedule.BLL.Services
             }
         }   
 
-        public async Task<ImageBytesDTO> LoadPerformanceMainImageBytesAsync(int id)
+        public async Task<ImageBytes> LoadPerformanceMainImageBytesAsync(int id)
         {
-            ImageBytesDTO imageDTO = null;
-            byte[] image = await TryAddPerformanceImageToCacheAsync(id);
+            ImageBytes image = null;
+            byte[] imageByte = await TryAddPerformanceImageToCacheAsync(id);
 
             if (image != null)
             {
                 await Task.Run(() =>
                 {
-                    imageDTO = new ImageBytesDTO()
+                    image = new ImageBytes()
                     {
-                        Image = image,
-                        ImageFormat = GeMimeTypeFromImageByteArray(image)
+                        Image = imageByte,
+                        ImageFormat = GeMimeTypeFromImageByteArray(imageByte)
                     };
                 });
             }
 
-            return imageDTO;
+            return image;
         }
 
-        public async Task<List<ImageBytesDTO>> LoadPerformanceGalleryBytesAsync(int id)
+        public async Task<List<ImageBytes>> LoadPerformanceGalleryBytesAsync(int id)
         {
-            List<ImageBytesDTO> imagesDTO = null;
+            List<ImageBytes> imagesDTO = null;
             IEnumerable<byte[]> images = await TryAddGalleryImagesToCacheAsync(id);
 
             await Task.Run(() =>
             {
-                imagesDTO = images.Select(image => new ImageBytesDTO()
+                imagesDTO = images.Select(image => new ImageBytes()
                 {
                     Image = image,
                     ImageFormat = GeMimeTypeFromImageByteArray(image)
-                }).ToList<ImageBytesDTO>();               
+                }).ToList<ImageBytes>();               
             });
 
             return imagesDTO;

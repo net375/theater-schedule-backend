@@ -4,6 +4,7 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
+using TeamMember = TheaterSchedule.BLL.DTO.TeamMember;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -15,7 +16,7 @@ namespace TheaterSchedule.BLL.Services
         private ICreativeTeamRepository creativeTeamRepository;
         private IIsCheckedPerformanceRepository isCheckedPerformanceRepository;
         private IMemoryCache memoryCache;
-        private PerformanceDetailsDTOBase performanceDetailsRequest;
+        private PerformanceDetailsBase performanceDetailsRequest;
 
         public PerformanceDetailsServiceWp( 
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
@@ -33,7 +34,7 @@ namespace TheaterSchedule.BLL.Services
             this.memoryCache = memoryCache;
         }
 
-        public PerformanceDetailsDTOBase LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
+        public PerformanceDetailsBase LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
         {
             var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId );
             string memoryCacheKey = GetCacheKey( languageCode, performanceId );
@@ -48,7 +49,7 @@ namespace TheaterSchedule.BLL.Services
                 var creativeTeam = creativeTeamRepository.GetCreativeTeam( languageCode, performanceId );
                
 
-                performanceDetailsRequest = new PerformanceDetailsDTOWp()
+                performanceDetailsRequest = new PerformanceDetailsWp()
                 {
                     Title = performance.Title,
                     Duration = performance.Duration,
@@ -61,7 +62,7 @@ namespace TheaterSchedule.BLL.Services
                     HashTag = from tg in tags
                         select tg,
                     TeamMember = from tm in creativeTeam
-                        select new TeamMemberDTO()
+                        select new TeamMember()
                         {
                             FirstName = tm.FirstName,
                             LastName = tm.LastName,

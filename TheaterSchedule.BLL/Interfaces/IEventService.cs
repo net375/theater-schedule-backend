@@ -5,6 +5,6 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface IEventService
     {
-        IEnumerable<EventDTO> LoadAvailable(string languageCode);
+        IEnumerable<Event> LoadAvailable(string languageCode);
     }
 }
