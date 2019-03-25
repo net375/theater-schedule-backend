@@ -19,7 +19,7 @@ namespace TheaterSchedule.BLL.Services
             this.performanceDetailsRepository = performanceDetailsRepository;
         }
 
-        public PerformanceDetailsDTOBase LoadPerformanceDetails( 
+        public PerformanceDetailsBaseDTO LoadPerformanceDetails( 
             string phoneId, string languageCode, int id )
         {
             var mapper =

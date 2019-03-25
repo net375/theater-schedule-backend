@@ -4,6 +4,7 @@ using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
 using System.Net;
 using TheaterSchedule.Infrastructure;
+using SettingsDTO = TheaterSchedule.BLL.DTO.SettingsDTO;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -33,7 +34,7 @@ namespace TheaterSchedule.BLL.Services
         public SettingsDTO LoadSettings(string phoneId)
         {
             SettingsDTO settingsRequest = null;
-            Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
+            Entities.Models.Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
                 settingsRequest = new SettingsDTO()
@@ -70,7 +71,7 @@ namespace TheaterSchedule.BLL.Services
                     $"Notification frequency [{settingsRequest.NotificationFrequency}] doesn't exist");
             }
 
-            Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
+            Entities.Models.Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
                 settings.Language = language;
@@ -79,7 +80,7 @@ namespace TheaterSchedule.BLL.Services
             }
             else
             {
-                Settings newSettings = new Settings
+                Entities.Models.Settings newSettings = new Entities.Models.Settings
                 {
                     Language = language,
                     DoesNotify = true,

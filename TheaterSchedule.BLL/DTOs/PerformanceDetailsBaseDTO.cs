@@ -2,7 +2,7 @@
 
 namespace TheaterSchedule.BLL.DTO
 {
-    public class PerformanceDetailsDTOBase
+    public class PerformanceDetailsBaseDTO
     {
         public int Duration { get; set; }
         public int MinPrice { get; set; }

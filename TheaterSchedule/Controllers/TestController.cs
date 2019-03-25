@@ -10,7 +10,7 @@ namespace TheaterSchedule.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "testValue1", "testValue2", "testValue2" };
+            return new string[] { "testValue1", "testValue2", "testValue3" };
         }
 
         [HttpGet("{id}")]

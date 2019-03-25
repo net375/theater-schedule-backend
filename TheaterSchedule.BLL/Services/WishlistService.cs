@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using TheaterSchedule.BLL.Helpers;
 
+
 namespace TheaterSchedule.BLL.Services
 {
     public class WishlistService : IWishlistService
@@ -67,14 +68,14 @@ namespace TheaterSchedule.BLL.Services
 
         public void SaveOrDeletePerformance(string phoneId, int performanceId)
         {
-            Wishlist performance =
+            Entities.Models.Wishlist performance =
                 WishlistRepository.GetPerformanceByPhoneIdAndPerformanceId(
                     phoneId, performanceId);
 
             if (performance == null)
             {
                 int accountId = accountRepository.GetAccountByPhoneId(phoneId).AccountId;
-                performance = new Wishlist()
+                performance = new Entities.Models.Wishlist()
                 {
                     AccountId = accountId,
                     PerformanceId = performanceId

@@ -17,8 +17,8 @@ namespace TheaterSchedule.BLL.Services
         private ICreativeTeamRepository creativeTeamRepository;
         private IIsCheckedPerformanceRepository isCheckedPerformanceRepository;
         private IMemoryCache memoryCache;
-        private PerformanceDetailsDTOBase performanceDetailsRequest;
         private IPerfomanceRepository perfomanceRepository;
+        private PerformanceDetailsBaseDTO performanceDetailsRequest;
 
         public PerformanceDetailsServiceWp( 
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
@@ -38,7 +38,7 @@ namespace TheaterSchedule.BLL.Services
             this.perfomanceRepository = perfomanceRepository;
         }
 
-        public PerformanceDetailsDTOBase LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
+        public PerformanceDetailsBaseDTO LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
         {
             var cacheProvider = new CacheProvider(memoryCache);
 
@@ -47,7 +47,7 @@ namespace TheaterSchedule.BLL.Services
                     () => Constants.PerformancesCacheKey + languageCode,
                     () => perfomanceRepository.GetPerformanceTitlesAndImages(languageCode));
 
-            var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId, performancesWp );
+            var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId );
 
             performanceDetailsRequest = cacheProvider.GetAndSave(
                     () => GetCacheKey(languageCode, performanceId),
@@ -60,7 +60,7 @@ namespace TheaterSchedule.BLL.Services
                         var tags = tagRepository.GetTagsByPerformanceId(performanceId).Result;
                         var creativeTeam = creativeTeamRepository.GetCreativeTeam(languageCode, performanceId);
 
-                        performanceDetailsRequest = new PerformanceDetailsDTOWp()
+                        performanceDetailsRequest = new PerformanceDetailsWpDTO()
                         {
                             Title = performance.Title,
                             Duration = performance.Duration,

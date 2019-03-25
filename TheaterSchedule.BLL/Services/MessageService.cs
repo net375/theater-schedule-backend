@@ -25,7 +25,7 @@ namespace TheaterSchedule.BLL.Services
 
         public MessageDTO GetById(int id)
         {
-            Message message = messageRepository.GetMessageById(id);
+            Entities.Models.Message message = messageRepository.GetMessageById(id);
             if (message == null)
             {
                 return null;
@@ -45,7 +45,7 @@ namespace TheaterSchedule.BLL.Services
                 throw new ArgumentException("Non existent account");
             }
 
-            var message = new Message()
+            var message = new Entities.Models.Message()
             {
                 Subject = newMessage.Subject,
                 MessageText = newMessage.MessageText,

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.DTO;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace TheaterSchedule.Controllers
 {
@@ -20,9 +17,25 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpGet("{id}", Name = "Get")]
-        public PerformanceScheduleDTO Get(int id)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<PerformanceScheduleDTO> Get(int id)
         {
-            return performanceScheduleService.LoadScheduleData(id);
+            try
+            {
+                PerformanceScheduleDTO performanceSchedule = performanceScheduleService.LoadScheduleData(id);
+
+                if (performanceSchedule == null)
+                    return NotFound();
+
+                return StatusCode(200, performanceSchedule);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
                 
     }

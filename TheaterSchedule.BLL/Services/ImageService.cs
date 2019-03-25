@@ -53,22 +53,22 @@ namespace TheaterSchedule.BLL.Services
 
         public async Task<ImageBytesDTO> LoadPerformanceMainImageBytesAsync(int id)
         {
-            ImageBytesDTO imageDTO = null;
-            byte[] image = await TryAddPerformanceImageToCacheAsync(id);
+            ImageBytesDTO image = null;
+            byte[] imageByte = await TryAddPerformanceImageToCacheAsync(id);
 
             if (image != null)
             {
                 await Task.Run(() =>
                 {
-                    imageDTO = new ImageBytesDTO()
+                    image = new ImageBytesDTO()
                     {
-                        Image = image,
-                        ImageFormat = GeMimeTypeFromImageByteArray(image)
+                        Image = imageByte,
+                        ImageFormat = GeMimeTypeFromImageByteArray(imageByte)
                     };
                 });
             }
 
-            return imageDTO;
+            return image;
         }
 
         public async Task<List<ImageBytesDTO>> LoadPerformanceGalleryBytesAsync(int id)

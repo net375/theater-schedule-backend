@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.BLL.DTO

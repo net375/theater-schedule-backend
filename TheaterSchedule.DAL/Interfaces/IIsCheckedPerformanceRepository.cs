@@ -5,6 +5,6 @@ namespace TheaterSchedule.DAL.Interfaces
 {
     public interface IIsCheckedPerformanceRepository
     {
-        bool IsChecked(string phoneId, int performanceId, List<PerformanceDataModel> performances);
+        bool IsChecked(string phoneId, int performanceId);
     }
 }
