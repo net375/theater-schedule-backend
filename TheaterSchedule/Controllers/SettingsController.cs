@@ -21,11 +21,11 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Settings> Get(string phoneId)
+        public ActionResult<SettingsDTO> Get(string phoneId)
         {
             try
             {
-                Settings settings = settingsService.LoadSettings(phoneId);
+                SettingsDTO settings = settingsService.LoadSettings(phoneId);
 
                 if (settings == null)
                     return NotFound();
@@ -41,7 +41,7 @@ namespace TheaterSchedule.Controllers
         [HttpPut("{phoneId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
-        public ActionResult Put(string phoneId, [FromBody]Settings settings)
+        public ActionResult Put(string phoneId, [FromBody]SettingsDTO settings)
         {
             try
             {

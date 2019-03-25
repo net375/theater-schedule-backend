@@ -21,9 +21,9 @@ namespace TheaterSchedule.Controllers
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Message> GetMessage(int id)
+        public ActionResult<MessageDTO> GetMessage(int id)
         {
-            Message message = messageService.GetById(id);
+            MessageDTO message = messageService.GetById(id);
 
             if (message == null)
             {
@@ -37,7 +37,7 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<Message> PostMessage([FromBody] Message message)
+        public ActionResult<MessageDTO> PostMessage([FromBody] MessageDTO message)
         {
             if (!ModelState.IsValid)
             {

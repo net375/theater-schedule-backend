@@ -1,6 +1,6 @@
 ﻿namespace TheaterSchedule.BLL.DTO
 {
-    public class Wishlist
+    public class WishlistDTO
     {
         public int PerformanceId { get; set; }
         public string Title { get; set; }

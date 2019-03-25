@@ -4,7 +4,7 @@ using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
 using System.Net;
 using TheaterSchedule.Infrastructure;
-using Settings = TheaterSchedule.BLL.DTO.Settings;
+using SettingsDTO = TheaterSchedule.BLL.DTO.SettingsDTO;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -31,13 +31,13 @@ namespace TheaterSchedule.BLL.Services
             this.languageRepository = languageRepository;
 
         }
-        public Settings LoadSettings(string phoneId)
+        public SettingsDTO LoadSettings(string phoneId)
         {
-            Settings settingsRequest = null;
+            SettingsDTO settingsRequest = null;
             Entities.Models.Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
             {
-                settingsRequest = new Settings()
+                settingsRequest = new SettingsDTO()
                 {
                     LanguageCode = settings.Language.LanguageCode,
                     DoesNotify = settings.DoesNotify,
@@ -51,7 +51,7 @@ namespace TheaterSchedule.BLL.Services
             return settingsRequest;
         }
 
-        public void StoreSettings(string phoneId, Settings settingsRequest)
+        public void StoreSettings(string phoneId, SettingsDTO settingsRequest)
         {
             Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
             if (language == null)

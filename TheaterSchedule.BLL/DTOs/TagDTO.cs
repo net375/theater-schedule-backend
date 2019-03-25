@@ -2,7 +2,7 @@
 
 namespace TheaterSchedule.BLL.DTO
 {
-    public class Tag
+    public class TagDTO
     {
         public IEnumerable<string> HashTag { get; set; }
     }

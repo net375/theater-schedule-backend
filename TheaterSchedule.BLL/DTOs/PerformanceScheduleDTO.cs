@@ -3,7 +3,7 @@ using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.BLL.DTO
 {
-    public class PerformanceSchedule
+    public class PerformanceScheduleDTO
     {
         public List<PerformanceScheduleDataModelBase> ScheduleList { get; set; }
         public int PerformanceId { get; set; }

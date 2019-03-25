@@ -21,11 +21,11 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<PerformanceSchedule> Get(int id)
+        public ActionResult<PerformanceScheduleDTO> Get(int id)
         {
             try
             {
-                PerformanceSchedule performanceSchedule = performanceScheduleService.LoadScheduleData(id);
+                PerformanceScheduleDTO performanceSchedule = performanceScheduleService.LoadScheduleData(id);
 
                 if (performanceSchedule == null)
                     return NotFound();

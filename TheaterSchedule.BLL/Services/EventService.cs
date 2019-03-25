@@ -20,10 +20,10 @@ namespace TheaterSchedule.BLL.Services
             this.eventRepository = eventRepository;
         }
 
-        public IEnumerable<Event> LoadAvailable(string languageCode)
+        public IEnumerable<EventDTO> LoadAvailable(string languageCode)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<EventDataModel, Event>()).CreateMapper();
-            return mapper.Map<IEnumerable<EventDataModel>, List<Event>>(eventRepository.GetAllEvents(languageCode));
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<EventDataModel, EventDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<EventDataModel>, List<EventDTO>>(eventRepository.GetAllEvents(languageCode));
         }
     }
 }

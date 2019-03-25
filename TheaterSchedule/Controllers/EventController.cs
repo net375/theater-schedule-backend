@@ -38,11 +38,11 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<Event>> LoadEvents(string languageCode)
+        public ActionResult<IEnumerable<EventDTO>> LoadEvents(string languageCode)
         {
             try
             {
-                IEnumerable<Event> events = service.LoadAvailable(languageCode).ToList();
+                IEnumerable<EventDTO> events = service.LoadAvailable(languageCode).ToList();
 
                 if (events == null)
                     return NotFound();

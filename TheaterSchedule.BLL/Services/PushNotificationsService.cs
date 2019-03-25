@@ -21,8 +21,8 @@ namespace TheaterSchedule.BLL.Services
             PushTokenDataModel[] pushTokens = 
                 pushTokenRepository.GetAllPushTokensToSendNotifications().ToArray();
 
-            PushNotification[] reqBody = Enumerable.Range(0, pushTokens.Length).Select(i =>
-                new PushNotification
+            PushNotificationDTO[] reqBody = Enumerable.Range(0, pushTokens.Length).Select(i =>
+                new PushNotificationDTO
                 {
                     To = pushTokens[i].Token,
                     Title = pushTokens[i].LanguageCode == "en" ? "Lviv Puppet Theater" : "Львівський театр ляльок",

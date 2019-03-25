@@ -23,11 +23,11 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Tag> Get(int id)
+        public ActionResult<TagDTO> Get(int id)
         {
             try
             {
-                Tag tags = tagService.LoadTagsById(id);
+                TagDTO tags = tagService.LoadTagsById(id);
 
                 if (tags == null)
                     return NotFound();

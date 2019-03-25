@@ -20,7 +20,7 @@ namespace TheaterSchedule.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<string> PostToken([FromBody] PushToken pushToken)
+        public ActionResult<string> PostToken([FromBody] PushTokenDTO pushToken)
         {
             if (!ModelState.IsValid)
             {

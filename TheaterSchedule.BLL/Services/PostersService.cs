@@ -26,19 +26,19 @@ namespace TheaterSchedule.BLL.Services
             this.memoryCache = memoryCache;
         }
 
-        public List<Posters> LoadPostersData(string languageCode)
+        public List<PostersDTO> LoadPostersData(string languageCode)
         {
-            List<Posters> postersRequest = null;
+            List<PostersDTO> postersRequest = null;
 
             string memoryCacheKey = languageCode;        
             if (!memoryCache.TryGetValue(memoryCacheKey, out postersRequest))
             {
-                postersRequest = new List<Posters>();
+                postersRequest = new List<PostersDTO>();
                 List<PerformanceDataModel> selectedPerformances = 
                     perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
                 foreach (var performance in selectedPerformances)
                 {               
-                    postersRequest.Add(new Posters()
+                    postersRequest.Add(new PostersDTO()
                     {
                         MainImage = 
                             performance.MainImageUrl == null 

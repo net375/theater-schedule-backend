@@ -3,7 +3,6 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
-using Message = TheaterSchedule.BLL.DTO.Message;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -24,21 +23,21 @@ namespace TheaterSchedule.BLL.Services
             this.accountRepository = accountRepository;
         }
 
-        public Message GetById(int id)
+        public MessageDTO GetById(int id)
         {
             Entities.Models.Message message = messageRepository.GetMessageById(id);
             if (message == null)
             {
                 return null;
             }
-            return new Message
+            return new MessageDTO
             {
                 MessageId = message.MessageId,
                 Subject = message.Subject
             };
         }
 
-        public void SendMessage(Message newMessage)
+        public void SendMessage(MessageDTO newMessage)
         {
             Account account = accountRepository.GetAccountByPhoneId(newMessage.PhoneId);
             if (account == null)

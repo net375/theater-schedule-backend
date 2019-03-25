@@ -4,7 +4,7 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
-using TeamMember = TheaterSchedule.BLL.DTO.TeamMember;
+using TeamMemberDTO = TheaterSchedule.BLL.DTO.TeamMemberDTO;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -16,7 +16,7 @@ namespace TheaterSchedule.BLL.Services
         private ICreativeTeamRepository creativeTeamRepository;
         private IIsCheckedPerformanceRepository isCheckedPerformanceRepository;
         private IMemoryCache memoryCache;
-        private PerformanceDetailsBase performanceDetailsRequest;
+        private PerformanceDetailsBaseDTO performanceDetailsRequest;
 
         public PerformanceDetailsServiceWp( 
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
@@ -34,7 +34,7 @@ namespace TheaterSchedule.BLL.Services
             this.memoryCache = memoryCache;
         }
 
-        public PerformanceDetailsBase LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
+        public PerformanceDetailsBaseDTO LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
         {
             var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId );
             string memoryCacheKey = GetCacheKey( languageCode, performanceId );
@@ -49,7 +49,7 @@ namespace TheaterSchedule.BLL.Services
                 var creativeTeam = creativeTeamRepository.GetCreativeTeam( languageCode, performanceId );
                
 
-                performanceDetailsRequest = new PerformanceDetailsWp()
+                performanceDetailsRequest = new PerformanceDetailsWpDTO()
                 {
                     Title = performance.Title,
                     Duration = performance.Duration,
@@ -62,7 +62,7 @@ namespace TheaterSchedule.BLL.Services
                     HashTag = from tg in tags
                         select tg,
                     TeamMember = from tm in creativeTeam
-                        select new TeamMember()
+                        select new TeamMemberDTO()
                         {
                             FirstName = tm.FirstName,
                             LastName = tm.LastName,

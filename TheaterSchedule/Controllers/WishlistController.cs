@@ -37,12 +37,12 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<Wishlist>> LoadWishlist(
+        public ActionResult<IEnumerable<WishlistDTO>> LoadWishlist(
             string phoneId, string languageCode)
         {
             try
             {
-                IEnumerable<Wishlist> wishlist = wishlistService.LoadWishlist(phoneId, languageCode);
+                IEnumerable<WishlistDTO> wishlist = wishlistService.LoadWishlist(phoneId, languageCode);
 
                 if (wishlist == null)
                     return NotFound();
