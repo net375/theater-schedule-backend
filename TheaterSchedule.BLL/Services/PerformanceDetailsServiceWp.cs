@@ -5,7 +5,7 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
-using TheaterSchedule.BLL;
+using TheaterSchedule.BLL.Helpers;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -40,54 +40,50 @@ namespace TheaterSchedule.BLL.Services
 
         public PerformanceDetailsDTOBase LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
         {
-            List<PerformanceDataModel> performancesWp = null;
+            var cacheProvider = new CacheProvider(memoryCache);
 
-            string performanceMemoryCacheKey = Constants.PerformancesCacheKey + languageCode;
-
-            if (!memoryCache.TryGetValue(performanceMemoryCacheKey, out performancesWp))
-            {
-                performancesWp =
-                    perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
-
-                memoryCache.Set(performanceMemoryCacheKey, performancesWp);
-            }
+            List<PerformanceDataModel> performancesWp =
+                cacheProvider.GetAndSave(
+                    () => Constants.PerformancesCacheKey + languageCode,
+                    () => perfomanceRepository.GetPerformanceTitlesAndImages(languageCode));
 
             var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId, performancesWp );
 
-            string memoryCacheKey = GetCacheKey( languageCode, performanceId );
+            performanceDetailsRequest = cacheProvider.GetAndSave(
+                    () => GetCacheKey(languageCode, performanceId),
+                    () =>
+                    {
+                        var performance = performanceDetailsRepository
+                            .GetInformationAboutPerformance(phoneId, languageCode, performanceId)
+                            as PerformanceDetailsDataModelWp;
 
-            if ( !memoryCache.TryGetValue( memoryCacheKey, out performanceDetailsRequest ) )
-            {
-                var performance = performanceDetailsRepository
-                    .GetInformationAboutPerformance( phoneId, languageCode, performanceId ) 
-                    as PerformanceDetailsDataModelWp;
+                        var tags = tagRepository.GetTagsByPerformanceId(performanceId).Result;
+                        var creativeTeam = creativeTeamRepository.GetCreativeTeam(languageCode, performanceId);
 
-                var tags = tagRepository.GetTagsByPerformanceId( performanceId ).Result;
-                var creativeTeam = creativeTeamRepository.GetCreativeTeam( languageCode, performanceId );
-
-                performanceDetailsRequest = new PerformanceDetailsDTOWp()
-                {
-                    Title = performance.Title,
-                    Duration = performance.Duration,
-                    MinimumAge = performance.MinimumAge,
-                    MinPrice = performance.MinPrice,
-                    MaxPrice = performance.MaxPrice,
-                    Description = performance.Description,
-                    MainImage = performance.MainImage,
-                    GalleryImage = performance.GalleryImage,
-                    HashTag = from tg in tags
-                        select tg,
-                    TeamMember = from tm in creativeTeam
-                        select new TeamMemberDTO()
+                        performanceDetailsRequest = new PerformanceDetailsDTOWp()
                         {
-                            FirstName = tm.FirstName,
-                            LastName = tm.LastName,
-                            Role = tm.Role,
-                            RoleKey = tm.RoleKey,
-                        },
-                };               
-                memoryCache.Set( memoryCacheKey, performanceDetailsRequest );
-            }
+                            Title = performance.Title,
+                            Duration = performance.Duration,
+                            MinimumAge = performance.MinimumAge,
+                            MinPrice = performance.MinPrice,
+                            MaxPrice = performance.MaxPrice,
+                            Description = performance.Description,
+                            MainImage = performance.MainImage,
+                            GalleryImage = performance.GalleryImage,
+                            HashTag = from tg in tags
+                                      select tg,
+                            TeamMember = from tm in creativeTeam
+                                         select new TeamMemberDTO()
+                                         {
+                                             FirstName = tm.FirstName,
+                                             LastName = tm.LastName,
+                                             Role = tm.Role,
+                                             RoleKey = tm.RoleKey,
+                                         },
+                        };
+
+                        return performanceDetailsRequest;
+                    });
 
             performanceDetailsRequest.IsChecked = isChecked;
 

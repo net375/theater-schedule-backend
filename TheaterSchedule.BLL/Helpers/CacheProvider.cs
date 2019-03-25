@@ -13,18 +13,17 @@ namespace TheaterSchedule.BLL.Helpers
             this.memoryCache = memoryCache;
         }
 
-        public T GetAndSave<T>(Func<string> keyGetter, Func<T> objGet)
+        public T GetAndSave<T>(Func< string> keyGetter, Func<T> objGet) 
         {
             string memoryCacheKey = keyGetter();
             T result;
             if (!memoryCache.TryGetValue(memoryCacheKey, out result))
             {
                 result = objGet();
-
-
+         
                 memoryCache.Set(memoryCacheKey, result);
             }
-            return result;
+            return result; 
         }
     }
 }
