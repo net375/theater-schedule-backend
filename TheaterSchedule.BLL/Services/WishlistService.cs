@@ -7,9 +7,34 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using TheaterSchedule.BLL;
+using System;
+using System.Linq;
 
 namespace TheaterSchedule.BLL.Services
 {
+    public class CacheProvider
+    {
+        private IMemoryCache memoryCache;
+        public CacheProvider(IMemoryCache memoryCache)
+        {
+            this.memoryCache = memoryCache;
+        }
+
+        public T GetAndSave<T>(Func< string> keyGetter, Func<T> objGet) 
+        {
+            string memoryCacheKey = keyGetter();
+            T result;
+            if (!memoryCache.TryGetValue(memoryCacheKey, out result))
+            {
+                result = objGet();
+                     
+         
+                memoryCache.Set(memoryCacheKey, result);
+            }
+            return result; 
+        }
+    }
+
     public class WishlistService : IWishlistService
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
@@ -32,10 +57,21 @@ namespace TheaterSchedule.BLL.Services
             this.perfomanceRepository = perfomanceRepository;
         }
 
-        public IEnumerable<WishlistDTO> LoadWishlist(
-            string phoneId, string languageCode)
+        private string GetKey(string languageCode)
         {
-            List<PerformanceDataModel> performancesWp = null;
+            string memoryCacheKey = Constants.PerformancesCacheKey + languageCode;
+            return memoryCacheKey;
+        }
+
+        public IEnumerable<WishlistDTO> LoadWishlist(string phoneId, string languageCode)
+        {
+            var cacheProvider = new CacheProvider(memoryCache);
+
+            var performancesWp = cacheProvider.GetAndSave(
+                () => GetKey(languageCode),
+                () => perfomanceRepository.GetPerformanceTitlesAndImages(languageCode));
+
+            /*List<PerformanceDataModel> performancesWp = null;
 
             string memoryCacheKey = Constants.PerformancesCacheKey + languageCode;
 
@@ -45,14 +81,22 @@ namespace TheaterSchedule.BLL.Services
                     perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
 
                 memoryCache.Set(memoryCacheKey, performancesWp);
-            }
+            }*/
 
-            return new MapperConfiguration(
-                    cfg => cfg.CreateMap<WishlistDataModel, WishlistDTO>())
-                .CreateMapper()
-                .Map<IEnumerable<WishlistDataModel>, IEnumerable<WishlistDTO>>(
-                    WishlistRepository.GetWishlistByPhoneIdentifier(
-                        phoneId, languageCode, performancesWp));
+            var perfIds = WishlistRepository.GetPerformanceIdsInWishlist(phoneId, languageCode);
+
+            var result = from perfId in perfIds
+                         join perfWp in performancesWp 
+                            on perfId equals perfWp.PerformanceId
+                         select new WishlistDTO
+                         {
+                             PerformanceId = perfId,
+                             MainImage = perfWp.MainImageUrl,
+                             Title = perfWp.Title
+                         };
+
+            return result;
+
         }
 
         public void SaveOrDeletePerformance(string phoneId, int performanceId)

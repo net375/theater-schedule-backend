@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
 using TheaterSchedule.BLL;
+using System;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -44,27 +45,43 @@ namespace TheaterSchedule.BLL.Services
             //schedule
             string scheduleMemoryCacheKey = Constants.ScheduleCacheKey + "uk";
 
-            IEnumerable<ScheduleDataModelBase> schedule = null;
+            IEnumerable<ScheduleDataModelBase> scheduleWp = null;
 
-            if (!memoryCache.TryGetValue(scheduleMemoryCacheKey, out schedule))
+            if (!memoryCache.TryGetValue(scheduleMemoryCacheKey, out scheduleWp))
             {
-                schedule = scheduleRepository.GetListPerformancesByDateRange("uk",
-                    null, null); //needs to be changed when cache preload is implemented
-                memoryCache.Set(scheduleMemoryCacheKey, schedule);
+                scheduleWp = scheduleRepository.GetListPerformancesByDateRange("uk",
+                    DateTime.Now, null);
+                memoryCache.Set(scheduleMemoryCacheKey, scheduleWp);
             }
 
+            //statements above need to be changed when cache preload is implemented
 
-            PushTokenDataModel[] pushTokens = 
-                pushTokenRepository.GetAllPushTokensToSendNotifications(performancesWp, schedule ).ToArray();
+            IEnumerable<PushTokenDataModelPartial> pushTokensPartial = pushTokenRepository.GetAllPushTokensToSendNotifications();
 
-            PushNotificationDTO[] reqBody = Enumerable.Range(0, pushTokens.Length).Select(i =>
+            List<PushTokenDataModel> pushTokens =
+                (from partialInfo in pushTokensPartial
+                 join performance in performancesWp on partialInfo.PerformanceId equals performance.PerformanceId
+                 join schedule in scheduleWp on performance.PerformanceId equals schedule.PerformanceId
+
+                 where (schedule.Beginning.Day == (DateTime.Today.AddDays(partialInfo.Frequency).Day)
+                         && (schedule.PerformanceId == partialInfo.PerformanceId))
+
+                 select new PushTokenDataModel
+                 {
+                     Token = partialInfo.Token,
+                     LanguageCode = partialInfo.LanguageCode
+                 })
+                 .Distinct(new PushTokenDataModelComparer()) //select distinct push tokens in order not to send several notifications
+                 .ToList();
+
+            List<PushNotificationDTO> reqBody = (pushTokens.Select(p =>
                 new PushNotificationDTO
                 {
-                    To = pushTokens[i].Token,
-                    Title = pushTokens[i].LanguageCode == "en" ? "Lviv Puppet Theater" : "Львівський театр ляльок",
-                    Body = pushTokens[i].LanguageCode == "en" ? 
+                    To = p.Token,
+                    Title = p.LanguageCode == "en" ? "Lviv Puppet Theater" : "Львівський театр ляльок",
+                    Body = p.LanguageCode == "en" ?
                         "The perfomances you have liked coming soon" : "Вистави, які вам сподобались, скоро в прокаті"
-                }).ToArray();
+                })).ToList();
             
             using (System.Net.WebClient client = new System.Net.WebClient())
             {
@@ -75,6 +92,23 @@ namespace TheaterSchedule.BLL.Services
                     "https://exp.host/--/api/v2/push/send", 
                     JsonConvert.SerializeObject(reqBody));
             }
+        }
+    }
+
+    internal class PushTokenDataModelComparer : IEqualityComparer<PushTokenDataModel>
+    {
+        public bool Equals(PushTokenDataModel x, PushTokenDataModel y)
+        {
+            if (string.Equals(x.Token, y.Token))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public int GetHashCode(PushTokenDataModel obj)
+        {
+            return obj.Token.GetHashCode();
         }
     }
 }

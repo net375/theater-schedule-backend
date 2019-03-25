@@ -21,17 +21,26 @@ namespace TheaterSchedule.DAL.Repositories
             db.PushToken.Add(pushToken);
         }
 
-        public IEnumerable<PushTokenDataModel> GetAllPushTokensToSendNotifications(IEnumerable<PerformanceDataModel> performancesWp,
-            IEnumerable<ScheduleDataModelBase> scheduleWp)
+        public IEnumerable<PushTokenDataModelPartial> GetAllPushTokensToSendNotifications()
         {
-            var tokenWithLanguage = (from token in db.PushToken
-                            join account in db.Account on token.AccountId equals account.AccountId
-                            join settings in db.Settings on account.SettingsId equals settings.SettingsId
-                            join language in db.Language on settings.LanguageId equals language.LanguageId
-                            join frequency in db.NotificationFrequency on settings.NotificationFrequencyId equals frequency.NotificationFrequencyId
-                            join wishlist in db.Wishlist on account.AccountId equals wishlist.AccountId
+            var tokenWithLanguage = from token in db.PushToken
+                                    join account in db.Account on token.AccountId equals account.AccountId
+                                    join settings in db.Settings on account.SettingsId equals settings.SettingsId
+                                    join language in db.Language on settings.LanguageId equals language.LanguageId
+                                    join frequency in db.NotificationFrequency 
+                                        on settings.NotificationFrequencyId equals frequency.NotificationFrequencyId
+                                    join wishlist in db.Wishlist on account.AccountId equals wishlist.AccountId
+                                    where settings.DoesNotify
+                                    
+                                    select new PushTokenDataModelPartial
+                                    {
+                                        PerformanceId = wishlist.PerformanceId,
+                                        Token = token.Token,
+                                        LanguageCode = language.LanguageCode,
+                                        Frequency = frequency.Frequency
+                                    };
 
-                            join performance in performancesWp on wishlist.PerformanceId equals performance.PerformanceId
+                            /*join performance in performancesWp on wishlist.PerformanceId equals performance.PerformanceId
                             join schedule in scheduleWp on performance.PerformanceId equals schedule.PerformanceId
 
                             where (schedule.Beginning.Day == (DateTime.Today.AddDays(frequency.Frequency).Day + 1) 
@@ -41,7 +50,7 @@ namespace TheaterSchedule.DAL.Repositories
                             {
                                 Token =  token.Token,
                                 LanguageCode = language.LanguageCode
-                            }).Distinct().ToList();
+                            }).Distinct().ToList();*/
 
             return tokenWithLanguage;
         }

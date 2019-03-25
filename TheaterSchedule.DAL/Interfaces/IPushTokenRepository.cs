@@ -7,7 +7,6 @@ namespace TheaterSchedule.DAL.Interfaces
     public interface IPushTokenRepository
     {
         void Add(PushToken pushToken);
-        IEnumerable<PushTokenDataModel> GetAllPushTokensToSendNotifications(IEnumerable<PerformanceDataModel> performancesWp,
-            IEnumerable<ScheduleDataModelBase> scheduleWp);
+        IEnumerable<PushTokenDataModelPartial> GetAllPushTokensToSendNotifications();
     }
 }
