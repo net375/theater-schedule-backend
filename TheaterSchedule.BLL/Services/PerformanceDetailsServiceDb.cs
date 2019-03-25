@@ -19,14 +19,14 @@ namespace TheaterSchedule.BLL.Services
             this.performanceDetailsRepository = performanceDetailsRepository;
         }
 
-        public PerformanceDetailsBase LoadPerformanceDetails( 
+        public PerformanceDetailsBaseDTO LoadPerformanceDetails( 
             string phoneId, string languageCode, int id )
         {
             var mapper =
                 new MapperConfiguration(cfg => 
-                        cfg.CreateMap<PerformanceDetailsDataModel, PerformanceDetails>())
+                        cfg.CreateMap<PerformanceDetailsDataModel, PerformanceDetailsDTO>())
                     .CreateMapper();
-            return mapper.Map<PerformanceDetailsDataModelBase, PerformanceDetails>(
+            return mapper.Map<PerformanceDetailsDataModelBase, PerformanceDetailsDTO>(
                 performanceDetailsRepository.GetInformationAboutPerformance( 
                     phoneId, languageCode, id ) ); 
         }

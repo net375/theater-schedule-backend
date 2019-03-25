@@ -40,13 +40,13 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<ScheduleBase>> FilterByDate(
+        public ActionResult<IEnumerable<ScheduleBaseDTO>> FilterByDate(
             string languageCode,
             DateTime? startDate, DateTime? endDate)
         {
             try
             {
-                IEnumerable<ScheduleBase> schedule = service.FilterByDate(languageCode, startDate, endDate).ToList();
+                IEnumerable<ScheduleBaseDTO> schedule = service.FilterByDate(languageCode, startDate, endDate).ToList();
 
                 if (schedule == null)
                     return NotFound();

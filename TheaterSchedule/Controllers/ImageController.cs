@@ -39,19 +39,19 @@ namespace TheaterSchedule.Controllers
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ImageBase64>> GetImage(int performanceId)
+        public async Task<ActionResult<ImageBase64DTO>> GetImage(int performanceId)
         {
-            ImageBytes image =
+            ImageBytesDTO image =
                 await imageService.LoadPerformanceMainImageBytesAsync(performanceId);
             if (image != null)
             {
-                ImageBase64 imageBase64 = new ImageBase64()
+                ImageBase64DTO imageBase64Dto = new ImageBase64DTO()
                 {
                     Image = imageService.ImageToBase64(image.Image),
                     ImageFormat = image.ImageFormat
                 };
 
-                return imageBase64;
+                return imageBase64Dto;
             }
 
             return NotFound();
@@ -68,15 +68,15 @@ namespace TheaterSchedule.Controllers
         /// <returns>image in "base64" format</returns>
         [HttpGet("GetGalleryImages")]
         [Produces("application/json")]
-        public async Task<ActionResult<List<ImageBase64>>> GetGalleryImages(int performanceId)
+        public async Task<ActionResult<List<ImageBase64DTO>>> GetGalleryImages(int performanceId)
         {
-            List<ImageBase64> result = null;
-            List<ImageBytes> images =
+            List<ImageBase64DTO> result = null;
+            List<ImageBytesDTO> images =
                 await imageService.LoadPerformanceGalleryBytesAsync(performanceId);
 
             await Task.Run(() =>
             {
-                result = images.Select(image => new ImageBase64()
+                result = images.Select(image => new ImageBase64DTO()
                 {
                     Image = imageService.ImageToBase64(image.Image),
                     ImageFormat = image.ImageFormat
@@ -99,7 +99,7 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAsFile(int performanceId)
         {
-            ImageBytes image =
+            ImageBytesDTO image =
                 await imageService.LoadPerformanceMainImageBytesAsync(performanceId);
             if (image != null && image.Image != null)
             {

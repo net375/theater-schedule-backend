@@ -10,7 +10,7 @@ namespace TheaterSchedule.BLL.Interfaces
         string ImageToBase64(byte[] image);
         Task<byte[]> TryAddPerformanceImageToCacheAsync(int id);
         Task<IEnumerable<byte[]>> TryAddGalleryImagesToCacheAsync(int performanceId);
-        Task<ImageBytes> LoadPerformanceMainImageBytesAsync(int id);
-        Task<List<ImageBytes>> LoadPerformanceGalleryBytesAsync(int id);
+        Task<ImageBytesDTO> LoadPerformanceMainImageBytesAsync(int id);
+        Task<List<ImageBytesDTO>> LoadPerformanceGalleryBytesAsync(int id);
     }
 }

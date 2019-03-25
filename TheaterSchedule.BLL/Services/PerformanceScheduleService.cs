@@ -16,15 +16,15 @@ namespace TheaterSchedule.BLL.Services
             this.memoryCache = memoryCache;
         }
 
-        public PerformanceSchedule LoadScheduleData(int performanceId)
+        public PerformanceScheduleDTO LoadScheduleData(int performanceId)
         {
-            PerformanceSchedule performanceScheduleRequest;
+            PerformanceScheduleDTO performanceScheduleRequest;
             string memoryCacheKey = "Performance_" + performanceId.ToString();
             var scheduleDataModel = performanceScheduleRepository.GetPerfomanceScheduleInfo(performanceId).Result;
 
             if (!memoryCache.TryGetValue(memoryCache, out performanceScheduleRequest))
             {
-                performanceScheduleRequest = new PerformanceSchedule()
+                performanceScheduleRequest = new PerformanceScheduleDTO()
                 {
                     PerformanceId = scheduleDataModel.PerformanceId,
                     Title = scheduleDataModel.Title,

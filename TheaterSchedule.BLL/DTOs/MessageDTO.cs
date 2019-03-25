@@ -1,6 +1,6 @@
 ﻿namespace TheaterSchedule.BLL.DTO
 {
-    public class Message
+    public class MessageDTO
     {
         public int MessageId { get; set; }
         public string Subject { get; set; }

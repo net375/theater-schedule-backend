@@ -23,11 +23,11 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<Posters>> Get(string languageCode)
+        public ActionResult<IEnumerable<PostersDTO>> Get(string languageCode)
         {
             try
             {
-                IEnumerable<Posters> posters = postersService.LoadPostersData(languageCode).ToList();
+                IEnumerable<PostersDTO> posters = postersService.LoadPostersData(languageCode).ToList();
 
                 if (posters == null)
                     return NotFound();

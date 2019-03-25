@@ -38,12 +38,12 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<TeamMember>> LoadCreativeTeam(
+        public ActionResult<IEnumerable<TeamMemberDTO>> LoadCreativeTeam(
             string languageCode, int performanceId)
         {
             try
             {
-                IEnumerable<TeamMember> creativeTeam =
+                IEnumerable<TeamMemberDTO> creativeTeam =
                     creativeTeamService.LoadCreativeTeam(languageCode, performanceId);
 
                 if (creativeTeam == null)

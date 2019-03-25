@@ -10,7 +10,7 @@ namespace TheaterSchedule.BLL.Services
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IPerformanceDetailsService performanceDetailsService;
         private IMemoryCache memoryCache;
-        private PerformanceDetailsBase performanceDetailsRequest;
+        private PerformanceDetailsBaseDTO performanceDetailsRequest;
 
         public PerformanceDetailsService(
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
@@ -22,7 +22,7 @@ namespace TheaterSchedule.BLL.Services
             this.memoryCache = memoryCache;
         }
 
-        public PerformanceDetailsBase LoadPerformanceDetails(
+        public PerformanceDetailsBaseDTO LoadPerformanceDetails(
             string phoneId, string languageCode, int performanceId)
         {
             string memoryCacheKey = GetCacheKey(languageCode, performanceId);

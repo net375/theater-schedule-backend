@@ -5,7 +5,7 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
-using TeamMember = TheaterSchedule.BLL.DTO.TeamMember;
+using TeamMemberDTO = TheaterSchedule.BLL.DTO.TeamMemberDTO;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -25,11 +25,11 @@ namespace TheaterSchedule.BLL.Services
             this.memoryCache = memoryCache;
         }
 
-        public IEnumerable<TeamMember> LoadCreativeTeam(
+        public IEnumerable<TeamMemberDTO> LoadCreativeTeam(
             string languageCode, int performanceId )
         {
             var mapper = new MapperConfiguration(
-                cfg => cfg.CreateMap<DAL.Models.TeamMember, TeamMember>() )
+                cfg => cfg.CreateMap<DAL.Models.TeamMember, TeamMemberDTO>() )
                 .CreateMapper();
             IEnumerable<DAL.Models.TeamMember> creativeTeam = null;
             string cacheKey = GetCacheKey(languageCode, performanceId);
@@ -40,7 +40,7 @@ namespace TheaterSchedule.BLL.Services
                 memoryCache.Set(cacheKey, creativeTeam);
             }
 
-            return mapper.Map<IEnumerable<DAL.Models.TeamMember>, IEnumerable<TeamMember>>(creativeTeam);
+            return mapper.Map<IEnumerable<DAL.Models.TeamMember>, IEnumerable<TeamMemberDTO>>(creativeTeam);
         }
 
         private string GetCacheKey(string languageCode, int id)

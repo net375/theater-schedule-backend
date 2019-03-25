@@ -1,6 +1,6 @@
 ﻿namespace TheaterSchedule.BLL.DTO
 {
-    public class ScheduleWp : ScheduleBase
+    public class ScheduleWpDTO : ScheduleBaseDTO
     {
         public string MainImage { get; set; }
         public string redirectToTicket { get; set; }

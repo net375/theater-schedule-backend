@@ -2,7 +2,7 @@
 
 namespace TheaterSchedule.BLL.DTO
 {
-    public class ScheduleBase
+    public class ScheduleBaseDTO
     {
         public int PerformanceId { get; set; }
         public DateTime Beginning { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace TheaterSchedule.BLL.DTO
 {
-    public class TeamMember
+    public class TeamMemberDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
