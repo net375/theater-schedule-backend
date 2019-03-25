@@ -40,18 +40,6 @@ namespace TheaterSchedule.DAL.Repositories
                                         Frequency = frequency.Frequency
                                     };
 
-                            /*join performance in performancesWp on wishlist.PerformanceId equals performance.PerformanceId
-                            join schedule in scheduleWp on performance.PerformanceId equals schedule.PerformanceId
-
-                            where (schedule.Beginning.Day == (DateTime.Today.AddDays(frequency.Frequency).Day + 1) 
-                                    && (schedule.PerformanceId == wishlist.PerformanceId) && settings.DoesNotify)
-
-                            select new PushTokenDataModel
-                            {
-                                Token =  token.Token,
-                                LanguageCode = language.LanguageCode
-                            }).Distinct().ToList();*/
-
             return tokenWithLanguage;
         }
     }

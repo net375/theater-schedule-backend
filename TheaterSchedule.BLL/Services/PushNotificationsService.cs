@@ -6,7 +6,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
-using TheaterSchedule.BLL;
+using TheaterSchedule.BLL.Helpers;
 using System;
 
 namespace TheaterSchedule.BLL.Services
@@ -29,30 +29,19 @@ namespace TheaterSchedule.BLL.Services
 
         public void SendPushNotification()
         {
+            var cacheProvider = new CacheProvider(memoryCache);
+
             //performances
-            List<PerformanceDataModel> performancesWp = null;
-
-            string performanceMemoryCacheKey = Constants.PerformancesCacheKey + "uk";
-
-            if (!memoryCache.TryGetValue(performanceMemoryCacheKey, out performancesWp))
-            {
-                performancesWp =
-                    perfomanceRepository.GetPerformanceTitlesAndImages("uk");
-
-                memoryCache.Set(performanceMemoryCacheKey, performancesWp);
-            }
+            List<PerformanceDataModel> performancesWp =
+                cacheProvider.GetAndSave(
+                    () => Constants.PerformancesCacheKey + "uk",
+                    () => perfomanceRepository.GetPerformanceTitlesAndImages("uk"));
 
             //schedule
-            string scheduleMemoryCacheKey = Constants.ScheduleCacheKey + "uk";
-
-            IEnumerable<ScheduleDataModelBase> scheduleWp = null;
-
-            if (!memoryCache.TryGetValue(scheduleMemoryCacheKey, out scheduleWp))
-            {
-                scheduleWp = scheduleRepository.GetListPerformancesByDateRange("uk",
-                    DateTime.Now, null);
-                memoryCache.Set(scheduleMemoryCacheKey, scheduleWp);
-            }
+            IEnumerable<ScheduleDataModelBase> scheduleWp =
+                cacheProvider.GetAndSave(
+                    () => Constants.ScheduleCacheKey + "uk",
+                    () => scheduleRepository.GetListPerformancesByDateRange("uk", DateTime.Now, null));
 
             //statements above need to be changed when cache preload is implemented
 

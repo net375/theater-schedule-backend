@@ -9,32 +9,10 @@ using TheaterSchedule.DAL.Models;
 using TheaterSchedule.BLL;
 using System;
 using System.Linq;
+using TheaterSchedule.BLL.Helpers;
 
 namespace TheaterSchedule.BLL.Services
 {
-    public class CacheProvider
-    {
-        private IMemoryCache memoryCache;
-        public CacheProvider(IMemoryCache memoryCache)
-        {
-            this.memoryCache = memoryCache;
-        }
-
-        public T GetAndSave<T>(Func< string> keyGetter, Func<T> objGet) 
-        {
-            string memoryCacheKey = keyGetter();
-            T result;
-            if (!memoryCache.TryGetValue(memoryCacheKey, out result))
-            {
-                result = objGet();
-                     
-         
-                memoryCache.Set(memoryCacheKey, result);
-            }
-            return result; 
-        }
-    }
-
     public class WishlistService : IWishlistService
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
@@ -71,22 +49,10 @@ namespace TheaterSchedule.BLL.Services
                 () => GetKey(languageCode),
                 () => perfomanceRepository.GetPerformanceTitlesAndImages(languageCode));
 
-            /*List<PerformanceDataModel> performancesWp = null;
-
-            string memoryCacheKey = Constants.PerformancesCacheKey + languageCode;
-
-            if (!memoryCache.TryGetValue(memoryCacheKey, out performancesWp))
-            {
-                performancesWp =
-                    perfomanceRepository.GetPerformanceTitlesAndImages(languageCode);
-
-                memoryCache.Set(memoryCacheKey, performancesWp);
-            }*/
-
             var perfIds = WishlistRepository.GetPerformanceIdsInWishlist(phoneId, languageCode);
 
             var result = from perfId in perfIds
-                         join perfWp in performancesWp 
+                         join perfWp in performancesWp
                             on perfId equals perfWp.PerformanceId
                          select new WishlistDTO
                          {
