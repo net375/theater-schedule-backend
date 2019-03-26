@@ -4,31 +4,73 @@ using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using System.Linq;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
+using TheaterSchedule.BLL.Helpers;
+using System;
 
 namespace TheaterSchedule.BLL.Services
 {
     public class PushNotificationsService: IPushNotificationsService
     {
         private IPushTokenRepository pushTokenRepository;
+        private IScheduleRepository scheduleRepository;
+        private IPerfomanceRepository perfomanceRepository;
+        private IMemoryCache memoryCache;
 
-        public PushNotificationsService(IPushTokenRepository pushTokenRepository)
+        public PushNotificationsService(IPushTokenRepository pushTokenRepository, IScheduleRepository scheduleRepository,
+            IPerfomanceRepository perfomanceRepository, IMemoryCache memoryCache)
         {
             this.pushTokenRepository = pushTokenRepository;
+            this.scheduleRepository = scheduleRepository;
+            this.perfomanceRepository = perfomanceRepository;
+            this.memoryCache = memoryCache;
         }
 
         public void SendPushNotification()
         {
-            PushTokenDataModel[] pushTokens = 
-                pushTokenRepository.GetAllPushTokensToSendNotifications().ToArray();
+            var cacheProvider = new CacheProvider(memoryCache);
 
-            PushNotificationDTO[] reqBody = Enumerable.Range(0, pushTokens.Length).Select(i =>
+            //performances
+            List<PerformanceDataModel> performancesWp =
+                cacheProvider.GetAndSave(
+                    () => Constants.PerformancesCacheKey + "uk",
+                    () => perfomanceRepository.GetPerformanceTitlesAndImages("uk"));
+
+            //schedule
+            IEnumerable<ScheduleDataModelBase> scheduleWp =
+                cacheProvider.GetAndSave(
+                    () => Constants.ScheduleCacheKey + "uk",
+                    () => scheduleRepository.GetListPerformancesByDateRange("uk", DateTime.Now, null));
+
+            //statements above need to be changed when cache preload is implemented
+
+            IEnumerable<PushTokenDataModelPartial> pushTokensPartial = pushTokenRepository.GetAllPushTokensToSendNotifications();
+
+            List<PushTokenDataModel> pushTokens =
+                (from partialInfo in pushTokensPartial
+                 join performance in performancesWp on partialInfo.PerformanceId equals performance.PerformanceId
+                 join schedule in scheduleWp on performance.PerformanceId equals schedule.PerformanceId
+
+                 where (schedule.Beginning.Day == (DateTime.Today.AddDays(partialInfo.Frequency).Day)
+                         && (schedule.PerformanceId == partialInfo.PerformanceId))
+
+                 select new PushTokenDataModel
+                 {
+                     Token = partialInfo.Token,
+                     LanguageCode = partialInfo.LanguageCode
+                 })
+                 .Distinct(new PushTokenDataModelComparer()) //select distinct push tokens in order not to send several notifications
+                 .ToList();
+
+            List<PushNotificationDTO> reqBody = (pushTokens.Select(p =>
                 new PushNotificationDTO
                 {
-                    To = pushTokens[i].Token,
-                    Title = pushTokens[i].LanguageCode == "en" ? "Lviv Puppet Theater" : "Львівський театр ляльок",
-                    Body = pushTokens[i].LanguageCode == "en" ? 
+                    To = p.Token,
+                    Title = p.LanguageCode == "en" ? "Lviv Puppet Theater" : "Львівський театр ляльок",
+                    Body = p.LanguageCode == "en" ?
                         "The perfomances you have liked coming soon" : "Вистави, які вам сподобались, скоро в прокаті"
-                }).ToArray();
+                })).ToList();
             
             using (System.Net.WebClient client = new System.Net.WebClient())
             {
@@ -38,7 +80,24 @@ namespace TheaterSchedule.BLL.Services
                 client.UploadString(
                     "https://exp.host/--/api/v2/push/send", 
                     JsonConvert.SerializeObject(reqBody));
-            }   
+            }
+        }
+    }
+
+    internal class PushTokenDataModelComparer : IEqualityComparer<PushTokenDataModel>
+    {
+        public bool Equals(PushTokenDataModel x, PushTokenDataModel y)
+        {
+            if (string.Equals(x.Token, y.Token))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public int GetHashCode(PushTokenDataModel obj)
+        {
+            return obj.Token.GetHashCode();
         }
     }
 }

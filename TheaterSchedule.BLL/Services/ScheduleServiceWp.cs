@@ -7,6 +7,7 @@ using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
+using TheaterSchedule.BLL;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -30,7 +31,7 @@ namespace TheaterSchedule.BLL.Services
         {
             IEnumerable<ScheduleDataModelBase> schedule = null;
 
-            string memoryCacheKey = GetCacheKey(languageCode);
+            string memoryCacheKey = Constants.ScheduleCacheKey + languageCode;
 
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ScheduleBaseDTO, ScheduleWpDTO>())
                 .CreateMapper();
@@ -45,11 +46,6 @@ namespace TheaterSchedule.BLL.Services
                 mapper.Map<IEnumerable<ScheduleDataModelBase>, List<ScheduleWpDTO>>(schedule);
 
             return scheduleList = scheduleList.Where(s => (!startDate.HasValue || s.Beginning >= startDate) && (!endDate.HasValue || s.Beginning <= endDate));
-        }
-
-        private string GetCacheKey(string languageCode)
-        {
-            return $"Schedule {languageCode}";
         }
     }
 }
