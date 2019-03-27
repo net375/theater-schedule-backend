@@ -18,6 +18,14 @@ namespace TheaterSchedule.Controllers
             this.tagService = tagService;
         }
 
+        /// <summary>
+        /// Loads tags for the particular performance from lvivpuppet.com
+        /// </summary>
+        /// <param name="id">performance id</param>
+        /// <returns>array of hashtags</returns>
+        /// <response code="200">Returns list of hashtags for the particular performance</response>
+        /// <response code="400">If url which you are sending is not valid</response>
+        /// <response code="404">If the information about performance is null</response> 
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
