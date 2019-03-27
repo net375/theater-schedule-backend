@@ -18,11 +18,10 @@ namespace TheaterSchedule.BLL.Services
 
         public PerformanceScheduleDTO LoadScheduleData(int performanceId)
         {
-            PerformanceScheduleDTO performanceScheduleRequest;
+            PerformanceScheduleDTO performanceScheduleRequest = null;
             string memoryCacheKey = "Performance_" + performanceId.ToString();
             var scheduleDataModel = performanceScheduleRepository.GetPerfomanceScheduleInfo(performanceId).Result;
-
-            if (!memoryCache.TryGetValue(memoryCache, out performanceScheduleRequest))
+            if (!memoryCache.TryGetValue(memoryCacheKey, out performanceScheduleRequest))
             {
                 performanceScheduleRequest = new PerformanceScheduleDTO()
                 {
