@@ -19,7 +19,7 @@ namespace TheaterSchedule.BLL.Services
 
         public string GetMemoryCacheKey(int performanceId)
         {
-            return string.Format("Performance_" + performanceId.ToString());
+            return $"Performance_{performanceId}";
         }
 
         public PerformanceScheduleDTO LoadScheduleData(int performanceId)
