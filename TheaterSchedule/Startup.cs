@@ -14,6 +14,7 @@ using TheaterSchedule.DAL.Repositories;
 using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.DALwp.Repositories;
 using TheaterSchedule.MiddlewareComponents;
+using TheaterSchedule.BLL.Helpers;
 using Hangfire;
 using Hangfire.Dashboard;
 using Swashbuckle.AspNetCore.Swagger;
@@ -101,6 +102,7 @@ namespace TheaterSchedule
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();
+            services.AddScoped<ICacheProvider, CacheProvider>();
             services.AddMemoryCache();
         }
 

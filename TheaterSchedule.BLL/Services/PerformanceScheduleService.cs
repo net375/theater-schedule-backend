@@ -2,40 +2,42 @@ using TheaterSchedule.DAL.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
+using TheaterSchedule.BLL.Helpers;
 
 namespace TheaterSchedule.BLL.Services
 {
     public class PerformanceScheduleService : IPerformanceScheduleService
     {
         private IPerformanceScheduleRepository performanceScheduleRepository;
-        private IMemoryCache memoryCache;
+        private ICacheProvider cacheProvider;
 
-        public PerformanceScheduleService(IPerformanceScheduleRepository performanceScheduleRepository, IMemoryCache memoryCache)
+        public PerformanceScheduleService(IPerformanceScheduleRepository performanceScheduleRepository, ICacheProvider cacheProvider)
         {
             this.performanceScheduleRepository = performanceScheduleRepository;
-            this.memoryCache = memoryCache;
+            this.cacheProvider = cacheProvider;
+        }
+
+        public string GetMemoryCacheKey(int performanceId)
+        {
+            return $"Performance_{performanceId}";
         }
 
         public PerformanceScheduleDTO LoadScheduleData(int performanceId)
         {
-            PerformanceScheduleDTO performanceScheduleRequest;
-            string memoryCacheKey = "Performance_" + performanceId.ToString();
-            var scheduleDataModel = performanceScheduleRepository.GetPerfomanceScheduleInfo(performanceId).Result;
+            PerformanceScheduleDTO performanceScheduleRequest = null;
 
-            if (!memoryCache.TryGetValue(memoryCache, out performanceScheduleRequest))
+            var scheduleDataModel = cacheProvider.GetAndSave(() => GetMemoryCacheKey(performanceId), () => performanceScheduleRepository.GetPerfomanceScheduleInfo(performanceId).Result);
+
+            performanceScheduleRequest = new PerformanceScheduleDTO()
             {
-                performanceScheduleRequest = new PerformanceScheduleDTO()
-                {
-                    PerformanceId = scheduleDataModel.PerformanceId,
-                    Title = scheduleDataModel.Title,
-                    MainImage = scheduleDataModel.MainImage,
-                    ScheduleList = scheduleDataModel.ScheduleList,
-                    Age = scheduleDataModel.Age,
-                    Duration = scheduleDataModel.Duration,
-                    Price = scheduleDataModel.Price,
-                };
-                memoryCache.Set(memoryCacheKey, performanceScheduleRequest);
-            }
+                PerformanceId = scheduleDataModel.PerformanceId,
+                Title = scheduleDataModel.Title,
+                MainImage = scheduleDataModel.MainImage,
+                ScheduleList = scheduleDataModel.ScheduleList,
+                Age = scheduleDataModel.Age,
+                Duration = scheduleDataModel.Duration,
+                Price = scheduleDataModel.Price,
+            };
 
             return performanceScheduleRequest;
         }
