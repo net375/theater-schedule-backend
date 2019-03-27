@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using System;
+using TheaterSchedule.BLL.Interfaces;
 using System.Collections.Generic;
 using System.Text;
 
 namespace TheaterSchedule.BLL.Helpers
 {
-    public class CacheProvider
+    public class CacheProvider: ICacheProvider
     {
         private IMemoryCache memoryCache;
         public CacheProvider(IMemoryCache memoryCache)

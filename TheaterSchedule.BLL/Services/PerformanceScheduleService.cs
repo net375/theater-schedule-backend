@@ -9,12 +9,12 @@ namespace TheaterSchedule.BLL.Services
     public class PerformanceScheduleService : IPerformanceScheduleService
     {
         private IPerformanceScheduleRepository performanceScheduleRepository;
-        private IMemoryCache memoryCache;
+        private ICacheProvider cacheProvider;
 
-        public PerformanceScheduleService(IPerformanceScheduleRepository performanceScheduleRepository, IMemoryCache memoryCache)
+        public PerformanceScheduleService(IPerformanceScheduleRepository performanceScheduleRepository, ICacheProvider cacheProvider)
         {
             this.performanceScheduleRepository = performanceScheduleRepository;
-            this.memoryCache = memoryCache;
+            this.cacheProvider = cacheProvider;
         }
 
         public string GetMemoryCacheKey(int performanceId)
@@ -25,8 +25,6 @@ namespace TheaterSchedule.BLL.Services
         public PerformanceScheduleDTO LoadScheduleData(int performanceId)
         {
             PerformanceScheduleDTO performanceScheduleRequest = null;
-
-            CacheProvider cacheProvider = new CacheProvider(memoryCache);
 
             var scheduleDataModel = cacheProvider.GetAndSave(() => GetMemoryCacheKey(performanceId), () => performanceScheduleRepository.GetPerfomanceScheduleInfo(performanceId).Result);
 
