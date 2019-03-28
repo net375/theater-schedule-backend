@@ -13,10 +13,14 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TheaterDatabase", "TheaterD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{44DB1505-9B18-4BCD-B059-E677C4B9C95B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheaterSchedule.DALwp", "TheaterSchedule.DALwp\TheaterSchedule.DALwp.csproj", "{05A9ACCA-283C-4A13-83A9-F54D869ED224}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheaterSchedule.DALwp", "TheaterSchedule.DALwp\TheaterSchedule.DALwp.csproj", "{05A9ACCA-283C-4A13-83A9-F54D869ED224}"
 	ProjectSection(ProjectDependencies) = postProject
 		{70DAEA2D-DF69-4017-B237-3251288E1977} = {70DAEA2D-DF69-4017-B237-3251288E1977}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheaterSchedule.BLL.Tests", "TheaterSchedule.BLL.Tests\TheaterSchedule.BLL.Tests.csproj", "{6A522E3D-E7DA-4A39-9316-18A833CF15C4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheaterSchedule.DAL.Tests", "TeaterSchedule.DAL.Tests\TheaterSchedule.DAL.Tests.csproj", "{26FD038A-71AC-4350-8498-89E693C9C3F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +82,22 @@ Global
 		{05A9ACCA-283C-4A13-83A9-F54D869ED224}.Release|Any CPU.Build.0 = Release|Any CPU
 		{05A9ACCA-283C-4A13-83A9-F54D869ED224}.Release|x86.ActiveCfg = Release|Any CPU
 		{05A9ACCA-283C-4A13-83A9-F54D869ED224}.Release|x86.Build.0 = Release|Any CPU
+		{6A522E3D-E7DA-4A39-9316-18A833CF15C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A522E3D-E7DA-4A39-9316-18A833CF15C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A522E3D-E7DA-4A39-9316-18A833CF15C4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6A522E3D-E7DA-4A39-9316-18A833CF15C4}.Debug|x86.Build.0 = Debug|Any CPU
+		{6A522E3D-E7DA-4A39-9316-18A833CF15C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A522E3D-E7DA-4A39-9316-18A833CF15C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A522E3D-E7DA-4A39-9316-18A833CF15C4}.Release|x86.ActiveCfg = Release|Any CPU
+		{6A522E3D-E7DA-4A39-9316-18A833CF15C4}.Release|x86.Build.0 = Release|Any CPU
+		{26FD038A-71AC-4350-8498-89E693C9C3F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26FD038A-71AC-4350-8498-89E693C9C3F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26FD038A-71AC-4350-8498-89E693C9C3F3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{26FD038A-71AC-4350-8498-89E693C9C3F3}.Debug|x86.Build.0 = Debug|Any CPU
+		{26FD038A-71AC-4350-8498-89E693C9C3F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26FD038A-71AC-4350-8498-89E693C9C3F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26FD038A-71AC-4350-8498-89E693C9C3F3}.Release|x86.ActiveCfg = Release|Any CPU
+		{26FD038A-71AC-4350-8498-89E693C9C3F3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
