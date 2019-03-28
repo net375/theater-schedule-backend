@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="TheaterSchedule.BLL.Tests\TheaterSchedule.BLL.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
@@ -23,6 +27,10 @@
   <ItemGroup>
     <ProjectReference Include="..\TheaterSchedule.DALwp\TheaterSchedule.DALwp.csproj" />
     <ProjectReference Include="..\TheaterSchedule.DAL\TheaterSchedule.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TheaterSchedule.BLL.Tests\bin\Debug\netcoreapp2.2\" />
   </ItemGroup>
 
 </Project>
