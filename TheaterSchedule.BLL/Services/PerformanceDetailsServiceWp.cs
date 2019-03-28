@@ -17,7 +17,6 @@ namespace TheaterSchedule.BLL.Services
         private ICreativeTeamRepository creativeTeamRepository;
         private IIsCheckedPerformanceRepository isCheckedPerformanceRepository;
         private IMemoryCache memoryCache;
-        private IPerfomanceRepository perfomanceRepository;
         private PerformanceDetailsBaseDTO performanceDetailsRequest;
 
         public PerformanceDetailsServiceWp( 
@@ -26,8 +25,7 @@ namespace TheaterSchedule.BLL.Services
             ITagRepository tagRepository, 
             ICreativeTeamRepository creativeTeamRepository,
             IIsCheckedPerformanceRepository isCheckedPerformanceRepository,
-            IMemoryCache memoryCache,
-            IPerfomanceRepository perfomanceRepository)
+            IMemoryCache memoryCache)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.performanceDetailsRepository = performanceDetailsRepository;
@@ -35,17 +33,11 @@ namespace TheaterSchedule.BLL.Services
             this.creativeTeamRepository = creativeTeamRepository;
             this.isCheckedPerformanceRepository = isCheckedPerformanceRepository;
             this.memoryCache = memoryCache;
-            this.perfomanceRepository = perfomanceRepository;
         }
 
         public PerformanceDetailsBaseDTO LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
         {
             var cacheProvider = new CacheProvider(memoryCache);
-
-            List<PerformanceDataModel> performancesWp =
-                cacheProvider.GetAndSave(
-                    () => Constants.PerformancesCacheKey + languageCode,
-                    () => perfomanceRepository.GetPerformanceTitlesAndImages(languageCode));
 
             var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId );
 
