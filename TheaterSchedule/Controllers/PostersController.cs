@@ -18,6 +18,14 @@ namespace TheaterSchedule.Controllers
             this.postersService = postersService;
         }
 
+        /// <summary>
+        /// Loads tags for the particular performance from lvivpuppet.com
+        /// </summary>
+        /// <param name="languageCode">Code of exist language(localisation of posters not supported yet, you can enter any value)</param>
+        /// <returns>array of posters with selected language</returns>
+        /// <response code="200">Returns list of  posters  with selected language</response>
+        /// <response code="400">If url which you are sending is not valid</response>
+        /// <response code="404">If the information about languageCode is null</response> 
         [HttpGet("{languageCode}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
