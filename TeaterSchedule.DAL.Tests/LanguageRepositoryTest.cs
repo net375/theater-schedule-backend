@@ -1,7 +1,5 @@
-using System;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using TheaterSchedule.DAL.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
