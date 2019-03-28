@@ -117,7 +117,7 @@ namespace TheaterSchedule.BLL.UnitTests
                 .Returns( true );
             tagRepositoryMock.Setup( x => x.GetTagsByPerformanceId(
                     It.IsAny<int>() ) )
-                .Returns(Task.FromResult( tags as IEnumerable<string>));//new List<string>( tags ) 
+                .Returns(Task.FromResult( tags as IEnumerable<string>));
             performanceDetailsRepositoryMock.Setup( x => x.GetInformationAboutPerformance(
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>() ) )
                 .Returns( performanceDetails );
