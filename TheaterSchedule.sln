@@ -13,10 +13,12 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TheaterDatabase", "TheaterD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{44DB1505-9B18-4BCD-B059-E677C4B9C95B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheaterSchedule.DALwp", "TheaterSchedule.DALwp\TheaterSchedule.DALwp.csproj", "{05A9ACCA-283C-4A13-83A9-F54D869ED224}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheaterSchedule.DALwp", "TheaterSchedule.DALwp\TheaterSchedule.DALwp.csproj", "{05A9ACCA-283C-4A13-83A9-F54D869ED224}"
 	ProjectSection(ProjectDependencies) = postProject
 		{70DAEA2D-DF69-4017-B237-3251288E1977} = {70DAEA2D-DF69-4017-B237-3251288E1977}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject", "UnitTestProject\UnitTestProject.csproj", "{82AA5FCC-C620-493A-BB2F-E20CC0B33FCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +80,14 @@ Global
 		{05A9ACCA-283C-4A13-83A9-F54D869ED224}.Release|Any CPU.Build.0 = Release|Any CPU
 		{05A9ACCA-283C-4A13-83A9-F54D869ED224}.Release|x86.ActiveCfg = Release|Any CPU
 		{05A9ACCA-283C-4A13-83A9-F54D869ED224}.Release|x86.Build.0 = Release|Any CPU
+		{82AA5FCC-C620-493A-BB2F-E20CC0B33FCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82AA5FCC-C620-493A-BB2F-E20CC0B33FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82AA5FCC-C620-493A-BB2F-E20CC0B33FCE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{82AA5FCC-C620-493A-BB2F-E20CC0B33FCE}.Debug|x86.Build.0 = Debug|Any CPU
+		{82AA5FCC-C620-493A-BB2F-E20CC0B33FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82AA5FCC-C620-493A-BB2F-E20CC0B33FCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82AA5FCC-C620-493A-BB2F-E20CC0B33FCE}.Release|x86.ActiveCfg = Release|Any CPU
+		{82AA5FCC-C620-493A-BB2F-E20CC0B33FCE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
