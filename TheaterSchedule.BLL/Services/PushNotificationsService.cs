@@ -69,7 +69,7 @@ namespace TheaterSchedule.BLL.Services
                     To = p.Token,
                     Title = p.LanguageCode == "en" ? "Lviv Puppet Theater" : "Львівський театр ляльок",
                     Body = p.LanguageCode == "en" ?
-                        "The perfomances you have liked coming soon" : "Вистави, які вам сподобались, скоро в прокаті"
+                        "The perfomances you have liked coming soon" : "Вистави, які вам сподобались, скоро на сцені"
                 })).ToList();
             
             using (System.Net.WebClient client = new System.Net.WebClient())
