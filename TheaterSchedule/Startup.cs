@@ -140,7 +140,7 @@ namespace TheaterSchedule
 
             loggerFactory.AddFile("Logs/myapp-{Date}.txt");
             app.UseToken();
-            app.UseHttpsRedirection();
+            
             app.UseMvc();
         }
     }

@@ -64,25 +64,15 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Account.sql" />
-    <Build Include="dbo\Tables\CreativeTeamMember.sql" />
     <Build Include="dbo\Tables\GalleryImage.sql" />
-    <Build Include="dbo\Tables\HashTag.sql" />
-    <Build Include="dbo\Tables\HashTag_Performance.sql" />
     <Build Include="dbo\Tables\Performance.sql" />
-    <Build Include="dbo\Tables\PerformanceCreativeTeamMember.sql" />
-    <Build Include="dbo\Tables\Schedule.sql" />
     <Build Include="dbo\Tables\Settings.sql" />
     <Build Include="dbo\Tables\Wishlist.sql" />
-    <Build Include="dbo\Tables\HashTag_TR.sql" />
-    <Build Include="dbo\Tables\Performance_TR.sql" />
-    <Build Include="dbo\Tables\CreativeTeamMember_TR.sql" />
-    <Build Include="dbo\Tables\PerformanceCreativeTeamMember_TR.sql" />
     <Build Include="dbo\Tables\Language.sql" />
     <None Include="TestData\FillByTestData.sql" />
     <Build Include="dbo\Tables\Message.sql" />
     <Build Include="dbo\Tables\Event.sql" />
     <Build Include="dbo\Tables\Event_TR.sql" />
-    <Build Include="dbo\Tables\Role_TR.sql" />
     <Build Include="dbo\Tables\PushToken.sql" />
     <Build Include="dbo\Tables\NotificationFrequency.sql" />
   </ItemGroup>
