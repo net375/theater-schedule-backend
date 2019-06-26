@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using TheaterSchedule.BLL.DTOs;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.Formatters;
+using TheaterSchedule.Infrastructure;
 
 namespace TheaterSchedule.Controllers
 {
@@ -37,8 +39,8 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApplicationUserDTO>> AuthorizationAsync(string email, string password)
         {
-            if (!ModelState.IsValid)
-                 return BadRequest(ModelState);
+            //if (!ModelState.IsValid)
+            //     return BadRequest(ModelState);
 
             try
             {
@@ -46,7 +48,8 @@ namespace TheaterSchedule.Controllers
 
                 if (userResult == null)
                 {
-                   return NotFound();
+                    throw new HttpStatusCodeException(
+                        HttpStatusCode.NotFound, $"Such [{email}] doesn't exist");
                 }
 
                 var jwt = _tokenFormation.GetToken(userResult);

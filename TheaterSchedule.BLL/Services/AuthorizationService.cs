@@ -13,7 +13,7 @@ namespace TheaterSchedule.BLL.Services
 
         public AuthorizationService(IAuthorizationRepository authorizationRepository, ICacheProvider cacheProvider)
         {
-            _authorizationRepository = authorizationRepository;
+            _authorizationRepository = authorizationRepository; 
         }
 
         public async Task<ApplicationUserDTO> GetUserAsync(string email, string password)
