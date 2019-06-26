@@ -108,7 +108,11 @@ namespace TheaterSchedule
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();
             services.AddScoped<ICacheProvider, CacheProvider>();
+            services.AddScoped<ISendDataToGoogleFormService, SendDataToGoogleFormService>();
+            services.AddScoped<IGetDataFromGoogleFormService, GetDataFromGoogleFormService>();
             services.AddMemoryCache();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -147,7 +151,10 @@ namespace TheaterSchedule
 
             loggerFactory.AddFile("Logs/myapp-{Date}.txt");
             app.UseToken();
+<<<<<<< HEAD
             
+=======
+>>>>>>> f414a2dbb0e41c6b588ab62e478e6ecaddb76256
             app.UseMvc();
         }
     }
