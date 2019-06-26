@@ -9,6 +9,6 @@ namespace TheaterSchedule.BLL.Interfaces
     {
         void SetFieldValues(Dictionary<string, string> data);
         void SetCheckboxValues(string key, params string[] values);
-        Task<string> SubmitAsync(string rootUrl);
+        string SubmitAsync(string rootUrl);
     }
 }

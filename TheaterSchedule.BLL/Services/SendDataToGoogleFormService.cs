@@ -48,7 +48,7 @@ namespace TheaterSchedule.BLL.Services
             _checkbox[key] = valuesWithData;
         }
 
-        public async Task<string> SubmitAsync(string rootUrl)
+        public string SubmitAsync(string rootUrl)
         {
             _baseUrl = rootUrl.Replace("viewform", "formResponse?");
 
@@ -72,11 +72,11 @@ namespace TheaterSchedule.BLL.Services
                 {
                     _baseUrl += temp.Key + "=" + temp.Value[i] + "&";
                 }
-                _baseUrl.TrimEnd();
+                _baseUrl =_baseUrl.TrimEnd();
             }
 
             _uri = new Uri(_baseUrl);
-            byte[] response = await _client.UploadValuesTaskAsync(_uri, "POST", nameValue);
+            byte[] response = _client.UploadValues(_uri, "POST", nameValue);
             string result = Encoding.UTF8.GetString(response);
             return result;
         }

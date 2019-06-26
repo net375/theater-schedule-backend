@@ -16,9 +16,10 @@ namespace TheaterSchedule.Controllers
         private IGetDataFromGoogleFormService getService;
         private ISendDataToGoogleFormService sendService;
 
-        public CreateGoogleFormController(IGetDataFromGoogleFormService googleFormService)
+        public CreateGoogleFormController(IGetDataFromGoogleFormService googleFormService, ISendDataToGoogleFormService sendFormService)
         {
             getService = googleFormService;
+            sendService = sendFormService;
         }
 
         [HttpGet]
@@ -41,16 +42,15 @@ namespace TheaterSchedule.Controllers
             }
 
         }
-
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<string>> SendDataToGoogleForm(string url = "https://docs.google.com/forms/d/e/1FAIpQLSfwgTnNsb7SvCmrkskJZINvhuGY861iNfdbMZ_1UcNylORT6A/viewform")
+        public ActionResult<string> SendDataToGoogleForm(string url = "https://docs.google.com/forms/d/e/1FAIpQLSfwgTnNsb7SvCmrkskJZINvhuGY861iNfdbMZ_1UcNylORT6A/viewform")
         {
             try
             {
-                string result = await sendService.SubmitAsync(url);
+                string result = sendService.SubmitAsync(url);
                 if (result == null)
                     return BadRequest();
                 return StatusCode(200, result);
