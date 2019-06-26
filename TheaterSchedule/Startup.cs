@@ -21,6 +21,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.Reflection;
 using System.IO;
 using System;
+using TheaterSchedule.Extensions;
 
 namespace TheaterSchedule
 {
@@ -51,6 +52,7 @@ namespace TheaterSchedule
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);
 
+            services.AddAuthenticationService();
 
             services.AddSwaggerGen(c =>
             {
@@ -83,12 +85,15 @@ namespace TheaterSchedule
             services.AddScoped<ICreativeTeamRepository, CreativeTeamRepositoryWpFake>();
             services.AddScoped<ITagRepository, TagRepositoryWp>();
             services.AddScoped<IPerformanceScheduleRepository, PerformanceScheduleRepositoryWp>();
+            services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<INotificationFrequencyRepository, NotificationFrequencyRepository>();
+            
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             //services
             services.AddScoped<ISettingsService, SettingsService>();
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddScoped<IScheduleService, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
             services.AddScoped<IImageService, ImageService>();
@@ -125,6 +130,8 @@ namespace TheaterSchedule
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
+
             app.UseStaticFiles();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
@@ -140,7 +147,7 @@ namespace TheaterSchedule
 
             loggerFactory.AddFile("Logs/myapp-{Date}.txt");
             app.UseToken();
-            app.UseHttpsRedirection();
+            
             app.UseMvc();
         }
     }
