@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace TheaterSchedule.Formatters
+namespace TheaterSchedule.Models
 {
     public class AuthOptions
     {

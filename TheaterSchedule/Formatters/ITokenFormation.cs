@@ -4,6 +4,7 @@ namespace TheaterSchedule.Formatters
 {
     public interface ITokenFormation
     {
-        string GetToken(ApplicationUserDTO user);
+        string GenerateAccessToken(ApplicationUserDTO user);
+        string GenerateRefreshToken(int size = 32);
     }
 }

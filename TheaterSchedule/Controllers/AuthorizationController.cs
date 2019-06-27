@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using TheaterSchedule.BLL.DTOs;
 using TheaterSchedule.BLL.Interfaces;
+using TheaterSchedule.BLL;
 using TheaterSchedule.Formatters;
 using TheaterSchedule.Infrastructure;
+using TheaterSchedule.Models;
 
 namespace TheaterSchedule.Controllers
 {
@@ -14,21 +15,22 @@ namespace TheaterSchedule.Controllers
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
-        private IAuthorizationService _authorizationService;
+        private IUserService _userService;
         private ITokenFormation _tokenFormation;
+        private IRefreshTokenService _refreshTokenService;
 
-        public AuthorizationController(IAuthorizationService authorizationService, ITokenFormation tokenFormation)
-        {           
-            _authorizationService = authorizationService;
+        public AuthorizationController(IUserService userService, ITokenFormation tokenFormation, IRefreshTokenService refreshTokenService)
+        {            
+            _userService = userService;
             _tokenFormation = tokenFormation;
+            _refreshTokenService = refreshTokenService;
         }
 
 
         /// <summary>
-        ///     Authorization user in database and retun information about user in response (lvivpuppet.com)
+        ///     Authorization user in database and retun information about user in access token and refresh token in response
         /// </summary>
-        /// <param name="email"></param> 
-        /// <param name="password"></param>
+        /// <param name="input"></param> 
         /// <returns>Information about user in response and token</returns>
         /// <response code="200">Returns the information about user  and token</response>
         /// <response code="400">If url which you are sending is not valid</response>
@@ -37,32 +39,34 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ApplicationUserDTO>> AuthorizationAsync(string email, string password)
+        public async Task<ActionResult<TokensResponse>> AuthorizationAsync([FromBody] UserLoginModel input)
         {
-            //if (!ModelState.IsValid)
-            //     return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             try
             {
-                var userResult = await _authorizationService.GetUserAsync(email, password);
+                var userResult = await _userService.GetAsync(input.Email, input.PasswordHash);
 
                 if (userResult == null)
                 {
                     throw new HttpStatusCodeException(
-                        HttpStatusCode.NotFound, $"Such [{email}] doesn't exist");
+                        HttpStatusCode.NotFound, $"Such [{input.Email}] doesn't exist");
                 }
 
-                var jwt = _tokenFormation.GetToken(userResult);
+                var jwt = _tokenFormation.GenerateAccessToken(userResult);
 
-                return new ApplicationUserDTO
+                var refreshToken = _tokenFormation.GenerateRefreshToken();
+
+                await _refreshTokenService.AddRefreshTokenAsync(refreshToken, userResult.Id, Constants.DaysToExpireRefreshToken);
+
+                return StatusCode(200, new TokensResponse
                 {
-                    FirstName = userResult.FirstName,
-                    LastName = userResult.LastName,
-                    DateOfBirth = userResult.DateOfBirth,
-                    Email = userResult.Email,
-                    Role = userResult.Role,
-                    Token = jwt 
-                };
+                    AccessToken = jwt,
+                    RefreshToken = refreshToken,
+                    ExpiresTime = DateTime.UtcNow.AddMinutes(Constants.MinToExpireAccessToken)
+                });
+                
             }
             catch (Exception e)
             {

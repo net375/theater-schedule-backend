@@ -11,6 +11,7 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
+using TheaterSchedule.BLL;
 using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.DALwp.Repositories;
 using TheaterSchedule.MiddlewareComponents;
@@ -22,6 +23,8 @@ using System.Reflection;
 using System.IO;
 using System;
 using TheaterSchedule.Extensions;
+using TheaterSchedule.Models;
+using TheaterSchedule.Formatters;
 
 namespace TheaterSchedule
 {
@@ -39,7 +42,7 @@ namespace TheaterSchedule
             services.AddHangfire(configuration =>
             {
                 configuration.UseSqlServerStorage(
-                    Configuration.GetConnectionString("TheaterConnectionString"));
+                    Configuration.GetConnectionString(Constants.ConnectionString));
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -50,13 +53,10 @@ namespace TheaterSchedule
             }); 
 
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
-                (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);
-
-            services.AddAuthenticationService();
+                (Configuration.GetConnectionString(Constants.ConnectionString)), ServiceLifetime.Scoped);           
 
             services.AddSwaggerGen(c =>
             {
-
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "v1.0",
@@ -70,8 +70,18 @@ namespace TheaterSchedule
                 c.IncludeXmlComments(xmlPath);
             });
 
+            services.AddOptions();
+
+            services.Configure<AuthOptions>(Configuration.GetSection(Constants.AuthOption));            
+
+            services.AddAuthenticationService();
+
+            //formatter
+            services.AddScoped<ITokenFormation, TokenFormation>();
+            
             //repositories
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepositoryWp>();
@@ -85,15 +95,13 @@ namespace TheaterSchedule
             services.AddScoped<ICreativeTeamRepository, CreativeTeamRepositoryWpFake>();
             services.AddScoped<ITagRepository, TagRepositoryWp>();
             services.AddScoped<IPerformanceScheduleRepository, PerformanceScheduleRepositoryWp>();
-            services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<INotificationFrequencyRepository, NotificationFrequencyRepository>();
-            
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             //services
             services.AddScoped<ISettingsService, SettingsService>();
-            services.AddScoped<IAuthorizationService, AuthorizationService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IScheduleService, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
             services.AddScoped<IImageService, ImageService>();
@@ -151,10 +159,6 @@ namespace TheaterSchedule
 
             loggerFactory.AddFile("Logs/myapp-{Date}.txt");
             app.UseToken();
-<<<<<<< HEAD
-            
-=======
->>>>>>> f414a2dbb0e41c6b588ab62e478e6ecaddb76256
             app.UseMvc();
         }
     }

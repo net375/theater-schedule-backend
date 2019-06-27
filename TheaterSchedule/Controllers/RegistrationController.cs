@@ -18,6 +18,7 @@ namespace TheaterSchedule.Controllers
             this.service = service;
         }
 
+        [HttpGet]
         public ActionResult CreateUser()
         {
             ApplicationUserDTO user = new ApplicationUserDTO

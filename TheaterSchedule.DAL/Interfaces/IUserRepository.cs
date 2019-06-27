@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Entities.Models;
+using System.Linq;
+using System.Threading.Tasks;
 using TheaterSchedule.DAL.Models;
 
 namespace TheaterSchedule.DAL.Interfaces
 {
     public interface IUserRepository
     {
-        ApplicationUserModel GetUserByEmailAddress(string email);
-        IEnumerable<ApplicationUserModel> GetAll();
+        Task<ApplicationUser> GetUserByEmailAddress(string email);
+        IQueryable<ApplicationUser> GetAll();
+        Task<ApplicationUser> GetByIdAsync(int id);
         ApplicationUserModel GetById(int id);
         void Add(ApplicationUserModel user);
         void UpdateUser(ApplicationUserModel user);

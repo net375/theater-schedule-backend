@@ -1,9 +1,10 @@
-﻿using Entities.Models;
-using System.Text;
-using System.Collections.Generic;
+﻿using System.Text;
 using System.Linq;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
+using Entities.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace TheaterSchedule.DAL.Repositories
 {
@@ -18,6 +19,7 @@ namespace TheaterSchedule.DAL.Repositories
 
         public void Add(ApplicationUserModel user)
         {
+            db.ApplicationUser.ToListAsync();
             db.ApplicationUser.Add(new ApplicationUser
             {
                 Id = user.Id,
@@ -38,23 +40,14 @@ namespace TheaterSchedule.DAL.Repositories
             db.ApplicationUser.Remove(user);
         }
 
-        public IEnumerable<ApplicationUserModel> GetAll()
+        public IQueryable<ApplicationUser> GetAll()
         {
-            IEnumerable<ApplicationUserModel> listOfUsers = null;
-            listOfUsers = from applicationuser in db.ApplicationUser
-                          select new ApplicationUserModel
-                          {
-                              Id = applicationuser.Id,
-                              FirstName = applicationuser.FirstName,
-                              LastName = applicationuser.LastName,
-                              DateOfBirth = applicationuser.DateOfBirth,
-                              City = applicationuser.City,
-                              Country = applicationuser.Country,
-                              Email = applicationuser.Email,
-                              PasswordHash = Encoding.UTF8.GetBytes(applicationuser.PasswordHash),                          
-                              PasswordSalt = Encoding.UTF8.GetBytes(applicationuser.PasswordSalt)
-                          };
-            return listOfUsers;
+            return db.ApplicationUser;            
+        }
+
+        public async Task<ApplicationUser> GetByIdAsync(int id)
+        {
+             return await db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == id);           
         }
 
         public ApplicationUserModel GetById(int id)
@@ -74,21 +67,9 @@ namespace TheaterSchedule.DAL.Repositories
             };
         }
 
-        public ApplicationUserModel GetUserByEmailAddress(string email)
+        public async Task<ApplicationUser> GetUserByEmailAddress(string email)
         {
-            ApplicationUser user = db.ApplicationUser.First(u => u.Email == email);
-            return new ApplicationUserModel
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth,
-                City = user.City,
-                Country = user.Country,
-                Email = user.Email,
-                PasswordHash = Encoding.UTF8.GetBytes(user.PasswordHash),
-                PasswordSalt = Encoding.UTF8.GetBytes(user.PasswordSalt)
-            };
+           return await db.ApplicationUser.FirstOrDefaultAsync(item => item.Email == email);
         }
 
         public void UpdateUser(ApplicationUserModel user)

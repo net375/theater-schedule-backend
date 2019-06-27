@@ -11,12 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="appsettings.json" />
     <Content Remove="web.config" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="appsettings.json" />
   </ItemGroup>
 
   <ItemGroup>
