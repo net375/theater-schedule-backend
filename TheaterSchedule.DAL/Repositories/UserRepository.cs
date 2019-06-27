@@ -19,46 +19,49 @@ namespace TheaterSchedule.DAL.Repositories
 
         public void Add(ApplicationUserModel user)
         {
-            db.ApplicationUser.ToListAsync();
-            db.ApplicationUser.Add(new ApplicationUser
+
+            db.Account.Add(new Account
             {
-                Id = user.Id,
+                AccountId = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth,
+                Birthdate = user.DateOfBirth,
                 City = user.City,
                 Country = user.Country,
                 Email = user.Email,
                 PasswordHash = Encoding.UTF8.GetString(user.PasswordHash),
-                PasswordSalt = Encoding.UTF8.GetString(user.PasswordSalt)
+                PasswordSalt = Encoding.UTF8.GetString(user.PasswordSalt),
+                PhoneIdentifier = user.PhoneIdentifier,
+                SettingsId = user.SettingsId
             });
         }
 
         public void Delete(int id)
         {
-            ApplicationUser user = db.ApplicationUser.First(u => u.Id == id);
-            db.ApplicationUser.Remove(user);
+            Account user = db.Account
+                .First(u => u.AccountId == id);
+            db.Account.Remove(user);
         }
 
-        public IQueryable<ApplicationUser> GetAll()
+        public IQueryable<Account> GetAll()
         {
-            return db.ApplicationUser;            
+            return db.Account;            
         }
 
-        public async Task<ApplicationUser> GetByIdAsync(int id)
+        public async Task<Account> GetByIdAsync(int id)
         {
-             return await db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == id);           
+             return await db.Account.FirstOrDefaultAsync(u => u.AccountId == id);           
         }
 
         public ApplicationUserModel GetById(int id)
         {
-            ApplicationUser user = db.ApplicationUser.First(u => u.Id == id);
+            Account user = db.Account.First(u => u.AccountId == id);
             return new ApplicationUserModel
             {
-                Id = user.Id,
+                Id = user.AccountId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth,
+                DateOfBirth = user.Birthdate,
                 City = user.City,
                 Country = user.Country,
                 Email = user.Email,
@@ -66,20 +69,20 @@ namespace TheaterSchedule.DAL.Repositories
                 PasswordSalt = Encoding.UTF8.GetBytes(user.PasswordSalt)
             };
         }
-
-        public async Task<ApplicationUser> GetUserByEmailAddress(string email)
+        
+        public async Task<Account> GetUserByEmailAddress(string email)
         {
-           return await db.ApplicationUser.FirstOrDefaultAsync(item => item.Email == email);
+           return await db.Account.FirstOrDefaultAsync(item => item.Email == email);
         }
 
         public void UpdateUser(ApplicationUserModel user)
         {
-            db.ApplicationUser.Update(new ApplicationUser
+            db.Account.Update(new Account
             {
-                Id = user.Id,
+                AccountId = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth,
+                Birthdate = user.DateOfBirth,
                 City = user.City,
                 Country = user.Country,
                 Email = user.Email,
