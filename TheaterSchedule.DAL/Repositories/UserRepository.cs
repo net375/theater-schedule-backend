@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace TheaterSchedule.DAL.Repositories
 {
@@ -18,36 +20,39 @@ namespace TheaterSchedule.DAL.Repositories
 
         public void Add(ApplicationUserModel user)
         {
-            db.ApplicationUser.Add(new ApplicationUser
+            db.Account.Add(new Account
             {
-                Id = user.Id,
+                AccountId = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth,
+                Birthdate = user.DateOfBirth,
                 City = user.City,
                 Country = user.Country,
                 Email = user.Email,
                 PasswordHash = Encoding.UTF8.GetString(user.PasswordHash),
-                PasswordSalt = Encoding.UTF8.GetString(user.PasswordSalt)
+                PasswordSalt = Encoding.UTF8.GetString(user.PasswordSalt),
+                PhoneIdentifier = user.PhoneIdentifier,
+                SettingsId = user.SettingsId
             });
         }
 
         public void Delete(int id)
         {
-            ApplicationUser user = db.ApplicationUser.First(u => u.Id == id);
-            db.ApplicationUser.Remove(user);
+            Account user = db.Account
+                .First(u => u.AccountId == id);
+            db.Account.Remove(user);
         }
 
         public IEnumerable<ApplicationUserModel> GetAll()
         {
             IEnumerable<ApplicationUserModel> listOfUsers = null;
-            listOfUsers = from applicationuser in db.ApplicationUser
+            listOfUsers = from applicationuser in db.Account
                           select new ApplicationUserModel
                           {
-                              Id = applicationuser.Id,
+                              Id = applicationuser.AccountId,
                               FirstName = applicationuser.FirstName,
                               LastName = applicationuser.LastName,
-                              DateOfBirth = applicationuser.DateOfBirth,
+                              DateOfBirth = applicationuser.Birthdate,
                               City = applicationuser.City,
                               Country = applicationuser.Country,
                               Email = applicationuser.Email,
@@ -59,13 +64,13 @@ namespace TheaterSchedule.DAL.Repositories
 
         public ApplicationUserModel GetById(int id)
         {
-            ApplicationUser user = db.ApplicationUser.First(u => u.Id == id);
+            Account user = db.Account.First(u => u.AccountId == id);
             return new ApplicationUserModel
             {
-                Id = user.Id,
+                Id = user.AccountId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth,
+                DateOfBirth = user.Birthdate,
                 City = user.City,
                 Country = user.Country,
                 Email = user.Email,
@@ -74,15 +79,15 @@ namespace TheaterSchedule.DAL.Repositories
             };
         }
 
-        public ApplicationUserModel GetUserByEmailAddress(string email)
+        public async Task<ApplicationUserModel> GetUserByEmailAddress(string email)
         {
-            ApplicationUser user = db.ApplicationUser.First(u => u.Email == email);
+            Account user = await db.Account.FirstOrDefaultAsync(u => u.Email == email);
             return new ApplicationUserModel
             {
-                Id = user.Id,
+                Id = user.AccountId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth,
+                DateOfBirth = user.Birthdate,
                 City = user.City,
                 Country = user.Country,
                 Email = user.Email,
@@ -93,12 +98,12 @@ namespace TheaterSchedule.DAL.Repositories
 
         public void UpdateUser(ApplicationUserModel user)
         {
-            db.ApplicationUser.Update(new ApplicationUser
+            db.Account.Update(new Account
             {
-                Id = user.Id,
+                AccountId = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth,
+                Birthdate = user.DateOfBirth,
                 City = user.City,
                 Country = user.Country,
                 Email = user.Email,
