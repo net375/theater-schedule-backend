@@ -1,8 +1,9 @@
-﻿CREATE TABLE [dbo].[RefreshTokens](
+﻿
+CREATE TABLE [dbo].[RefreshTokens](
 	[DaysToExpire] [datetime] NOT NULL,
 	[UserId] [int] NOT NULL,
 	[RefreshToken] [nvarchar](50) NOT NULL,
-	[Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
  CONSTRAINT [PK_RefreshTokens] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

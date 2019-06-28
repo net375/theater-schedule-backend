@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using TheaterSchedule.Models;
+using TheaterSchedule.BLL.Models;
 
 namespace TheaterSchedule.Extensions
 {

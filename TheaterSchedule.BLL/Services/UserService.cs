@@ -9,6 +9,7 @@ using TheaterSchedule.DAL.Models;
 using System.Threading.Tasks;
 using System.Net;
 using TheaterSchedule.Infrastructure;
+using System.Text;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -52,7 +53,7 @@ namespace TheaterSchedule.BLL.Services
             if (user == null)
             {
                 throw new HttpStatusCodeException(
-                       HttpStatusCode.NotFound, $"Such [{email}] doesn't exist");
+                       HttpStatusCode.NotFound, $"Such user doesn't exist");
             }
 
             return new ApplicationUserDTO
@@ -76,20 +77,20 @@ namespace TheaterSchedule.BLL.Services
 
             PasswordGenerators.CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
-                _userRepository.Add(new ApplicationUserModel
-                {
-                    City = user.City,
-                    PasswordSalt = passwordSalt,
-                    Country = user.Country,
-                    DateOfBirth=user.DateOfBirth,
-                    Email=user.Email,
-                    FirstName=user.FirstName,
-                    Id=user.Id,
-                    LastName=user.LastName,
-                    PasswordHash=passwordHash,
-                    PhoneIdentifier = user.PhoneIdentifier,
-                    SettingsId=user.SettingsId
-                });
+            _userRepository.Add(new ApplicationUserModel
+            {
+                City = user.City,
+                PasswordSalt = passwordSalt,
+                Country = user.Country,
+                DateOfBirth = user.DateOfBirth,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                Id = user.Id,
+                LastName = user.LastName,
+                PasswordHash = Encoding.UTF8.GetBytes(password),
+                PhoneIdentifier = user.PhoneIdentifier,
+                SettingsId = user.SettingsId
+            });
 
             _theaterScheduleUnitOfWork.Save();
 

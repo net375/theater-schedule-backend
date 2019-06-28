@@ -23,8 +23,7 @@ using System.Reflection;
 using System.IO;
 using System;
 using TheaterSchedule.Extensions;
-using TheaterSchedule.Models;
-using TheaterSchedule.Formatters;
+using TheaterSchedule.BLL.Models;
 
 namespace TheaterSchedule
 {
@@ -75,13 +74,11 @@ namespace TheaterSchedule
             services.Configure<AuthOptions>(Configuration.GetSection(Constants.AuthOption));            
 
             services.AddAuthenticationService();
-
-            //formatter
-            services.AddScoped<ITokenFormation, TokenFormation>();
             
             //repositories
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepositoryWp>();
@@ -99,8 +96,9 @@ namespace TheaterSchedule
             services.AddScoped<INotificationFrequencyRepository, NotificationFrequencyRepository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
-            //services
+            //services            
             services.AddScoped<ISettingsService, SettingsService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IScheduleService, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
@@ -120,7 +118,6 @@ namespace TheaterSchedule
             services.AddScoped<IGetDataFromGoogleFormService, GetDataFromGoogleFormService>();
             services.AddMemoryCache();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

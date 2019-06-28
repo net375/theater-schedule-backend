@@ -5,7 +5,6 @@ using System.Net;
 using System.Threading.Tasks;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL;
-using TheaterSchedule.Formatters;
 using TheaterSchedule.Infrastructure;
 using TheaterSchedule.Models;
 
@@ -16,13 +15,13 @@ namespace TheaterSchedule.Controllers
     public class AuthorizationController : ControllerBase
     {
         private IUserService _userService;
-        private ITokenFormation _tokenFormation;
+        private ITokenService _tokenService;
         private IRefreshTokenService _refreshTokenService;
 
-        public AuthorizationController(IUserService userService, ITokenFormation tokenFormation, IRefreshTokenService refreshTokenService)
+        public AuthorizationController(IUserService userService, ITokenService tokenService, IRefreshTokenService refreshTokenService)
         {            
             _userService = userService;
-            _tokenFormation = tokenFormation;
+            _tokenService = tokenService;
             _refreshTokenService = refreshTokenService;
         }
 
@@ -54,17 +53,17 @@ namespace TheaterSchedule.Controllers
                         HttpStatusCode.NotFound, $"Such [{input.Email}] doesn't exist");
                 }
 
-                var jwt = _tokenFormation.GenerateAccessToken(userResult);
+                var jwt = _tokenService.GenerateAccessToken(userResult);
 
-                var refreshToken = _tokenFormation.GenerateRefreshToken();
-
+                var refreshToken = _refreshTokenService.GenerateRefreshToken();
+                
                 await _refreshTokenService.AddRefreshTokenAsync(refreshToken, userResult.Id, Constants.DaysToExpireRefreshToken);
 
                 return StatusCode(200, new TokensResponse
                 {
                     AccessToken = jwt,
                     RefreshToken = refreshToken,
-                    ExpiresTime = DateTime.UtcNow.AddMinutes(Constants.MinToExpireAccessToken)
+                    ExpiresTime = DateTime.Now.AddMinutes(Constants.MinToExpireAccessToken)
                 });
                 
             }

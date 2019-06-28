@@ -5,7 +5,6 @@ using TheaterSchedule.BLL;
 using System.Net;
 using System.Threading.Tasks;
 using TheaterSchedule.BLL.Interfaces;
-using TheaterSchedule.Formatters;
 using TheaterSchedule.Infrastructure;
 using TheaterSchedule.Models;
 
@@ -17,11 +16,11 @@ namespace TheaterSchedule.Controllers
     {
         private IUserService _userService;
         private IRefreshTokenService _refreshTokenService;
-        private ITokenFormation _tokenFormation;
+        private ITokenService _tokenService;
 
-        public RefreshTokenController(ITokenFormation tokenFormation, IRefreshTokenService refreshTokenService, IUserService userService)
+        public RefreshTokenController(ITokenService tokenService, IRefreshTokenService refreshTokenService, IUserService userService)
         {
-            _tokenFormation = tokenFormation;
+            _tokenService = tokenService;
             _refreshTokenService = refreshTokenService;
             _userService = userService;
         }
@@ -53,7 +52,7 @@ namespace TheaterSchedule.Controllers
                         HttpStatusCode.BadRequest, $"Such refreshToken doesn't exist");
                 }
 
-                if (DateTime.UtcNow >= refreshToken.DaysToExpire)
+                if (DateTime.Now >= refreshToken.DaysToExpire)
                 {
                     throw new HttpStatusCodeException(
                         HttpStatusCode.Unauthorized, "Such refresh token is inactive");
@@ -67,9 +66,9 @@ namespace TheaterSchedule.Controllers
                         HttpStatusCode.NotFound, $"Such user doesn't exist");
                 }
        
-                var newJwt = _tokenFormation.GenerateAccessToken(userResult);
+                var newJwt = _tokenService.GenerateAccessToken(userResult);
 
-                var newRefreshToken = _tokenFormation.GenerateRefreshToken();
+                var newRefreshToken = _refreshTokenService.GenerateRefreshToken();
                 
                 await _refreshTokenService.UpdateRefreshTokenAsync(refreshToken.Id, newRefreshToken, userResult.Id, Constants.DaysToExpireRefreshToken);
 

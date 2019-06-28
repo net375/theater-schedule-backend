@@ -1,6 +1,7 @@
 ﻿using System;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
+using System.Threading.Tasks;
 
 namespace TheaterSchedule.DAL.Repositories
 {
@@ -16,6 +17,11 @@ namespace TheaterSchedule.DAL.Repositories
         public void Save()
         {
             db.SaveChanges();
+        }
+
+        public async Task SaveAsync()
+        {
+            await db.SaveChangesAsync();
         }
 
         private bool disposed = false;
