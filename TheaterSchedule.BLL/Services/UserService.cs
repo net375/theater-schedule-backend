@@ -87,7 +87,7 @@ namespace TheaterSchedule.BLL.Services
                 FirstName = user.FirstName,
                 Id = user.Id,
                 LastName = user.LastName,
-                PasswordHash = Encoding.UTF8.GetBytes(password),
+                PasswordHash = passwordHash,
                 PhoneIdentifier = user.PhoneIdentifier,
                 SettingsId = user.SettingsId
             });
