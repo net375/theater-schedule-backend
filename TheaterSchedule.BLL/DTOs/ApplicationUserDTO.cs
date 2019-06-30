@@ -8,7 +8,7 @@ namespace TheaterSchedule.BLL.DTOs
         public int Id { get; set;}
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         [EmailAddress]
@@ -16,7 +16,7 @@ namespace TheaterSchedule.BLL.DTOs
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public string PhoneIdentifier { get; set; }
-        public int SettingsId { get; set; }
+        public int? SettingsId { get; set; }
 
     }
 }

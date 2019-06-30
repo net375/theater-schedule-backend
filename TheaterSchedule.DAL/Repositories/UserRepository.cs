@@ -19,10 +19,8 @@ namespace TheaterSchedule.DAL.Repositories
 
         public void Add(ApplicationUserModel user)
         {
-
             db.Account.Add(new Account
             {
-                AccountId = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Birthdate = user.DateOfBirth,

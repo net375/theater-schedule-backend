@@ -42,7 +42,7 @@ namespace TheaterSchedule.BLL.Services
                 Email = user.Email,
                 City = user.City,
                 Country = user.Country,
-                DateOfBirth = user.Birthdate
+                DateOfBirth = user.Birthdate.ToString()
             };
         }
 
@@ -64,7 +64,7 @@ namespace TheaterSchedule.BLL.Services
                 Email = user.Email,
                 City = user.City,
                 Country = user.Country,
-                DateOfBirth = user.Birthdate
+                DateOfBirth = user.Birthdate.ToString()
             };
         }
 
@@ -76,20 +76,22 @@ namespace TheaterSchedule.BLL.Services
             byte[] passwordHash, passwordSalt;
 
             PasswordGenerators.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            if (user.SettingsId == null)
+                user.SettingsId = 1;
 
             _userRepository.Add(new ApplicationUserModel
             {
                 City = user.City,
                 PasswordSalt = passwordSalt,
                 Country = user.Country,
-                DateOfBirth = user.DateOfBirth,
+                DateOfBirth = Convert.ToDateTime(user.DateOfBirth).Date,
                 Email = user.Email,
                 FirstName = user.FirstName,
                 Id = user.Id,
                 LastName = user.LastName,
                 PasswordHash = passwordHash,
                 PhoneIdentifier = user.PhoneIdentifier,
-                SettingsId = user.SettingsId
+                SettingsId = user.SettingsId.Value
             });
 
             _theaterScheduleUnitOfWork.Save();

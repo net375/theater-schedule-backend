@@ -28,10 +28,11 @@ namespace TheaterSchedule.Controllers
         /// <response code="201">Returns a model, wchich was created</response>
         /// <response code="404">If the model is null</response> 
         [HttpPost]
+        [Route("CreateUser")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<ApplicationUserDTO> CreateUser(ApplicationUserDTO userDTO)
+        public ActionResult<ApplicationUserDTO> CreateUser([FromBody]ApplicationUserDTO userDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
