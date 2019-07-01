@@ -91,12 +91,10 @@ namespace TheaterSchedule
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<IScheduleService, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
-            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsServiceWp>();
             services.AddScoped<IWishlistService, WishlistService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IEventService, EventService>();
-            services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IPushTokenService, PushTokenService>();
             services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
@@ -126,6 +124,8 @@ namespace TheaterSchedule
             }
 
             app.UseStaticFiles();
+
+            app.UseHttpsRedirection();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
