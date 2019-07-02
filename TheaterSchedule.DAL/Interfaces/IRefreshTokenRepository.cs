@@ -7,12 +7,12 @@ namespace TheaterSchedule.DAL.Interfaces
 {
     public interface IRefreshTokenRepository
     {
-        RefreshTokens Insert(RefreshTokens entity);
-        Task<RefreshTokens> InsertAsync(RefreshTokens entity);
-        RefreshTokens Update(RefreshTokens entity);
-        Task<RefreshTokens> UpdateAsync(RefreshTokens entity);
+        RefreshTokens Insert(RefreshTokens token);
+        Task<RefreshTokens> InsertAsync(RefreshTokens token);
+        RefreshTokens Update(RefreshTokens token);
+        Task<RefreshTokens> UpdateAsync(RefreshTokens token);
         Task<RefreshTokens> GetAsync(Expression<Func<RefreshTokens, bool>> predicate);
-        RefreshTokens Delete(RefreshTokens entity);
-        Task<RefreshTokens> DeleteAsync(RefreshTokens entity);
+        RefreshTokens Delete(RefreshTokens token);
+        Task<RefreshTokens> DeleteAsync(RefreshTokens token);
     }
 }

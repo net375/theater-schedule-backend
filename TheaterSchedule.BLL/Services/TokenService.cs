@@ -25,12 +25,12 @@ namespace TheaterSchedule.BLL.Services
         {
             var claims = new List<Claim>
             {
-                new Claim("userId", user.Id.ToString()),
-                new Claim("firstName", user.FirstName),
-                new Claim("lastName", user.LastName),
-                new Claim("email", user.Email),
-                new Claim("pnoneNumber", user.PnoneNumber),
-                new Claim("dateOfBirth", user.DateOfBirth.ToString())
+                new Claim(ClaimKeys.UserId, user.Id.ToString()),
+                new Claim(ClaimKeys.FirstName, user.FirstName),
+                new Claim(ClaimKeys.LastName, user.LastName),
+                new Claim(ClaimKeys.Email, user.Email),
+                new Claim(ClaimKeys.PnoneNumber, user.PnoneNumber),
+                new Claim(ClaimKeys.DateOfBirth, user.DateOfBirth.ToString())
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Authorization", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
