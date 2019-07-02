@@ -29,7 +29,8 @@ namespace TheaterSchedule.BLL.Services
                 new Claim("firstName", user.FirstName),
                 new Claim("lastName", user.LastName),
                 new Claim("email", user.Email),
-                new Claim("dateTimeOffset", user.DateOfBirth.ToString())
+                new Claim("pnoneNumber", user.PnoneNumber),
+                new Claim("dateOfBirth", user.DateOfBirth.ToString())
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Authorization", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

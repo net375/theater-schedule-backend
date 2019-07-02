@@ -9,7 +9,6 @@ using TheaterSchedule.DAL.Models;
 using System.Threading.Tasks;
 using System.Net;
 using TheaterSchedule.Infrastructure;
-using System.Text;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -44,6 +43,7 @@ namespace TheaterSchedule.BLL.Services
                 Email = user.Email,
                 City = user.City,
                 Country = user.Country,
+                PnoneNumber = user.PnoneNumber,
                 DateOfBirth = user.Birthdate.ToString()
             };
         }
@@ -65,6 +65,7 @@ namespace TheaterSchedule.BLL.Services
                 LastName = user.LastName,
                 Email = user.Email,
                 City = user.City,
+                PnoneNumber = user.PnoneNumber,
                 Country = user.Country,
                 DateOfBirth = user.Birthdate.ToString()
             };

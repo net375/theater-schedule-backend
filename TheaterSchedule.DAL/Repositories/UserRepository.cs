@@ -64,6 +64,7 @@ namespace TheaterSchedule.DAL.Repositories
                 City = user.City,
                 Country = user.Country,
                 Email = user.Email,
+                PhoneNumber = user.PnoneNumber,
                 PasswordHash = Encoding.UTF8.GetBytes(user.PasswordHash),
                 PasswordSalt = Encoding.UTF8.GetBytes(user.PasswordSalt)
             };

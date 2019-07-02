@@ -64,12 +64,12 @@ namespace TheaterSchedule.BLL.Services
             NotificationFrequency notificationFrequency =
                 notificationFrequencyRepository.GetNotificationFrequencyByFrequency(settingsRequest.NotificationFrequency);
 
-            if (notificationFrequency == null)
-            {
-                throw new HttpStatusCodeException(
-                    HttpStatusCode.NotFound,
-                    $"Notification frequency [{settingsRequest.NotificationFrequency}] doesn't exist");
-            }
+            //if (notificationFrequency == null)
+            //{
+            //    throw new HttpStatusCodeException(
+            //        HttpStatusCode.NotFound,
+            //        $"Notification frequency [{settingsRequest.NotificationFrequency}] doesn't exist");
+            //}
 
             Entities.Models.Settings settings = settingsRepository.GetSettingsByPhoneId(phoneId);
             if (settings != null)
@@ -80,6 +80,7 @@ namespace TheaterSchedule.BLL.Services
             }
             else
             {
+                notificationFrequency = new NotificationFrequency { NotificationFrequencyId = 1, Frequency = 12 };
                 Entities.Models.Settings newSettings = new Entities.Models.Settings
                 {
                     Language = language,
@@ -89,11 +90,11 @@ namespace TheaterSchedule.BLL.Services
 
                 settingsRepository.Add(newSettings);
 
-                accountRepository.Add(new Account
-                {
-                    PhoneIdentifier = phoneId,
-                    Settings = newSettings
-                });
+                //accountRepository.Add(new Account
+                //{
+                //    PhoneIdentifier = phoneId,
+                //    Settings = newSettings
+                //});
             }
             theaterScheduleUnitOfWork.Save();
         }

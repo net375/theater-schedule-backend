@@ -64,8 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Account.sql" />
-    <Build Include="dbo\Tables\GalleryImage.sql" />
-    <Build Include="dbo\Tables\Performance.sql" />
     <Build Include="dbo\Tables\Settings.sql" />
     <Build Include="dbo\Tables\Wishlist.sql" />
     <Build Include="dbo\Tables\Language.sql" />

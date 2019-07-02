@@ -58,22 +58,22 @@ namespace TheaterSchedule.DALwp.Repositories
 
         private int GetTotalPages(string uri)
         {
-            HttpWebRequest request = ( HttpWebRequest )WebRequest.Create( uri );
-            HttpWebResponse response = ( HttpWebResponse )request.GetResponse();
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             int totalPages = (int)Math.Ceiling(
                 double.Parse(response.Headers["X-WP-TotalPages"]) / PERFORMANCES_PER_PAGE);
 
             return totalPages;
         }
 
-        private async Task<IEnumerable<PerformanceDataModel>> 
+        private async Task<IEnumerable<PerformanceDataModel>>
             GetPerformanceTitlesAndImagesAsync(string languageCode)
         {
             //no localisation yet
 
             var client = new Repository().InitializeClient();
             string uriForGettingTotalPages = $"{client.WordPressUri}{CUSTOM_URL}?per_page=1";
-            int totalPages = GetTotalPages( uriForGettingTotalPages );
+            int totalPages = GetTotalPages(uriForGettingTotalPages);
 
             List<Performance> performances = new List<Performance>();
             IEnumerable<Performance> newPerformances = null;
@@ -82,7 +82,7 @@ namespace TheaterSchedule.DALwp.Repositories
             for (int i = 1; i <= totalPages; ++i)   // i equals 1 at the beginning for more convenient creating of url
             {
                 newPerformances = await client.CustomRequest
-                    .Get<IEnumerable<Performance>>($"{customRequest}{i}" );
+                    .Get<IEnumerable<Performance>>($"{customRequest}{i}");
                 performances.AddRange(newPerformances);
             }
 
@@ -90,7 +90,7 @@ namespace TheaterSchedule.DALwp.Repositories
                 p => new PerformanceDataModel
                 {
                     PerformanceId = p.Id,
-                    Title = WebUtility.HtmlDecode( p.Title.Rendered ),
+                    Title = WebUtility.HtmlDecode(p.Title.Rendered),
                     MainImageUrl = client.CustomRequest.Get<Media>(
                         $"wp/v2/media/{p.Featured_media}").Result.Media_details.Sizes.Full.Source_url
                 }).ToList();

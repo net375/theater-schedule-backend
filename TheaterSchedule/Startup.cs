@@ -107,7 +107,6 @@ namespace TheaterSchedule
             services.AddScoped<IWishlistService, WishlistService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IEventService, EventService>();
-            services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IPushTokenService, PushTokenService>();
             services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
@@ -128,7 +127,7 @@ namespace TheaterSchedule
                 Authorization = new[] { new AllowAllAuthorizationFilter() }
             });
 
-            RecurringJob.AddOrUpdate<PushNotificationsService>(service => service.SendPushNotification(), "0 9 * * *");
+           RecurringJob.AddOrUpdate<PushNotificationsService>(service => service.SendPushNotification(), "0 9 * * *");
 
             if (env.IsDevelopment())
             {
@@ -141,8 +140,9 @@ namespace TheaterSchedule
 
             app.UseAuthentication();
 
-            app.UseStaticFiles();
+            app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
