@@ -8,23 +8,16 @@ using System.Threading.Tasks;
 using TheaterSchedule.BLL.Interfaces;
 namespace TheaterSchedule.BLL.Services
 {
-    public class SendDataToGoogleFormService:ISendDataToGoogleFormService
+    public class SendDataToGoogleFormService : ISendDataToGoogleFormService
     {
-        private string _baseUrl;
-        private Dictionary<string, string> _field;
-        public Dictionary<string, string[]> _checkbox;
-        private WebClient _client;
-        private Uri _uri;
-
+       
         public SendDataToGoogleFormService()
         {
-            _field = new Dictionary<string, string>();
-            _checkbox = new Dictionary<string, string[]>();
-            _client = new WebClient();
         }
 
-        public void SetFieldValues(Dictionary<string,string> data)
+        public Dictionary<string, string> SetFieldValues(Dictionary<string, string> data)
         {
+            Dictionary<string, string> resDataToStoreInField = new Dictionary<string, string>();
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
@@ -35,25 +28,35 @@ namespace TheaterSchedule.BLL.Services
 
             foreach (var param in fieldsWithData)
             {
-                _field[param.Key] = param.Value;
+                resDataToStoreInField[param.Key] = param.Value;
             }
+            return resDataToStoreInField;
         }
 
-        public void SetCheckboxValues(string key, params string[] values)
+        public Dictionary<string, string[]> SetCheckboxValues(string key, params string[] values)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
-
+            Dictionary<string, string[]> resDataToStoreInCheckBox = new Dictionary<string, string[]>();
             var valuesWithData = values.Where(value => !string.IsNullOrWhiteSpace(value)).ToArray();
-            _checkbox[key] = valuesWithData;
+            resDataToStoreInCheckBox[key] = valuesWithData;
+            return resDataToStoreInCheckBox;
         }
 
-        public string SubmitAsync(string rootUrl)
+        public string Submit(string rootUrl, Dictionary<string, string> valuesForField, Dictionary<string, string[]> valuesForCheckbox)
         {
-            _baseUrl = rootUrl.Replace("viewform", "formResponse?");
+            rootUrl = rootUrl.Replace("viewform", "formResponse?");
+            var resDataToStoreInCheckBox = new Dictionary<string, string[]>();
 
+            foreach(var temp in valuesForCheckbox)
+            {
+                var res = SetCheckboxValues(temp.Key, temp.Value).First();
+                resDataToStoreInCheckBox.Add(res.Key, res.Value);
+            }
 
-            if (!_field.Any() && !_checkbox.Any())
+            var resDataToStoreInField = SetFieldValues(valuesForField);
+
+            if (!resDataToStoreInField.Any() && !resDataToStoreInCheckBox.Any())
             {
                 throw new InvalidOperationException("No data has been set to submit");
             }
@@ -61,21 +64,22 @@ namespace TheaterSchedule.BLL.Services
             NameValueCollection nameValue = new NameValueCollection();
 
 
-            foreach (var temp in _field)
+            foreach (var temp in resDataToStoreInField)
             {
                 nameValue.Add(temp.Key, temp.Value);
             }
 
-            foreach (var temp in _checkbox)
+            foreach (var temp in resDataToStoreInCheckBox)
             {
                 for (int i = 0; i < temp.Value.Length; i++)
                 {
-                    _baseUrl += temp.Key + "=" + temp.Value[i] + "&";
+                    rootUrl += $"{temp.Key}={temp.Value[i]}&";
                 }
-                _baseUrl =_baseUrl.TrimEnd();
+                rootUrl = rootUrl.TrimEnd();
             }
 
-            _uri = new Uri(_baseUrl);
+            Uri _uri = new Uri(rootUrl);
+            WebClient _client = new WebClient();
             byte[] response = _client.UploadValues(_uri, "POST", nameValue);
             string result = Encoding.UTF8.GetString(response);
             return result;

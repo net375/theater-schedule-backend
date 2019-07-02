@@ -7,8 +7,8 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface ISendDataToGoogleFormService
     {
-        void SetFieldValues(Dictionary<string, string> data);
-        void SetCheckboxValues(string key, params string[] values);
-        string SubmitAsync(string rootUrl);
+        Dictionary<string, string> SetFieldValues(Dictionary<string, string> data);
+        Dictionary<string, string[]> SetCheckboxValues(string key, params string[] values);
+        string Submit(string rootUrl, Dictionary<string, string> valuesForField, Dictionary<string, string[]> valuesForCheckbox);
     }
 }
