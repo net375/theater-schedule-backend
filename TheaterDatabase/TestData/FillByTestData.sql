@@ -55,7 +55,7 @@ INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId)
 SET IDENTITY_INSERT dbo.Settings OFF
 GO
 SET IDENTITY_INSERT dbo.Account ON
-
+ 
 INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (6, N'061A269220293916GY', N'FGHFSDHHH34767', N'Bolt@nowherLe.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1951-03-09', N'0d0ce684-3c5e-470d-b5c5-159802f9ed2e', 1, N'(459) 618-9464')
 INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (7, N'061A269221293916GY', N'FGHFSDHHH384767', N'Bolt@nowherCe.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 613-9462 ', 2,N'(459) 618-9464' )
 INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (1, N'061A2692245393916GY', N'FGHFSDHHKLH34767', N'Bolt@noVwhere.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 612-9463 ', 3, N'(459) 618-9464')
@@ -66,22 +66,23 @@ INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, Last
 INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (34, N'061A269220873916GY', N'FGHFSDHQWHH34767', N'Bolt@nowQhere.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 613-9468 ', 8, N'(459) 618-9464')
 INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (4, N'061A269220873916GY', N'FGHFSDHHH3476E7', N'Bolt@nowherTe.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 6198-9469 ', 9, N'(459) 618-9464')
 INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (90, N'061A26922028093916GY', N'FGHFSDHH6H34767', N'Bolt@nowhTere.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 615-9457 ', 10,N'(459) 618-9464')
-
+ 
 SET IDENTITY_INSERT dbo.Account OFF
 GO
 
 SET IDENTITY_INSERT dbo.Message ON
 
-INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (1,  N'Mystery of the forest',        N'The best performance i have ever seen!',	N'Thank you for your message, it is important for us :)',67)
-INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (2,  N'The road to Bethlehem',        N'Super!', N'Thank you for your message, it is important for us :)',67)
+
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (1,  N'Mystery of the forest',        N'The best performance i have ever seen!',	N'Thank you for your message, it is important for us :)',6)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (2,  N'The road to Bethlehem',        N'Super!', N'Thank you for your message, it is important for us :)',10)
 INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (3,  N'Тарас',                        N'Дуже цікава та пізнавальна вистава)', N'Дякуємо вам, надіюсь, ви гарно провели час)',2)
 INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (4,  N'Cвяткові сни',                 N'Дуже цікава та пізнавальна вистава)', N'Дякуємо вам, надіюсь, ви гарно провели час)',1)
 INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (5,  N'Cedar seedlings',              N'The best performance i have ever seen!',	N'Thank you, we do best for you)', 7)
-INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (6,  N'Goat-Dereza',                  N'Amazing performance, I will come here again!', N'Thank you, we do best for you)',67)
-INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (7,  N'Підкова на щастя',             N'Дякую за гарний проведений час, вистава була чудовою!' ,N'Дякуємо за відгук, ми завжди раді бачити задоволених клієнтів)',45)
-INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (8,  N'Наш веселий колобок',          N'Дякую за гарний проведений час, вистава була чудовою!', N'Дякуємо за відгук, ми завжди раді бачити задоволених клієнтів)',34)
-INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (9,  N'Chanterelle, Cat and Cockerel',N'Super!', N'Thank you for your message)',9)
-INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (10, N'Кіт у чоботях ',               N'The best performance i have ever seen!',	N'Thank you for your message, it is important for us :)',90)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (6,  N'Goat-Dereza',                  N'Amazing performance, I will come here again!', N'Thank you, we do best for you)',6)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (7,  N'Підкова на щастя',             N'Дякую за гарний проведений час, вистава була чудовою!' ,N'Дякуємо за відгук, ми завжди раді бачити задоволених клієнтів)',8)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (8,  N'Наш веселий колобок',          N'Дякую за гарний проведений час, вистава була чудовою!', N'Дякуємо за відгук, ми завжди раді бачити задоволених клієнтів)',9)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (9,  N'Chanterelle, Cat and Cockerel',N'Super!', N'Thank you for your message)',5)
+INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (10, N'Кіт у чоботях ',               N'The best performance i have ever seen!',	N'Thank you for your message, it is important for us :)',9)
 
 SET IDENTITY_INSERT dbo.Message OFF
 
@@ -98,7 +99,6 @@ INSERT dbo.Event_TR(Event_TRId, Title, ShortDescription, FullDescription, [Type]
 INSERT dbo.Event_TR(Event_TRId, Title, ShortDescription, FullDescription, [Type], LanguageId, EventId) VALUES(10, N'Подія № 10', N'Тут буде короткий опис події № 10', N'Тут буде повний опис події № 10', N'Майстер-клас', 2, 10)
 SET IDENTITY_INSERT dbo.Event_TR OFF
 
-
 SET IDENTITY_INSERT dbo.Wishlist ON
 GO
 
@@ -112,5 +112,6 @@ INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (7, 90, 
 INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (8, 34, 15)
 INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (9, 45, 85)
 INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (10,67, 149)
+
 GO
 SET IDENTITY_INSERT dbo.Wishlist OFF

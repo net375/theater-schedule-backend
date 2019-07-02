@@ -1,0 +1,2 @@
+sqlcmd -f 65001 -v FullScriptDir="%CD%" -S SERVERNAME -d DATABASENAME -U USERNAME -P PASSWORD -i TheaterDatabase\TestData\FillByTestData.sql
+pause
