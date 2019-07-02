@@ -102,7 +102,6 @@ namespace TheaterSchedule
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IScheduleService, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
-            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsServiceWp>();
             services.AddScoped<IWishlistService, WishlistService>();
             services.AddScoped<IMessageService, MessageService>();
@@ -113,8 +112,6 @@ namespace TheaterSchedule
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();
             services.AddScoped<ICacheProvider, CacheProvider>();
-            services.AddScoped<ISendDataToGoogleFormService, SendDataToGoogleFormService>();
-            services.AddScoped<IGetDataFromGoogleFormService, GetDataFromGoogleFormService>();
             services.AddMemoryCache();
             services.AddScoped<IUserService, UserService>();
         }
