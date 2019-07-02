@@ -30,7 +30,8 @@ namespace TheaterSchedule.DAL.Repositories
                 PasswordHash = Encoding.UTF8.GetString(user.PasswordHash),
                 PasswordSalt = Encoding.UTF8.GetString(user.PasswordSalt),
                 PhoneIdentifier = user.PhoneIdentifier,
-                SettingsId = user.SettingsId
+                SettingsId = user.SettingsId,
+                PnoneNumber = user.PhoneNumber
             });
         }
 
@@ -75,18 +76,16 @@ namespace TheaterSchedule.DAL.Repositories
 
         public void UpdateUser(ApplicationUserModel user)
         {
-            db.Account.Update(new Account
-            {
-                AccountId = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Birthdate = user.DateOfBirth,
-                City = user.City,
-                Country = user.Country,
-                Email = user.Email,
-                PasswordHash = Encoding.UTF8.GetString(user.PasswordHash),
-                PasswordSalt = Encoding.UTF8.GetString(user.PasswordSalt)
-            });
+            var UpdateUser = db.Account.First(u => u.PhoneIdentifier == user.PhoneIdentifier);
+            UpdateUser.Birthdate = user.DateOfBirth;
+            UpdateUser.FirstName = user.FirstName;
+            UpdateUser.LastName = user.LastName;
+            UpdateUser.City = user.City;
+            UpdateUser.Country = user.Country;
+            UpdateUser.Email = user.Email;
+            UpdateUser.PasswordHash = Encoding.UTF8.GetString(user.PasswordHash);
+            UpdateUser.PasswordSalt = Encoding.UTF8.GetString(user.PasswordSalt);
+            UpdateUser.PnoneNumber = user.PhoneNumber;
         }
     }
 }

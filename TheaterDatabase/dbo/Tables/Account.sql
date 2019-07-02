@@ -8,8 +8,9 @@
 	[City] [nvarchar](50) NOT NULL,
 	[Country] [nvarchar](50) NULL,
     [Birthdate] DATE          NOT NULL,
-	[PhoneIdentifier] NVARCHAR(15) UNIQUE NOT NULL,
-	[SettingsId] INT   UNIQUE NULL,
+	[PhoneIdentifier] NVARCHAR(40) UNIQUE NOT NULL,
+	[SettingsId] INT  UNIQUE NULL,
+    [PnoneNumber] NCHAR(15) NULL, 
     CONSTRAINT [PK_Account] PRIMARY KEY CLUSTERED ([AccountId] ASC),   
     CONSTRAINT [FK_Account_Settings]  FOREIGN KEY ([SettingsId]) REFERENCES [dbo].[Settings] ([SettingsId])
 );

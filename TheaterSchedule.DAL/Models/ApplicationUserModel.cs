@@ -18,6 +18,7 @@ namespace TheaterSchedule.DAL.Models
         public byte[] PasswordSalt { get; set; }
         public string PhoneIdentifier { get; set; }
         public int SettingsId { get; set; }
+        public string PhoneNumber { get; set; }
 
     }
 }

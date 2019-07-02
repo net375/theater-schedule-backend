@@ -17,11 +17,13 @@ namespace TheaterSchedule.BLL.Services
     {
         private ITheaterScheduleUnitOfWork _theaterScheduleUnitOfWork;
         private IUserRepository _userRepository;
+        private ISettingsRepository _settingsRepository;
 
-        public UserService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IUserRepository userRepository)
+        public UserService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IUserRepository userRepository, ISettingsRepository settingsRepository)
         {
             _theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             _userRepository = userRepository;
+            _settingsRepository = settingsRepository;
         }
         
         public async Task<ApplicationUserDTO> GetByIdAsync(int id)
@@ -76,10 +78,11 @@ namespace TheaterSchedule.BLL.Services
             byte[] passwordHash, passwordSalt;
 
             PasswordGenerators.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-            if (user.SettingsId == null)
-                user.SettingsId = 1;
 
-            _userRepository.Add(new ApplicationUserModel
+            user.SettingsId = _settingsRepository.GetSettingsByPhoneId(user.PhoneIdentifier).SettingsId;
+            user.Id = _userRepository.GetAll().First(u => u.PhoneIdentifier == user.PhoneIdentifier).AccountId;
+
+            _userRepository.UpdateUser(new ApplicationUserModel
             {
                 City = user.City,
                 PasswordSalt = passwordSalt,
@@ -90,8 +93,9 @@ namespace TheaterSchedule.BLL.Services
                 Id = user.Id,
                 LastName = user.LastName,
                 PasswordHash = passwordHash,
-                PhoneIdentifier = user.PhoneIdentifier,
-                SettingsId = user.SettingsId.Value
+                SettingsId = user.SettingsId.Value,
+                PhoneNumber = user.PnoneNumber,
+                PhoneIdentifier = user.PhoneIdentifier
             });
 
             _theaterScheduleUnitOfWork.Save();
