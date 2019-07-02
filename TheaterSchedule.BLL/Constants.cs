@@ -3,7 +3,6 @@ namespace TheaterSchedule.BLL
 {
     public static class Constants
     {
-        public const string ConnectionString = "TheaterConnectionString";
         public const string PerformancesCacheKey = "Performances";
         public const string ScheduleCacheKey = "Schedule";
         public const double DaysToExpireRefreshToken = 3;

@@ -51,7 +51,7 @@ namespace TheaterSchedule.BLL.Services
             return settingsRequest;
         }
 
-       public void StoreSettings(string phoneId, SettingsDTO settingsRequest)
+        public void StoreSettings(string phoneId, SettingsDTO settingsRequest)
         {
             Language language = languageRepository.GetLanguageByName(settingsRequest.LanguageCode);
             if (language == null)

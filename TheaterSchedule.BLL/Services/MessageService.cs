@@ -25,7 +25,7 @@ namespace TheaterSchedule.BLL.Services
 
         public MessageDTO GetById(int id)
         {
-            Message message = messageRepository.GetMessageById(id);
+            Entities.Models.Message message = messageRepository.GetMessageById(id);
             if (message == null)
             {
                 return null;

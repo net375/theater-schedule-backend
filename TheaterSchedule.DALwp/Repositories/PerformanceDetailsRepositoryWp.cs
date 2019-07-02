@@ -11,119 +11,118 @@ using WordPressPCL;
 
 namespace TheaterSchedule.DALwp.Repositories
 {
-    public class PerformanceDetailsRepositoryWp : Repository, IPerformanceDetailsRepository
+    public class PerformanceDetailsRepositoryWp: Repository, IPerformanceDetailsRepository
     {
-        //Information about performance(Title, Description, Min-Max Price, Gallery of images, Duration, Min age)
+        // Information about performance (Title, Description, Min-Max Price, Gallery of images, Duration, Min age)
         #region Access to json without Main image
-        private class Performance : WordPressPCL.Models.Base
+        private class Performance: WordPressPCL.Models.Base
         {
-            [JsonProperty("title", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "title", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public RenderedItem Title { get; set; }
 
-            [JsonProperty("content", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "content", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public RenderedItem Content { get; set; }
 
-            [JsonProperty("featured_media", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "featured_media", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public int Featured_media { get; set; }
 
-            [JsonProperty("acf", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "acf", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public ACF AcfInfo { get; set; }
         }
 
-        private class RenderedItem : WordPressPCL.Models.Base
+        private class RenderedItem: WordPressPCL.Models.Base
         {
-            [JsonProperty("rendered", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "rendered", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public string Rendered { get; set; }
         }
 
-        private class ACF : WordPressPCL.Models.Base
+        private class ACF: WordPressPCL.Models.Base
         {
-            [JsonProperty("about_group", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "about_group", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public AboutGroup AboutGroup { get; set; }
         }
 
-        private class AboutGroup : WordPressPCL.Models.Base
+        private class AboutGroup: WordPressPCL.Models.Base
         {
-
-            [JsonProperty("duration", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            public int Duration { get; set; }
-
-            [JsonProperty("price", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            public string Price { get; set; }
-
-            [JsonProperty("age", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "age", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public int Age { get; set; }
 
-            [JsonProperty("gallery", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "price", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public string Price { get; set; }
+
+            [JsonProperty( "duration", DefaultValueHandling = DefaultValueHandling.Ignore )]
+            public int Duration { get; set; }
+
+            [JsonProperty( "gallery", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public IEnumerable<GalleryOfImages> Gallery { get; set; }
         }
 
-        private class GalleryOfImages : WordPressPCL.Models.Base
+        private class GalleryOfImages: WordPressPCL.Models.Base
         {
-            [JsonProperty("sizes", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "sizes", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public LargeItem Sizes { get; set; }
         }
 
-        private class LargeItem : WordPressPCL.Models.Base
+        private class LargeItem: WordPressPCL.Models.Base
         {
-            [JsonProperty("large", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "large", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public string Large { get; set; }
         }
         #endregion
 
-        //Information about performance(Main Image)
+        // Information about performance (Main Image)
         #region Access to Main Image
-        private class Media : WordPressPCL.Models.Base
+        private class Media: WordPressPCL.Models.Base
         {
-            [JsonProperty("media_details", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "media_details", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public Media_detailsItem Media_details { get; set; }
         }
 
-        private class Media_detailsItem : WordPressPCL.Models.Base
+        private class Media_detailsItem: WordPressPCL.Models.Base
         {
-            [JsonProperty("sizes", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "sizes", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public SizesItem Sizes { get; set; }
         }
 
-        private class SizesItem : WordPressPCL.Models.Base
+        private class SizesItem: WordPressPCL.Models.Base
         {
-            [JsonProperty("full", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "full", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public FullItem Full { get; set; }
         }
 
-        private class FullItem : WordPressPCL.Models.Base
+        private class FullItem: WordPressPCL.Models.Base
         {
-            [JsonProperty("source_url", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty( "source_url", DefaultValueHandling = DefaultValueHandling.Ignore )]
             public string Source_url { get; set; }
         }
         #endregion
 
-        private static async Task<Performance> GetPerformance(WordPressClient client, int perforamanceId)
+        private static async Task<Performance> GetPerformance( WordPressClient client, int perforamanceId )
         {
-            return await client.CustomRequest.Get<Performance>($"wp/v2/performance/{perforamanceId}");
+            return await client.CustomRequest.Get<Performance>( $"wp/v2/performance/{perforamanceId}" );
         }
 
-        private static async Task<Media> GetMainImage(WordPressClient client, int featured_media)
+        private static async Task<Media> GetMainImage( WordPressClient client, int featured_media )
         {
-           return await client.CustomRequest.Get<Media>($"wp/v2/media/{featured_media}");           
+            return await client.CustomRequest.Get<Media>( $"wp/v2/media/{featured_media}" );
         }
 
-        public PerformanceDetailsDataModelBase GetInformationAboutPerformance(string phoneId, string languageCode, int perforamanceId)
+        public PerformanceDetailsDataModelBase GetInformationAboutPerformance( string phoneId, string languageCode, int perforamanceId )
         {
-            var performance = GetPerformance(InitializeClient(), perforamanceId).Result;
-            var media = GetMainImage(InitializeClient(), performance.Featured_media).Result;
+            var performance = GetPerformance( InitializeClient(), perforamanceId ).Result;
+            var media = GetMainImage( InitializeClient(), performance.Featured_media ).Result;
 
             var galleryImage = (from image in performance.AcfInfo.AboutGroup.Gallery
                                 select image.Sizes.Large).ToList();
 
-            string[] Prices = (performance.AcfInfo.AboutGroup.Price).Split('-');
+            string [] Prices = (performance.AcfInfo.AboutGroup.Price).Split( '-' );
 
-            string description = Regex.Replace(performance.Content.Rendered, @"(</p>)", "\n");
-            description = Regex.Replace(description, @"(<.*?>)", string.Empty);
-            description = WebUtility.HtmlDecode(description);
+            string description = Regex.Replace( performance.Content.Rendered, @"(</p>)", "\n" );
+            description = Regex.Replace( description, @"(<.*?>)", string.Empty );
+            description = WebUtility.HtmlDecode( description );
             description = description.Trim();
 
-            string title = WebUtility.HtmlDecode(performance.Title.Rendered);
+            string title = WebUtility.HtmlDecode( performance.Title.Rendered );
 
             return new PerformanceDetailsDataModelWp()
             {
@@ -131,9 +130,9 @@ namespace TheaterSchedule.DALwp.Repositories
                 Description = description,
                 MainImage = media.Media_details.Sizes.Full.Source_url,
                 GalleryImage = galleryImage,
-                 MinimumAge = performance.AcfInfo.AboutGroup.Age,
-                MinPrice = Convert.ToInt32(Prices[0]),
-                MaxPrice = Convert.ToInt32(Prices[1]),
+                MinimumAge = performance.AcfInfo.AboutGroup.Age,
+                MinPrice = Convert.ToInt32( Prices [0] ),
+                MaxPrice = Convert.ToInt32( Prices [1] ),
                 Duration = performance.AcfInfo.AboutGroup.Duration,
             };
         }

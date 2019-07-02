@@ -41,7 +41,7 @@ namespace TheaterSchedule
             services.AddHangfire(configuration =>
             {
                 configuration.UseSqlServerStorage(
-                    Configuration.GetConnectionString(Constants.ConnectionString));
+                    Configuration.GetConnectionString("TheaterConnectionString"));
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -52,7 +52,7 @@ namespace TheaterSchedule
             }); 
 
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
-                (Configuration.GetConnectionString(Constants.ConnectionString)), ServiceLifetime.Scoped);           
+                (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);           
 
             services.AddSwaggerGen(c =>
             {

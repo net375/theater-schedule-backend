@@ -74,13 +74,11 @@ namespace TheaterSchedule.BLL.Services
 
             if (performance == null)
             {
-                var account = accountRepository.GetAccountByPhoneId(phoneId);
-
+                int accountId = accountRepository.GetAccountByPhoneId(phoneId).AccountId;
                 performance = new Entities.Models.Wishlist()
                 {
-                    AccountId = account.AccountId,
-                    PerformanceId = performanceId,
-                    Account = account
+                    AccountId = accountId,
+                    PerformanceId = performanceId
                 };
                 WishlistRepository.Add(performance);
             }
