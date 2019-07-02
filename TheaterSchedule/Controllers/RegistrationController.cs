@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.DTOs;
 using TheaterSchedule.BLL.Interfaces;
+using TheaterSchedule.Infrastructure;
+
 namespace TheaterSchedule.Controllers
 {
     #region snippet_RegistrationController
@@ -37,16 +40,12 @@ namespace TheaterSchedule.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var user = _service.Create(userDTO, userDTO.Password);
+            if(user == null)
+                throw new HttpStatusCodeException(
+                        HttpStatusCode.NotFound, $"Unable to create user");
 
-            try
-            {
-                _service.Create(userDTO, userDTO.Password);
-                return StatusCode(201, userDTO);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            return StatusCode(201, user);
         }
         #endregion
     }
