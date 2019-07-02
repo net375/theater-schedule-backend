@@ -81,9 +81,7 @@ namespace TheaterSchedule.BLL.Services
                     AccountId = account.AccountId,
                     PerformanceId = performanceId,
                     Account = account
-
                 };
-
                 WishlistRepository.Add(performance);
             }
             else

@@ -131,7 +131,7 @@ namespace TheaterSchedule.DALwp.Repositories
                 Description = description,
                 MainImage = media.Media_details.Sizes.Full.Source_url,
                 GalleryImage = galleryImage,
-                MinimumAge = performance.AcfInfo.AboutGroup.Age = performance.AcfInfo.AboutGroup.Age == 0 ? 1 : performance.AcfInfo.AboutGroup.Age,
+                 MinimumAge = performance.AcfInfo.AboutGroup.Age,
                 MinPrice = Convert.ToInt32(Prices[0]),
                 MaxPrice = Convert.ToInt32(Prices[1]),
                 Duration = performance.AcfInfo.AboutGroup.Duration,
