@@ -55,22 +55,23 @@ INSERT dbo.Settings(SettingsId, LanguageId, DoesNotify, NotificationFrequencyId)
 SET IDENTITY_INSERT dbo.Settings OFF
 GO
 SET IDENTITY_INSERT dbo.Account ON
-
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (6, N'061A269220293916GY',									   N'Bolt@nowhere.com           ',	         N'Letha  ',     N'Wahl    ',   '1950-03-09', N'0d0ce684-3c5e-470d-b5c5-159802f9ed2e', 1)
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (10,N'D4G1H66LQ8SI15W457',									   N'Morehead@example.com       ',           N'Kraig  ',     N'Boucher ',   '1930-03-09', N'(730) 955-6764 ',2)
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (2, N'5115I09IOJ232X9E64WZ507C02627871M5U1V6',				   N'qpzre411@example.com       ',           N'Harlan ',     N'Ludwig  ',   '1981-09-13', N'(681) 747-0352 ',3)
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (7, N'NAMS722HRM8INU36V71KJ12T6S09DCX7JHN4N3USVDCUE720Y0KCZ',   N'Bray162@example.com        ',           N'Brad   ',     N'Craven  ',   '1978-10-25', N'(513) 643-0254 ',4)
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (3, N'D8257J9C9HT2W39O2QGSX55MD8WQ4V48JVFPP',				   N'Sidney_Agnew3@nowhere.com  ',           N'Enrique',     N'Sizemore',   '1951-03-23', N'(776) 960-1978 ',5)
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (8, N'74198D85DH',											   N'xmhz1900@nowhere.com       ',	     	 N'Bennie ',     N'Flowers ',   '1964-03-15', N'(943) 664-5705 ',6)
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (4, N'B1XLA34H7BP8U098SA9NB4RU5W92',						       N'Monroe.Rinehart@nowhere.com',           N'Francis',     N'Conway  ',   '1972-04-02', N'(282) 510-9326 ',7)
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (9, N'9SKKLJB914O9J5U80I57Q',								   N'Gutierrez73@example.com    ',           N'Nickie ',     N'Waite+  ',   '2002-03-09', N'(350) 234-6559 ',8)
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (5, N'UK311H1D5I0530I',								      	   N'FelipaAbernathy@nowhere.com',           N'Boyd   ',     N'Skaggs  ', NULL   , N'(157) 934-3116',9)
-INSERT dbo.Account(AccountId, Password, Email, FirstName, LastName, Birthdate, PhoneIdentifier, SettingsId) VALUES (1, N'83HED0WQMG0RNZ23CLW0U21',						     	   N'Adler@example.com          ',           N'Alonzo ',     N'Peacock ', '1944-10-28', N'(465) 454-8347'  ,10)
-
+ 
+INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (6, N'061A269220293916GY', N'FGHFSDHHH34767', N'Bolt@nowherLe.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1951-03-09', N'0d0ce684-3c5e-470d-b5c5-159802f9ed2e', 1, N'(459) 618-9464')
+INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (7, N'061A269221293916GY', N'FGHFSDHHH384767', N'Bolt@nowherCe.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 613-9462 ', 2,N'(459) 618-9464' )
+INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (1, N'061A2692245393916GY', N'FGHFSDHHKLH34767', N'Bolt@noVwhere.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 612-9463 ', 3, N'(459) 618-9464')
+INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (2, N'061A2692245493916GY', N'FGHFSDHH5KLH34767', N'Bolt@nWowhere.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 618-9464 ', 4, N'(459) 618-9464')
+INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (9, N'061A2693530293916GY', N'FGHFSDHHRJH34767', N'Bolt@nowNhere.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 617-9465', 5, N'(459) 618-9464')
+INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (67, N'061A26922230293916GY', N'FGHFSDHHH34L767', N'Bolt@nowThere.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 603-9466 ', 6, N'(459) 618-9464')
+INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (45, N'061A269220293916GY', N'FGHFSDHHHEW347Q67', N'Bolt@noEwhere.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 313-9467 ', 7, N'(459) 618-9464')
+INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (34, N'061A269220873916GY', N'FGHFSDHQWHH34767', N'Bolt@nowQhere.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 613-9468 ', 8, N'(459) 618-9464')
+INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (4, N'061A269220873916GY', N'FGHFSDHHH3476E7', N'Bolt@nowherTe.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 6198-9469 ', 9, N'(459) 618-9464')
+INSERT dbo.Account(AccountId, PasswordHash, PasswordSalt, Email, FirstName, LastName, City, Country, Birthdate, PhoneIdentifier, SettingsId, PnoneNumber) VALUES (90, N'061A26922028093916GY', N'FGHFSDHH6H34767', N'Bolt@nowhTere.com', N'Letha', N'Wahl', N'lviv', N'Ukraine', '1950-03-09', N'(459) 615-9457 ', 10,N'(459) 618-9464')
+ 
 SET IDENTITY_INSERT dbo.Account OFF
 GO
 
 SET IDENTITY_INSERT dbo.Message ON
+
 
 INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (1,  N'Mystery of the forest',        N'The best performance i have ever seen!',	N'Thank you for your message, it is important for us :)',6)
 INSERT dbo.Message(MessageId, Subject, MessageText, ReplyText, AccountId) VALUES (2,  N'The road to Bethlehem',        N'Super!', N'Thank you for your message, it is important for us :)',10)
@@ -104,12 +105,13 @@ GO
 INSERT dbo.Wishlist(WishPerformanceId, AccountId, PerformanceId) VALUES (1, 1, 66)
 INSERT dbo.Wishlist(WishPerformanceId, AccountId, PerformanceId) VALUES (2, 2, 65)
 INSERT dbo.Wishlist(WishPerformanceId, AccountId, PerformanceId) VALUES (3, 4, 176)
-INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (4, 6, 9)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (4, 67, 9)
 INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (5,7, 399)
 INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (6, 9, 124)
-INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (7, 3, 104)
-INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (8, 5, 15)
-INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (9, 8, 85)
-INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (10,10, 149)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (7, 90, 104)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (8, 34, 15)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (9, 45, 85)
+INSERT dbo.Wishlist(WishPerformanceId ,AccountId, PerformanceId) VALUES (10,67, 149)
+
 GO
 SET IDENTITY_INSERT dbo.Wishlist OFF
