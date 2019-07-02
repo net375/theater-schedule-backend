@@ -11,6 +11,7 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Repositories;
+using TheaterSchedule.BLL;
 using TheaterSchedule.DALwp.Fake_Repositories;
 using TheaterSchedule.DALwp.Repositories;
 using TheaterSchedule.MiddlewareComponents;
@@ -21,6 +22,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.Reflection;
 using System.IO;
 using System;
+using TheaterSchedule.Extensions;
+using TheaterSchedule.BLL.Models;
 
 namespace TheaterSchedule
 {
@@ -49,12 +52,10 @@ namespace TheaterSchedule
             }); 
 
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
-                (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);
-
+                (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);           
 
             services.AddSwaggerGen(c =>
             {
-
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "v1.0",
@@ -68,8 +69,16 @@ namespace TheaterSchedule
                 c.IncludeXmlComments(xmlPath);
             });
 
+            services.AddOptions();
+
+            services.Configure<AuthOptions>(Configuration.GetSection(Constants.AuthOption));            
+
+            services.AddAuthenticationService();
+            
             //repositories
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepositoryWp>();
@@ -87,16 +96,16 @@ namespace TheaterSchedule
             services.AddScoped<INotificationFrequencyRepository, NotificationFrequencyRepository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
-            //services
+            //services            
             services.AddScoped<ISettingsService, SettingsService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IScheduleService, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
-            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsServiceWp>();
             services.AddScoped<IWishlistService, WishlistService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IEventService, EventService>();
-            services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IPushTokenService, PushTokenService>();
             services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
@@ -106,6 +115,7 @@ namespace TheaterSchedule
             services.AddScoped<ISendDataToGoogleFormService, SendDataToGoogleFormService>();
             services.AddScoped<IGetDataFromGoogleFormService, GetDataFromGoogleFormService>();
             services.AddMemoryCache();
+            services.AddScoped<IUserService, UserService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -116,7 +126,7 @@ namespace TheaterSchedule
                 Authorization = new[] { new AllowAllAuthorizationFilter() }
             });
 
-            RecurringJob.AddOrUpdate<PushNotificationsService>(service => service.SendPushNotification(), "0 9 * * *");
+           RecurringJob.AddOrUpdate<PushNotificationsService>(service => service.SendPushNotification(), "0 9 * * *");
 
             if (env.IsDevelopment())
             {
@@ -127,8 +137,11 @@ namespace TheaterSchedule
                 app.UseHsts();
             }
 
-            app.UseStaticFiles();
+            app.UseAuthentication();
 
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
