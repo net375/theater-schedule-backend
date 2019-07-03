@@ -47,7 +47,7 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<string> SendDataToGoogleForm(string url = "https://docs.google.com/forms/d/e/1FAIpQLSfwgTnNsb7SvCmrkskJZINvhuGY861iNfdbMZ_1UcNylORT6A/viewform", Dictionary<string, string[]> checkboxes, Dictionary<string, string> fields )
+        public ActionResult<string> SendDataToGoogleForm(string url, Dictionary<string, string[]> checkboxes, Dictionary<string, string> fields)
         {
             string result = sendService.Submit(url, fields, checkboxes);
 

@@ -112,7 +112,7 @@ namespace TheaterSchedule
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();
             services.AddScoped<ICacheProvider, CacheProvider>();
-            services.AddScoped<ISendDataToGoogleFormService, SendDataToGoogleFormService>();
+            //services.AddScoped<ISendDataToGoogleFormService, SendDataToGoogleFormService>();
             services.AddScoped<IGetDataFromGoogleFormService, GetDataFromGoogleFormService>();
             services.AddMemoryCache();
             services.AddScoped<IUserService, UserService>();
@@ -139,7 +139,7 @@ namespace TheaterSchedule
 
             app.UseAuthentication();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseStaticFiles();
             // Enable middleware to serve generated Swagger as a JSON endpoint.

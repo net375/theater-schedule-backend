@@ -92,7 +92,12 @@ namespace TheaterSchedule.BLL.Services
                 accountRepository.Add(new Account
                 {
                     PhoneIdentifier = phoneId,
-                    Settings = newSettings
+                    Settings = newSettings,
+                    PasswordHash = "",
+                    PasswordSalt = "",
+                    Email = "",
+                    FirstName = "",
+                    City = ""
                 });
             }
             theaterScheduleUnitOfWork.Save();

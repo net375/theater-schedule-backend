@@ -29,7 +29,7 @@ namespace TheaterSchedule.BLL.Services
                 new Claim(ClaimKeys.FirstName, user.FirstName),
                 new Claim(ClaimKeys.LastName, user.LastName),
                 new Claim(ClaimKeys.Email, user.Email),
-                new Claim(ClaimKeys.PnoneNumber, user.PnoneNumber),
+                //new Claim(ClaimKeys.PnoneNumber, user.PnoneNumber),
                 new Claim(ClaimKeys.DateOfBirth, user.DateOfBirth.ToString())
             };
 

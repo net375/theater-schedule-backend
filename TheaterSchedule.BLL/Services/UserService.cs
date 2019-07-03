@@ -9,6 +9,7 @@ using TheaterSchedule.DAL.Models;
 using System.Threading.Tasks;
 using System.Net;
 using TheaterSchedule.Infrastructure;
+using System.Text;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -50,9 +51,9 @@ namespace TheaterSchedule.BLL.Services
 
         public async Task<ApplicationUserDTO> GetAsync(string email, string passwordHash)
         {
-            var user = await _userRepository.GetAll().FirstOrDefaultAsync(item => item.Email == email && item.PasswordHash == passwordHash);
+            var listOfUser = await _userRepository.GetAll().FirstOrDefaultAsync(item => item.Email == email);
 
-            if (user == null)
+            if (PasswordGenerators.VerifyPasswordHash(passwordHash, Encoding.UTF8.GetBytes(listOfUser.PasswordHash), Encoding.UTF8.GetBytes(listOfUser.PasswordSalt)))
             {
                 throw new HttpStatusCodeException(
                        HttpStatusCode.NotFound, $"Such user doesn't exist");
@@ -60,14 +61,14 @@ namespace TheaterSchedule.BLL.Services
 
             return new ApplicationUserDTO
             {
-                Id = user.AccountId,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                City = user.City,
-                PnoneNumber = user.PnoneNumber,
-                Country = user.Country,
-                DateOfBirth = user.Birthdate.ToString()
+                Id = listOfUser.AccountId,
+                FirstName = listOfUser.FirstName,
+                LastName = listOfUser.LastName,
+                Email = listOfUser.Email,
+                City = listOfUser.City,
+                PnoneNumber = listOfUser.PnoneNumber,
+                Country = listOfUser.Country,
+                DateOfBirth = listOfUser.Birthdate.ToString()
             };
         }
 
