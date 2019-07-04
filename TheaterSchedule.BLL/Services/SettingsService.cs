@@ -1,5 +1,4 @@
-﻿using TheaterSchedule.BLL.DTO;
-using TheaterSchedule.BLL.Interfaces;
+﻿using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
 using System.Net;
@@ -93,11 +92,10 @@ namespace TheaterSchedule.BLL.Services
                 {
                     PhoneIdentifier = phoneId,
                     Settings = newSettings,
-                    PasswordHash = "",
-                    PasswordSalt = "",
-                    Email = "",
-                    FirstName = "",
-                    City = ""
+                    PasswordHash="",
+                    Email="",
+                    FirstName="",
+                    City=""
                 });
             }
             theaterScheduleUnitOfWork.Save();

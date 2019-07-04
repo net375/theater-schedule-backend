@@ -51,13 +51,17 @@ namespace TheaterSchedule.BLL.Services
 
         public async Task<ApplicationUserDTO> GetAsync(string email, string passwordHash)
         {
-            var listOfUser = await _userRepository.GetAll().FirstOrDefaultAsync(item => item.Email == email);
-
-            if (PasswordGenerators.VerifyPasswordHash(passwordHash, Encoding.UTF8.GetBytes(listOfUser.PasswordHash), Encoding.UTF8.GetBytes(listOfUser.PasswordSalt)))
-            {
+            var user = await _userRepository.GetAll().FirstOrDefaultAsync(item => item.Email == email);
+            
+            if(user == null)            
                 throw new HttpStatusCodeException(
                        HttpStatusCode.NotFound, $"Such user doesn't exist");
-            }
+            
+
+            if (!(PasswordGenerators.CreatePasswordHash(passwordHash) == user.PasswordHash))            
+                throw new HttpStatusCodeException(
+                       HttpStatusCode.NotFound, $"Such user doesn't exist");
+            
 
             return new ApplicationUserDTO
             {
@@ -75,26 +79,21 @@ namespace TheaterSchedule.BLL.Services
         public ApplicationUserDTO Create(ApplicationUserDTO user, string password)
         {
             if (_userRepository.GetAll().Any(u => u.Email == user.Email))
-                throw new ArgumentException("Such user already exists");
-
-            byte[] passwordHash, passwordSalt;
-
-            PasswordGenerators.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
+                throw new ArgumentException("Such user already exists");           
+            
             user.SettingsId = _settingsRepository.GetSettingsByPhoneId(user.PhoneIdentifier).SettingsId;
             user.Id = _userRepository.GetAll().First(u => u.PhoneIdentifier == user.PhoneIdentifier).AccountId;
 
             _userRepository.UpdateUser(new ApplicationUserModel
             {
                 City = user.City,
-                PasswordSalt = passwordSalt,
                 Country = user.Country,
                 DateOfBirth = Convert.ToDateTime(user.DateOfBirth).Date,
                 Email = user.Email,
                 FirstName = user.FirstName,
                 Id = user.Id,
                 LastName = user.LastName,
-                PasswordHash = passwordHash,
+                PasswordHash = PasswordGenerators.CreatePasswordHash(password),
                 SettingsId = user.SettingsId.Value,
                 PhoneNumber = user.PnoneNumber,
                 PhoneIdentifier = user.PhoneIdentifier

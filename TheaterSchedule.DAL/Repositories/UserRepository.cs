@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Linq;
+﻿using System.Linq;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using Entities.Models;
@@ -27,8 +26,7 @@ namespace TheaterSchedule.DAL.Repositories
                 City = user.City,
                 Country = user.Country,
                 Email = user.Email,
-                PasswordHash = Encoding.UTF8.GetString(user.PasswordHash),
-                PasswordSalt = Encoding.UTF8.GetString(user.PasswordSalt),
+                PasswordHash = user.PasswordHash,
                 PhoneIdentifier = user.PhoneIdentifier,
                 SettingsId = user.SettingsId,
                 PnoneNumber = user.PhoneNumber
@@ -65,16 +63,15 @@ namespace TheaterSchedule.DAL.Repositories
                 Country = user.Country,
                 Email = user.Email,
                 PhoneNumber = user.PnoneNumber,
-                PasswordHash = Encoding.UTF8.GetBytes(user.PasswordHash),
-                PasswordSalt = Encoding.UTF8.GetBytes(user.PasswordSalt)
+                PasswordHash = user.PasswordHash
             };
         }
-        
+
         public async Task<Account> GetUserByEmailAddress(string email)
         {
            return await db.Account.FirstOrDefaultAsync(item => item.Email == email);
         }
-
+        
         public void UpdateUser(ApplicationUserModel user)
         {
             var UpdateUser = db.Account.First(u => u.PhoneIdentifier == user.PhoneIdentifier);
@@ -84,9 +81,8 @@ namespace TheaterSchedule.DAL.Repositories
             UpdateUser.City = user.City;
             UpdateUser.Country = user.Country;
             UpdateUser.Email = user.Email;
-            UpdateUser.PasswordHash = Encoding.UTF8.GetString(user.PasswordHash);
-            UpdateUser.PasswordSalt = Encoding.UTF8.GetString(user.PasswordSalt);
-            UpdateUser.PnoneNumber = user.PhoneNumber;
+            UpdateUser.PasswordHash = user.PasswordHash;
+            UpdateUser.PnoneNumber = user.PhoneNumber;              
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [dbo].[Account] (
     [AccountId] INT	identity(1,1) NOT NULL,
-	[PasswordHash] [nvarchar](550) NOT NULL,
-	[PasswordSalt] [nvarchar](500) NOT NULL,    
+	[PasswordHash] [nvarchar](550) NOT NULL,   
 	[Email]     NVARCHAR (60) NOT NULL,
     [FirstName] NVARCHAR (25) NOT NULL,
     [LastName]  NVARCHAR (25) NULL,
