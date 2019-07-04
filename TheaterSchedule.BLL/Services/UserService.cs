@@ -65,14 +65,14 @@ namespace TheaterSchedule.BLL.Services
 
             return new ApplicationUserDTO
             {
-                Id = listOfUser.AccountId,
-                FirstName = listOfUser.FirstName,
-                LastName = listOfUser.LastName,
-                Email = listOfUser.Email,
-                City = listOfUser.City,
-                PnoneNumber = listOfUser.PnoneNumber,
-                Country = listOfUser.Country,
-                DateOfBirth = listOfUser.Birthdate.ToString()
+                Id = user.AccountId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                City = user.City,
+                PnoneNumber = user.PnoneNumber,
+                Country = user.Country,
+                DateOfBirth = user.Birthdate.ToString()
             };
         }
 
