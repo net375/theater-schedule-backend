@@ -11,7 +11,7 @@ namespace TheaterSchedule.BLL.Services
     public class SendDataToGoogleFormService : ISendDataToGoogleFormService
     {
        
-        private Dictionary<string, string> SetFieldValues(Dictionary<string, string> data)
+        public Dictionary<string, string> SetFieldValues(Dictionary<string, string> data)
         {
             Dictionary<string, string> resDataToStoreInField = new Dictionary<string, string>();
             if (data == null)
@@ -29,7 +29,7 @@ namespace TheaterSchedule.BLL.Services
             return resDataToStoreInField;
         }
 
-        private Dictionary<string, string[]> SetCheckboxValues(string key, params string[] values)
+        public Dictionary<string, string[]> SetCheckboxValues(string key, params string[] values)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));

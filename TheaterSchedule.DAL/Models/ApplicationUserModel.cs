@@ -14,8 +14,7 @@ namespace TheaterSchedule.DAL.Models
         public string City { get; set; }
         public string Country { get; set; }
         public string Email { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
+        public string PasswordHash { get; set; }
         public string PhoneIdentifier { get; set; }
         public int SettingsId { get; set; }
         public string PhoneNumber { get; set; }

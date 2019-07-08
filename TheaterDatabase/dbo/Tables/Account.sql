@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [dbo].[Account] (
     [AccountId] INT	identity(1,1) NOT NULL,
-	[PasswordHash] [nvarchar](550) NOT NULL,
-	[PasswordSalt] [nvarchar](500) NOT NULL,    
+	[PasswordHash] [nvarchar](550) NOT NULL,   
 	[Email]     NVARCHAR (60) NOT NULL,
     [FirstName] NVARCHAR (25) NOT NULL,
     [LastName]  NVARCHAR (25) NULL,
@@ -10,7 +9,7 @@
     [Birthdate] DATE          NOT NULL,
 	[PhoneIdentifier] NVARCHAR(40) UNIQUE NOT NULL,
 	[SettingsId] INT  UNIQUE NULL,
-    [PnoneNumber] NCHAR(15) NULL, 
+    [PhoneNumber] NCHAR(15) NULL, 
     CONSTRAINT [PK_Account] PRIMARY KEY CLUSTERED ([AccountId] ASC),   
     CONSTRAINT [FK_Account_Settings]  FOREIGN KEY ([SettingsId]) REFERENCES [dbo].[Settings] ([SettingsId])
 );

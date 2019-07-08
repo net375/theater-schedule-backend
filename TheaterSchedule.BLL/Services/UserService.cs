@@ -9,6 +9,7 @@ using TheaterSchedule.DAL.Models;
 using System.Threading.Tasks;
 using System.Net;
 using TheaterSchedule.Infrastructure;
+using System.Text;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -43,20 +44,24 @@ namespace TheaterSchedule.BLL.Services
                 Email = user.Email,
                 City = user.City,
                 Country = user.Country,
-                PnoneNumber = user.PnoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 DateOfBirth = user.Birthdate.ToString()
             };
         }
 
         public async Task<ApplicationUserDTO> GetAsync(string email, string passwordHash)
         {
-            var user = await _userRepository.GetAll().FirstOrDefaultAsync(item => item.Email == email && item.PasswordHash == passwordHash);
-
-            if (user == null)
-            {
+            var user = await _userRepository.GetAll().FirstOrDefaultAsync(item => item.Email == email);
+            
+            if(user == null)            
                 throw new HttpStatusCodeException(
                        HttpStatusCode.NotFound, $"Such user doesn't exist");
-            }
+            
+
+            if (!(PasswordGenerators.CreatePasswordHash(passwordHash) == user.PasswordHash))            
+                throw new HttpStatusCodeException(
+                       HttpStatusCode.NotFound, $"Such user doesn't exist");
+            
 
             return new ApplicationUserDTO
             {
@@ -65,7 +70,7 @@ namespace TheaterSchedule.BLL.Services
                 LastName = user.LastName,
                 Email = user.Email,
                 City = user.City,
-                PnoneNumber = user.PnoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 Country = user.Country,
                 DateOfBirth = user.Birthdate.ToString()
             };
@@ -74,28 +79,23 @@ namespace TheaterSchedule.BLL.Services
         public ApplicationUserDTO Create(ApplicationUserDTO user, string password)
         {
             if (_userRepository.GetAll().Any(u => u.Email == user.Email))
-                throw new ArgumentException("Such user already exists");
-
-            byte[] passwordHash, passwordSalt;
-
-            PasswordGenerators.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
+                throw new ArgumentException("Such user already exists");           
+            
             user.SettingsId = _settingsRepository.GetSettingsByPhoneId(user.PhoneIdentifier).SettingsId;
             user.Id = _userRepository.GetAll().First(u => u.PhoneIdentifier == user.PhoneIdentifier).AccountId;
 
             _userRepository.UpdateUser(new ApplicationUserModel
             {
                 City = user.City,
-                PasswordSalt = passwordSalt,
                 Country = user.Country,
                 DateOfBirth = Convert.ToDateTime(user.DateOfBirth).Date,
                 Email = user.Email,
                 FirstName = user.FirstName,
                 Id = user.Id,
                 LastName = user.LastName,
-                PasswordHash = passwordHash,
+                PasswordHash = PasswordGenerators.CreatePasswordHash(password),
                 SettingsId = user.SettingsId.Value,
-                PhoneNumber = user.PnoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 PhoneIdentifier = user.PhoneIdentifier
             });
 
