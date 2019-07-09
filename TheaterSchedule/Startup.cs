@@ -100,6 +100,7 @@ namespace TheaterSchedule
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IScheduleService, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsServiceWp>();
