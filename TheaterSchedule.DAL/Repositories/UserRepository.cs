@@ -84,5 +84,23 @@ namespace TheaterSchedule.DAL.Repositories
             UpdateUser.PasswordHash = user.PasswordHash;
             UpdateUser.PhoneNumber = user.PhoneNumber;              
         }
+
+        public async Task UpdatePasswordAsync(ChangePasswordModel model)
+        {
+            var user = await db.Account.FirstAsync(item => item.AccountId == model.Id);
+            user.PasswordHash = model.Password;
+        }
+
+        public async Task UpdateProfileAsync(ChangeProfileModel model)
+        {
+            var user = await db.Account.FirstAsync(item => item.AccountId == model.Id);
+            user.Birthdate = model.DateOfBirth;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.City = model.City;
+            user.Country = model.Country;
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+        }
     }
 }

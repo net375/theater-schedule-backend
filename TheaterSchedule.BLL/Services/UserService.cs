@@ -9,7 +9,6 @@ using TheaterSchedule.DAL.Models;
 using System.Threading.Tasks;
 using System.Net;
 using TheaterSchedule.Infrastructure;
-using System.Text;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -45,7 +44,8 @@ namespace TheaterSchedule.BLL.Services
                 City = user.City,
                 Country = user.Country,
                 PhoneNumber = user.PhoneNumber,
-                DateOfBirth = user.Birthdate.ToString()
+                DateOfBirth = user.Birthdate.ToString("yyyy-MM-dd"),
+                Password = user.PasswordHash
             };
         }
 
@@ -72,7 +72,7 @@ namespace TheaterSchedule.BLL.Services
                 City = user.City,
                 PhoneNumber = user.PhoneNumber,
                 Country = user.Country,
-                DateOfBirth = user.Birthdate.ToString()
+                DateOfBirth = user.Birthdate.ToString("yyyy-MM-dd")
             };
         }
 
@@ -102,6 +102,45 @@ namespace TheaterSchedule.BLL.Services
             _theaterScheduleUnitOfWork.Save();
 
             return user;
+        }
+
+        public async Task UpdatePasswordAsync(ChangePasswordDTO passwordDTO)
+        {
+            var user = await _userRepository.GetByIdAsync(passwordDTO.Id);
+            if (user == null)
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Wrong user Id");
+
+            var oldPasswordHash = PasswordGenerators.CreatePasswordHash(passwordDTO.OldPassword);
+            if (user.PasswordHash != oldPasswordHash)
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, $"Wrong user Password");
+
+            await _userRepository.UpdatePasswordAsync(new ChangePasswordModel
+            {
+                Id = passwordDTO.Id,
+                Password = PasswordGenerators.CreatePasswordHash(passwordDTO.NewPassword)
+            });
+            _theaterScheduleUnitOfWork.Save();
+        }
+
+        public async Task<ChangeProfileDTO> UpdateProfileAsync(ChangeProfileDTO profileDTO)
+        {
+            var user = await _userRepository.GetByIdAsync(profileDTO.Id);
+            if (user == null)
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Wrong user Id");
+
+            await _userRepository.UpdateProfileAsync(new ChangeProfileModel
+            {
+                Id = profileDTO.Id,
+                FirstName = profileDTO.FirstName,
+                LastName = profileDTO.LastName,
+                DateOfBirth = Convert.ToDateTime(profileDTO.DateOfBirth).Date,
+                City = profileDTO.City,
+                Country = profileDTO.Country,
+                Email = profileDTO.Email,
+                PhoneNumber = profileDTO.PhoneNumber,
+            });
+            _theaterScheduleUnitOfWork.Save();
+            return profileDTO;
         }
     }
 }
