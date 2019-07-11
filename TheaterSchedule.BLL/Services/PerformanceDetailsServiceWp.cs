@@ -9,7 +9,7 @@ using TheaterSchedule.BLL.Helpers;
 
 namespace TheaterSchedule.BLL.Services
 {
-    public class PerformanceDetailsServiceWp: IPerformanceDetailsService
+    public class PerformanceDetailsServiceWp : IPerformanceDetailsService
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IPerformanceDetailsRepository performanceDetailsRepository;
@@ -19,10 +19,10 @@ namespace TheaterSchedule.BLL.Services
         private IMemoryCache memoryCache;
         private PerformanceDetailsBaseDTO performanceDetailsRequest;
 
-        public PerformanceDetailsServiceWp( 
+        public PerformanceDetailsServiceWp(
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork,
-            IPerformanceDetailsRepository performanceDetailsRepository, 
-            ITagRepository tagRepository, 
+            IPerformanceDetailsRepository performanceDetailsRepository,
+            ITagRepository tagRepository,
             ICreativeTeamRepository creativeTeamRepository,
             IIsCheckedPerformanceRepository isCheckedPerformanceRepository,
             IMemoryCache memoryCache)
@@ -35,11 +35,11 @@ namespace TheaterSchedule.BLL.Services
             this.memoryCache = memoryCache;
         }
 
-        public PerformanceDetailsBaseDTO LoadPerformanceDetails( string phoneId, string languageCode, int performanceId )
+        public PerformanceDetailsBaseDTO LoadPerformanceDetails(string phoneId, string languageCode, int performanceId)
         {
             var cacheProvider = new CacheProvider(memoryCache);
 
-            var isChecked = isCheckedPerformanceRepository.IsChecked( phoneId, performanceId );
+            var isChecked = isCheckedPerformanceRepository.IsChecked(phoneId, performanceId);
 
             performanceDetailsRequest = cacheProvider.GetAndSave(
                     () => GetCacheKey(languageCode, performanceId),
@@ -82,7 +82,7 @@ namespace TheaterSchedule.BLL.Services
             return performanceDetailsRequest;
         }
 
-        private string GetCacheKey( string languageCode, int id )
+        private string GetCacheKey(string languageCode, int id)
         {
             return $"PerformanceDetails {languageCode} {id}";
         }
