@@ -153,12 +153,12 @@ namespace TheaterSchedule.DALwp.Repositories
 
                 performanceDetailsDataModelWp.MinPrice = Convert.ToInt32(Prices[0]);
                 performanceDetailsDataModelWp.MaxPrice = Convert.ToInt32(Prices[1]);
-
-                return performanceDetailsDataModelWp;
             }
-
-            performanceDetailsDataModelWp.Price = Convert.ToInt32(performance.AcfInfo.AboutGroup.Price);
-
+            else
+            {
+                performanceDetailsDataModelWp.MinPrice = Convert.ToInt32(performance.AcfInfo.AboutGroup.Price);
+                performanceDetailsDataModelWp.MaxPrice = Convert.ToInt32(performance.AcfInfo.AboutGroup.Price);
+            }
             return performanceDetailsDataModelWp;
         }
     }
