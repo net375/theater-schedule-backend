@@ -59,7 +59,6 @@ namespace TheaterSchedule.BLL.Services
                             MinimumAge = performance.MinimumAge,
                             MinPrice = performance.MinPrice,
                             MaxPrice = performance.MaxPrice,
-                            Price = performance.Price,
                             Description = performance.Description,
                             MainImage = performance.MainImage,
                             GalleryImage = performance.GalleryImage,

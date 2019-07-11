@@ -133,17 +133,16 @@ namespace TheaterSchedule.DALwp.Repositories
                 Duration = performance.AcfInfo.AboutGroup.Duration,
             };
 
-            if (performance.AcfInfo.AboutGroup.Price.Contains('-'))
+             if (performance.AcfInfo.AboutGroup.Price.Contains('-'))
             {
                 string[] Prices = (performance.AcfInfo.AboutGroup.Price).Split('-');
-
+     
                 performanceDetailsDataModelWp.MinPrice = Convert.ToInt32(Prices[0]);
                 performanceDetailsDataModelWp.MaxPrice = Convert.ToInt32(Prices[1]);
-
-                return performanceDetailsDataModelWp;
             }
-
-            performanceDetailsDataModelWp.Price = Convert.ToInt32(performance.AcfInfo.AboutGroup.Price);
+               
+            performanceDetailsDataModelWp.MinPrice = Convert.ToInt32(performance.AcfInfo.AboutGroup.Price);
+            performanceDetailsDataModelWp.MaxPrice = Convert.ToInt32(performance.AcfInfo.AboutGroup.Price);
 
             return performanceDetailsDataModelWp;
         }
