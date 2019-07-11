@@ -57,12 +57,12 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<ApplicationUserDTO>> UpdateProfile([FromBody]ChangeProfileModel input)
+        public async Task<ActionResult<ChangeProfileDTO>> UpdateProfile([FromBody]ChangeProfileModel input)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _userService.UpdateProfileAsync(new ChangeProfileDTO
+            var updated = await _userService.UpdateProfileAsync(new ChangeProfileDTO
             {
                 Id = input.Id,
                 FirstName = input.FirstName,
@@ -74,7 +74,7 @@ namespace TheaterSchedule.Controllers
                 PhoneNumber = input.PhoneNumber,
             });
 
-            return StatusCode(201, input);
+            return StatusCode(201, updated);
         }
     }
 }
