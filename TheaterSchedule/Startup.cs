@@ -74,8 +74,9 @@ namespace TheaterSchedule
             services.Configure<AuthOptions>(Configuration.GetSection(Constants.AuthOption));            
 
             services.AddAuthenticationService();
-            
+
             //repositories
+            services.AddScoped<IAdminsPostRepository, AdminsPostRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -97,6 +98,7 @@ namespace TheaterSchedule
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             //services            
+            services.AddScoped<IAdminsPostService, AdminsPostService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
