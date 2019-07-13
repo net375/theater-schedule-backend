@@ -31,7 +31,7 @@ namespace TheaterSchedule.BLL.Services
             }
         }
 
-        public async Task<RefreshTokenDTO> GetAsync(string refreshToken)
+        public async Task<RefreshTokenDTO> GetAsync(string refreshToken, bool isActive = true)
         {
             var result = await _refreshTokenRepository.GetAsync(item => item.RefreshToken == refreshToken);
 
@@ -45,21 +45,23 @@ namespace TheaterSchedule.BLL.Services
             {
                 Id = result.Id,
                 UserId = result.UserId,
+                IsActive = result.IsActive,
                 RefreshToken = result.RefreshToken,
                 DaysToExpire = result.DaysToExpire
             };
         }
 
-        public async Task UpdateRefreshTokenAsync(int id, string refreshtoken, int userId, double daysToExpire)
+        public async Task UpdateRefreshTokenAsync(int id, string refreshtoken, int userId, double daysToExpire, bool isActive = true)
         {
-            var refreshToken = await _refreshTokenRepository.GetAsync(item => item.Id == id);
+            var refreshToken = await _refreshTokenRepository.GetAsync(item => item.Id == id && item.UserId == userId);
 
             if (refreshToken == null)
             {
                 throw new HttpStatusCodeException(
                        HttpStatusCode.NotFound, $"Such refresh token doesn't exist");
             }
-
+            
+            refreshToken.IsActive = isActive;
             refreshToken.RefreshToken = refreshtoken;
             refreshToken.DaysToExpire = DateTime.Now.AddDays(daysToExpire);
 
@@ -70,23 +72,18 @@ namespace TheaterSchedule.BLL.Services
 
         public async Task AddRefreshTokenAsync(string refreshtoken, int userId, double daysToExpire)
         {
-            var refreshToken = await _refreshTokenRepository.GetAsync(item => item.RefreshToken == refreshtoken);
+            var refreshToken = await _refreshTokenRepository.GetAsync(item => item.RefreshToken == refreshtoken && item.UserId == userId);
      
             if (refreshToken != null)
             {
-                refreshToken.RefreshToken = refreshtoken;
-
-                refreshToken.DaysToExpire = DateTime.Now.AddDays(daysToExpire);
-
-                await _refreshTokenRepository.UpdateAsync(refreshToken);
-
-                await _theaterScheduleUnitOfWork.SaveAsync();
+                await UpdateRefreshTokenAsync(refreshToken.Id, refreshtoken, userId, daysToExpire);
             }
             else
             {
                 await _refreshTokenRepository.InsertAsync(new RefreshTokens
                 {
                     RefreshToken = refreshtoken,
+                    IsActive = true,
                     UserId = userId,
                     DaysToExpire = DateTime.Now.AddDays(daysToExpire)
                 });
