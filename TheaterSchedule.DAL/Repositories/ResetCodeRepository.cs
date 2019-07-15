@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using Entities.Models;
@@ -21,7 +22,8 @@ namespace TheaterSchedule.DAL.Repositories
             db.ResetCode.Add(new ResetCode
             {
                 Code = resetModel.Code,
-                AccountId = resetModel.AccountId
+                AccountId = resetModel.AccountId,
+                CreationTime = resetModel.CreationTime
             });
         }
 
@@ -48,7 +50,8 @@ namespace TheaterSchedule.DAL.Repositories
             {
                 Id = resetCode.Id,
                 Code = resetCode.Code,
-                AccountId = resetCode.AccountId
+                AccountId = resetCode.AccountId,
+                CreationTime = resetCode.CreationTime
             };
         }
 

@@ -53,11 +53,13 @@ namespace TheaterSchedule.BLL.Services
             }
 
             int random = new Random().Next(1000, 9999);
+            TimeSpan currentTime = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 
             _resetCodeRepository.Add(new ResetCodeModel
             {
                 Code = random,
-                AccountId = user.Result.AccountId
+                AccountId = user.Result.AccountId,
+                CreationTime = currentTime
             });
 
             _emailService.SendEmailAsync(email, "noreply", $"Verification code for resetting your password: {random}");
@@ -72,6 +74,12 @@ namespace TheaterSchedule.BLL.Services
             if (code == null)
             {
                 throw new HttpStatusCodeException(HttpStatusCode.NotFound);
+            }
+
+            if ((DateTime.Now.Minute - code.Result.CreationTime.Minutes) > 5)
+            {
+                _resetCodeRepository.Delete(validationCode);
+                throw new Exception("This validation code timeout expired! Try again.");
             }
 
             _resetCodeRepository.Delete(validationCode);

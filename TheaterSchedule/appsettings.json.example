@@ -11,7 +11,7 @@
   },
   "AuthOption": {
     "ISSUER": "MyAuthServer",
-    "AUDIENCE": "http://192.168.103.28:5000/",
+    "AUDIENCE": "http://192.168.103.124:5000/",
     "KEY": "mysupersecret_secretkey!123",
     "LIFETIME": 10
   },

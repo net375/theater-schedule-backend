@@ -7,5 +7,6 @@ namespace TheaterSchedule.DAL.Models
         public int Id { get; set; }
         public int Code { get; set; }
         public int AccountId { get; set; }
+        public TimeSpan CreationTime { get; set; }
     }
 }
