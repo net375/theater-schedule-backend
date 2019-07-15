@@ -9,7 +9,7 @@
     [Birthdate] DATE          NOT NULL,
 	[PhoneIdentifier] NVARCHAR(40) UNIQUE NOT NULL,
 	[SettingsId] INT  UNIQUE NULL,
-    [PnoneNumber] NCHAR(15) NULL, 
+    [PhoneNumber] NCHAR(15) NULL, 
     CONSTRAINT [PK_Account] PRIMARY KEY CLUSTERED ([AccountId] ASC),   
     CONSTRAINT [FK_Account_Settings]  FOREIGN KEY ([SettingsId]) REFERENCES [dbo].[Settings] ([SettingsId])
 );

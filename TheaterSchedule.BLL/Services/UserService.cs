@@ -12,6 +12,7 @@ using TheaterSchedule.Infrastructure;
 using System.Text;
 using WordPressPCL.Models;
 
+
 namespace TheaterSchedule.BLL.Services
 {
     public class UserService : IUserService
@@ -45,7 +46,7 @@ namespace TheaterSchedule.BLL.Services
                 Email = user.Email,
                 City = user.City,
                 Country = user.Country,
-                PnoneNumber = user.PnoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 DateOfBirth = user.Birthdate.ToString()
             };
         }
@@ -71,7 +72,7 @@ namespace TheaterSchedule.BLL.Services
                 LastName = user.LastName,
                 Email = user.Email,
                 City = user.City,
-                PnoneNumber = user.PnoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 Country = user.Country,
                 DateOfBirth = user.Birthdate.ToString()
             };
@@ -96,7 +97,7 @@ namespace TheaterSchedule.BLL.Services
                 LastName = user.LastName,
                 PasswordHash = PasswordGenerators.CreatePasswordHash(password),
                 SettingsId = user.SettingsId.Value,
-                PhoneNumber = user.PnoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 PhoneIdentifier = user.PhoneIdentifier
             });
 

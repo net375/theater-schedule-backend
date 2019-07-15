@@ -17,7 +17,7 @@ namespace TheaterSchedule.BLL.DTOs
         public string Password { get; set; }
         public string PhoneIdentifier { get; set; }
         public int? SettingsId { get; set; }
-        public string PnoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
     }
 }
