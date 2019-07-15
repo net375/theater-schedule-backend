@@ -17,14 +17,14 @@ namespace TheaterSchedule.BLL.Services
         private IResetCodeRepository _resetCodeRepository;
         private ITheaterScheduleUnitOfWork _theaterScheduleUnitOfWork;
         private IUserRepository _userRepository;
-        //private IEmailService _emailService;
+        private IEmailService _emailService;
 
-        public ResetCodeService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IResetCodeRepository resetCodeRepository, IUserRepository userRepository)
+        public ResetCodeService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IResetCodeRepository resetCodeRepository, IUserRepository userRepository, IEmailService emailService)
         {
             _theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             _resetCodeRepository = resetCodeRepository;
             _userRepository = userRepository;
-            //_emailService = emailService;
+            _emailService = emailService;
         }
 
         public async Task<ResetCodeDTO> GetByValueAsync(int value)
@@ -60,7 +60,7 @@ namespace TheaterSchedule.BLL.Services
                 AccountId = user.Result.AccountId
             });
 
-            //_emailService.SendEmailAsync(email, "noreply", $"Verification code for resetting your password: {random}");
+            _emailService.SendEmailAsync(email, "noreply", $"Verification code for resetting your password: {random}");
 
             _theaterScheduleUnitOfWork.Save();
         }

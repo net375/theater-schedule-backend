@@ -118,7 +118,7 @@ namespace TheaterSchedule
             services.AddMemoryCache();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IResetCodeService, ResetCodeService>();
-            //services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IEmailService, EmailService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
