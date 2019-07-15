@@ -7,11 +7,11 @@
   },
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "TheaterConnectionString": "Data Source=<SQL_SERVER>; Initial Catalog=<DATABASE_NAME>; User id=<USER_NAME>; Password=<PASSWORD>;"
+    "TheaterConnectionString": "Data Source=DESKTOP-9H958DD;Database=TheaterDatabase;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;"
   },
   "AuthOption": {
     "ISSUER": "MyAuthServer",
-    "AUDIENCE": "http://192.168.103.26:5000/",
+    "AUDIENCE": "http://192.168.103.28:5000/",
     "KEY": "mysupersecret_secretkey!123",
     "LIFETIME": 10
   },

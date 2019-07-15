@@ -2,7 +2,7 @@
 <configuration>
   <connectionStrings>
     <add name="TheaterConnectionString"
-   connectionString="Server=DESKTOP-1SL3KUF;Database=TheaterDatabase;User ID=sa;Password=admin;ConnectRetryCount=0"
+   connectionString="Data Source=DESKTOP-9H958DD;Database=TheaterDatabase;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True"
    providerName="System.Data.SqlClient"
 />
   </connectionStrings>

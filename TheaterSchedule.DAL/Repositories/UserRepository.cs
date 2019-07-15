@@ -63,7 +63,8 @@ namespace TheaterSchedule.DAL.Repositories
                 Country = user.Country,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                PasswordHash = user.PasswordHash
+                PasswordHash = user.PasswordHash,
+                PhoneIdentifier = user.PhoneIdentifier
             };
         }
 
