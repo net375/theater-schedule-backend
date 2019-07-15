@@ -52,8 +52,8 @@ namespace TheaterSchedule.BLL.Services
                  join performance in performancesWp on partialInfo.PerformanceId equals performance.PerformanceId
                  join schedule in scheduleWp on performance.PerformanceId equals schedule.PerformanceId
 
-                // where (schedule.Beginning.Day == (DateTime.Today.AddDays(partialInfo.Frequency).Day)
-                  //       && (schedule.PerformanceId == partialInfo.PerformanceId))
+                 where (schedule.Beginning.Day == (DateTime.Today.AddDays(partialInfo.Frequency).Day)
+                         && (schedule.PerformanceId == partialInfo.PerformanceId))
 
                  select new PushTokenDataModel
                  {
