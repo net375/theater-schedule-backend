@@ -31,7 +31,7 @@ namespace TheaterSchedule.BLL.Services
             }
         }
 
-        public async Task<RefreshTokenDTO> GetAsync(string refreshToken, bool isActive = true)
+        public async Task<RefreshTokenDTO> GetAsync(string refreshToken)
         {
             var result = await _refreshTokenRepository.GetAsync(item => item.RefreshToken == refreshToken);
 

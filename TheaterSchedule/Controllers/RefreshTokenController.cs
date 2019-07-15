@@ -37,19 +37,14 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TokensResponse>> RefreshTokenAsync([FromBody] RefreshTokenModel input)
+        public async Task<ActionResult<TokensResponse>> UpdateRefreshTokenAsync([FromBody] RefreshTokenModel input)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
                 var refreshToken = await _refreshTokenService.GetAsync(input.RefreshToken);
 
                 if (refreshToken == null)
                 {
                     throw new HttpStatusCodeException(
-                        HttpStatusCode.BadRequest, $"Such refreshToken doesn't exist");
+                        HttpStatusCode.NotFound, $"Such refreshToken doesn't exist");
                 }
 
                 if(!refreshToken.IsActive)
@@ -61,7 +56,7 @@ namespace TheaterSchedule.Controllers
                 if (DateTime.Now >= refreshToken.DaysToExpire)
                 {
                     throw new HttpStatusCodeException(
-                        HttpStatusCode.Unauthorized, "Such refresh token is inactive");
+                        HttpStatusCode.Unauthorized, "Days to expire of refresh token is inactive");
                 }
 
                 var userResult = await _userService.GetByIdAsync(refreshToken.UserId);
@@ -85,11 +80,7 @@ namespace TheaterSchedule.Controllers
                     ExpiresTime = DateTime.UtcNow.AddMinutes(Constants.MinToExpireAccessToken)
                 });              
             }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
+        
 
         // <summary>
         //     Updates Refresh Token by making it inactive and return Ok() in response
@@ -111,7 +102,7 @@ namespace TheaterSchedule.Controllers
             if (refreshToken == null)
             {
                 throw new HttpStatusCodeException(
-                    HttpStatusCode.BadRequest, $"Such refreshToken doesn't exist");
+                    HttpStatusCode.NotFound, $"Such refreshToken doesn't exist");
             }
 
             var userResult = await _userService.GetByIdAsync(refreshToken.UserId);
