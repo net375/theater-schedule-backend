@@ -2,14 +2,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Moq;
-using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Net;
 using System.Threading.Tasks;
 using TheaterSchedule.BLL.DTOs;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.Controllers;
-using TheaterSchedule.Infrastructure;
 using TheaterSchedule.Models;
 using Xunit;
 
