@@ -7,7 +7,9 @@ namespace TheaterSchedule.BLL
         public const string FirstName = "firstName";
         public const string LastName = "lastName";
         public const string Email = "email";
-        public const string PnoneNumber = "pnoneNumber";
+        public const string PhoneNumber = "phoneNumber";
         public const string DateOfBirth = "dateOfBirth";
+        public const string City = "city";
+        public const string Country = "country";
     }
 }

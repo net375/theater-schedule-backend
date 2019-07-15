@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using Entities.Models;
+using TheaterSchedule.DAL.Models;
+using AutoMapper;
+using TheaterSchedule.BLL.DTOs;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -10,17 +16,22 @@ namespace TheaterSchedule.BLL.Services
     {
         private ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork;
         private IMessageRepository messageRepository;
-        private IAccountRepository accountRepository;
-
+        private IUserRepository userRepository;
+        private IMapper _mapper;
 
         public MessageService(
             ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, 
             IMessageRepository messageRepository,
-            IAccountRepository accountRepository)
+             IUserRepository userRepository)
         {
             this.theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             this.messageRepository = messageRepository;
-            this.accountRepository = accountRepository;
+            this.userRepository = userRepository;
+            _mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Message, MessageDTO>().ReverseMap();
+            }).CreateMapper();
+
         }
 
         public MessageDTO GetById(int id)
@@ -30,30 +41,42 @@ namespace TheaterSchedule.BLL.Services
             {
                 return null;
             }
-            return new MessageDTO
-            {
-                MessageId = message.MessageId,
-                Subject = message.Subject
-            };
+
+            return _mapper.Map<MessageDTO>(message);
         }
 
-        public void SendMessage(MessageDTO newMessage)
+        public async Task SendMessage(MessageDTO newMessage)
         {
-            Account account = accountRepository.GetAccountByPhoneId(newMessage.PhoneId);
+            var account = userRepository.GetById(newMessage.AccountId);
+
             if (account == null)
             {
                 throw new ArgumentException("Non existent account");
             }
 
-            var message = new Entities.Models.Message()
-            {
-                Subject = newMessage.Subject,
-                MessageText = newMessage.MessageText,
-                AccountId = account.AccountId
-            };
+            var message = _mapper.Map<Message>(newMessage);
 
             messageRepository.Add(message);
-            theaterScheduleUnitOfWork.Save();
+            await theaterScheduleUnitOfWork.SaveAsync();
+        }
+
+        public List<UserMessageDTO> GetAllMessages()
+        {
+            var messages = messageRepository.GetUnrepliedMessages();
+
+            var users = userRepository.GetAll().ToList();
+
+            if (messages == null)
+            {
+                throw new ArgumentException("Not found messages");
+            }
+
+            var result = from m in messages
+                join u in users on m.AccountId equals u.AccountId
+                select new UserMessageDTO{MessageId = m.MessageId,Subject = m.Subject,MessageText = m.MessageText,
+                    AccountId = m.AccountId,FirstName = u.FirstName, LastName = u.LastName, Email = u.Email};
+
+            return result.ToList();
         }
     }
 }
