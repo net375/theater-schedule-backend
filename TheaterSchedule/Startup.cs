@@ -93,10 +93,12 @@ namespace TheaterSchedule
             services.AddScoped<ITagRepository, TagRepositoryWp>();
             services.AddScoped<IPerformanceScheduleRepository, PerformanceScheduleRepositoryWp>();
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IGoogleFormUrlRepository, GoogleFormUrlRepository>();
             services.AddScoped<INotificationFrequencyRepository, NotificationFrequencyRepository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
-            //services            
+            //services        
+            services.AddScoped<IFormService, FormService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
@@ -139,7 +141,7 @@ namespace TheaterSchedule
 
             app.UseAuthentication();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
 
             app.UseStaticFiles();

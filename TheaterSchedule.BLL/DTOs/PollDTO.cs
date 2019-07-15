@@ -6,7 +6,6 @@ namespace TheaterSchedule.BLL.DTOs
 {
     public class PollDTO
     {
-        public string RootURL { get; set; }
         public Dictionary<string, string[]> CheckBoxes { get; set; }
         public Dictionary<string, string> Fields { get; set; }
     }

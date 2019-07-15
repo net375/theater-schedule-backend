@@ -17,11 +17,13 @@ namespace TheaterSchedule.Controllers
     {
         private IGetDataFromGoogleFormService getService;
         private ISendDataToGoogleFormService sendService;
+        private IFormService getUrlService;
 
-        public CreateGoogleFormController(IGetDataFromGoogleFormService googleFormService, ISendDataToGoogleFormService sendFormService)
+        public CreateGoogleFormController(IFormService getUrlService, IGetDataFromGoogleFormService googleFormService, ISendDataToGoogleFormService sendFormService)
         {
             getService = googleFormService;
             sendService = sendFormService;
+            this.getUrlService = getUrlService;
         }
 
 
@@ -29,19 +31,20 @@ namespace TheaterSchedule.Controllers
         /// <summary>
         /// Get data from Google Form
         /// </summary>
-        /// <param name="url">Information about input fields</param>
         /// <returns>google fields</returns>
         /// <response code="201">Returns a json with info about fields</response>
         /// <response code="404">If the json is null</response> 
         [HttpGet]
         [Produces("application/json")]
+        [Route("GetDataFromGoogleForm")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<string> GetDataFromGoogleForm([FromQuery]string url = "https://docs.google.com/forms/d/e/1FAIpQLSfwgTnNsb7SvCmrkskJZINvhuGY861iNfdbMZ_1UcNylORT6A/viewform")
+        public ActionResult<string> GetDataFromGoogleForm()
         {
             try
             {
+                string url = getUrlService.GetUrl().Url;
                 string res = JsonConvert.SerializeObject(getService.GetDataFromServer(url));
                 if (res == null)
                     return NotFound();
@@ -60,7 +63,9 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string> SendDataToGoogleForm([FromBody] PollDTO inputs)
         {
-            string result = sendService.Submit(inputs.RootURL, inputs.Fields, inputs.CheckBoxes);
+            string url = getUrlService.GetUrl().Url;
+
+            string result = sendService.Submit(url, inputs.Fields, inputs.CheckBoxes);
 
             if (result == null)
                     return BadRequest();
