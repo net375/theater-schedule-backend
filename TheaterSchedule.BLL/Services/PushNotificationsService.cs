@@ -52,13 +52,15 @@ namespace TheaterSchedule.BLL.Services
                  join performance in performancesWp on partialInfo.PerformanceId equals performance.PerformanceId
                  join schedule in scheduleWp on performance.PerformanceId equals schedule.PerformanceId
 
-                 where (schedule.Beginning.Day == (DateTime.Today.AddDays(partialInfo.Frequency).Day)
-                         && (schedule.PerformanceId == partialInfo.PerformanceId))
+                // where (schedule.Beginning.Day == (DateTime.Today.AddDays(partialInfo.Frequency).Day)
+                  //       && (schedule.PerformanceId == partialInfo.PerformanceId))
 
                  select new PushTokenDataModel
                  {
                      Token = partialInfo.Token,
-                     LanguageCode = partialInfo.LanguageCode
+                     LanguageCode = partialInfo.LanguageCode,
+                     ImageUrl = performance.MainImageUrl,
+                     Title= performance.Title
                  })
                  .Distinct(new PushTokenDataModelComparer()) //select distinct push tokens in order not to send several notifications
                  .ToList();
@@ -69,7 +71,9 @@ namespace TheaterSchedule.BLL.Services
                     To = p.Token,
                     Title = p.LanguageCode == "en" ? "Lviv Puppet Theater" : "Львівський театр ляльок",
                     Body = p.LanguageCode == "en" ?
-                        "The perfomances you have liked coming soon" : "Вистави, які вам сподобались, скоро на сцені"
+                        $"{p.Title} coming soon" : $"{p.Title} скоро на сцені",
+                    Icon =$"{p.ImageUrl}",
+                    Color = "#9984d4"
                 })).ToList();
             
             using (System.Net.WebClient client = new System.Net.WebClient())
