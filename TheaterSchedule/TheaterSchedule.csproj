@@ -11,10 +11,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Compile Remove="Controllers\CreateGoogleFormController.cs" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <Content Remove="appsettings.json" />
     <Content Remove="web.config" />
   </ItemGroup>
@@ -22,7 +18,6 @@
   <ItemGroup>
     <None Include="appsettings.json" />
     <None Include="Controllers\CreateGoogleFormController.cs" />
-    <None Include="web.config" />
   </ItemGroup>
 
   <ItemGroup>

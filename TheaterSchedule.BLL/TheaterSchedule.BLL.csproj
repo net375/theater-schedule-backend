@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\SendDataToGoogleFormService.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Services\SendDataToGoogleFormService.cs" />
     <None Include="TheaterSchedule.BLL.Tests\TheaterSchedule.BLL.Tests.csproj" />
   </ItemGroup>
 
