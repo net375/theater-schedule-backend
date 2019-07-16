@@ -8,10 +8,10 @@ namespace TheaterSchedule.DAL.Interfaces
     public interface IResetCodeRepository
     {
         Task<Account> GetUserByEmailAddress(string email);
-        IQueryable<ResetCode> GetAll();
         Task<ResetCode> GetByValueAsync(int value);
-        ResetCodeModel GetByValue(int value);
         void Add(ResetCodeModel resetCode);
         void Delete(int value);
+        void DropPassword(Account account);
+        void ResetPassword(Account account, string password);
     }
 }

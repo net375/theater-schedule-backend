@@ -33,26 +33,19 @@ namespace TheaterSchedule.DAL.Repositories
             db.ResetCode.Remove(resetCode.Result);
         }
 
-        public IQueryable<ResetCode> GetAll()
+        public void DropPassword(Account account)
         {
-            return db.ResetCode;
+            account.PasswordHash = "";
+        }
+
+        public void ResetPassword(Account account, string password)
+        {
+            account.PasswordHash = password;
         }
 
         public async Task<ResetCode> GetByValueAsync(int value)
         {
             return await db.ResetCode.FirstOrDefaultAsync(r => r.Code == value);
-        }
-
-        public ResetCodeModel GetByValue(int value)
-        {
-            ResetCode resetCode = db.ResetCode.First(r => r.Code == value);
-            return new ResetCodeModel
-            {
-                Id = resetCode.Id,
-                Code = resetCode.Code,
-                AccountId = resetCode.AccountId,
-                CreationTime = resetCode.CreationTime
-            };
         }
 
         public async Task<Account> GetUserByEmailAddress(string email)

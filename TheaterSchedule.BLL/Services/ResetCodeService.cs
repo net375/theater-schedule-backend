@@ -79,52 +79,26 @@ namespace TheaterSchedule.BLL.Services
             if ((DateTime.Now.Minute - code.Result.CreationTime.Minutes) > 5)
             {
                 _resetCodeRepository.Delete(validationCode);
+                _theaterScheduleUnitOfWork.Save();
                 throw new Exception("This validation code timeout expired! Try again.");
             }
 
+            var user = _userRepository.GetByIdAsync(code.Result.AccountId);
+            _resetCodeRepository.DropPassword(user.Result);
             _resetCodeRepository.Delete(validationCode);
-
-            var user = _userRepository.GetById(code.Result.AccountId);
-            _userRepository.UpdateUser(new ApplicationUserModel
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                DateOfBirth = user.DateOfBirth,
-                SettingsId = user.SettingsId,
-                PhoneNumber = user.PhoneNumber,
-                PhoneIdentifier = user.PhoneIdentifier,
-                PasswordHash = "",
-                City = user.City,
-                Country = user.Country
-            });
 
             _theaterScheduleUnitOfWork.Save();
         }
         public void ResetPassword(string password)
         {
-            var user = _userRepository.GetAll().FirstOrDefaultAsync(u => u.PasswordHash == "");
+            var user = _userRepository.GetAll().FirstOrDefault(u => u.PasswordHash == "");
 
             if (user == null)
             {
                 throw new HttpStatusCodeException(HttpStatusCode.NotFound);
             }
 
-            _userRepository.UpdateUser(new ApplicationUserModel
-            {
-                Id = user.Result.AccountId,
-                FirstName = user.Result.FirstName,
-                LastName = user.Result.LastName,
-                Email = user.Result.Email,
-                DateOfBirth = user.Result.Birthdate,
-                SettingsId = user.Result.SettingsId.Value,
-                PhoneNumber = user.Result.PhoneNumber,
-                PhoneIdentifier = user.Result.PhoneIdentifier,
-                PasswordHash = PasswordGenerators.CreatePasswordHash(password),
-                City = user.Result.City,
-                Country = user.Result.Country
-            });
+            _resetCodeRepository.ResetPassword(user, PasswordGenerators.CreatePasswordHash(password));
 
             _theaterScheduleUnitOfWork.Save();
         }
