@@ -51,7 +51,7 @@ namespace TheaterSchedule.BLL.Services
 
             if (account == null)
             {
-                throw new ArgumentException("Non existent account");
+                throw new NullReferenceException();
             }
 
             var message = _mapper.Map<Message>(newMessage);
