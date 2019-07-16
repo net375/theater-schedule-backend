@@ -30,7 +30,7 @@ namespace TheaterSchedule.Controllers
                 return NotFound();
             }
 
-            return message;
+            return Ok(message);
         }
 
         [HttpPost]
