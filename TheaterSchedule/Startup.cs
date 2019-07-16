@@ -89,8 +89,9 @@ namespace TheaterSchedule
             services.Configure<AuthOptions>(Configuration.GetSection(Constants.AuthOption));            
 
             services.AddAuthenticationService();
-            
+
             //repositories
+            services.AddScoped<IAdminsPostRepository, AdminsPostRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -108,10 +109,13 @@ namespace TheaterSchedule
             services.AddScoped<ITagRepository, TagRepositoryWp>();
             services.AddScoped<IPerformanceScheduleRepository, PerformanceScheduleRepositoryWp>();
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IGoogleFormUrlRepository, GoogleFormUrlRepository>();
             services.AddScoped<INotificationFrequencyRepository, NotificationFrequencyRepository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
-            //services            
+            //services        
+            services.AddScoped<IFormService, FormService>();
+            services.AddScoped<IAdminsPostService, AdminsPostService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
@@ -128,7 +132,7 @@ namespace TheaterSchedule
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();
             services.AddScoped<ICacheProvider, CacheProvider>();
-            //services.AddScoped<ISendDataToGoogleFormService, SendDataToGoogleFormService>();
+            services.AddScoped<ISendDataToGoogleFormService, SendDataToGoogleFormService>();
             services.AddScoped<IGetDataFromGoogleFormService, GetDataFromGoogleFormService>();
             services.AddMemoryCache();
             services.AddScoped<IUserService, UserService>();
