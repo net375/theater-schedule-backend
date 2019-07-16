@@ -71,7 +71,7 @@ namespace TheaterSchedule.BLL.Tests
                     FirstName = "Vasyl",
                     LastName = "Kyrt",
                     PasswordHash = "das",
-                    PnoneNumber = "+380",
+                    PhoneNumber = "+380",
                 },
                 new Account()
                 {
@@ -83,7 +83,7 @@ namespace TheaterSchedule.BLL.Tests
                     FirstName = "Vasyl",
                     LastName = "Kyrt",
                     PasswordHash = "das",
-                    PnoneNumber = "+380",
+                    PhoneNumber = "+380",
                 }
             };
 
