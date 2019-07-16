@@ -29,7 +29,7 @@ namespace TheaterSchedule.DAL.Repositories
                 PasswordHash = user.PasswordHash,
                 PhoneIdentifier = user.PhoneIdentifier,
                 SettingsId = user.SettingsId,
-                PnoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber
             });
         }
 
@@ -62,7 +62,7 @@ namespace TheaterSchedule.DAL.Repositories
                 City = user.City,
                 Country = user.Country,
                 Email = user.Email,
-                PhoneNumber = user.PnoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 PasswordHash = user.PasswordHash
             };
         }
@@ -82,7 +82,7 @@ namespace TheaterSchedule.DAL.Repositories
             UpdateUser.Country = user.Country;
             UpdateUser.Email = user.Email;
             UpdateUser.PasswordHash = user.PasswordHash;
-            UpdateUser.PnoneNumber = user.PhoneNumber;              
+            UpdateUser.PhoneNumber = user.PhoneNumber;              
         }
     }
 }
