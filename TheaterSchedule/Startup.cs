@@ -29,6 +29,7 @@ namespace TheaterSchedule
 {
     public class Startup
     {
+        private const string CorsName = "AllowAllOrigins";
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -38,6 +39,20 @@ namespace TheaterSchedule
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    CorsName,
+                    builder =>
+                    {
+                        builder
+                            .SetIsOriginAllowed(host => true)
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    });
+            });
+
             services.AddHangfire(configuration =>
             {
                 configuration.UseSqlServerStorage(
@@ -74,8 +89,9 @@ namespace TheaterSchedule
             services.Configure<AuthOptions>(Configuration.GetSection(Constants.AuthOption));            
 
             services.AddAuthenticationService();
-            
+
             //repositories
+            services.AddScoped<IAdminsPostRepository, AdminsPostRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -99,9 +115,11 @@ namespace TheaterSchedule
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
             //services        
             services.AddScoped<IFormService, FormService>();
+            services.AddScoped<IAdminsPostService, AdminsPostService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IScheduleService, ScheduleServiceWp>();
             services.AddScoped<IPostersService, PostersService>();
             services.AddScoped<IPerformanceDetailsService, PerformanceDetailsServiceWp>();
@@ -146,6 +164,9 @@ namespace TheaterSchedule
 
             app.UseStaticFiles();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
+
+            app.UseCors(CorsName);
+
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
