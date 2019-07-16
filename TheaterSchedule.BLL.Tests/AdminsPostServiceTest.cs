@@ -2,13 +2,13 @@
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.BLL.DTOs;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.Services;
 using AutoMapper;
 using Entities.Models;
+using TheaterSchedule.BLL.Tests.Helpers;
 
 namespace TheaterSchedule.BLL.Tests
 {
@@ -100,8 +100,7 @@ namespace TheaterSchedule.BLL.Tests
 
             List<AdminsPost> posts = mapper.Map<List<AdminsPostDTO>, List<AdminsPost>>(adminsPostService.GetAllPublicPosts());
 
-            CollectionAssert.AllItemsAreInstancesOfType(posts, typeof(AdminsPost));
-            CollectionAssert.AllItemsAreNotNull(posts);
+            CollectionAssert.AreEqual(adminsPostsPublic, posts, new AdminsPostComparer());
         }
 
         [TestMethod]
@@ -114,8 +113,7 @@ namespace TheaterSchedule.BLL.Tests
 
             List<AdminsPost> posts = mapper.Map<List<AdminsPostDTO>, List<AdminsPost>>(adminsPostService.GetAllPublicPosts());
 
-            CollectionAssert.AllItemsAreInstancesOfType(posts, typeof(AdminsPost));
-            CollectionAssert.AllItemsAreNotNull(posts);
+            CollectionAssert.AreEqual(adminsPostsPersonal, posts, new AdminsPostComparer());
         }
     }
 }

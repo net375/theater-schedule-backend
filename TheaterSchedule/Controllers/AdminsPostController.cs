@@ -42,15 +42,9 @@ namespace TheaterSchedule.Controllers
             {
                 return BadRequest(ModelState);
             }
-            try
-            {
-                adminsPostService.AddNewPost(post);
-                return StatusCode(StatusCodes.Status201Created, post);
-            }
-            catch (System.Exception e)
-            {
-                return BadRequest(e);
-            }
+
+            adminsPostService.AddNewPost(post);
+            return StatusCode(StatusCodes.Status201Created, post);
         }
     }
 }

@@ -37,24 +37,14 @@ namespace TheaterSchedule.BLL.Services
         public List<AdminsPostDTO> GetAllPersonalPosts(int id)
         {
             var posts = adminsPostRepository.GetAllPersonalById(id);
-
-            if (posts == null)
-            {
-                return null;
-            }
-
+            
             return mapper.Map<List<AdminsPost>, List<AdminsPostDTO>>(posts);
         }
 
         public List<AdminsPostDTO> GetAllPublicPosts()
         {
             var posts = adminsPostRepository.GetAllPublic();
-
-            if (posts == null)
-            {
-                return null;
-            }
-
+            
             return mapper.Map<List<AdminsPost>, List<AdminsPostDTO>>(posts);
         }
     }
