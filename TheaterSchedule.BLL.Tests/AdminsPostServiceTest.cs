@@ -111,7 +111,7 @@ namespace TheaterSchedule.BLL.Tests
                 .Returns(adminsPostsPersonal);
             adminsPostService = new AdminsPostService(theaterScheduleUnitOfWork.Object, adminsPostRepository.Object);
 
-            List<AdminsPost> posts = mapper.Map<List<AdminsPostDTO>, List<AdminsPost>>(adminsPostService.GetAllPublicPosts());
+            List<AdminsPost> posts = mapper.Map<List<AdminsPostDTO>, List<AdminsPost>>(adminsPostService.GetAllPersonalPosts(userId));
 
             CollectionAssert.AreEqual(adminsPostsPersonal, posts, new AdminsPostComparer());
         }

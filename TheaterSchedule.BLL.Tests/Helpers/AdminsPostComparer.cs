@@ -9,44 +9,22 @@ namespace TheaterSchedule.BLL.Tests.Helpers
         public int Compare(object a, object b)
         {
             AdminsPost x = a as AdminsPost;
-            AdminsPost y = b as AdminsPost;
+            AdminsPost y = a as AdminsPost;
 
-            if (x.ToUserId.HasValue && !y.ToUserId.HasValue)
-            {
-                return 1;
-            }
-            else if (!x.ToUserId.HasValue && y.ToUserId.HasValue)
-            {
-                return 1;
-            }
+            bool areEqual = x.AdminsPostId == y.AdminsPostId
+                && x.Subject == y.Subject
+                && x.PostText == y.PostText
+                && x.PostDate == y.PostDate
+                && x.IsPersonal == y.IsPersonal
+                && x.ToUserId == y.ToUserId;
 
-            if (x.AdminsPostId.CompareTo(y.AdminsPostId) != 0)
+            if (areEqual)
             {
-                return x.AdminsPostId.CompareTo(y.AdminsPostId);
-            }
-            else if (x.Subject.CompareTo(y.Subject) != 0)
-            {
-                return x.Subject.CompareTo(y.Subject);
-            }
-            else if (x.PostText.CompareTo(y.PostText) != 0)
-            {
-                return x.PostText.CompareTo(y.PostText);
-            }
-            else if (x.PostDate.CompareTo(y.PostDate) != 0)
-            {
-                return x.PostDate.CompareTo(y.PostDate);
-            }
-            else if (x.IsPersonal.CompareTo(y.IsPersonal) != 0)
-            {
-                return x.IsPersonal.CompareTo(y.IsPersonal);
-            }
-            else if (x.ToUserId.HasValue && y.ToUserId.HasValue)
-            {
-                return x.ToUserId.Value.CompareTo(y.ToUserId.Value);
+                return 0;
             }
             else
             {
-                return 0;
+                return 1;
             }
         }
     }
