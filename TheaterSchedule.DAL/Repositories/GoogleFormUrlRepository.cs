@@ -18,6 +18,10 @@ namespace TheaterSchedule.DAL.Repositories
 
         public void Add(UrlModel url)
         {
+            if(db.FormUrl.Count() != 0)
+            {
+                Delete();
+            }
             db.FormUrl.Add(new FormUrl
             {
                 Url = url.Url
@@ -32,6 +36,12 @@ namespace TheaterSchedule.DAL.Repositories
                 Url = url.Url,
                 UrlId = url.UrlId
             };
+        }
+
+        public void Delete()
+        {
+            var existingUrl = db.FormUrl.First();
+            db.FormUrl.Remove(existingUrl);
         }
     }
 }
