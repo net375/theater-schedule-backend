@@ -34,10 +34,10 @@ namespace TheaterSchedule.BLL.Tests
             Message messageAdd = new Message()
                 { AccountId = 95, MessageId = 5, MessageText = "Hi", Subject = "Performance" };
 
-            ApplicationUserModel userModel = new ApplicationUserModel()
+            Account userModel = new Account()
             {
-                Id = 95,
-                DateOfBirth = new DateTime(1999, 6, 19, 12, 0, 0),
+                AccountId = 95,
+                Birthdate = new DateTime(1999, 6, 19, 12, 0, 0),
                 City = "Lviv",
                 Country = "Ukraine",
                 Email = "jegerq@gmail.com",
@@ -129,15 +129,6 @@ namespace TheaterSchedule.BLL.Tests
             Assert.AreEqual(messageExpected.Subject, "The road to Bethlehem","Subject is not correct");
             Assert.AreEqual(messageExpected.MessageText, "Super","MessageText is not correct");
         }
-
-        [TestMethod]
-        public void SendMessage()
-        {
-            var result = messageService.SendMessage(messageAddDto);
-
-            Assert.IsTrue(result.IsCompleted);
-        }
-
 
     }
 }

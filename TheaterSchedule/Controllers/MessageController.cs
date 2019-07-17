@@ -41,20 +41,8 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<MessageDTO> PostMessage([FromBody] MessageDTO message)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                messageService.SendMessage(message);
+            messageService.SendMessage(message);
                 return StatusCode(201, message);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
         }
 
         [HttpGet]

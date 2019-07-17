@@ -8,7 +8,7 @@ namespace TheaterSchedule.BLL.Interfaces
     public interface IMessageService
     {
         MessageDTO GetById(int id);
-        Task SendMessage(MessageDTO newMessage);
+        void SendMessage(MessageDTO newMessage);
 
         List<UserMessageDTO> GetAllMessages();
     }

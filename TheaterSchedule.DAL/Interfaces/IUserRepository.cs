@@ -10,7 +10,7 @@ namespace TheaterSchedule.DAL.Interfaces
         Task<Account> GetUserByEmailAddress(string email);
         IQueryable<Account> GetAll();
         Task<Account> GetByIdAsync(int id);
-        ApplicationUserModel GetById(int id);
+        Account GetById(int id);
         void Add(ApplicationUserModel user);
         void UpdateUser(ApplicationUserModel user);
         void Delete(int id);

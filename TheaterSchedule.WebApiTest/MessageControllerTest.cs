@@ -18,7 +18,7 @@ namespace TheaterSchedule.WebApiTest
     public class MessageControllerTest
     {
         private const int SomeId = 1;
-        private static MessageDTO _someMessage = new MessageDTO
+        private static readonly MessageDTO _someMessage = new MessageDTO
         {
             MessageId = 1,
             AccountId = 1,
@@ -26,7 +26,7 @@ namespace TheaterSchedule.WebApiTest
             Subject = "SomePerformance",
         };
 
-        private static MessageDTO _otherMessage = new MessageDTO
+        private static readonly MessageDTO _otherMessage = new MessageDTO
         {
             MessageId = 1,
             MessageText = "Nice",
@@ -133,19 +133,7 @@ namespace TheaterSchedule.WebApiTest
             Assert.IsNotNull(value);
             Assert.AreEqual(value.MessageId,SomeId);
             Assert.AreEqual(result.StatusCode,StatusCodes.Status201Created);
-        }
-
-        [TestMethod]
-        public void TestSendMessage_400BadRequest()
-        {
-            var messageMock = new Mock<IMessageService>();
-
-            messageMock.Setup(m => m.SendMessage(_otherMessage)).Returns(()=> throw new System.ArgumentException("Some exception"));
-            var controller = new MessageController(messageMock.Object);
-
-            var result = (controller.PostMessage(_otherMessage)).Result as IStatusCodeActionResult;
-
-            Assert.AreEqual(result.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.AreEqual(value.MessageText,_someMessage.MessageText);
         }
     }
 }

@@ -45,19 +45,19 @@ namespace TheaterSchedule.BLL.Services
             return _mapper.Map<MessageDTO>(message);
         }
 
-        public async Task SendMessage(MessageDTO newMessage)
+        public void SendMessage(MessageDTO newMessage)
         {
             var account = userRepository.GetById(newMessage.AccountId);
 
             if (account == null)
             {
-                throw new NullReferenceException();
+                throw new NullReferenceException("account");
             }
 
             var message = _mapper.Map<Message>(newMessage);
 
             messageRepository.Add(message);
-            await theaterScheduleUnitOfWork.SaveAsync();
+            theaterScheduleUnitOfWork.Save();
         }
 
         public List<UserMessageDTO> GetAllMessages()
@@ -68,7 +68,7 @@ namespace TheaterSchedule.BLL.Services
 
             if (messages == null)
             {
-                throw new ArgumentException("Not found messages");
+                return new List<UserMessageDTO>();
             }
 
             var result = from m in messages
