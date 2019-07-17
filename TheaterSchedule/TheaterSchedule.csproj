@@ -18,7 +18,6 @@
   <ItemGroup>
     <None Include="appsettings.json" />
     <None Include="Controllers\CreateGoogleFormController.cs" />
-    <None Include="web.config" />
   </ItemGroup>
 
   <ItemGroup>
