@@ -15,6 +15,6 @@ namespace TheaterSchedule.DAL.Interfaces
         void UpdateUser(ApplicationUserModel user);
         void Delete(int id);
         Task UpdatePasswordAsync(ChangePasswordModel model);
-        Task UpdateProfileAsync(ChangeProfileModel model);
+        Task UpdateProfileAsync(Account user);
     }
 }

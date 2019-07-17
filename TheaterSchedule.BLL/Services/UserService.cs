@@ -128,17 +128,15 @@ namespace TheaterSchedule.BLL.Services
             if (user == null)
                 throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Wrong user Id");
 
-            await _userRepository.UpdateProfileAsync(new ChangeProfileModel
-            {
-                Id = profileDTO.Id,
-                FirstName = profileDTO.FirstName,
-                LastName = profileDTO.LastName,
-                DateOfBirth = Convert.ToDateTime(profileDTO.DateOfBirth).Date,
-                City = profileDTO.City,
-                Country = profileDTO.Country,
-                Email = profileDTO.Email,
-                PhoneNumber = profileDTO.PhoneNumber,
-            });
+            user.FirstName = profileDTO.FirstName;
+            user.LastName = profileDTO.LastName;
+            user.Birthdate = Convert.ToDateTime(profileDTO.DateOfBirth).Date;
+            user.City = profileDTO.City;
+            user.Country = profileDTO.Country;
+            user.Email = profileDTO.Email;
+            user.PhoneNumber = profileDTO.PhoneNumber;
+
+            await _userRepository.UpdateProfileAsync(user);
             _theaterScheduleUnitOfWork.Save();
             return profileDTO;
         }
