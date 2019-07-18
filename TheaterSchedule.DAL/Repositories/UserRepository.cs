@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using Entities.Models;
@@ -50,9 +50,21 @@ namespace TheaterSchedule.DAL.Repositories
              return await db.Account.FirstOrDefaultAsync(u => u.AccountId == id);           
         }
 
-        public Account GetById(int id)
+        public ApplicationUserModel GetById(int id)
         {
-            return db.Account.First(u => u.AccountId == id);
+            Account user = db.Account.First(u => u.AccountId == id);
+            return new ApplicationUserModel
+            {
+                Id = user.AccountId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DateOfBirth = user.Birthdate,
+                City = user.City,
+                Country = user.Country,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                PasswordHash = user.PasswordHash
+            };
         }
 
         public async Task<Account> GetUserByEmailAddress(string email)
@@ -71,6 +83,17 @@ namespace TheaterSchedule.DAL.Repositories
             UpdateUser.Email = user.Email;
             UpdateUser.PasswordHash = user.PasswordHash;
             UpdateUser.PhoneNumber = user.PhoneNumber;              
+        }
+
+        public async Task UpdatePasswordAsync(ChangePasswordModel model)
+        {
+            var user = await db.Account.FirstAsync(item => item.AccountId == model.Id);
+            user.PasswordHash = model.Password;
+        }
+
+        public async Task UpdateProfileAsync(Account user)
+        {
+           db.Account.Update(user);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using TheaterSchedule.BLL.Helpers;
 using TheaterSchedule.BLL.DTOs;
 using TheaterSchedule.BLL.Interfaces;
@@ -9,9 +9,6 @@ using TheaterSchedule.DAL.Models;
 using System.Threading.Tasks;
 using System.Net;
 using TheaterSchedule.Infrastructure;
-using System.Text;
-using WordPressPCL.Models;
-
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -47,7 +44,8 @@ namespace TheaterSchedule.BLL.Services
                 City = user.City,
                 Country = user.Country,
                 PhoneNumber = user.PhoneNumber,
-                DateOfBirth = user.Birthdate.ToString()
+                DateOfBirth = user.Birthdate.ToString("yyyy-MM-dd"),
+                Password = user.PasswordHash
             };
         }
 
@@ -74,7 +72,7 @@ namespace TheaterSchedule.BLL.Services
                 City = user.City,
                 PhoneNumber = user.PhoneNumber,
                 Country = user.Country,
-                DateOfBirth = user.Birthdate.ToString()
+                DateOfBirth = user.Birthdate.ToString("yyyy-MM-dd")
             };
         }
 
@@ -104,6 +102,43 @@ namespace TheaterSchedule.BLL.Services
             _theaterScheduleUnitOfWork.Save();
 
             return user;
+        }
+
+        public async Task UpdatePasswordAsync(ChangePasswordDTO passwordDTO)
+        {
+            var user = await _userRepository.GetByIdAsync(passwordDTO.Id);
+            if (user == null)
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Wrong user Id");
+
+            var oldPasswordHash = PasswordGenerators.CreatePasswordHash(passwordDTO.OldPassword);
+            if (user.PasswordHash != oldPasswordHash)
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, $"Wrong user Password");
+
+            await _userRepository.UpdatePasswordAsync(new ChangePasswordModel
+            {
+                Id = passwordDTO.Id,
+                Password = PasswordGenerators.CreatePasswordHash(passwordDTO.NewPassword)
+            });
+            _theaterScheduleUnitOfWork.Save();
+        }
+
+        public async Task<ChangeProfileDTO> UpdateProfileAsync(ChangeProfileDTO profileDTO)
+        {
+            var user = await _userRepository.GetByIdAsync(profileDTO.Id);
+            if (user == null)
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Wrong user Id");
+
+            user.FirstName = profileDTO.FirstName;
+            user.LastName = profileDTO.LastName;
+            user.Birthdate = Convert.ToDateTime(profileDTO.DateOfBirth).Date;
+            user.City = profileDTO.City;
+            user.Country = profileDTO.Country;
+            user.Email = profileDTO.Email;
+            user.PhoneNumber = profileDTO.PhoneNumber;
+
+            await _userRepository.UpdateProfileAsync(user);
+            _theaterScheduleUnitOfWork.Save();
+            return profileDTO;
         }
     }
 }
