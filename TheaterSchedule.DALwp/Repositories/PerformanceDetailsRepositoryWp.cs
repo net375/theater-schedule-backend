@@ -54,7 +54,12 @@ namespace TheaterSchedule.DALwp.Repositories
             public int Duration { get; set; }
 
             [JsonProperty("gallery", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            public IEnumerable<GalleryOfImages> Gallery { get; set; }
+            public object Gallery { get; set; }
+        }
+
+        private class GalleryInfo
+        {
+            public static IEnumerable<GalleryOfImages> Gallery { get; set; }
         }
 
         private class GalleryOfImages : WordPressPCL.Models.Base
@@ -99,7 +104,17 @@ namespace TheaterSchedule.DALwp.Repositories
 
         private static async Task<Performance> GetPerformance(WordPressClient client, int perforamanceId)
         {
-            return await client.CustomRequest.Get<Performance>($"wp/v2/performance/{perforamanceId}");
+            var result = await client.CustomRequest.Get<Performance>($"wp/v2/performance/{perforamanceId}");
+
+            if (result.AcfInfo.AboutGroup.Gallery.ToString() != "False")
+            {
+                GalleryInfo.Gallery = JsonConvert.DeserializeObject<IEnumerable<GalleryOfImages>>(result.AcfInfo.AboutGroup.Gallery.ToString());
+
+                return result;
+            }
+
+            result.AcfInfo.AboutGroup.Gallery = null;
+            return result;
         }
 
         private static async Task<Media> GetMainImage(WordPressClient client, int featured_media)
@@ -112,9 +127,8 @@ namespace TheaterSchedule.DALwp.Repositories
             var performance = GetPerformance(InitializeClient(), perforamanceId).Result;
             var media = GetMainImage(InitializeClient(), performance.Featured_media).Result;
 
-            var galleryImage = (from image in performance.AcfInfo.AboutGroup.Gallery
-                                select image.Sizes.Large).ToList();
-
+            var galleryImage = performance.AcfInfo.AboutGroup.Gallery == null ? null : (from image in GalleryInfo.Gallery
+                                                                                        select image.Sizes.Large).ToList();
 
             string description = Regex.Replace(performance.Content.Rendered, @"(</p>)", "\n");
             description = Regex.Replace(description, @"(<.*?>)", string.Empty);
@@ -133,14 +147,15 @@ namespace TheaterSchedule.DALwp.Repositories
                 Duration = performance.AcfInfo.AboutGroup.Duration,
             };
 
-             if (performance.AcfInfo.AboutGroup.Price.Contains('-'))
+            if (performance.AcfInfo.AboutGroup.Price.Contains('-'))
             {
                 string[] Prices = (performance.AcfInfo.AboutGroup.Price).Split('-');
-     
+
                 performanceDetailsDataModelWp.MinPrice = Convert.ToInt32(Prices[0]);
                 performanceDetailsDataModelWp.MaxPrice = Convert.ToInt32(Prices[1]);
             }
-            else{               
+            else
+            {
                 performanceDetailsDataModelWp.MinPrice = Convert.ToInt32(performance.AcfInfo.AboutGroup.Price);
                 performanceDetailsDataModelWp.MaxPrice = Convert.ToInt32(performance.AcfInfo.AboutGroup.Price);
             }
