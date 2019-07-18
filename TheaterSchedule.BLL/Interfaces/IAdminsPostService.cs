@@ -5,8 +5,8 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface IAdminsPostService
     {
-        List<AdminsPostDTO> GetAllPublicPosts();
-        List<AdminsPostDTO> GetAllPersonalPosts(int id);
+        IEnumerable<AdminsPostDTO> GetAllPublicPosts();
+        IEnumerable<AdminsPostDTO> GetAllPersonalPosts(int id);
         void AddNewPost(AdminsPostDTO post);
     }
 }

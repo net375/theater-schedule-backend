@@ -20,14 +20,14 @@ namespace TheaterSchedule.DAL.Repositories
             this.db.AdminsPost.Add(post);
         }
 
-        public List<AdminsPost> GetAllPersonalById(int id)
+        public IEnumerable<AdminsPost> GetAllPersonalById(int id)
         {
-            return this.db.AdminsPost.Where(post => post.IsPersonal && post.ToUserId == id).ToList();
+            return this.db.AdminsPost.Where(post => post.IsPersonal && post.ToUserId == id);
         }
 
-        public List<AdminsPost> GetAllPublic()
+        public IEnumerable<AdminsPost> GetAllPublic()
         {
-            return this.db.AdminsPost.Where(post => !post.IsPersonal).ToList();
+            return this.db.AdminsPost.Where(post => !post.IsPersonal);
         }
     }
 }

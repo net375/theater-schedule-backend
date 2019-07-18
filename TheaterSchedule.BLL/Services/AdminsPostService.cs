@@ -34,18 +34,18 @@ namespace TheaterSchedule.BLL.Services
             theaterScheduleUnitOfWork.Save();
         }
 
-        public List<AdminsPostDTO> GetAllPersonalPosts(int id)
+        public IEnumerable<AdminsPostDTO> GetAllPersonalPosts(int id)
         {
             var posts = adminsPostRepository.GetAllPersonalById(id);
             
-            return mapper.Map<List<AdminsPost>, List<AdminsPostDTO>>(posts);
+            return mapper.Map<IEnumerable<AdminsPost>, IEnumerable<AdminsPostDTO>>(posts);
         }
 
-        public List<AdminsPostDTO> GetAllPublicPosts()
+        public IEnumerable<AdminsPostDTO> GetAllPublicPosts()
         {
             var posts = adminsPostRepository.GetAllPublic();
             
-            return mapper.Map<List<AdminsPost>, List<AdminsPostDTO>>(posts);
+            return mapper.Map<IEnumerable<AdminsPost>, IEnumerable<AdminsPostDTO>>(posts);
         }
     }
 }
