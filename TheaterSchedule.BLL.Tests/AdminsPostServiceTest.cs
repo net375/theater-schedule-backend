@@ -98,8 +98,9 @@ namespace TheaterSchedule.BLL.Tests
                 .Setup(post => post.GetAllPublic())
                 .Returns(adminsPostsPublic);
             adminsPostService = new AdminsPostService(theaterScheduleUnitOfWork.Object, adminsPostRepository.Object);
-
-            List<AdminsPost> posts = mapper.Map<List<AdminsPostDTO>, List<AdminsPost>>(adminsPostService.GetAllPublicPosts().ToList());
+            
+            List<AdminsPost> posts = 
+                mapper.Map<List<AdminsPostDTO>, List<AdminsPost>>(adminsPostService.GetAllPublicPosts().ToList());
 
             CollectionAssert.AreEqual(adminsPostsPublic, posts, new AdminsPostComparer());
         }
@@ -111,8 +112,9 @@ namespace TheaterSchedule.BLL.Tests
                 .Setup(post => post.GetAllPersonalById(userId))
                 .Returns(adminsPostsPersonal);
             adminsPostService = new AdminsPostService(theaterScheduleUnitOfWork.Object, adminsPostRepository.Object);
-
-            List<AdminsPost> posts = mapper.Map<List<AdminsPostDTO>, List<AdminsPost>>(adminsPostService.GetAllPersonalPosts(userId).ToList());
+            
+            List<AdminsPost> posts = 
+                mapper.Map<List<AdminsPostDTO>, List<AdminsPost>>(adminsPostService.GetAllPersonalPosts(userId).ToList());
 
             CollectionAssert.AreEqual(adminsPostsPersonal, posts, new AdminsPostComparer());
         }

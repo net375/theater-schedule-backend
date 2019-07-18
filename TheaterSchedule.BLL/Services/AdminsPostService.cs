@@ -44,7 +44,7 @@ namespace TheaterSchedule.BLL.Services
         public IEnumerable<AdminsPostDTO> GetAllPublicPosts()
         {
             var posts = adminsPostRepository.GetAllPublic();
-            
+
             return mapper.Map<IEnumerable<AdminsPost>, IEnumerable<AdminsPostDTO>>(posts);
         }
     }

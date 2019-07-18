@@ -10,5 +10,9 @@ namespace TheaterSchedule.BLL.DTO
         public string Title { get; set; }
         [JsonProperty("body")]
         public string Body { get; set; }
+        [JsonProperty("icon")]
+        public string Icon { get; set; }
+        [JsonProperty("color")]
+        public string Color { get; set; }
     }
 }

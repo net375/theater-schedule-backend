@@ -19,7 +19,7 @@ namespace TheaterSchedule.DAL.Repositories
         {
             this.db.AdminsPost.Add(post);
         }
-
+        
         public IEnumerable<AdminsPost> GetAllPersonalById(int id)
         {
             return this.db.AdminsPost.Where(post => post.IsPersonal && post.ToUserId == id);
