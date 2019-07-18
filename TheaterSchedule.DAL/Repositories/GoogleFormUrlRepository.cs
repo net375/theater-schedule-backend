@@ -44,11 +44,5 @@ namespace TheaterSchedule.DAL.Repositories
                 UrlId = url.UrlId
             };
         }
-
-        public void Delete()
-        {
-            var existingUrl = db.FormUrl.First();
-            db.FormUrl.Remove(existingUrl);
-        }
     }
 }
