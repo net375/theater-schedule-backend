@@ -35,7 +35,7 @@ namespace TheaterSchedule.DAL.Repositories
 
         public void DropPassword(Account account)
         {
-            account.PasswordHash = "";
+            account.PasswordHash = string.Empty;
         }
 
         public void ResetPassword(Account account, string password)
@@ -45,7 +45,7 @@ namespace TheaterSchedule.DAL.Repositories
 
         public async Task<ResetCode> GetByValueAsync(int value)
         {
-            return await db.ResetCode.FirstOrDefaultAsync(r => r.Code == value);
+            return await db.ResetCode.SingleAsync(r => r.Code == value);
         }
 
         public async Task<Account> GetUserByEmailAddress(string email)

@@ -76,7 +76,10 @@ namespace TheaterSchedule.BLL.Services
                 throw new HttpStatusCodeException(HttpStatusCode.NotFound);
             }
 
-            if ((DateTime.Now.Minute - code.Result.CreationTime.Minutes) > 5)
+            TimeSpan current = new TimeSpan(DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+            TimeSpan limit = new TimeSpan(0, 0, 1, 0);
+
+            if (current.Subtract(code.Result.CreationTime) > limit)
             {
                 _resetCodeRepository.Delete(validationCode);
                 _theaterScheduleUnitOfWork.Save();

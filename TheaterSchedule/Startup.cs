@@ -140,9 +140,9 @@ namespace TheaterSchedule
                 app.UseHsts();
             }
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
 
             app.UseStaticFiles();
