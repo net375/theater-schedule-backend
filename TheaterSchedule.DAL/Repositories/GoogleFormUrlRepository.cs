@@ -18,14 +18,21 @@ namespace TheaterSchedule.DAL.Repositories
 
         public void Add(UrlModel url)
         {
-            if(db.FormUrl.Count() != 0)
+            if(db.FormUrl.Any())
             {
-                Delete();
+                db.FormUrl.Update(new FormUrl
+                {
+                    Url = url.Url,
+                    UrlId = false
+                });
             }
-            db.FormUrl.Add(new FormUrl
+            else
             {
-                Url = url.Url
-            });
+                db.FormUrl.Add(new FormUrl
+                {
+                    Url = url.Url
+                });
+            }
         }
 
         public UrlModel GetUrl()
