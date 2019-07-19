@@ -48,9 +48,9 @@ namespace TheaterSchedule.DAL.Repositories
             return await db.ResetCode.SingleAsync(r => r.Code == value);
         }
 
-        public async Task<Account> GetUserByEmailAddress(string email)
+        public Task<Account> GetUserByEmailAddress(string email)
         {
-            return await db.Account.FirstOrDefaultAsync(item => item.Email == email);
+            return db.Account.FirstOrDefaultAsync(item => item.Email == email);
         }
     }
 }

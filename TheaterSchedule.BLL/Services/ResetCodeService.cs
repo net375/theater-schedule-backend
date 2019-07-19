@@ -39,7 +39,8 @@ namespace TheaterSchedule.BLL.Services
             return new ResetCodeDTO
             {
                 Id = resetCode.Id,
-                Code = resetCode.Code
+                Code = resetCode.Code,
+                CreationTime = resetCode.CreationTime
             };
         }
 
@@ -53,13 +54,12 @@ namespace TheaterSchedule.BLL.Services
             }
 
             int random = new Random().Next(1000, 9999);
-            TimeSpan currentTime = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 
             _resetCodeRepository.Add(new ResetCodeModel
             {
                 Code = random,
                 AccountId = user.Result.AccountId,
-                CreationTime = currentTime
+                CreationTime = DateTime.Now
             });
 
             _emailService.SendEmailAsync(email, "noreply", $"Verification code for resetting your password: {random}");
@@ -76,10 +76,12 @@ namespace TheaterSchedule.BLL.Services
                 throw new HttpStatusCodeException(HttpStatusCode.NotFound);
             }
 
-            TimeSpan current = new TimeSpan(DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-            TimeSpan limit = new TimeSpan(0, 0, 1, 0);
+            DateTime current = DateTime.Now;
+            TimeSpan time = current - code.Result.CreationTime;
 
-            if (current.Subtract(code.Result.CreationTime) > limit)
+            int limit = 5;
+
+            if (time.TotalMinutes > limit)
             {
                 _resetCodeRepository.Delete(validationCode);
                 _theaterScheduleUnitOfWork.Save();
