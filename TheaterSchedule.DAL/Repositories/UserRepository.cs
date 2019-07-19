@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
 using Entities.Models;

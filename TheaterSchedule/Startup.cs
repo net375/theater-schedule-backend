@@ -162,6 +162,7 @@ namespace TheaterSchedule
             app.UseHttpsRedirection();
 
 
+
             app.UseStaticFiles();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
 
