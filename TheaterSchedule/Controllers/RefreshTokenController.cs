@@ -37,25 +37,26 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TokensResponse>> RefreshTokenAsync([FromBody] RefreshTokenModel input)
+        public async Task<ActionResult<TokensResponse>> UpdateRefreshTokenAsync([FromBody] RefreshTokenModel input)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
                 var refreshToken = await _refreshTokenService.GetAsync(input.RefreshToken);
 
                 if (refreshToken == null)
                 {
                     throw new HttpStatusCodeException(
-                        HttpStatusCode.BadRequest, $"Such refreshToken doesn't exist");
+                        HttpStatusCode.NotFound, $"Such refreshToken doesn't exist");
+                }
+
+                if(!refreshToken.IsActive)
+                {
+                    throw new HttpStatusCodeException(
+                        HttpStatusCode.Unauthorized, "Such refresh token is inactive");
                 }
 
                 if (DateTime.Now >= refreshToken.DaysToExpire)
                 {
                     throw new HttpStatusCodeException(
-                        HttpStatusCode.Unauthorized, "Such refresh token is inactive");
+                        HttpStatusCode.Unauthorized, "Days to expire of refresh token is inactive");
                 }
 
                 var userResult = await _userService.GetByIdAsync(refreshToken.UserId);
@@ -79,10 +80,42 @@ namespace TheaterSchedule.Controllers
                     ExpiresTime = DateTime.UtcNow.AddMinutes(Constants.MinToExpireAccessToken)
                 });              
             }
-            catch (Exception e)
+        
+
+        // <summary>
+        //     Updates Refresh Token by making it inactive and return Ok() in response
+        // </summary>
+        // <param name="input"></param> 
+        // <returns> StatusCodes.Status200OK in response</returns>
+        // <response code="200">Returns Ok() in response</response>
+        // <response code="400">If url which you are sending is not valid</response>
+        // <response code="404">If the refresh token is not exist</response> 
+        // <summary>
+        [HttpDelete]
+        [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<TokensResponse>> DeleteRefreshTokenAsync([FromBody] RefreshTokenModel input)
+        {
+            var refreshToken = await _refreshTokenService.GetAsync(input.RefreshToken);
+
+            if (refreshToken == null)
             {
-                return BadRequest(e);
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.NotFound, $"Such refreshToken doesn't exist");
             }
+
+            var userResult = await _userService.GetByIdAsync(refreshToken.UserId);
+
+            if (userResult == null)
+            {
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.NotFound, $"Such user doesn't exist");
+            }
+
+            await _refreshTokenService.UpdateRefreshTokenAsync(refreshToken.Id, input.RefreshToken, userResult.Id, Constants.DaysToExpireRefreshToken, false);
+
+            return StatusCode(200);
         }
     }
 }
