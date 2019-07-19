@@ -1,4 +1,7 @@
-﻿using TheaterSchedule.BLL.DTO;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using TheaterSchedule.BLL.DTO;
+using TheaterSchedule.BLL.DTOs;
 
 namespace TheaterSchedule.BLL.Interfaces
 {
@@ -6,5 +9,7 @@ namespace TheaterSchedule.BLL.Interfaces
     {
         MessageDTO GetById(int id);
         void SendMessage(MessageDTO newMessage);
+
+        List<UserMessageDTO> GetAllMessages();
     }
 }

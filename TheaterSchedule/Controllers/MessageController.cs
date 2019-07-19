@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.DTO;
+using TheaterSchedule.BLL.DTOs;
 using TheaterSchedule.BLL.Interfaces;
 
 namespace TheaterSchedule.Controllers
@@ -34,25 +37,28 @@ namespace TheaterSchedule.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<MessageDTO> PostMessage([FromBody] MessageDTO message)
         {
-            if (!ModelState.IsValid)
+            messageService.SendMessage(message);
+                return StatusCode(201, message);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public  ActionResult<List<MessageDTO>> GetAllMessages()
+        {
+            List<UserMessageDTO> messages =  messageService.GetAllMessages();
+
+            if (messages == null)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
 
-            try
-            {
-                messageService.SendMessage(message);
-                return StatusCode(201, message);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            return Ok(messages);
         }
     }
 }

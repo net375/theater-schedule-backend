@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using TheaterSchedule.BLL.Helpers;
 using TheaterSchedule.BLL.DTOs;
 using TheaterSchedule.BLL.Interfaces;

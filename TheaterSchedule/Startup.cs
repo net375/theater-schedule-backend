@@ -128,7 +128,7 @@ namespace TheaterSchedule
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IPushTokenService, PushTokenService>();
-            services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
+            services.AddScoped<IPushNotificationsService, PushNotificationsService>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();
@@ -163,6 +163,7 @@ namespace TheaterSchedule
             //app.UseAuthentication();
 
             app.UseHttpsRedirection();
+
 
 
             app.UseStaticFiles();

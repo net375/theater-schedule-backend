@@ -4,7 +4,7 @@
     {
         public int MessageId { get; set; }
         public string Subject { get; set; }
-        public string MessageText { get; set; }       
-        public string PhoneId { get; set; }
+        public string MessageText { get; set; }
+        public int AccountId { get; set; }
     }
 }

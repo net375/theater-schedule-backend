@@ -8,5 +8,7 @@ namespace TheaterSchedule.DAL.Interfaces
     {
         void Add(PushToken pushToken);
         IEnumerable<PushTokenDataModelPartial> GetAllPushTokensToSendNotifications();
+        IEnumerable<PushTokenDataModelPartial> GetAllPushTokensWithoutPerformances();
+        IEnumerable<PushTokenDataModelPartial> GetPushTokenByAccountId(int accountId);
     }
 }
