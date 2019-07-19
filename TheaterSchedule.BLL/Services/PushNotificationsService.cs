@@ -1,4 +1,5 @@
 ﻿using TheaterSchedule.BLL.DTO;
+using TheaterSchedule.BLL.DTOs;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
 using TheaterSchedule.DAL.Models;
@@ -53,7 +54,7 @@ namespace TheaterSchedule.BLL.Services
                  join schedule in scheduleWp on performance.PerformanceId equals schedule.PerformanceId
 
                  where (schedule.Beginning.Day == (DateTime.Today.AddDays(partialInfo.Frequency).Day)
-                         && (schedule.PerformanceId == partialInfo.PerformanceId))
+                        && (schedule.PerformanceId == partialInfo.PerformanceId))
 
                  select new PushTokenDataModel
                  {
@@ -86,7 +87,78 @@ namespace TheaterSchedule.BLL.Services
                     JsonConvert.SerializeObject(reqBody));
             }
         }
-    }
+        
+        public void SendPostPushNotification(AdminsPostDTO post)
+        {
+            if (post.IsPersonal)
+            {
+                int userId = post.ToUserId.GetValueOrDefault();
+                IEnumerable<PushTokenDataModelPartial> pushTokenById = pushTokenRepository.GetPushTokenByAccountId(userId);
+                var pushNotificationById =
+                    (from partialInfo in pushTokenById
+                     select new PushTokenDataModel
+                     {
+                         Token = partialInfo.Token,
+                         LanguageCode = partialInfo.LanguageCode,
+
+                     }).ToList();
+               List<PushNotificationDTO> reqBody = (pushNotificationById.Select(p =>
+               new PushNotificationDTO
+               {
+                   To = p.Token,
+                   Title = p.LanguageCode == "en" ? "New message" : "Нове повідомлення",
+                   Body = p.LanguageCode == "en" ?
+                       "You got new private message" : "Вам прийшло нове приватне повідомлення",
+                   Color = "#9984d4",
+                   Icon= "../img/logo.png"
+               })).ToList();
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                    client.Headers.Add("accept", "application/json");
+                    client.Headers.Add("accept-encoding", "gzip, deflate");
+                    client.Headers.Add("Content-Type", "application/json");
+                    client.UploadString(
+                        "https://exp.host/--/api/v2/push/send",
+                        JsonConvert.SerializeObject(reqBody));
+                }
+            }
+
+
+
+            else
+            {
+                IEnumerable<PushTokenDataModelPartial> allPushTokens = pushTokenRepository.GetAllPushTokensWithoutPerformances();
+                var allTokens= (from pushToken in allPushTokens
+                 select new PushTokenDataModel
+                 {
+                     Token = pushToken.Token,
+                     LanguageCode = pushToken.LanguageCode,
+
+                 }).ToList();
+                List<PushNotificationDTO> reqBody = (allTokens.Select(p =>
+               new PushNotificationDTO
+               {
+                   To = p.Token,
+                   Title = p.LanguageCode == "en" ? "New message" : "Нове повідомлення",
+                   Body = p.LanguageCode == "en" ?
+                       "You got new public message" : "Вам прийшло нове спільне повідомлення",
+                   Color = "#9984d4",
+                   Icon = "../img/logo.png"
+               })).ToList();
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                    client.Headers.Add("accept", "application/json");
+                    client.Headers.Add("accept-encoding", "gzip, deflate");
+                    client.Headers.Add("Content-Type", "application/json");
+                    client.UploadString(
+                        "https://exp.host/--/api/v2/push/send",
+                        JsonConvert.SerializeObject(reqBody));
+                }
+
+            }
+        }
+        }
+    
 
     internal class PushTokenDataModelComparer : IEqualityComparer<PushTokenDataModel>
     {
