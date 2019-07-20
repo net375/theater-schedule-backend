@@ -11,10 +11,11 @@ namespace TheaterSchedule.Controllers
     public class AdminsPostController : ControllerBase
     {
         private IAdminsPostService adminsPostService;
-
-        public AdminsPostController(IAdminsPostService adminsPostService)
+        private IPushNotificationsService pushNotificationsService;
+        public AdminsPostController(IAdminsPostService adminsPostService,IPushNotificationsService pushNotificationsService)
         {
             this.adminsPostService = adminsPostService;
+            this.pushNotificationsService = pushNotificationsService;
         }
 
         [HttpGet]
@@ -44,6 +45,7 @@ namespace TheaterSchedule.Controllers
             }
 
             adminsPostService.AddNewPost(post);
+            pushNotificationsService.SendPostPushNotification(post);
             return StatusCode(StatusCodes.Status201Created, post);
         }
     }

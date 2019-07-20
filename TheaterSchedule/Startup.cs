@@ -111,6 +111,7 @@ namespace TheaterSchedule
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IGoogleFormUrlRepository, GoogleFormUrlRepository>();
             services.AddScoped<INotificationFrequencyRepository, NotificationFrequencyRepository>();
+            services.AddScoped<IResetCodeRepository, ResetCodeRepository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
 
@@ -128,7 +129,7 @@ namespace TheaterSchedule
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IPushTokenService, PushTokenService>();
-            services.AddSingleton<IPushNotificationsService, PushNotificationsService>();
+            services.AddScoped<IPushNotificationsService, PushNotificationsService>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();
@@ -137,6 +138,8 @@ namespace TheaterSchedule
             services.AddScoped<IGetDataFromGoogleFormService, GetDataFromGoogleFormService>();
             services.AddMemoryCache();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IResetCodeService, ResetCodeService>();
+            services.AddScoped<IEmailService, EmailService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -158,9 +161,10 @@ namespace TheaterSchedule
                 app.UseHsts();
             }
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             //app.UseHttpsRedirection();
+
 
 
             app.UseStaticFiles();

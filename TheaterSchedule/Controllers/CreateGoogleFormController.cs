@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using TheaterSchedule.BLL.DTOs;
+using TheaterSchedule.Infrastructure;
+using System.Net;
 
 namespace TheaterSchedule.Controllers
 {
@@ -40,21 +42,16 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<string> GetDataFromGoogleForm()
         {
-            try
-            {
-                string url = getUrlService.GetUrl().Url;
-                string res = JsonConvert.SerializeObject(getService.GetDataFromServer(url));
-                if (res == null)
-                    return NotFound();
+            string url = getUrlService.GetUrl().Url;
+            string res = JsonConvert.SerializeObject(getService.GetDataFromServer(url));
+            if (res == null)
+                throw new HttpStatusCodeException(
+                        HttpStatusCode.NotFound, $"Unable to get the form");
 
-                return StatusCode(200, res);
-            }catch(Exception e)
-            {
-                return BadRequest(e);
-            }
-
+            return StatusCode(201, res);
         }
         [HttpPost]
         [Route("SendDataToGoogleForm")]
@@ -68,9 +65,9 @@ namespace TheaterSchedule.Controllers
             string result = sendService.Submit(url, inputs.Fields, inputs.CheckBoxes);
 
             if (result == null)
-                    return BadRequest();
+                return BadRequest();
 
-                return StatusCode(200, result);
+            return StatusCode(200, result);
         }
         #endregion
     }

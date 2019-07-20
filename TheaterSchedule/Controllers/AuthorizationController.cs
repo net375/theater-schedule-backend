@@ -19,7 +19,7 @@ namespace TheaterSchedule.Controllers
         private IRefreshTokenService _refreshTokenService;
 
         public AuthorizationController(IUserService userService, ITokenService tokenService, IRefreshTokenService refreshTokenService)
-        {            
+        {
             _userService = userService;
             _tokenService = tokenService;
             _refreshTokenService = refreshTokenService;
@@ -40,37 +40,26 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TokensResponse>> AuthorizationAsync([FromBody] UserLoginModel input)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var userResult = await _userService.GetAsync(input.Email, input.PasswordHash);
 
-            try
+            if (userResult == null)
             {
-                var userResult = await _userService.GetAsync(input.Email, input.PasswordHash);
-
-                if (userResult == null)
-                {
-                    throw new HttpStatusCodeException(
-                        HttpStatusCode.NotFound, $"Such [{input.Email}] doesn't exist");
-                }
-
-                var jwt = _tokenService.GenerateAccessToken(userResult);
-
-                var refreshToken = _refreshTokenService.GenerateRefreshToken();
-                
-                await _refreshTokenService.AddRefreshTokenAsync(refreshToken, userResult.Id, Constants.DaysToExpireRefreshToken);
-
-                return StatusCode(200, new TokensResponse
-                {
-                    AccessToken = jwt,
-                    RefreshToken = refreshToken,
-                    ExpiresTime = DateTime.Now.AddMinutes(Constants.MinToExpireAccessToken)
-                });
-                
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.NotFound, $"Such [{input.Email}] doesn't exist");
             }
-            catch (Exception e)
+
+            var jwt = _tokenService.GenerateAccessToken(userResult);
+
+            var refreshToken = _refreshTokenService.GenerateRefreshToken();
+
+            await _refreshTokenService.AddRefreshTokenAsync(refreshToken, userResult.Id, Constants.DaysToExpireRefreshToken);
+
+            return StatusCode(200, new TokensResponse
             {
-                return BadRequest(e);
-            }
+                AccessToken = jwt,
+                RefreshToken = refreshToken,
+                ExpiresTime = DateTime.Now.AddMinutes(Constants.MinToExpireAccessToken)
+            });
         }
     }
 }
