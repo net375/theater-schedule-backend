@@ -6,7 +6,7 @@ namespace TheaterSchedule.DAL.Interfaces
     public interface IAdminsPostRepository
     {
         void Add(AdminsPost post);
-        List<AdminsPost> GetAllPersonalById(int id);
-        List<AdminsPost> GetAllPublic();
+        IEnumerable<AdminsPost> GetAllPersonalById(int id);
+        IEnumerable<AdminsPost> GetAllPublic();
     }
 }

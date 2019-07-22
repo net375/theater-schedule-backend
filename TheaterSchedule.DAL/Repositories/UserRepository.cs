@@ -50,22 +50,9 @@ namespace TheaterSchedule.DAL.Repositories
              return await db.Account.FirstOrDefaultAsync(u => u.AccountId == id);           
         }
 
-        public ApplicationUserModel GetById(int id)
+        public Account GetById(int id)
         {
-            Account user = db.Account.First(u => u.AccountId == id);
-            return new ApplicationUserModel
-            {
-                Id = user.AccountId,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                DateOfBirth = user.Birthdate,
-                City = user.City,
-                Country = user.Country,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                PasswordHash = user.PasswordHash,
-                PhoneIdentifier = user.PhoneIdentifier
-            };
+            return db.Account.First(u => u.AccountId == id);
         }
 
         public async Task<Account> GetUserByEmailAddress(string email)
