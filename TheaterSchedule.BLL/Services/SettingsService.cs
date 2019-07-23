@@ -93,7 +93,7 @@ namespace TheaterSchedule.BLL.Services
                     PhoneIdentifier = phoneId,
                     Settings = newSettings,
                     PasswordHash="",
-                    Email="",
+                    Email=phoneId,
                     FirstName="",
                     City=""
                 });
