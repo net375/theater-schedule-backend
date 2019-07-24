@@ -21,7 +21,7 @@ namespace TheaterSchedule.BLL.Services
             _tokenHandler = new JwtSecurityTokenHandler();
         }
 
-        public string GenerateAccessToken(ApplicationUserDTO user)
+        public string GenerateAccessToken(ApplicationUserDTO user, string refreshToken)
         {
             var claims = new List<Claim>
             {
@@ -32,6 +32,8 @@ namespace TheaterSchedule.BLL.Services
                 new Claim(ClaimKeys.PhoneNumber, user.PhoneNumber),
                 new Claim(ClaimKeys.DateOfBirth, user.DateOfBirth.ToString()),
                 new Claim(ClaimKeys.City, user.City),
+                new Claim(ClaimKeys.ExpiresTime, DateTime.Now.AddMinutes(Constants.MinToExpireAccessToken).ToString()),
+                new Claim(ClaimKeys.RefreshToken, refreshToken),
                 new Claim(ClaimKeys.Country, user.Country)
             };
 

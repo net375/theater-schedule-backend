@@ -7,18 +7,24 @@ using TheaterSchedule.BLL.DTOs;
 using TheaterSchedule.Infrastructure;
 using System.Net;
 using System.Security.Cryptography;
+using TheaterSchedule.BLL.Models;
 
 namespace TheaterSchedule.BLL.Services
 {
     public class RefreshTokenService : IRefreshTokenService
     {
+        private IUserService _userService;
         private IRefreshTokenRepository _refreshTokenRepository;
         private ITheaterScheduleUnitOfWork _theaterScheduleUnitOfWork;
+        private ITokenService _tokenService;
 
-        public RefreshTokenService(IRefreshTokenRepository refreshTokenRepository, ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork)
+
+        public RefreshTokenService(IRefreshTokenRepository refreshTokenRepository, ITokenService tokenService, IUserService userService, ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork)
         {
+            _userService = userService;
+            _tokenService = tokenService;
             _refreshTokenRepository = refreshTokenRepository;
-            _theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;           
+            _theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
         }
 
         public string GenerateRefreshToken(int size = 32)
@@ -51,6 +57,45 @@ namespace TheaterSchedule.BLL.Services
             };
         }
 
+        public async Task<TokensResponse> CheckRefreshTokenAsync(string inputValues)
+        {
+            var refreshToken = await GetAsync(inputValues);
+
+            if (refreshToken == null)
+            {
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.NotFound, $"Such refreshToken doesn't exist");
+            }
+
+            if (!refreshToken.IsActive)
+            {
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.Unauthorized, "Such refresh token is inactive");
+            }
+
+            if (DateTime.Now >= refreshToken.DaysToExpire)
+            {
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.Unauthorized, "Days to expire of refresh token is inactive");
+            }
+
+            var userResult = await _userService.GetByIdAsync(refreshToken.UserId);
+
+            if (userResult == null)
+            {
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.NotFound, $"Such user doesn't exist");
+            }
+
+            var newRefreshToken = GenerateRefreshToken();
+
+            var newJwt = _tokenService.GenerateAccessToken(userResult, newRefreshToken);
+
+            await UpdateRefreshTokenAsync(refreshToken.Id, newRefreshToken, userResult.Id, Constants.DaysToExpireRefreshToken);            
+
+            return new TokensResponse { AccessToken = newJwt, RefreshToken = newRefreshToken, ExpiresTime = DateTime.Now.AddMinutes(Constants.MinToExpireAccessToken) };
+        }
+
         public async Task UpdateRefreshTokenAsync(int id, string refreshtoken, int userId, double daysToExpire, bool isActive = true)
         {
             var refreshToken = await _refreshTokenRepository.GetAsync(item => item.Id == id && item.UserId == userId);
@@ -60,20 +105,20 @@ namespace TheaterSchedule.BLL.Services
                 throw new HttpStatusCodeException(
                        HttpStatusCode.NotFound, $"Such refresh token doesn't exist");
             }
-            
+
             refreshToken.IsActive = isActive;
             refreshToken.RefreshToken = refreshtoken;
             refreshToken.DaysToExpire = DateTime.Now.AddDays(daysToExpire);
 
             await _refreshTokenRepository.UpdateAsync(refreshToken);
-          
+
             await _theaterScheduleUnitOfWork.SaveAsync();
         }
 
         public async Task AddRefreshTokenAsync(string refreshtoken, int userId, double daysToExpire)
         {
             var refreshToken = await _refreshTokenRepository.GetAsync(item => item.RefreshToken == refreshtoken && item.UserId == userId);
-     
+
             if (refreshToken != null)
             {
                 await UpdateRefreshTokenAsync(refreshToken.Id, refreshtoken, userId, daysToExpire);

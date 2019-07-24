@@ -11,7 +11,7 @@ namespace TheaterSchedule.Extensions
         private static IOptions<AuthOptions> _authOptions { get; }
         public static void AddAuthenticationService(this IServiceCollection services)
         {
-            using (var buildServiceProvide = services.BuildServiceProvider())
+            using ( var buildServiceProvide = services.BuildServiceProvider())
             {
                 var authOption = buildServiceProvide.GetRequiredService<IOptions<AuthOptions>>();
 
@@ -23,7 +23,6 @@ namespace TheaterSchedule.Extensions
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-
                         NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
                         ValidateIssuer = true,
                         ValidIssuer = authOption.Value.ISSUER,

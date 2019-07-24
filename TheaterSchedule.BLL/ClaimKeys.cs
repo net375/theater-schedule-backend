@@ -11,5 +11,7 @@ namespace TheaterSchedule.BLL
         public const string DateOfBirth = "dateOfBirth";
         public const string City = "city";
         public const string Country = "country";
+        public const string ExpiresTime = "expiresTime";
+        public const string RefreshToken = "refreshToken";
     }
 }

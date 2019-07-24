@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using Microsoft.AspNetCore.Http;
+using TheaterSchedule.MiddlewareComponents;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TheaterSchedule.Controllers
 {
     #region snippet_WishlistController
-    [Route("api/[controller]")]
-    [ApiController]
+    [ServiceFilter(typeof(CustomAuthorizationAttribute))]
+    [Authorize]   
+    [ApiController]    
+    [Route("api/[controller]")]      
     public class WishlistController : Controller
     {
         private IWishlistService wishlistService;
@@ -31,7 +35,7 @@ namespace TheaterSchedule.Controllers
         /// <returns>A list of favourites user performances from database</returns>
         /// <response code="200">Returns the list of favourites user performances of appropriate language</response>
         /// <response code="400">If url which you are sending is not valid</response>
-        /// <response code="404">If the information about user performances is null</response>
+        /// <response code="404">If the information about user performances is null</response>         
         [HttpGet("{phoneId}/{languageCode}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -78,6 +82,7 @@ namespace TheaterSchedule.Controllers
         /// <response code="200">A newly added performance to wishlist or information about successful operation (Save or Delete)</response>
         /// <response code="400">If url which you are sending is not valid</response>
         [HttpPost("{phoneId}")]
+        [ServiceFilter(typeof(CustomAuthorizationAttribute))]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]

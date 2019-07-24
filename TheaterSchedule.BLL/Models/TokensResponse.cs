@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace TheaterSchedule.Models
+namespace TheaterSchedule.BLL.Models
 {
     public class TokensResponse
     {
