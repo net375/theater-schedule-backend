@@ -21,8 +21,10 @@ namespace TheaterSchedule.BLL.Tests
     {
         private RefreshTokenService refreshTokenService;
         private Mock<IRefreshTokenRepository> refreshTokenRepositoryMock;
+        private Mock<ITokenService> tokenService;
+        private Mock<IUserService> userService;
         private Mock<ITheaterScheduleUnitOfWork> theaterScheduleUnitOfWorkMock;
-        private RefreshTokens refreshTokenInitialize;
+        private RefreshTokens refreshTokenInitialize; 
         private string refreshToken = "4wjRDjmSi9YfgFYAVM2QWjJxY8w1Ao6U7S6ZWX9VDCQ=";
         private int UserId = 91;
         private double daysToExpire = 3;
@@ -32,7 +34,7 @@ namespace TheaterSchedule.BLL.Tests
         {
             theaterScheduleUnitOfWorkMock = new Mock<ITheaterScheduleUnitOfWork>();
             refreshTokenRepositoryMock = new Mock<IRefreshTokenRepository>();
-            refreshTokenService = new RefreshTokenService(refreshTokenRepositoryMock.Object, theaterScheduleUnitOfWorkMock.Object);
+            refreshTokenService = new RefreshTokenService(refreshTokenRepositoryMock.Object, tokenService.Object, userService.Object, theaterScheduleUnitOfWorkMock.Object);
 
             refreshTokenInitialize = new RefreshTokens()
             {

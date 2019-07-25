@@ -4,6 +4,6 @@ namespace TheaterSchedule.BLL.Interfaces
 {
     public interface ITokenService
     {
-        string GenerateAccessToken(ApplicationUserDTO user);
+        string GenerateAccessToken(ApplicationUserDTO user, string refreshToken);
     }
 }

@@ -52,7 +52,7 @@ namespace TheaterSchedule
                             .AllowCredentials();
                     });
             });
-
+            
             services.AddHangfire(configuration =>
             {
                 configuration.UseSqlServerStorage(
@@ -60,11 +60,12 @@ namespace TheaterSchedule
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.Configure<CookiePolicyOptions>(options =>
             {
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            }); 
+            });
 
             services.AddDbContext<TheaterDatabaseContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("TheaterConnectionString")), ServiceLifetime.Scoped);           
@@ -86,9 +87,11 @@ namespace TheaterSchedule
 
             services.AddOptions();
 
-            services.Configure<AuthOptions>(Configuration.GetSection(Constants.AuthOption));            
+            services.Configure<AuthOptions>(Configuration.GetSection(Constants.AuthOption));
 
             services.AddAuthenticationService();
+
+            services.AddScoped<CustomAuthorizationAttribute>();
 
             //repositories
             services.AddScoped<IAdminsPostRepository, AdminsPostRepository>();
@@ -132,7 +135,7 @@ namespace TheaterSchedule
             services.AddScoped<IPushNotificationsService, PushNotificationsService>();
             services.AddScoped<ICreativeTeamService, CreativeTeamService>();
             services.AddScoped<ITagService, TagService>();
-            services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();
+            services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();            
             services.AddScoped<ICacheProvider, CacheProvider>();
             services.AddScoped<ISendDataToGoogleFormService, SendDataToGoogleFormService>();
             services.AddScoped<IGetDataFromGoogleFormService, GetDataFromGoogleFormService>();
@@ -151,7 +154,8 @@ namespace TheaterSchedule
             });
 
            RecurringJob.AddOrUpdate<PushNotificationsService>(service => service.SendPushNotification(), "0 9 * * *");
-
+            
+           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -161,7 +165,7 @@ namespace TheaterSchedule
                 app.UseHsts();
             }
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
             //app.UseHttpsRedirection();
 

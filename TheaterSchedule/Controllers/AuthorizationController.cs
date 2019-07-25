@@ -7,6 +7,7 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL;
 using TheaterSchedule.Infrastructure;
 using TheaterSchedule.Models;
+using TheaterSchedule.BLL.Models;
 
 namespace TheaterSchedule.Controllers
 {
@@ -33,7 +34,7 @@ namespace TheaterSchedule.Controllers
         /// <returns>Information about user in response and token</returns>
         /// <response code="200">Returns the information about user  and token</response>
         /// <response code="400">If url which you are sending is not valid</response>
-        /// <response code="404">If the information about user is null</response> 
+        /// <response code="404">If the information about user is null</response>      
         [HttpPost]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -47,12 +48,12 @@ namespace TheaterSchedule.Controllers
                 throw new HttpStatusCodeException(
                     HttpStatusCode.NotFound, $"Such [{input.Email}] doesn't exist");
             }
-
-            var jwt = _tokenService.GenerateAccessToken(userResult);
-
+     
             var refreshToken = _refreshTokenService.GenerateRefreshToken();
 
-            await _refreshTokenService.AddRefreshTokenAsync(refreshToken, userResult.Id, Constants.DaysToExpireRefreshToken);
+            var jwt = _tokenService.GenerateAccessToken(userResult, refreshToken);
+
+            await _refreshTokenService.AddRefreshTokenAsync(refreshToken, userResult.Id, Constants.DaysToExpireRefreshToken);            
 
             return StatusCode(200, new TokensResponse
             {
