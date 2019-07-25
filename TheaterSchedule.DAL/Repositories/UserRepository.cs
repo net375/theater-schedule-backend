@@ -53,7 +53,6 @@ namespace TheaterSchedule.DAL.Repositories
         public Account GetById(int id)
         {
             return db.Account.First(u => u.AccountId == id);
-         
         }
 
         public async Task<Account> GetUserByEmailAddress(string email)
