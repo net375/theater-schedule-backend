@@ -48,7 +48,7 @@ namespace TheaterSchedule.Controllers
                 throw new HttpStatusCodeException(
                     HttpStatusCode.NotFound, $"Such [{input.Email}] doesn't exist");
             }
-            
+     
             var refreshToken = _refreshTokenService.GenerateRefreshToken();
 
             var jwt = _tokenService.GenerateAccessToken(userResult, refreshToken);

@@ -117,6 +117,7 @@ namespace TheaterSchedule
             services.AddScoped<IResetCodeRepository, ResetCodeRepository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
+
             //services        
             services.AddScoped<IFormService, FormService>();
             services.AddScoped<IAdminsPostService, AdminsPostService>();
@@ -136,7 +137,7 @@ namespace TheaterSchedule
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IPerformanceScheduleService, PerformanceScheduleService>();            
             services.AddScoped<ICacheProvider, CacheProvider>();
-            //services.AddScoped<ISendDataToGoogleFormService, SendDataToGoogleFormService>();
+            services.AddScoped<ISendDataToGoogleFormService, SendDataToGoogleFormService>();
             services.AddScoped<IGetDataFromGoogleFormService, GetDataFromGoogleFormService>();
             services.AddMemoryCache();
             services.AddScoped<IUserService, UserService>();
@@ -166,7 +167,7 @@ namespace TheaterSchedule
 
             app.UseAuthentication();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
 
 
