@@ -17,7 +17,6 @@ namespace TheaterSchedule.Extensions
 
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 {
-
                     options.RequireHttpsMetadata = true;
                     options.SaveToken = true;
 
