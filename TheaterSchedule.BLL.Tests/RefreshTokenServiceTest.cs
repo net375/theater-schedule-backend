@@ -1,5 +1,4 @@
-﻿
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TheaterSchedule.BLL.Services;
 using TheaterSchedule.DAL.Interfaces;
 using Moq;
@@ -7,13 +6,10 @@ using TheaterSchedule.BLL.Interfaces;
 using System;
 using System.Threading.Tasks;
 using TheaterSchedule.Infrastructure;
-using TheaterSchedule.Controllers;
 using TheaterSchedule.Models;
 using TheaterSchedule.BLL.DTOs;
 using Entities.Models;
 using System.Net;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using TheaterSchedule.BLL.Models;
 
 namespace TheaterSchedule.BLL.Tests
