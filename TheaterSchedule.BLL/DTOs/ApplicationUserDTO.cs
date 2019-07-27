@@ -18,6 +18,8 @@ namespace TheaterSchedule.BLL.DTOs
         public string PhoneIdentifier { get; set; }
         public int? SettingsId { get; set; }
         public string PhoneNumber { get; set; }
+        public int? ValidationCode { get; set; }
+        public DateTime? CodeCreationTime { get; set; }
 
     }
 }

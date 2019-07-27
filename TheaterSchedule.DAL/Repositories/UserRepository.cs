@@ -29,7 +29,9 @@ namespace TheaterSchedule.DAL.Repositories
                 PasswordHash = user.PasswordHash,
                 PhoneIdentifier = user.PhoneIdentifier,
                 SettingsId = user.SettingsId,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                ValidationCode = user.ValidationCode,
+                CodeCreationTime = user.CodeCreationTime
             });
         }
 
@@ -50,22 +52,9 @@ namespace TheaterSchedule.DAL.Repositories
              return await db.Account.FirstOrDefaultAsync(u => u.AccountId == id);           
         }
 
-        public ApplicationUserModel GetById(int id)
+        public Account GetById(int id)
         {
-            Account user = db.Account.First(u => u.AccountId == id);
-            return new ApplicationUserModel
-            {
-                Id = user.AccountId,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                DateOfBirth = user.Birthdate,
-                City = user.City,
-                Country = user.Country,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                PasswordHash = user.PasswordHash,
-                PhoneIdentifier = user.PhoneIdentifier
-            };
+            return db.Account.First(u => u.AccountId == id);
         }
 
         public async Task<Account> GetUserByEmailAddress(string email)
@@ -83,18 +72,26 @@ namespace TheaterSchedule.DAL.Repositories
             UpdateUser.Country = user.Country;
             UpdateUser.Email = user.Email;
             UpdateUser.PasswordHash = user.PasswordHash;
-            UpdateUser.PhoneNumber = user.PhoneNumber;              
+            UpdateUser.PhoneNumber = user.PhoneNumber;
+            UpdateUser.ValidationCode = user.ValidationCode;
+            UpdateUser.CodeCreationTime = user.CodeCreationTime;
         }
 
         public async Task UpdatePasswordAsync(ChangePasswordModel model)
         {
-            var user = await db.Account.FirstAsync(item => item.AccountId == model.Id);
+            var user = db.Account.FirstOrDefault(item => item.AccountId == model.Id);
             user.PasswordHash = model.Password;
         }
 
         public async Task UpdateProfileAsync(Account user)
         {
            db.Account.Update(user);
+        }
+        public async Task UpdateValidationCodeAsync(UpdateValidationCodeModel code)
+        {
+            var user = db.Account.FirstOrDefault(item => item.AccountId == code.Id);
+            user.ValidationCode = code.ValidationCode;
+            user.CodeCreationTime = code.CodeCreationTime;
         }
     }
 }

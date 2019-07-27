@@ -17,12 +17,14 @@ namespace TheaterSchedule.BLL.Services
         private ITheaterScheduleUnitOfWork _theaterScheduleUnitOfWork;
         private IUserRepository _userRepository;
         private ISettingsRepository _settingsRepository;
+        private IEmailService _emailService;
 
-        public UserService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IUserRepository userRepository, ISettingsRepository settingsRepository)
+        public UserService(ITheaterScheduleUnitOfWork theaterScheduleUnitOfWork, IUserRepository userRepository, ISettingsRepository settingsRepository, IEmailService emailService)
         {
             _theaterScheduleUnitOfWork = theaterScheduleUnitOfWork;
             _userRepository = userRepository;
             _settingsRepository = settingsRepository;
+            _emailService = emailService;
         }
         
         public async Task<ApplicationUserDTO> GetByIdAsync(int id)
@@ -45,7 +47,9 @@ namespace TheaterSchedule.BLL.Services
                 Country = user.Country,
                 PhoneNumber = user.PhoneNumber,
                 DateOfBirth = user.Birthdate.ToString("yyyy-MM-dd"),
-                Password = user.PasswordHash
+                Password = user.PasswordHash,
+                ValidationCode = user.ValidationCode,
+                CodeCreationTime = user.CodeCreationTime
             };
         }
 
@@ -72,7 +76,9 @@ namespace TheaterSchedule.BLL.Services
                 City = user.City,
                 PhoneNumber = user.PhoneNumber,
                 Country = user.Country,
-                DateOfBirth = user.Birthdate.ToString("yyyy-MM-dd")
+                DateOfBirth = user.Birthdate.ToString("yyyy-MM-dd"),
+                ValidationCode = user.ValidationCode,
+                CodeCreationTime = user.CodeCreationTime
             };
         }
 
@@ -96,12 +102,97 @@ namespace TheaterSchedule.BLL.Services
                 PasswordHash = PasswordGenerators.CreatePasswordHash(password),
                 SettingsId = user.SettingsId.Value,
                 PhoneNumber = user.PhoneNumber,
-                PhoneIdentifier = user.PhoneIdentifier
+                PhoneIdentifier = user.PhoneIdentifier,
+                ValidationCode = user.ValidationCode,
+                CodeCreationTime = user.CodeCreationTime
             });
 
             _theaterScheduleUnitOfWork.Save();
 
             return user;
+        }
+
+        public int GenerateResetCode(string email)
+        {
+            var user = _userRepository.GetUserByEmailAddress(email);
+
+            if (user.Result == null)
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Wrong email");
+            }
+
+            int random = new Random().Next(1000, 9999);
+
+            _userRepository.UpdateValidationCodeAsync(new UpdateValidationCodeModel
+            {
+                Id = user.Result.AccountId,
+                ValidationCode = random,
+                CodeCreationTime = DateTime.Now
+            });
+
+            _emailService.SendEmailAsync(email, "noreply", $"Validation code for password reset: {random}");
+
+            _theaterScheduleUnitOfWork.Save();
+
+            return user.Result.AccountId;
+        }
+
+        public void ValidateResetCodeAsync(ValidationCodeDTO codeDTO)
+        {
+            var user = _userRepository.GetById(codeDTO.Id);
+
+            if (user == null)
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound);
+            }
+            else if (user.ValidationCode != codeDTO.ValidationCode)
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest);
+            }
+
+            DateTime current = DateTime.Now;
+            TimeSpan? time = current - user.CodeCreationTime;
+
+            int limit = 5;
+
+            if (time?.TotalMinutes > limit)
+            {
+               _userRepository.UpdateValidationCodeAsync(new UpdateValidationCodeModel
+                {
+                    Id = codeDTO.Id,
+                    ValidationCode = 0,
+                    CodeCreationTime = DateTime.Now
+                });
+
+                _theaterScheduleUnitOfWork.Save();
+
+                throw new HttpStatusCodeException(HttpStatusCode.Gone, $"This validation code timeout expired! Try again.");
+            }
+
+            _userRepository.UpdatePasswordAsync(new ChangePasswordModel
+            {
+                Id = codeDTO.Id,
+                Password = string.Empty,
+            });
+
+            _theaterScheduleUnitOfWork.Save();
+        }
+
+        public void ResetPasswordAsync(ResetPasswordDTO passwordDTO)
+        {
+            var user = _userRepository.GetById(passwordDTO.Id);
+
+            if (user == null)
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.NotFound);
+            }
+            _userRepository.UpdatePasswordAsync(new ChangePasswordModel
+            {
+                Id = passwordDTO.Id,
+                Password = PasswordGenerators.CreatePasswordHash(passwordDTO.Password)
+            });
+
+            _theaterScheduleUnitOfWork.Save();
         }
 
         public async Task UpdatePasswordAsync(ChangePasswordDTO passwordDTO)
