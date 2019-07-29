@@ -16,5 +16,6 @@ namespace TheaterSchedule.DAL.Interfaces
         void Delete(int id);
         Task UpdatePasswordAsync(ChangePasswordModel model);
         Task UpdateProfileAsync(Account user);
+        Task UpdateValidationCodeAsync(UpdateValidationCodeModel model);
     }
 }

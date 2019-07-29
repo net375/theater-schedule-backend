@@ -42,6 +42,8 @@ namespace TheaterSchedule.BLL.DTOs
         [RegularExpression(@"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$", ErrorMessage = "Phone Number is not valid")]
 
         public string PhoneNumber { get; set; }
+        public int? ValidationCode { get; set; }
+        public DateTime? CodeCreationTime { get; set; }
 
     }
 }

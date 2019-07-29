@@ -10,5 +10,8 @@ namespace TheaterSchedule.BLL.Interfaces
         ApplicationUserDTO Create(ApplicationUserDTO user, string password);
         Task UpdatePasswordAsync(ChangePasswordDTO passwordDTO);
         Task<ChangeProfileDTO> UpdateProfileAsync(ChangeProfileDTO profileDTO);
+        int GenerateResetCode(string email);
+        void ValidateResetCodeAsync(ValidationCodeDTO validationCode);
+        void ResetPasswordAsync(ResetPasswordDTO passwordDTO);
     }
 }
