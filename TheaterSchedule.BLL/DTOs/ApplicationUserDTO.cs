@@ -5,7 +5,6 @@ namespace TheaterSchedule.BLL.DTOs
 {
     public class ApplicationUserDTO
     {
-        [Required]
         public int Id { get; set;}
 
         [Required(ErrorMessage = "You should enter your firstname")]
@@ -27,14 +26,12 @@ namespace TheaterSchedule.BLL.DTOs
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required(ErrorMessage ="You should enter your password")]
-        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Required", AllowEmptyStrings = false)]
+        [MinLength(6)]
         public string Password { get; set; }
         
-        [Required]
         public string PhoneIdentifier { get; set; }
 
-        [Required]
         public int? SettingsId { get; set; }
 
         [Required(ErrorMessage = "Phone Number is required")]
