@@ -5,9 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.Models;
 using TheaterSchedule.BLL.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using TheaterSchedule.MiddlewareComponents;
 
 namespace TheaterSchedule.Controllers
 {
+    [ServiceFilter(typeof(CustomAuthorizationAttribute))]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

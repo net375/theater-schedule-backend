@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.Infrastructure;
@@ -7,11 +6,10 @@ using TheaterSchedule.Controllers;
 using TheaterSchedule.Models;
 using TheaterSchedule.BLL.DTOs;
 using Moq;
-using TheaterSchedule.DAL.Interfaces;
-using Entities.Models;
 using System.Net;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TheatherSchedule.Web.Test
 {
@@ -27,7 +25,7 @@ namespace TheatherSchedule.Web.Test
         private ApplicationUserDTO _applicationUserDTO;
         private int UserId;
         private string AccessToken;
-        private double DaysToExpire;
+        private int DaysToExpire;
         private int Size;
 
         [TestInitialize]
@@ -69,81 +67,9 @@ namespace TheatherSchedule.Web.Test
             };
 
             _refreshTokenService.Setup(service => service.UpdateRefreshTokenAsync(_refreshTokenDTO.Id, _refreshTokenDTO.RefreshToken, _refreshTokenDTO.UserId, DaysToExpire, true)).Returns(Task.CompletedTask);
-            _tokenService.Setup(service => service.GenerateAccessToken(_applicationUserDTO)).Returns(() => { return AccessToken; });
+            _tokenService.Setup(service => service.GenerateAccessToken(_applicationUserDTO, _refreshTokenModel.RefreshToken)).Returns(() => { return AccessToken; });
             _refreshTokenService.Setup(service => service.GenerateRefreshToken(Size)).Returns(() => { return _refreshTokenModel.RefreshToken; });
-        }
-
-        [TestMethod]
-        public async Task UpdateRefreshTokenCheckRefreshTokenNull_Test()
-        {
-            _refreshTokenService.Setup(service => service.GetAsync(_refreshTokenModel.RefreshToken)).Returns(async () => { return null; });
-
-            var ex = await Assert.ThrowsExceptionAsync<HttpStatusCodeException>(() => _refreshTokenController.UpdateRefreshTokenAsync(_refreshTokenModel));
-
-            Assert.AreEqual("Such refreshToken doesn't exist", ex.Message);
-            Assert.AreEqual(HttpStatusCode.NotFound, ex.StatusCode);
-        }
-
-        [TestMethod]
-        public async Task UpdateRefreshTokenCheckTokenInactive_Test()
-        {
-            _refreshTokenDTO = new RefreshTokenDTO()
-            {
-                Id = 1,
-                IsActive = false
-            };
-
-            _refreshTokenService.Setup(service => service.GetAsync(_refreshTokenModel.RefreshToken)).Returns(async () => { return _refreshTokenDTO; });
-
-            var ex = await Assert.ThrowsExceptionAsync<HttpStatusCodeException>(() => _refreshTokenController.UpdateRefreshTokenAsync(_refreshTokenModel));
-
-            Assert.AreEqual("Such refresh token is inactive", ex.Message);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, ex.StatusCode);
-        }
-
-        [TestMethod]
-        public async Task UpdateRefreshTokenCheckTokenDaysToExpireInactive_Test()
-        {
-            _refreshTokenDTO = new RefreshTokenDTO()
-            {
-                Id = 1,
-                IsActive = true,
-                DaysToExpire = Convert.ToDateTime("13.07.2019 11:45:12")
-            };
-
-            _refreshTokenService.Setup(service => service.GetAsync(_refreshTokenModel.RefreshToken)).Returns(async () => { return _refreshTokenDTO; });
-
-            var ex = await Assert.ThrowsExceptionAsync<HttpStatusCodeException>(() => _refreshTokenController.UpdateRefreshTokenAsync(_refreshTokenModel));
-
-            Assert.AreEqual("Days to expire of refresh token is inactive", ex.Message);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, ex.StatusCode);
-        }
-
-        [TestMethod]
-        public async Task UpdateRefreshTokenCheckUserIsNotExist_Test()
-        {
-            _userService.Setup(service => service.GetByIdAsync(UserId)).Returns(async () => { return null; });
-            _refreshTokenService.Setup(service => service.GetAsync(_refreshTokenModel.RefreshToken)).Returns(async () => { return _refreshTokenDTO; });
-
-            var ex = await Assert.ThrowsExceptionAsync<HttpStatusCodeException>(() => _refreshTokenController.UpdateRefreshTokenAsync(_refreshTokenModel));
-
-            Assert.AreEqual("Such user doesn't exist", ex.Message);
-            Assert.AreEqual(HttpStatusCode.NotFound, ex.StatusCode);
-        }
-
-        [TestMethod]
-        public async Task UpdateRefreshTokenCheckReturnOK_Test()
-        {
-            _refreshTokenService.Setup(service => service.GetAsync(_refreshTokenModel.RefreshToken)).Returns(async () => { return _refreshTokenDTO; });
-
-            _userService.Setup(service => service.GetByIdAsync(UserId)).Returns(async () => { return _applicationUserDTO; });
-
-            var actionResult = await _refreshTokenController.UpdateRefreshTokenAsync(_refreshTokenModel);
-
-            var contentResult = actionResult.Result as ObjectResult;
-
-            Assert.AreEqual(StatusCodes.Status200OK, contentResult.StatusCode);
-        }
+        }       
 
         [TestMethod]
         public async Task DeleteRefreshTokenCheckRefreshTokenNull_Test()
@@ -162,7 +88,7 @@ namespace TheatherSchedule.Web.Test
             _userService.Setup(service => service.GetByIdAsync(UserId)).Returns(async () => { return null; });
             _refreshTokenService.Setup(service => service.GetAsync(_refreshTokenModel.RefreshToken)).Returns(async () => { return _refreshTokenDTO; });
 
-            var ex = await Assert.ThrowsExceptionAsync<HttpStatusCodeException>(() => _refreshTokenController.UpdateRefreshTokenAsync(_refreshTokenModel));
+            var ex = await Assert.ThrowsExceptionAsync<HttpStatusCodeException>(() => _refreshTokenController.DeleteRefreshTokenAsync(_refreshTokenModel));
 
             Assert.AreEqual("Such user doesn't exist", ex.Message);
             Assert.AreEqual(HttpStatusCode.NotFound, ex.StatusCode);
@@ -175,9 +101,8 @@ namespace TheatherSchedule.Web.Test
 
             _userService.Setup(service => service.GetByIdAsync(UserId)).Returns(async () => { return _applicationUserDTO; });
 
-            var actionResult = await _refreshTokenController.UpdateRefreshTokenAsync(_refreshTokenModel);
-
-            var contentResult = actionResult.Result as ObjectResult;
+            var actionResult = await _refreshTokenController.DeleteRefreshTokenAsync(_refreshTokenModel);
+            var contentResult = actionResult.Result as IStatusCodeActionResult;
 
             Assert.AreEqual(StatusCodes.Status200OK, contentResult.StatusCode);
         }

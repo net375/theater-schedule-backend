@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.BLL.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using TheaterSchedule.MiddlewareComponents;
 
 namespace TheaterSchedule.Controllers
 {
@@ -26,6 +28,8 @@ namespace TheaterSchedule.Controllers
             return Ok(adminsPostService.GetAllPublicPosts());
         }
 
+        [ServiceFilter(typeof(CustomAuthorizationAttribute))]
+        [Authorize]
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]

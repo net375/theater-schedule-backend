@@ -59,7 +59,7 @@ namespace TheaterSchedule.BLL.Services
 
         public async Task<TokensResponse> CheckRefreshTokenAsync(string inputValues)
         {
-            var refreshToken = await GetAsync(inputValues);
+            var refreshToken = await _refreshTokenRepository.GetAsync(item => item.RefreshToken == inputValues);
 
             if (refreshToken == null)
             {
@@ -96,7 +96,7 @@ namespace TheaterSchedule.BLL.Services
             return new TokensResponse { AccessToken = newJwt, RefreshToken = newRefreshToken, ExpiresTime = DateTime.Now.AddMinutes(Constants.MinToExpireAccessToken) };
         }
 
-        public async Task UpdateRefreshTokenAsync(int id, string refreshtoken, int userId, double daysToExpire, bool isActive = true)
+        public async Task UpdateRefreshTokenAsync(int id, string refreshtoken, int userId, int daysToExpire, bool isActive = true)
         {
             var refreshToken = await _refreshTokenRepository.GetAsync(item => item.Id == id && item.UserId == userId);
 
@@ -108,14 +108,14 @@ namespace TheaterSchedule.BLL.Services
 
             refreshToken.IsActive = isActive;
             refreshToken.RefreshToken = refreshtoken;
-            refreshToken.DaysToExpire = DateTime.Now.AddDays(daysToExpire);
+            refreshToken.DaysToExpire = DateTime.Now.AddMonths(daysToExpire);
 
             await _refreshTokenRepository.UpdateAsync(refreshToken);
 
             await _theaterScheduleUnitOfWork.SaveAsync();
         }
 
-        public async Task AddRefreshTokenAsync(string refreshtoken, int userId, double daysToExpire)
+        public async Task AddRefreshTokenAsync(string refreshtoken, int userId, int daysToExpire)
         {
             var refreshToken = await _refreshTokenRepository.GetAsync(item => item.RefreshToken == refreshtoken && item.UserId == userId);
 
@@ -130,7 +130,7 @@ namespace TheaterSchedule.BLL.Services
                     RefreshToken = refreshtoken,
                     IsActive = true,
                     UserId = userId,
-                    DaysToExpire = DateTime.Now.AddDays(daysToExpire)
+                    DaysToExpire = DateTime.Now.AddMonths(daysToExpire)
                 });
 
                 await _theaterScheduleUnitOfWork.SaveAsync();
