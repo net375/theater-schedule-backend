@@ -114,7 +114,6 @@ namespace TheaterSchedule
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IGoogleFormUrlRepository, GoogleFormUrlRepository>();
             services.AddScoped<INotificationFrequencyRepository, NotificationFrequencyRepository>();
-            services.AddScoped<IResetCodeRepository, ResetCodeRepository>();
             //uow
             services.AddScoped<ITheaterScheduleUnitOfWork, TheaterScheduleUnitOfWork>();
 
@@ -141,7 +140,6 @@ namespace TheaterSchedule
             services.AddScoped<IGetDataFromGoogleFormService, GetDataFromGoogleFormService>();
             services.AddMemoryCache();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IResetCodeService, ResetCodeService>();
             services.AddScoped<IEmailService, EmailService>();
         }
 

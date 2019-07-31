@@ -6,10 +6,12 @@
     [LastName]  NVARCHAR (25) NULL,
 	[City] [nvarchar](50) NOT NULL,
 	[Country] [nvarchar](50) NULL,
-    [Birthdate] DATE          NOT NULL,
+    [Birthdate] DATE NOT NULL,
 	[PhoneIdentifier] NVARCHAR(40) UNIQUE NOT NULL,
 	[SettingsId] INT  UNIQUE NULL,
-    [PhoneNumber] NCHAR(15) NULL, 
+    [PhoneNumber] NCHAR(15) NULL,
+	[ValidationCode] INT NULL,
+	[CodeCreationTime] DATETIME NULL,
     CONSTRAINT [PK_Account] PRIMARY KEY CLUSTERED ([AccountId] ASC),   
     CONSTRAINT [FK_Account_Settings]  FOREIGN KEY ([SettingsId]) REFERENCES [dbo].[Settings] ([SettingsId])
 );

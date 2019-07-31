@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.Models;
+using System.Threading.Tasks;
 
 namespace TheaterSchedule.Controllers
 {
@@ -11,10 +12,10 @@ namespace TheaterSchedule.Controllers
     [ApiController]
     public class ForgotPasswordController : ControllerBase
     {
-        private readonly IResetCodeService _service;
+        private readonly IUserService _service;
         #endregion
 
-        public ForgotPasswordController(IResetCodeService service)
+        public ForgotPasswordController(IUserService service)
         {
             _service = service;
         }
@@ -31,14 +32,14 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<ForgotPasswordModel> GenerateResetCode([FromBody]ForgotPasswordModel model)
+        public ActionResult<int> GenerateResetCode([FromBody]ForgotPasswordModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            //if (!ModelState.IsValid)
+                //return BadRequest(ModelState);
 
-            _service.GenerateResetCodeAsync(model.Email);
+            var userId = _service.GenerateResetCode(model.Email);
 
-            return StatusCode(201);
+            return StatusCode(201, userId);       
         }
         #endregion
 
@@ -52,18 +53,22 @@ namespace TheaterSchedule.Controllers
         /// <response code ="404">If code is null</response>
 
         [HttpPost]
-        [Route("ValidateCode")]
+        [Route("ValidateResetCode")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ResetCodeModel> ValidateResetCode([FromBody]ResetCodeModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+                //return BadRequest(ModelState);
+            //}
 
-            _service.ValidateCode(model.Code);
+            _service.ValidateResetCodeAsync(new ValidationCodeDTO
+            {
+                Id = model.Id,
+                ValidationCode = model.ValidationCode
+            });
 
             return StatusCode(200);
         }
@@ -85,12 +90,17 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ResetPasswordModel> ResetPassword([FromBody]ResetPasswordModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+                //return BadRequest(ModelState);
+            //}
 
-            _service.ResetPassword(model.Password);
+            _service.ResetPasswordAsync(new ResetPasswordDTO
+            {
+                Id = model.Id,
+                Password = model.Password
+            });
+
             return StatusCode(200);
         }
         #endregion

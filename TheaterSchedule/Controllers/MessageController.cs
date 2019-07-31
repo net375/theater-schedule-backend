@@ -11,6 +11,8 @@ using TheaterSchedule.MiddlewareComponents;
 
 namespace TheaterSchedule.Controllers
 {
+    [ServiceFilter(typeof(CustomAuthorizationAttribute))]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MessageController : ControllerBase
