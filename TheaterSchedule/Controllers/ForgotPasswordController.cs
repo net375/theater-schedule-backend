@@ -1,16 +1,12 @@
 ﻿using System;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.Interfaces;
-using TheaterSchedule.MiddlewareComponents;
 using TheaterSchedule.Models;
 
 namespace TheaterSchedule.Controllers
 {
     #region snippet_ForgotPasswordController
-    [ServiceFilter(typeof(CustomAuthorizationAttribute))]
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ForgotPasswordController : ControllerBase

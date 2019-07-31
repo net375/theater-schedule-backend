@@ -22,7 +22,9 @@ namespace TheaterSchedule.MiddlewareComponents
         {
             var accessToken = context.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
 
-            if(String.IsNullOrEmpty(accessToken))
+            accessToken = accessToken == "null" ? null : accessToken;
+
+            if (String.IsNullOrEmpty(accessToken))
                 throw new HttpStatusCodeException(HttpStatusCode.Unauthorized);
 
             var authToken = new JwtSecurityToken(accessToken);
@@ -32,6 +34,7 @@ namespace TheaterSchedule.MiddlewareComponents
                 var refreshToken = authToken.Claims.First(c => c.Type == ClaimKeys.RefreshToken).Value;
                 var newTokens = _refreshTokenService.CheckRefreshTokenAsync(refreshToken).GetAwaiter().GetResult();
                 context.HttpContext.Response.Headers.Add("newAccess_token", newTokens.AccessToken);
+                context.HttpContext.Request.Headers["Authorization"] = "Bearer " + newTokens.AccessToken;
             }
         }
     }

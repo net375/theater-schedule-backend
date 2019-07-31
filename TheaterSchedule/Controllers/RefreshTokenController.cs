@@ -8,13 +8,9 @@ using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.Infrastructure;
 using TheaterSchedule.Models;
 using TheaterSchedule.BLL.Models;
-using Microsoft.AspNetCore.Authorization;
-using TheaterSchedule.MiddlewareComponents;
 
 namespace TheaterSchedule.Controllers
 {
-    [ServiceFilter(typeof(CustomAuthorizationAttribute))]
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RefreshTokenController : ControllerBase
