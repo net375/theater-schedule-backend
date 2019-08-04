@@ -85,7 +85,8 @@ namespace TheaterSchedule.BLL.Services
         public ApplicationUserDTO Create(ApplicationUserDTO user, string password)
         {
             if (_userRepository.GetAll().Any(u => u.Email == user.Email))
-                throw new ArgumentException("Such user already exists");           
+                throw new HttpStatusCodeException(
+                    HttpStatusCode.UnprocessableEntity, "Such user already exists");       
             
             user.SettingsId = _settingsRepository.GetSettingsByPhoneId(user.PhoneIdentifier).SettingsId;
             user.Id = _userRepository.GetAll().First(u => u.PhoneIdentifier == user.PhoneIdentifier).AccountId;

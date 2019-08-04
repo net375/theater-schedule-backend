@@ -43,7 +43,7 @@ namespace TheaterSchedule.Controllers
             var user = _service.Create(userDTO, userDTO.Password);
             if(user == null)
                 throw new HttpStatusCodeException(
-                        HttpStatusCode.NotFound, $"Unable to create user");
+                        HttpStatusCode.Conflict, "Unable to create user");
 
             return StatusCode(201, user);
         }
