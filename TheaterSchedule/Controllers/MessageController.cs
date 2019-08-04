@@ -40,6 +40,8 @@ namespace TheaterSchedule.Controllers
             return Ok(message);
         }
 
+        [ServiceFilter(typeof(CustomAuthorizationAttribute))]
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
