@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.Models;
 using System.Threading.Tasks;
-
+using TheaterSchedule.BLL.DTOs;
 namespace TheaterSchedule.Controllers
 {
     #region snippet_ForgotPasswordController

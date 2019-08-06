@@ -6,8 +6,8 @@ namespace TheaterSchedule.DAL.Interfaces
 {
     public interface IWishlistRepository
     {
-        IEnumerable<int> GetPerformanceIdsInWishlist( string phoneId, string languageCode );
-        Wishlist GetPerformanceByPhoneIdAndPerformanceId( string phoneId, int scheduleId );
+        IEnumerable<int> GetPerformanceIdsInWishlist( string AccountId, string languageCode );
+        Wishlist GetPerformanceByPhoneIdAndPerformanceId( string AccountId, int scheduleId );
         void Add( Wishlist performance );
         void Remove( Wishlist performance );
     }
