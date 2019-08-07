@@ -17,12 +17,12 @@ namespace TheaterSchedule.DAL.Repositories
             db = context;
         }
 
-        public IEnumerable<int> GetPerformanceIdsInWishlist(string phoneId, string languageCode)
+        public IEnumerable<int> GetPerformanceIdsInWishlist(string AccountId, string languageCode)
         {
             var resultWishlist = from account in db.Account
                                  join wishlist in db.Wishlist
                                      on account.AccountId equals wishlist.AccountId
-                                 where account.PhoneIdentifier == phoneId
+                                 where account.AccountId == int.Parse(AccountId)
                                  orderby wishlist.WishPerformanceId descending
                                  select wishlist.PerformanceId;
 
@@ -30,11 +30,11 @@ namespace TheaterSchedule.DAL.Repositories
         }
 
         public Wishlist GetPerformanceByPhoneIdAndPerformanceId(
-            string phoneId, int performanceId)
+            string AccountId, int performanceId)
         {
             return db.Wishlist
                 .Include(w => w.Account)
-                .FirstOrDefault(a => a.Account.PhoneIdentifier == phoneId &&
+                .FirstOrDefault(a => a.Account.AccountId == int.Parse(AccountId) &&
                                      a.PerformanceId == performanceId);
         }
 

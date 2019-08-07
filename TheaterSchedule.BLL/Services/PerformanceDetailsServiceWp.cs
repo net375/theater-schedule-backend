@@ -35,18 +35,18 @@ namespace TheaterSchedule.BLL.Services
             this.memoryCache = memoryCache;
         }
 
-        public PerformanceDetailsBaseDTO LoadPerformanceDetails(string phoneId, string languageCode, int performanceId)
+        public PerformanceDetailsBaseDTO LoadPerformanceDetails(string Accountid, string languageCode, int performanceId)
         {
             var cacheProvider = new CacheProvider(memoryCache);
 
-            var isChecked = isCheckedPerformanceRepository.IsChecked(phoneId, performanceId);
+            var isChecked = isCheckedPerformanceRepository.IsChecked(Accountid, performanceId);
 
             performanceDetailsRequest = cacheProvider.GetAndSave(
                     () => GetCacheKey(languageCode, performanceId),
                     () =>
                     {
                         var performance = performanceDetailsRepository
-                            .GetInformationAboutPerformance(phoneId, languageCode, performanceId)
+                            .GetInformationAboutPerformance(Accountid, languageCode, performanceId)
                             as PerformanceDetailsDataModelWp;
 
                         var tags = tagRepository.GetTagsByPerformanceId(performanceId).Result;
