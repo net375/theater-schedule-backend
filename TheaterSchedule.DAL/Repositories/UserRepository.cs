@@ -9,7 +9,7 @@ namespace TheaterSchedule.DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private TheaterDatabaseContext db;
+        private readonly TheaterDatabaseContext db;
 
         public UserRepository(TheaterDatabaseContext context)
         {

@@ -7,7 +7,7 @@ namespace TheaterSchedule.DAL.Repositories
 {
     public class MessageRepository : IMessageRepository
     {
-        private TheaterDatabaseContext db;
+        private readonly TheaterDatabaseContext db;
 
         public MessageRepository(TheaterDatabaseContext context)
         {

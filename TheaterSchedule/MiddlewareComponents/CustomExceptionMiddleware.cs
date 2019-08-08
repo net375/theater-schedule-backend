@@ -13,7 +13,7 @@ namespace TheaterSchedule.MiddlewareComponents
         private readonly RequestDelegate next;
         readonly ILogger<CustomExceptionMiddleware> log;
 
-        public CustomExceptionMiddleware(RequestDelegate next,ILogger<CustomExceptionMiddleware> log)
+        public CustomExceptionMiddleware(RequestDelegate next, ILogger<CustomExceptionMiddleware> log)
         {
             this.next = next;
             this.log = log;

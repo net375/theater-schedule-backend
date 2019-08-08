@@ -8,7 +8,7 @@ namespace TheaterSchedule.DAL.Repositories
 {
     public class AdminsPostRepository : IAdminsPostRepository
     {
-        private TheaterDatabaseContext db;
+        private readonly TheaterDatabaseContext db;
         
         public AdminsPostRepository(TheaterDatabaseContext context)
         {

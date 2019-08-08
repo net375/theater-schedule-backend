@@ -4,25 +4,26 @@ using System.Collections.Generic;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using Microsoft.AspNetCore.Http;
-using TheaterSchedule.MiddlewareComponents;
 using Microsoft.AspNetCore.Authorization;
+using TheaterSchedule.MiddlewareComponents;
+using System.Threading.Tasks;
 
 namespace TheaterSchedule.Controllers
 {
-    #region snippet_WishlistController
+    #region snippet_WishlistController    
+    [ApiController]
+    [Route("api/[controller]")]
     [ServiceFilter(typeof(CustomAuthorizationAttribute))]
-    [Authorize]   
-    [ApiController]    
-    [Route("api/[controller]")]      
+    [Authorize]
     public class WishlistController : Controller
     {
-        private IWishlistService wishlistService;
+        private IWishlistService _wishlistService;
 
         #endregion
 
         public WishlistController(IWishlistService wishlistService)
         {
-            this.wishlistService = wishlistService;
+            _wishlistService = wishlistService;
         }
 
         #region snippet_LoadWishlist
@@ -44,19 +45,12 @@ namespace TheaterSchedule.Controllers
         public ActionResult<IEnumerable<WishlistDTO>> LoadWishlist(
             string AccountId, string languageCode)
         {
-            try
-            {
-                IEnumerable<WishlistDTO> wishlist = wishlistService.LoadWishlist(AccountId, languageCode);
+            IEnumerable<WishlistDTO> wishlist = _wishlistService.LoadWishlist(AccountId, languageCode);
 
-                if (wishlist == null)
-                    return NotFound();
+            if (wishlist == null)
+                return NotFound();
 
-                return StatusCode(200, wishlist);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            return StatusCode(200, wishlist);
         }
 
         #endregion
@@ -89,15 +83,8 @@ namespace TheaterSchedule.Controllers
         public IActionResult SaveOrDeletePerformance(
             string AccountId, [FromQuery] int performanceId)
         {
-            try
-            {
-                wishlistService.SaveOrDeletePerformance(AccountId, performanceId);
+              await  wishlistService.SaveOrDeletePerformance(AccountId, performanceId);
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
         }
 
         #endregion

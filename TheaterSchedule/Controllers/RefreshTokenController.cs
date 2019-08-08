@@ -61,7 +61,7 @@ namespace TheaterSchedule.Controllers
                     HttpStatusCode.NotFound, $"Such user doesn't exist");
             }
 
-            await _refreshTokenService.UpdateRefreshTokenAsync(refreshToken.Id, input.RefreshToken, userResult.Id, Constants.DaysToExpireRefreshToken, false);
+           await  _refreshTokenService.UpdateRefreshTokenAsync(refreshToken.Id, input.RefreshToken, userResult.Id, Constants.DaysToExpireRefreshToken, false);
 
             return StatusCode(200);
         }
