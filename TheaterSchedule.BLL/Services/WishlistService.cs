@@ -1,16 +1,11 @@
-﻿using AutoMapper;
-using Entities.Models;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using TheaterSchedule.DAL.Interfaces;
-using TheaterSchedule.DAL.Models;
-using TheaterSchedule.BLL;
-using System;
 using System.Linq;
 using TheaterSchedule.BLL.Helpers;
-
+using System.Threading.Tasks;
 
 namespace TheaterSchedule.BLL.Services
 {
@@ -66,10 +61,10 @@ namespace TheaterSchedule.BLL.Services
 
         }
 
-        public void SaveOrDeletePerformance(string phoneId, int performanceId)
+        public async Task SaveOrDeletePerformance(string phoneId, int performanceId)
         {
-            Entities.Models.Wishlist performance =
-                WishlistRepository.GetPerformanceByPhoneIdAndPerformanceId(
+            Entities.Models.Wishlist performance = await
+                 WishlistRepository.GetPerformanceByPhoneIdAndPerformanceId(
                     phoneId, performanceId);
 
             if (performance == null)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TheaterSchedule.BLL.DTO;
 
 namespace TheaterSchedule.BLL.Interfaces
@@ -7,6 +8,6 @@ namespace TheaterSchedule.BLL.Interfaces
     {
         IEnumerable<WishlistDTO> LoadWishlist(
             string phoneId, string languageCode );
-        void SaveOrDeletePerformance( string phoneId, int performanceId );
+        Task SaveOrDeletePerformance( string phoneId, int performanceId );
     }
 }

@@ -9,7 +9,7 @@ namespace TheaterSchedule.DAL.Repositories
 {
     public class RefreshTokenRepository : IRefreshTokenRepository
     {
-        private TheaterDatabaseContext _context;
+        private readonly TheaterDatabaseContext _context;
 
         public RefreshTokenRepository(TheaterDatabaseContext context)
         {

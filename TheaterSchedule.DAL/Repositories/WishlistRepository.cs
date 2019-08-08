@@ -2,15 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TheaterSchedule.DAL.Interfaces;
-using TheaterSchedule.DAL.Models;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace TheaterSchedule.DAL.Repositories
 {
     public class WishlistRepository : IWishlistRepository
     {
-        private TheaterDatabaseContext db;
+        private readonly TheaterDatabaseContext db;
 
         public WishlistRepository(TheaterDatabaseContext context)
         {
@@ -28,14 +27,14 @@ namespace TheaterSchedule.DAL.Repositories
 
             return resultWishlist;
         }
-
-        public Wishlist GetPerformanceByPhoneIdAndPerformanceId(
+        
+        public async Task<Wishlist> GetPerformanceByPhoneIdAndPerformanceId(
             string phoneId, int performanceId)
         {
-            return db.Wishlist
-                .Include(w => w.Account)
-                .FirstOrDefault(a => a.Account.PhoneIdentifier == phoneId &&
-                                     a.PerformanceId == performanceId);
+                return await db.Wishlist
+                    .Include(w => w.Account)
+                    .FirstOrDefaultAsync(a => a.Account.PhoneIdentifier == phoneId &&
+                                         a.PerformanceId == performanceId);
         }
 
         public void Add(Wishlist performance)

@@ -4,25 +4,26 @@ using System.Collections.Generic;
 using TheaterSchedule.BLL.DTO;
 using TheaterSchedule.BLL.Interfaces;
 using Microsoft.AspNetCore.Http;
-using TheaterSchedule.MiddlewareComponents;
 using Microsoft.AspNetCore.Authorization;
+using TheaterSchedule.MiddlewareComponents;
+using System.Threading.Tasks;
 
 namespace TheaterSchedule.Controllers
 {
-    #region snippet_WishlistController
+    #region snippet_WishlistController    
+    [ApiController]
+    [Route("api/[controller]")]
     [ServiceFilter(typeof(CustomAuthorizationAttribute))]
-    [Authorize]   
-    [ApiController]    
-    [Route("api/[controller]")]      
+    [Authorize]
     public class WishlistController : Controller
     {
-        private IWishlistService wishlistService;
+        private IWishlistService _wishlistService;
 
         #endregion
 
         public WishlistController(IWishlistService wishlistService)
         {
-            this.wishlistService = wishlistService;
+            _wishlistService = wishlistService;
         }
 
         #region snippet_LoadWishlist
@@ -35,7 +36,8 @@ namespace TheaterSchedule.Controllers
         /// <returns>A list of favourites user performances from database</returns>
         /// <response code="200">Returns the list of favourites user performances of appropriate language</response>
         /// <response code="400">If url which you are sending is not valid</response>
-        /// <response code="404">If the information about user performances is null</response>         
+        /// <response code="404">If the information about user performances is null</response>
+        /// 
         [HttpGet("{phoneId}/{languageCode}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -44,19 +46,14 @@ namespace TheaterSchedule.Controllers
         public ActionResult<IEnumerable<WishlistDTO>> LoadWishlist(
             string phoneId, string languageCode)
         {
-            try
-            {
-                IEnumerable<WishlistDTO> wishlist = wishlistService.LoadWishlist(phoneId, languageCode);
 
-                if (wishlist == null)
-                    return NotFound();
+            IEnumerable<WishlistDTO> wishlist = _wishlistService.LoadWishlist(phoneId, languageCode);
 
-                return StatusCode(200, wishlist);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            if (wishlist == null)
+                return NotFound();
+
+            return StatusCode(200, wishlist);
+
         }
 
         #endregion
@@ -82,22 +79,15 @@ namespace TheaterSchedule.Controllers
         /// <response code="200">A newly added performance to wishlist or information about successful operation (Save or Delete)</response>
         /// <response code="400">If url which you are sending is not valid</response>
         [HttpPost("{phoneId}")]
-        [ServiceFilter(typeof(CustomAuthorizationAttribute))]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
-        public IActionResult SaveOrDeletePerformance(
+        public async Task<IActionResult> SaveOrDeletePerformance(
             string phoneId, [FromQuery] int performanceId)
         {
-            try
-            {
-                wishlistService.SaveOrDeletePerformance(phoneId, performanceId);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            
+               await _wishlistService.SaveOrDeletePerformance(phoneId, performanceId);
+                return Ok();       
         }
 
         #endregion

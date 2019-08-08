@@ -6,7 +6,7 @@ namespace TheaterSchedule.DAL.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
-        private TheaterDatabaseContext db;
+        private readonly  TheaterDatabaseContext db;
 
         public AccountRepository(TheaterDatabaseContext context)
         {

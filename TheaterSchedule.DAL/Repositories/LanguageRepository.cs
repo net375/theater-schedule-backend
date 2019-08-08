@@ -7,7 +7,7 @@ namespace TheaterSchedule.DAL.Repositories
     public class LanguageRepository : ILanguageRepository
     {
 
-        private TheaterDatabaseContext db;
+        private readonly TheaterDatabaseContext db;
 
         public LanguageRepository(TheaterDatabaseContext context)
         {

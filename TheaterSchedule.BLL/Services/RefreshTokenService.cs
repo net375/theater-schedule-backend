@@ -91,7 +91,7 @@ namespace TheaterSchedule.BLL.Services
 
             var newJwt = _tokenService.GenerateAccessToken(userResult, newRefreshToken);
 
-            await UpdateRefreshTokenAsync(refreshToken.Id, newRefreshToken, userResult.Id, Constants.DaysToExpireRefreshToken);            
+            await UpdateRefreshTokenAsync(refreshToken.Id, newRefreshToken, userResult.Id, Constants.DaysToExpireRefreshToken);
 
             return new TokensResponse { AccessToken = newJwt, RefreshToken = newRefreshToken, ExpiresTime = DateTime.Now.AddMinutes(Constants.MinToExpireAccessToken) };
         }
