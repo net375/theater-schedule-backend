@@ -7,7 +7,7 @@ namespace TheaterSchedule.BLL.Interfaces
     public interface IWishlistService
     {
         IEnumerable<WishlistDTO> LoadWishlist(
-            string phoneId, string languageCode );
-        Task SaveOrDeletePerformance( string phoneId, int performanceId );
+            string AccountId, string languageCode );
+        void SaveOrDeletePerformance( string phoneId, int performanceId );
     }
 }

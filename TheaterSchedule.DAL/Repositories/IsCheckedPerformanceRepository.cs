@@ -17,11 +17,11 @@ namespace TheaterSchedule.DAL.Repositories
             this.db = context;
         }
 
-        public bool IsChecked( string phoneId, int performanceId)
+        public bool IsChecked( string Accountid, int performanceId)
         {
             return (from account in db.Account
                     join wishlist in db.Wishlist on account.AccountId equals wishlist.AccountId
-                    where account.PhoneIdentifier == phoneId && wishlist.PerformanceId == performanceId
+                    where account.AccountId == int.Parse(Accountid) && wishlist.PerformanceId == performanceId
                     select account).Any();
         }
     }

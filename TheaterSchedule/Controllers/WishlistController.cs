@@ -32,28 +32,25 @@ namespace TheaterSchedule.Controllers
         /// Loads favourites user performances from database
         /// </summary>
         /// <param name="languageCode"></param>
-        /// <param name="phoneId">Unique user device identifier</param>
+        /// <param name="AccountId">Unique user device identifier</param>
         /// <returns>A list of favourites user performances from database</returns>
         /// <response code="200">Returns the list of favourites user performances of appropriate language</response>
         /// <response code="400">If url which you are sending is not valid</response>
-        /// <response code="404">If the information about user performances is null</response>
-        /// 
-        [HttpGet("{phoneId}/{languageCode}")]
+        /// <response code="404">If the information about user performances is null</response>         
+        [HttpGet("{AccountId}/{languageCode}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<WishlistDTO>> LoadWishlist(
-            string phoneId, string languageCode)
+            string AccountId, string languageCode)
         {
-
-            IEnumerable<WishlistDTO> wishlist = _wishlistService.LoadWishlist(phoneId, languageCode);
+            IEnumerable<WishlistDTO> wishlist = _wishlistService.LoadWishlist(AccountId, languageCode);
 
             if (wishlist == null)
                 return NotFound();
 
             return StatusCode(200, wishlist);
-
         }
 
         #endregion
@@ -74,20 +71,20 @@ namespace TheaterSchedule.Controllers
         ///
         /// </remarks>
         /// <param name="performanceId"></param>
-        /// <param name="phoneId">Unique user device identifier</param>
+        /// <param name="AccountId">Unique user device identifier</param>
         /// <returns>A newly added performance to wishlist or information about successful operation (Save or Delete)</returns>
         /// <response code="200">A newly added performance to wishlist or information about successful operation (Save or Delete)</response>
         /// <response code="400">If url which you are sending is not valid</response>
-        [HttpPost("{phoneId}")]
+        [HttpPost("{AccountId}")]
+        [ServiceFilter(typeof(CustomAuthorizationAttribute))]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SaveOrDeletePerformance(
-            string phoneId, [FromQuery] int performanceId)
+        public IActionResult SaveOrDeletePerformance(
+            string AccountId, [FromQuery] int performanceId)
         {
-            
-               await _wishlistService.SaveOrDeletePerformance(phoneId, performanceId);
-                return Ok();       
+              await  wishlistService.SaveOrDeletePerformance(AccountId, performanceId);
+                return Ok();
         }
 
         #endregion

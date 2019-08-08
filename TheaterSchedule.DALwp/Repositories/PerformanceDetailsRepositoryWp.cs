@@ -122,7 +122,7 @@ namespace TheaterSchedule.DALwp.Repositories
             return await client.CustomRequest.Get<Media>($"wp/v2/media/{featured_media}");
         }
 
-        public PerformanceDetailsDataModelBase GetInformationAboutPerformance(string phoneId, string languageCode, int perforamanceId)
+        public PerformanceDetailsDataModelBase GetInformationAboutPerformance(string Accountid, string languageCode, int perforamanceId)
         {
             var performance = GetPerformance(InitializeClient(), perforamanceId).Result;
             var media = GetMainImage(InitializeClient(), performance.Featured_media).Result;

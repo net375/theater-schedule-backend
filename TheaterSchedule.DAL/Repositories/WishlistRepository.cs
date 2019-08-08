@@ -16,25 +16,25 @@ namespace TheaterSchedule.DAL.Repositories
             db = context;
         }
 
-        public IEnumerable<int> GetPerformanceIdsInWishlist(string phoneId, string languageCode)
+        public IEnumerable<int> GetPerformanceIdsInWishlist(string AccountId, string languageCode)
         {
             var resultWishlist = from account in db.Account
                                  join wishlist in db.Wishlist
                                      on account.AccountId equals wishlist.AccountId
-                                 where account.PhoneIdentifier == phoneId
+                                 where account.AccountId == int.Parse(AccountId)
                                  orderby wishlist.WishPerformanceId descending
                                  select wishlist.PerformanceId;
 
             return resultWishlist;
         }
-        
+
         public async Task<Wishlist> GetPerformanceByPhoneIdAndPerformanceId(
-            string phoneId, int performanceId)
+            string AccountId, int performanceId)
         {
                 return await db.Wishlist
                     .Include(w => w.Account)
-                    .FirstOrDefaultAsync(a => a.Account.PhoneIdentifier == phoneId &&
-                                         a.PerformanceId == performanceId);
+                    .FirstOrDefaultAsync(a => a.Account.AccountId == int.Parse(AccountId) &&
+                                     a.PerformanceId == performanceId);
         }
 
         public void Add(Wishlist performance)

@@ -37,7 +37,7 @@ namespace TheaterSchedule.BLL.Services
             return memoryCacheKey;
         }
 
-        public IEnumerable<WishlistDTO> LoadWishlist(string phoneId, string languageCode)
+        public IEnumerable<WishlistDTO> LoadWishlist(string AccountId, string languageCode)
         {
             var cacheProvider = new CacheProvider(memoryCache);
 
@@ -45,7 +45,7 @@ namespace TheaterSchedule.BLL.Services
                 () => GetKey(languageCode),
                 () => perfomanceRepository.GetPerformanceTitlesAndImages(languageCode));
 
-            var perfIds = WishlistRepository.GetPerformanceIdsInWishlist(phoneId, languageCode);
+            var perfIds = WishlistRepository.GetPerformanceIdsInWishlist(AccountId, languageCode);
 
             var result = from perfId in perfIds
                          join perfWp in performancesWp
@@ -61,18 +61,17 @@ namespace TheaterSchedule.BLL.Services
 
         }
 
-        public async Task SaveOrDeletePerformance(string phoneId, int performanceId)
+        public async Task SaveOrDeletePerformance(string AccountId, int performanceId)
         {
             Entities.Models.Wishlist performance = await
                  WishlistRepository.GetPerformanceByPhoneIdAndPerformanceId(
-                    phoneId, performanceId);
+                    AccountId, performanceId);
 
             if (performance == null)
             {
-                int accountId = accountRepository.GetAccountByPhoneId(phoneId).AccountId;
                 performance = new Entities.Models.Wishlist()
                 {
-                    AccountId = accountId,
+                    AccountId = int.Parse(AccountId),
                     PerformanceId = performanceId
                 };
                 WishlistRepository.Add(performance);
