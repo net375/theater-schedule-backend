@@ -19,6 +19,11 @@ namespace TheaterSchedule.DAL.Repositories
 
         public bool IsChecked( string Accountid, int performanceId)
         {
+            Accountid = Accountid == "null" ? null : Accountid;
+
+            if (string.IsNullOrEmpty(Accountid))
+                return false;
+
             return (from account in db.Account
                     join wishlist in db.Wishlist on account.AccountId equals wishlist.AccountId
                     where account.AccountId == int.Parse(Accountid) && wishlist.PerformanceId == performanceId
