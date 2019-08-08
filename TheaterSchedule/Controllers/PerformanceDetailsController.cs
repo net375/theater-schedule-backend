@@ -34,20 +34,13 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
         public ActionResult<PerformanceDetailsBaseDTO> GetInfo(
             string Accountid, string languageCode, int performanceId)
-        {
-            try
-            {
+        {           
                 PerformanceDetailsBaseDTO performanceDetails = performanceDetailsService
                     .LoadPerformanceDetails(Accountid, languageCode, performanceId);
 
                 if (performanceDetails == null)
                     return NotFound();
                 return StatusCode(200, performanceDetails);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
         }
     }
 }

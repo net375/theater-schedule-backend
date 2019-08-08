@@ -8,6 +8,6 @@ namespace TheaterSchedule.BLL.Interfaces
     {
         IEnumerable<WishlistDTO> LoadWishlist(
             string AccountId, string languageCode );
-        void SaveOrDeletePerformance( string phoneId, int performanceId );
+        Task SaveOrDeletePerformance( string phoneId, int performanceId );
     }
 }

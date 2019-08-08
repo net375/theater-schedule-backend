@@ -80,10 +80,10 @@ namespace TheaterSchedule.Controllers
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Exception), StatusCodes.Status400BadRequest)]
-        public IActionResult SaveOrDeletePerformance(
+        public async Task<IActionResult> SaveOrDeletePerformance(
             string AccountId, [FromQuery] int performanceId)
         {
-              await  wishlistService.SaveOrDeletePerformance(AccountId, performanceId);
+              await _wishlistService.SaveOrDeletePerformance(AccountId, performanceId);
                 return Ok();
         }
 
