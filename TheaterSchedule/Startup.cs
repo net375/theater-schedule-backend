@@ -165,7 +165,7 @@ namespace TheaterSchedule
 
             app.UseAuthentication();
 
-          //  app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
 
 
