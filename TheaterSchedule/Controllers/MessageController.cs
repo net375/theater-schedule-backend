@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +10,6 @@ using TheaterSchedule.MiddlewareComponents;
 
 namespace TheaterSchedule.Controllers
 {
-    [ServiceFilter(typeof(CustomAuthorizationAttribute))]
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MessageController : ControllerBase
