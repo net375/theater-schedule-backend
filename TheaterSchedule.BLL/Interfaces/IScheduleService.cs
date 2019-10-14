@@ -8,6 +8,6 @@ namespace TheaterSchedule.BLL.Interfaces
     {
         IEnumerable<ScheduleBaseDTO> FilterByDate(
             string languageCode, 
-            DateTime? startDate, DateTime? endDate);
+            DateTime? startDate);
     }
 }

@@ -30,7 +30,6 @@ namespace TheaterSchedule.Controllers
         /// </summary>
         /// <param name="languageCode"></param>
         /// <param name="startDate">start date range of schedule</param>
-        /// <param name="endDate">end date range of schedule</param>
         /// <returns>a schedule list from lvivpuppet.com</returns>
         /// <response code="200">Returns a schedule list of appropriate language</response>
         /// <response code="400">If url which you are sending is not valid</response>
@@ -42,11 +41,11 @@ namespace TheaterSchedule.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<ScheduleBaseDTO>> FilterByDate(
             string languageCode,
-            DateTime? startDate, DateTime? endDate)
+            DateTime? startDate)
         {
             try
             {
-                IEnumerable<ScheduleBaseDTO> schedule = service.FilterByDate(languageCode, startDate, endDate).ToList();
+                IEnumerable<ScheduleBaseDTO> schedule = service.FilterByDate(languageCode, startDate).ToList();
 
                 if (schedule == null)
                     return NotFound();

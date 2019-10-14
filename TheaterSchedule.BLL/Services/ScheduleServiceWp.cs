@@ -27,7 +27,7 @@ namespace TheaterSchedule.BLL.Services
 
         public IEnumerable<ScheduleBaseDTO> FilterByDate(
             string languageCode,
-            DateTime? startDate, DateTime? endDate)
+            DateTime? startDate)
         {
             var cacheProvider = new CacheProvider(memoryCache);
 
@@ -37,12 +37,12 @@ namespace TheaterSchedule.BLL.Services
             IEnumerable<ScheduleDataModelBase> schedule =
                 cacheProvider.GetAndSave(
                     () => Constants.ScheduleCacheKey + languageCode,
-                    () => scheduleRepositoryWp.GetListPerformancesByDateRange(languageCode, startDate, endDate));
+                    () => scheduleRepositoryWp.GetListPerformancesByDateRange(languageCode, startDate));
 
             IEnumerable<ScheduleWpDTO> scheduleList =
                 mapper.Map<IEnumerable<ScheduleDataModelBase>, List<ScheduleWpDTO>>(schedule);
 
-            return scheduleList = scheduleList.Where(s => (!startDate.HasValue || s.Beginning >= startDate) && (!endDate.HasValue || s.Beginning <= endDate));
+            return scheduleList = scheduleList.Where(s => (!startDate.HasValue || s.Beginning >= startDate));
         }
     }
 }

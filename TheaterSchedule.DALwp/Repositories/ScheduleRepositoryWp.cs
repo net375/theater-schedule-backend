@@ -140,13 +140,10 @@ namespace TheaterSchedule.DALwp.Repositories
         }
 
         public IEnumerable<ScheduleDataModelBase> GetListPerformancesByDateRange( string languageCode,
-            DateTime? startDate, DateTime? endDate )
+            DateTime? startDate)
         {
             // No localization yet
-            //'EndDate' not needed anymore, it will be deleted if delete ScheduleRepository for DB 
 
-            //following line is used because schedule on the WordPress is empty for now
-            startDate = new DateTime(2019, 07, 13);
             var performances = GetPerformances( InitializeClient() ).Result;
             List<ScheduleDataModelWp> schedule = new List<ScheduleDataModelWp>();
 

@@ -8,6 +8,6 @@ namespace TheaterSchedule.DAL.Interfaces
     {
         IEnumerable<ScheduleDataModelBase> GetListPerformancesByDateRange(
             string languageCode,
-            DateTime? startDate, DateTime? endDate);
+            DateTime? startDate);
     }
 }
