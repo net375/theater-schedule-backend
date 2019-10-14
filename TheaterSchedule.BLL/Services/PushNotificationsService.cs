@@ -42,7 +42,7 @@ namespace TheaterSchedule.BLL.Services
             IEnumerable<ScheduleDataModelBase> scheduleWp =
                 cacheProvider.GetAndSave(
                     () => Constants.ScheduleCacheKey + "uk",
-                    () => scheduleRepository.GetListPerformancesByDateRange("uk", DateTime.Now, null));
+                    () => scheduleRepository.GetListPerformancesByDateRange("uk", DateTime.Now));
 
             //statements above need to be changed when cache preload is implemented
 
